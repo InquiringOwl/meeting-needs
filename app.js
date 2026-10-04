@@ -1,5 +1,6 @@
 /* Meeting Needs: home, lens pages and profile. Plain JS, no build step.
-   Routes (hash): '' home · 'profile' · 'lens-<id>'.
+   Routes (hash): '' home · 'profile' · 'lens-<id>[/<sub>]'. A lens with a course registers
+   window.MN_LENS_VIEWS[id](sub, lens) → { html, title } (see rel.js).
    The profile is saved only in this browser (localStorage). */
 (function () {
   'use strict';
@@ -301,15 +302,47 @@
       '</form></div>' + footer();
   }
 
+  /* Shared pieces for lens modules (e.g. rel.js registers window.MN_LENS_VIEWS.relationships). */
+  window.MN = { header: header, footer: footer, esc: esc, toast: function (m) { toast(m); }, lenses: LENS };
+
   /* ---------- render + routing ---------- */
   var app = document.getElementById('app');
   var sky = '<div class="sky" aria-hidden="true"><span class="a"></span><span class="b"></span><span class="c"></span><span class="d"></span></div>';
 
+  /* Course files load only when someone opens that lens, so the home page stays light. */
+  var LAZY = { relationships: { css: 'rel.css', js: ['rel-data.js', 'rel.js'] } };
+  var lazyState = {};
+  function needsLazy(r) {
+    var lid = r.indexOf('lens-') === 0 ? r.slice(5).split(/[\/?]/)[0] : '';
+    var m = LAZY[lid];
+    if (!m || lazyState[lid] === 'done' || lazyState[lid] === 'failed') return false;
+    if (lazyState[lid] !== 'loading') {
+      lazyState[lid] = 'loading';
+      var files = m.js.slice();
+      var next = function () {
+        if (!files.length) { lazyState[lid] = 'done'; route(); return; }
+        var sc = document.createElement('script'); sc.src = files.shift();
+        sc.onload = next;
+        sc.onerror = function () { lazyState[lid] = 'failed'; route(); };
+        document.body.appendChild(sc);
+      };
+      var link = document.createElement('link'); link.rel = 'stylesheet'; link.href = m.css;
+      link.onload = next; link.onerror = next;
+      document.head.appendChild(link);
+    }
+    return true;
+  }
+
   function route() {
     var r = (location.hash || '').replace(/^#/, '');
+    if (needsLazy(r)) return;
     var html, title = 'Meeting Needs';
     if (r === 'profile') { html = viewProfile(); title = 'Profile · Meeting Needs'; }
-    else if (r.indexOf('lens-') === 0 && LENS[r.slice(5)]) { var l = LENS[r.slice(5)]; html = viewLens(l); title = l.name + ' · Meeting Needs'; }
+    else if (r.indexOf('lens-') === 0 && LENS[r.slice(5).split(/[\/?]/)[0]]) {
+      var lid = r.slice(5).split(/[\/?]/)[0], l = LENS[lid], custom = (window.MN_LENS_VIEWS || {})[lid];
+      if (custom) { var v = custom(r.slice(5 + lid.length).replace(/^\//, ''), l); html = v.html; title = v.title; }
+      else { html = viewLens(l); title = l.name + ' · Meeting Needs'; }
+    }
     else html = viewHome();
     app.innerHTML = sky + '<div class="wrap">' + html + '</div>';
     document.title = title;

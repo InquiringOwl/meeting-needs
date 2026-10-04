@@ -32,10 +32,10 @@ window.MN_TIERS = [
         looks: ['Which stain is which, and what lifts it', 'Washing that is gentler on fabric and skin', 'Mould: what you can clean and when to call it in']
       },
       {
-        id: 'relationships', name: 'Relationships', color: '#A3457A', status: 'building',
-        blurb: 'Listening, repair and boundaries at home and next door, plus sharing tools and bulk orders.',
-        topics: ['Listening', 'Repair', 'Mutual aid'],
-        looks: ['How a disagreement starts and how it gets repaired', 'Boundaries that hold without a fight', 'Neighbours, tool libraries and splitting the bulk order']
+        id: 'relationships', name: 'Relationships', color: '#A3457A', status: 'demo',
+        blurb: 'Hear your own needs, meet others with kindness, and find strategies that work for everyone.',
+        topics: ['Needs', 'Dialogue', 'Circles'],
+        looks: ['Feelings as signals, and the universal needs they point to', 'Requests instead of demands, and dialogue where both sets of needs count', 'Children, housemates, groups, animals and plants']
       }
     ]
   },

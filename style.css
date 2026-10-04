@@ -1,4 +1,4 @@
-/* Layout: one centred column; frosted panels float over soft blurred light, and each tier steps down in opacity. */
+/* Light theme only. Layout: one centred column; frosted panels float over soft blurred light, and each tier steps down in opacity. */
 :root {
   --bg: #EEF2E8;
   --ink: #17241C;
@@ -22,29 +22,10 @@
   --on-lens: #FFFFFF;
   --focus: #2F6E9E;
 
+  color-scheme: light;
   --f-head: 'Manrope', 'Instrument Sans', system-ui, sans-serif;
   --f-body: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --f-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0E1611; --ink: #E6EEE4; --ink-2: #C3D1C4; --muted: #9AAE9D; --accent: #9CCB8E; --accent-ink: #0E1611;
-    --glass: rgba(255, 255, 255, 0.06); --glass-strong: rgba(255, 255, 255, 0.10); --glass-faint: rgba(255, 255, 255, 0.035);
-    --glass-edge: rgba(255, 255, 255, 0.12); --chip: rgba(255, 255, 255, 0.08); --line: rgba(230, 238, 228, 0.14); --dash: rgba(230, 238, 228, 0.26);
-    --shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
-    --blob-a: rgba(90, 150, 80, 0.34); --blob-b: rgba(70, 130, 180, 0.30); --blob-c: rgba(200, 160, 80, 0.20); --blob-d: rgba(160, 110, 180, 0.22);
-    --mixw: 48%; --on-lens: #0E1611; --focus: #8FC7EA;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #0E1611; --ink: #E6EEE4; --ink-2: #C3D1C4; --muted: #9AAE9D; --accent: #9CCB8E; --accent-ink: #0E1611;
-  --glass: rgba(255, 255, 255, 0.06); --glass-strong: rgba(255, 255, 255, 0.10); --glass-faint: rgba(255, 255, 255, 0.035);
-  --glass-edge: rgba(255, 255, 255, 0.12); --chip: rgba(255, 255, 255, 0.08); --line: rgba(230, 238, 228, 0.14); --dash: rgba(230, 238, 228, 0.26);
-  --shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
-  --blob-a: rgba(90, 150, 80, 0.34); --blob-b: rgba(70, 130, 180, 0.30); --blob-c: rgba(200, 160, 80, 0.20); --blob-d: rgba(160, 110, 180, 0.22);
-  --mixw: 48%; --on-lens: #0E1611; --focus: #8FC7EA;
-  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }

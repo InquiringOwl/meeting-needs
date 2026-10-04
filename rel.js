@@ -1,0 +1,495 @@
+/* Relationships lens: overview, one page per unit (sub-units are sections), and the tools
+   (feelings wheel, needs, accusation translator, need-or-strategy, Identify a need, Communicate).
+   Routes: #lens-relationships · #lens-relationships/<unit>[/<sub>]   (unit: feel | need | request | dialogue)
+   The sidebar is the skill tree, drawn vertically. Registers window.MN_LENS_VIEWS.relationships;
+   app.js supplies header/footer/esc/toast via window.MN. */
+(function () {
+  'use strict';
+  var D = window.MN_REL;
+  var BASE = '#lens-relationships';
+  var KEY = 'meeting-needs.rel.v3';
+  var ALIAS = { finder: 'need/identify', identify: 'need/identify', dialogue: 'dialogue/communicate', conflict: 'dialogue/communicate', communicate: 'dialogue/communicate' };
+
+  var UNIT = {}, FAMILY_OF = {}, FAUX = {}, SOURCE = {};
+  D.UNITS.forEach(function (u) { UNIT[u.id] = u; });
+  ['unmet', 'met'].forEach(function (m) {
+    D.WHEEL[m].families.forEach(function (f) { f.mode = m; f.words.forEach(function (w) { FAMILY_OF[w] = f; }); });
+  });
+  D.FAUX.forEach(function (x) { FAUX[x.word] = x; });
+  D.SOURCES.forEach(function (s) { SOURCE[s.id] = s; });
+
+  var FEEL_PICK = ['tired', 'discouraged', 'frustrated', 'sad', 'lonely', 'anxious', 'overwhelmed', 'tense', 'hurt', 'resentful'];
+  var NEED_PICK = ['support', 'rest', 'connection', 'order', 'ease', 'respect', 'fairness', 'mutuality', 'to be heard', 'safety', 'choice', 'autonomy', 'space', 'appreciation', 'play'];
+  var THANKS_PICK = ['relieved', 'grateful', 'hopeful', 'calm', 'touched', 'warm'];
+
+  /* ---------- state ---------- */
+  var prog = (function () { try { var r = JSON.parse(localStorage.getItem(KEY) || '{}'); return r && typeof r === 'object' ? r : {}; } catch (e) { return {}; } })();
+  if (!prog.learned || typeof prog.learned !== 'object') prog.learned = {};
+  function saveProgress() { try { localStorage.setItem(KEY, JSON.stringify(prog)); } catch (e) { /* storage blocked */ } }
+
+  var S = {
+    wheel: { solo: { mode: 'unmet', fam: null, word: null, rot: 0 }, finder: { mode: 'unmet', fam: null, word: null, rot: 0 } },
+    needs: [], sort: {}, faux: 'abandoned',
+    finder: blankFinder(),
+    cf: cloneConflict()
+  };
+  function blankFinder() { return { fam: null, faux: null, feelings: [], source: null, needs: [], showAll: false }; }
+  function cloneConflict() {
+    var c = D.CONFLICT;
+    return { a: JSON.parse(JSON.stringify(c.a)), b: JSON.parse(JSON.stringify(c.b)), both: c.both.slice(), pick: 0, add: '', thanks: c.thanks.slice() };
+  }
+
+  /* ---------- helpers ---------- */
+  function mn() { return window.MN; }
+  function esc(s) { return mn().esc(s); }
+  function md(s) { return esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>'); }
+  function list(arr) { if (!arr.length) return ''; if (arr.length === 1) return arr[0]; return arr.slice(0, -1).join(', ') + ' and ' + arr[arr.length - 1]; }
+  function uniq(arr) { var s = {}; return arr.filter(function (x) { if (s[x]) return false; s[x] = 1; return true; }); }
+  function toggle(arr, v) { var i = arr.indexOf(v); if (i === -1) arr.push(v); else arr.splice(i, 1); }
+  function attrs(o) { var s = ''; Object.keys(o || {}).forEach(function (k) { s += ' ' + k + '="' + esc(o[k]) + '"'; }); return s; }
+  function chip(action, value, label, on, cls, extra) {
+    return '<button type="button" class="rel-chip' + (on ? ' on' : '') + (cls ? ' ' + cls : '') + '" data-rel="' + action + '" data-v="' + esc(value) + '"' + attrs(extra) + ' aria-pressed="' + !!on + '">' + esc(label) + '</button>';
+  }
+  function href(u, sub) { return BASE + '/' + u + (sub ? '/' + sub : ''); }
+  function learned(id) { return !!prog.learned[id]; }
+
+  /* ---------- sidebar: the skill tree, vertical ---------- */
+  function sidebar(cur) {
+    var wide = window.matchMedia && window.matchMedia('(min-width: 900px)').matches;
+    var units = D.UNITS.map(function (u) {
+      var on = cur === u.id;
+      return '<li class="rel-vt-unit k-' + u.id + (on ? ' cur' : '') + (learned(u.id) ? ' done' : '') + '">' +
+        '<a class="rel-vt-head" href="' + href(u.id) + '"' + (on ? ' aria-current="page"' : '') + '>' +
+        '<span class="rel-vt-dot" aria-hidden="true">' + (learned(u.id) ? '✓' : u.num) + '</span>' +
+        '<span><b>' + esc(u.word) + '</b><small>' + esc(u.sub) + '</small></span></a>' +
+        '<ol class="rel-vt-subs">' + u.subs.map(function (s) {
+          return '<li><a href="' + href(u.id, s.id) + '" data-spy="' + u.id + '-' + s.id + '"' + (s.isTool ? ' class="tool"' : '') + '>' + esc(s.title) + (s.isTool ? ' <span class="rel-tooltag">tool</span>' : '') + '</a></li>';
+        }).join('') + '</ol></li>';
+    }).join('');
+    return '<nav class="rel-nav" aria-label="Relationships course">' +
+      '<details class="rel-nav-wrap"' + (wide ? ' open' : '') + '><summary class="rel-nav-head"><span class="eyebrow">Course map</span><b>Relationships</b></summary>' +
+      '<a class="rel-nav-over" href="' + BASE + '"' + (!cur ? ' aria-current="page"' : '') + '>Overview</a>' +
+      '<ol class="rel-vt">' + units + '</ol>' +
+      '<div class="rel-vt-apps"><span class="eyebrow">Then, special applications</span><p>' + D.APPS.map(function (a) { return esc(a.name); }).join(' · ') + '</p><span class="rel-later">Coming later</span></div>' +
+      '</details></nav>';
+  }
+  function layout(cur, main) {
+    return mn().header('home') + '<div class="rel-layout">' + sidebar(cur) + '<main class="rel-main">' +
+      '<div class="rel-topbar"><button type="button" class="rel-back" data-rel="back">← Back</button></div>' + main + '</main></div>' + mn().footer();
+  }
+
+  /* ---------- overview ---------- */
+  function viewOverview() {
+    var cards = D.UNITS.map(function (u) {
+      return '<li class="rel-ucard k-' + u.id + '"><a class="rel-ucard-head" href="' + href(u.id) + '"><span class="rel-ucard-n">' + u.num + '</span><b>' + esc(u.word) + '</b><span class="rel-ucard-sub">' + esc(u.sub) + '</span></a>' +
+        '<ol>' + u.subs.map(function (s) { return '<li><a href="' + href(u.id, s.id) + '">' + esc(s.title) + (s.isTool ? ' <span class="rel-tooltag">tool</span>' : '') + '</a></li>'; }).join('') + '</ol></li>';
+    }).join('');
+    return {
+      title: 'Relationships · Meeting Needs',
+      html: layout(null,
+        '<section class="rel-hero"><span class="eyebrow">Tier 1 · Roots · Course</span><h1 tabindex="-1">Relationships</h1>' +
+        '<p class="lede">Every conflict is two people trying to meet their universal needs through ineffective strategies. Learn to hear your own needs, meet others’ generously while keeping yours met, and bring that same care to kids, housemates, groups, animals and plants.</p></section>' +
+        '<ol class="rel-ucards" aria-label="The four units">' + cards + '</ol>' +
+        '<section class="rel-tools" aria-label="Tools">' +
+        '<a class="rel-toolcard k-need" href="' + href('need', 'identify') + '"><span class="eyebrow">Inner tool · Units 1–2</span><b>Identify a need</b><span>From a big feeling (sad, mad, scared) to the word that fits, where it’s coming from, and the universal need underneath.</span><span class="rel-go">Open →</span></a>' +
+        '<a class="rel-toolcard k-request" href="' + href('dialogue', 'communicate') + '"><span class="eyebrow">Between people · Units 3–4</span><b>Communicate</b><span>Say your need as a request, hear theirs, and find a strategy that meets you both.</span><span class="rel-go">Open →</span></a>' +
+        '</section>' +
+        '<section class="rel-apps" aria-labelledby="rel-apps-h"><div class="rel-apps-head"><div><span class="eyebrow">After the core relational skills</span><h2 id="rel-apps-h">Special applications</h2></div><span class="rel-later">Coming later</span></div>' +
+        '<p class="rel-q">The same four steps, applied to the relationships all around a home.</p><ul>' +
+        D.APPS.map(function (a) { return '<li><b>' + esc(a.name) + '</b><span>' + esc(a.short) + '</span>' + (a.thanks ? '<small>' + md(a.thanks) + '</small>' : '') + '</li>'; }).join('') + '</ul></section>' +
+        '<aside class="rel-funfact"><span class="eyebrow">A grateful fun fact</span><p>The idea that feelings point to universal needs, and that conflicts live between strategies, grows out of Marshall B. Rosenberg’s Nonviolent Communication. The feelings and needs words here are adapted from the Center for Nonviolent Communication’s inventories (<a href="https://www.cnvc.org" target="_blank" rel="noopener">cnvc.org</a>). Thank you!</p></aside>')
+    };
+  }
+
+  /* ---------- unit page: every sub-unit on one page ---------- */
+  function viewUnit(u, subId) {
+    var i = D.UNITS.indexOf(u), prev = D.UNITS[i - 1], next = D.UNITS[i + 1];
+    var secs = u.subs.map(function (s, j) {
+      var h = '<section class="rel-sec' + (s.isTool ? ' is-tool' : '') + '" id="sec-' + u.id + '-' + s.id + '" data-sec="' + u.id + '-' + s.id + '">' +
+        '<div class="rel-sec-head"><span class="rel-sec-n">' + u.num + '.' + (j + 1) + '</span><div><h2>' + esc(s.title) + (s.isTool ? ' <span class="rel-tooltag">tool</span>' : '') + '</h2><p>' + esc(s.short) + '</p></div></div>' +
+        '<ul class="rel-keys">' + s.key.map(function (k) { return '<li>' + md(k) + '</li>'; }).join('') + '</ul>';
+      if (s.ex) h += '<div class="rel-ex">' + s.ex.map(function (e) { return '<div><p class="rel-say">' + md(e[0]) + '</p><p>' + md(e[1]) + '</p></div>'; }).join('') + '</div>';
+      if (s.tool) h += '<div class="rel-tool" data-tool="' + s.tool + '">' + TOOLS[s.tool]() + '</div>';
+      if (s.remember) h += '<p class="rel-remember"><span class="eyebrow">Remember</span>' + md(s.remember) + '</p>';
+      return h + '</section>';
+    }).join('');
+    var html = '<article class="rel-unitpage k-' + u.id + '">' +
+      '<header class="rel-unit-hero"><span class="eyebrow">Unit ' + u.num + ' of 4</span><h1 tabindex="-1">' + esc(u.word) + '</h1><p class="rel-unit-sub">' + esc(u.sub) + '</p><p class="lede">' + esc(u.intro) + '</p>' +
+      '<ol class="rel-jumps">' + u.subs.map(function (s, j) { return '<li><a href="' + href(u.id, s.id) + '"><span>' + u.num + '.' + (j + 1) + '</span>' + esc(s.title) + '</a></li>'; }).join('') + '</ol></header>' +
+      secs +
+      '<div class="rel-done"><button type="button" class="btn' + (learned(u.id) ? ' ghost' : '') + '" data-rel="learn" data-v="' + u.id + '">' + (learned(u.id) ? '✓ Unit learned' : 'Mark this unit as learned') + '</button></div>' +
+      '</article>' +
+      '<nav class="rel-pager" aria-label="Units">' +
+      (prev ? '<a class="rel-pg prev k-' + prev.id + '" href="' + href(prev.id) + '"><small>← Previous</small><b>' + prev.num + ' · ' + esc(prev.word) + '</b></a>' : '<a class="rel-pg prev" href="' + BASE + '"><small>← Back to</small><b>Overview</b></a>') +
+      (next ? '<a class="rel-pg next k-' + next.id + '" href="' + href(next.id) + '"><small>Next →</small><b>' + next.num + ' · ' + esc(next.word) + '</b></a>' : '<a class="rel-pg next" href="' + BASE + '"><small>Next →</small><b>Special applications</b></a>') +
+      '</nav>';
+    if (subId) setTimeout(function () { var el = document.getElementById('sec-' + u.id + '-' + subId); if (el) el.scrollIntoView({ block: 'start' }); }, 0);
+    setTimeout(spy, 0);
+    return { title: u.word + ' · Relationships · Meeting Needs', html: layout(u.id, html) };
+  }
+
+  /* Highlight the sub-unit you're reading in the sidebar. */
+  var observer = null;
+  function spy() {
+    if (observer) observer.disconnect();
+    if (!('IntersectionObserver' in window)) return;
+    observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var id = en.target.getAttribute('data-sec');
+        document.querySelectorAll('[data-spy]').forEach(function (a) { a.classList.toggle('reading', a.getAttribute('data-spy') === id); });
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+    document.querySelectorAll('[data-sec]').forEach(function (s) { observer.observe(s); });
+  }
+
+  /* ---------- tools ---------- */
+  function arcPath(cx, cy, r0, r1, a0, a1) {
+    function pt(r, a) { var t = (a - 90) * Math.PI / 180; return [cx + r * Math.cos(t), cy + r * Math.sin(t)]; }
+    var p0 = pt(r1, a0), p1 = pt(r1, a1), p2 = pt(r0, a1), p3 = pt(r0, a0), big = a1 - a0 > 180 ? 1 : 0;
+    function f(p) { return p[0].toFixed(1) + ' ' + p[1].toFixed(1); }
+    return 'M' + f(p0) + ' A' + r1 + ' ' + r1 + ' 0 ' + big + ' 1 ' + f(p1) + ' L' + f(p2) + ' A' + r0 + ' ' + r0 + ' 0 ' + big + ' 0 ' + f(p3) + 'Z';
+  }
+  function radialText(cx, cy, r, a, text, cls) {
+    var t = (a - 90) * Math.PI / 180, x = cx + r * Math.cos(t), y = cy + r * Math.sin(t), rot = a <= 180 ? a - 90 : a + 90;
+    return '<text class="' + cls + '" x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" transform="rotate(' + rot.toFixed(1) + ' ' + x.toFixed(1) + ' ' + y.toFixed(1) + ')" text-anchor="middle" dominant-baseline="central">' + esc(text) + '</text>';
+  }
+  /* Feelings wheel: spin it (drag, arrows or tap a family) and the family at the pointer is the one in focus.
+     Geometry is drawn at the current rotation, so labels always read upright; a spin animates the group,
+     then the wheel is redrawn at its new rotation. */
+  var CX = 250, CY = 250, R0 = 56, R1 = 142, R2 = 248;
+  function famList(ctx) { return D.WHEEL[S.wheel[ctx].mode].families; }
+  function famIndex(ctx, id) { var fs = famList(ctx); for (var i = 0; i < fs.length; i++) if (fs[i].id === id) return i; return -1; }
+  function norm(a) { a = a % 360; return a < 0 ? a + 360 : a; }
+  function wheelTool(ctx) {
+    var ws = S.wheel[ctx], W = D.WHEEL[ws.mode], fams = W.families, step = 360 / fams.length, rot = ws.rot || 0;
+    var picked = ctx === 'finder' ? S.finder.feelings : (ws.word ? [ws.word] : []);
+    var svg = '';
+    fams.forEach(function (f, i) {
+      var a0 = i * step + rot, a1 = a0 + step, on = ws.fam === f.id;
+      svg += '<g class="wf' + (on ? ' on' : '') + (ws.fam && !on ? ' dim' : '') + '" style="--h:' + f.hue + '">' +
+        '<path class="seg fam" d="' + arcPath(CX, CY, R0, R1 - 2, a0 + 0.6, a1 - 0.6) + '" data-rel="wheel-fam" data-ctx="' + ctx + '" data-v="' + f.id + '"><title>' + esc(f.name) + '</title></path>' +
+        radialText(CX, CY, (R0 + R1) / 2, norm((a0 + a1) / 2), f.name, 'fam-t' + (f.name.length > 9 ? ' sm' : ''));
+      var w2 = step / f.words.length;
+      f.words.forEach(function (w, j) {
+        var b0 = a0 + j * w2, b1 = b0 + w2, sel = picked.indexOf(w) !== -1;
+        svg += '<path class="seg word' + (sel ? ' sel' : '') + '" d="' + arcPath(CX, CY, R1, R2, b0 + 0.4, b1 - 0.4) + '" data-rel="wheel-word" data-ctx="' + ctx + '" data-v="' + esc(w) + '"><title>' + esc(w) + '</title></path>' +
+          radialText(CX, CY, (R1 + R2) / 2 + 4, norm((b0 + b1) / 2), w, 'word-t' + (sel ? ' sel' : ''));
+      });
+      svg += '</g>';
+    });
+    var fam = ws.fam ? fams[famIndex(ctx, ws.fam)] : null;
+    var hub = '<circle class="hub" cx="' + CX + '" cy="' + CY + '" r="' + (R0 - 4) + '"/>' +
+      (fam ? '<text class="hub-t big" x="' + CX + '" y="' + (CY - 4) + '" text-anchor="middle">' + esc(fam.name) + '</text><text class="hub-t" x="' + CX + '" y="' + (CY + 14) + '" text-anchor="middle">spin or tap</text>'
+        : '<text class="hub-t big" x="' + CX + '" y="' + (CY - 4) + '" text-anchor="middle">Spin me</text><text class="hub-t" x="' + CX + '" y="' + (CY + 14) + '" text-anchor="middle">or tap a feeling</text>');
+    var detail;
+    if (fam) {
+      detail = '<p class="rel-wheel-fam" style="--h:' + fam.hue + '">' + esc(fam.name) + '</p><p class="rel-q">Which word fits best?' + (ctx === 'finder' ? ' Pick one or two.' : '') + '</p>' +
+        '<div class="rel-chips lg">' + fam.words.map(function (w) { return chip('wheel-word', w, w, picked.indexOf(w) !== -1, '', { 'data-ctx': ctx }); }).join('') + '</div>';
+      if (ctx === 'solo' && ws.word) {
+        detail += '<div class="rel-out"><p><strong>I feel ' + esc(ws.word) + '.</strong> ' + (ws.mode === 'met' ? 'A need is being met. Often: ' : 'What might it be telling you? Often: ') +
+          esc(list(fam.needs)) + '.</p><a href="' + href('need', 'identify') + '?w=' + encodeURIComponent(ws.word) + '">Follow it to the need →</a></div>';
+      }
+    } else detail = '<p class="rel-q">Drag the wheel round, use the arrows, or tap the family closest to how you feel. Then narrow to the word that fits.</p>';
+    if (ctx === 'finder' && picked.length) {
+      detail += '<div class="rel-picked"><span class="eyebrow">You feel</span><div class="rel-chips sm">' + picked.map(function (w) { return chip('wheel-word', w, w + ' ×', true, '', { 'data-ctx': ctx, 'aria-label': 'Remove ' + w }); }).join('') + '</div></div>';
+    }
+    return '<div class="rel-wheel' + (ctx === 'finder' ? ' big' : '') + '">' +
+      '<div class="rel-wheel-body"><div class="rel-wheel-stage">' +
+      '<svg class="rel-wheel-svg" data-ctx="' + ctx + '" viewBox="-12 -30 524 544" role="img" aria-label="Feelings wheel: ' + esc(W.label) + '">' +
+      '<g class="rel-spin" data-ctx="' + ctx + '">' + svg + '</g>' + hub +
+      '<path class="pointer" d="M236 -26 L264 -26 L250 -4 Z"/></svg>' +
+      '<div class="rel-wheel-ctrl"><button type="button" class="rel-arrow" data-rel="wheel-step" data-ctx="' + ctx + '" data-v="-1" aria-label="Spin to the previous feeling">↺</button>' +
+      '<div class="rel-chips sm" role="group" aria-label="Which wheel">' +
+      chip('wheel-mode', 'unmet', 'Needs not met', ws.mode === 'unmet', '', { 'data-ctx': ctx }) +
+      chip('wheel-mode', 'met', 'Needs met', ws.mode === 'met', '', { 'data-ctx': ctx }) + '</div>' +
+      '<button type="button" class="rel-arrow" data-rel="wheel-step" data-ctx="' + ctx + '" data-v="1" aria-label="Spin to the next feeling">↻</button></div></div>' +
+      '<div class="rel-wheel-side">' + detail + '</div></div></div>';
+  }
+  var reduced = function () { return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; };
+  var spinning = false;
+  function spinTo(ctx, famId) {
+    var ws = S.wheel[ctx], n = famList(ctx).length, step = 360 / n, i = famIndex(ctx, famId);
+    if (i < 0) return;
+    var target = -(i * step + step / 2), d = norm(target - (ws.rot || 0));
+    if (d > 180) d -= 360;
+    ws.fam = famId;
+    if (ctx === 'finder') S.finder.fam = famId;
+    var g = document.querySelector('.rel-spin[data-ctx="' + ctx + '"]');
+    if (!g || reduced() || Math.abs(d) < 0.5) { ws.rot = (ws.rot || 0) + d; refreshKeep(); return; }
+    spinning = true;
+    g.style.transition = 'transform 0.6s cubic-bezier(.22,.8,.24,1)';
+    g.style.transform = 'rotate(' + d + 'deg)';
+    setTimeout(function () { ws.rot = (ws.rot || 0) + d; spinning = false; refreshKeep(); }, 620);
+  }
+  function needsTool() {
+    return D.NEEDS.map(function (g) {
+      return '<div class="rel-ngroup"><h4>' + esc(g.name) + ' <span class="hint">' + esc(g.blurb) + '</span></h4><div class="rel-chips sm">' +
+        g.items.map(function (x) { return chip('need', x, x, S.needs.indexOf(x) !== -1); }).join('') + '</div></div>';
+    }).join('') + (S.needs.length
+      ? '<div class="rel-out"><p><strong>Alive in you right now:</strong> ' + esc(list(S.needs)) + '.</p><p class="hint">None of these name a person, place or time. Everyone you meet has the same list.</p></div>'
+      : '<p class="rel-q">Tap any need that feels alive in you right now, met or not.</p>');
+  }
+  function sorterTool() {
+    var right = 0, answered = 0;
+    var rows = D.SORT.map(function (s, i) {
+      var a = S.sort[i];
+      if (a) { answered++; if (a === s.kind) right++; }
+      return '<li class="rel-sort-row"><p class="rel-say">“' + esc(s.text.replace(/\.$/, '')) + '”</p><div class="rel-sort-btns">' +
+        chip('sort', i + ':need', 'Need', a === 'need', a && s.kind === 'need' ? 'right' : '') +
+        chip('sort', i + ':strategy', 'Strategy', a === 'strategy', a && s.kind === 'strategy' ? 'right' : '') + '</div>' +
+        (a ? '<p class="rel-verdict"><strong>' + (s.kind === 'need' ? 'A need.' : 'A strategy.') + '</strong> ' + esc(s.why) + '</p>' : '') + '</li>';
+    }).join('');
+    return '<p class="rel-q">Need or strategy?</p><ol class="rel-sort">' + rows + '</ol>' +
+      '<div class="rel-row"><span class="rel-prog">' + answered + ' of ' + D.SORT.length + ' sorted' + (answered ? ' · ' + right + ' matched' : '') + '</span>' +
+      (answered ? '<button type="button" class="btn quiet sm" data-rel="sort-reset">Start over</button>' : '') + '</div>';
+  }
+  function translatorTool() {
+    var x = FAUX[S.faux];
+    return '<p class="rel-q">Pick a word you’ve said or thought.</p>' +
+      '<div class="rel-chips sm">' + D.FAUX.map(function (f) { return chip('faux', f.word, f.word, f.word === S.faux); }).join('') + '</div>' +
+      '<div class="rel-translate">' +
+      '<div><span class="eyebrow">You might say</span><p class="rel-say">“I feel ' + esc(x.word) + '.”</p></div>' +
+      '<div><span class="eyebrow">The story inside</span><p class="rel-say muted">“' + esc(x.hidden) + '”</p></div>' +
+      '<div><span class="eyebrow">Feelings underneath</span><p>' + esc(list(x.feelings)) + '</p></div>' +
+      '<div><span class="eyebrow">Needs underneath</span><p>' + esc(list(x.needs)) + '</p></div></div>' +
+      '<div class="rel-out"><p><strong>Translated:</strong> “I feel ' + esc(list(x.feelings.slice(0, 2))) + ', because I need ' + esc(list(x.needs.slice(0, 2))) + '.”</p></div>';
+  }
+
+  /* Identify a need: spin to a feeling → where it's coming from → the need underneath */
+  function fNeeds() {
+    var f = S.finder, out = [];
+    if (f.source && SOURCE[f.source]) out = out.concat(SOURCE[f.source].needs);
+    if (f.faux) out = out.concat(FAUX[f.faux].needs);
+    f.feelings.forEach(function (w) { var fam = FAMILY_OF[w]; if (fam) out = out.concat(fam.needs); });
+    return uniq(out.concat(f.needs)).slice(0, 16);
+  }
+  function fStatement() {
+    var f = S.finder;
+    if (!f.needs.length) return '';
+    var allMet = f.feelings.length && f.feelings.every(function (w) { return FAMILY_OF[w] && FAMILY_OF[w].mode === 'met'; });
+    return 'I feel ' + (f.feelings.length ? list(f.feelings) : '…') + (allMet ? ', because these needs are being met: ' : ', because I need ') + list(f.needs) + '.';
+  }
+  function finderTool() {
+    var f = S.finder;
+    var h = '<div class="rel-step k-feel"><span class="rel-n">1</span><div><h3>Spin to the closest feeling</h3>' +
+      '<div class="rel-tool inner" data-tool="wheel-finder">' + wheelTool('finder') + '</div>' +
+      '<details class="rel-faux-alt"' + (f.faux ? ' open' : '') + '><summary>Or start from a word like abandoned, ignored or attacked</summary>' +
+      '<div class="rel-chips sm">' + D.FAUX.map(function (x) { return chip('f-faux', x.word, x.word, f.faux === x.word); }).join('') + '</div>' +
+      (f.faux ? '<p class="rel-note">“' + esc(f.faux) + '” has a story inside it: <em>' + esc(FAUX[f.faux].hidden) + '</em> Which feelings underneath are about you?</p>' +
+        '<div class="rel-chips">' + FAUX[f.faux].feelings.map(function (w) { return chip('f-feel', w, w, f.feelings.indexOf(w) !== -1); }).join('') + '</div>' : '') +
+      '</details></div></div>';
+    if (f.feelings.length) {
+      var src = f.source ? SOURCE[f.source] : null;
+      h += '<div class="rel-step k-need"><span class="rel-n">2</span><div><h3>Where is it coming from?</h3>' +
+        '<div class="rel-sources">' + D.SOURCES.map(function (s) {
+          return '<button type="button" class="rel-source' + (f.source === s.id ? ' on' : '') + '" data-rel="f-source" data-v="' + s.id + '" aria-pressed="' + (f.source === s.id) + '"><b>' + esc(s.label) + '</b><small>' + esc(s.hint) + '</small></button>';
+        }).join('') + '</div>' + (src && src.note ? '<p class="rel-note">' + esc(src.note) + '</p>' : '') + '</div></div>';
+    }
+    if (f.source) {
+      h += '<div class="rel-step k-need"><span class="rel-n">3</span><div><h3>Which need is underneath?</h3>' +
+        '<p class="rel-q">Read each slowly. Which one makes something in you say “yes, that”?</p>' +
+        '<div class="rel-chips">' + fNeeds().map(function (x) { return chip('f-need', x, x, f.needs.indexOf(x) !== -1); }).join('') + '</div>' +
+        '<button type="button" class="btn quiet sm" data-rel="f-all" aria-expanded="' + f.showAll + '">' + (f.showAll ? 'Hide the full list' : 'See every need') + '</button>' +
+        (f.showAll ? '<div class="rel-allneeds">' + D.NEEDS.map(function (g) {
+          return '<div class="rel-ngroup"><h4>' + esc(g.name) + '</h4><div class="rel-chips sm">' + g.items.map(function (x) { return chip('f-need', x, x, f.needs.indexOf(x) !== -1); }).join('') + '</div></div>';
+        }).join('') + '</div>' : '') + '</div></div>';
+    }
+    var st = fStatement();
+    if (st) {
+      h += '<div class="rel-result"><span class="eyebrow">Your need, in words</span><p class="rel-statement">' + esc(st) + '</p>' +
+        '<p class="rel-q">This need matters, and it makes sense that you feel this way. Take a breath with that before solving anything.</p>' +
+        '<div class="rel-row"><button type="button" class="btn ghost sm" data-rel="f-copy">Copy</button>' +
+        '<button type="button" class="btn sm" data-rel="f-communicate">Communicate it →</button></div></div>';
+    }
+    if (f.fam || f.feelings.length || f.faux) h += '<div class="rel-row end"><button type="button" class="btn quiet sm" data-rel="f-reset">Start again</button></div>';
+    return h;
+  }
+
+  /* Communicate: two people, each with feeling, need, request */
+  function cfSide(p) {
+    var d = S.cf[p], a = p === 'a';
+    return '<div class="rel-side ' + p + '">' +
+      '<label class="rel-label" for="cf-' + p + '-name">Name</label><input id="cf-' + p + '-name" type="text" data-rel-input="cf-' + p + '-name" value="' + esc(d.name) + '" autocomplete="off">' +
+      (a ? '<label class="rel-label" for="cf-a-obs">When I see…</label><input id="cf-a-obs" type="text" data-rel-input="cf-a-obs" value="' + esc(d.obs) + '" placeholder="what a camera would see" autocomplete="off">' : '') +
+      '<span class="rel-label">Feels</span><div class="rel-chips xs">' + uniq(FEEL_PICK.concat(d.feelings)).map(function (w) { return chip('cf-feel', p + ':' + w, w, d.feelings.indexOf(w) !== -1); }).join('') + '</div>' +
+      '<span class="rel-label">Needs</span><div class="rel-chips xs">' + uniq(NEED_PICK.concat(d.needs)).map(function (x) { return chip('cf-need', p + ':' + x, x, d.needs.indexOf(x) !== -1); }).join('') + '</div>' +
+      (a ? '' : '<label class="rel-label" for="cf-b-ctx">In their words <span class="hint">(optional)</span></label><input id="cf-b-ctx" type="text" data-rel-input="cf-b-ctx" value="' + esc(d.context) + '" autocomplete="off">') +
+      '<label class="rel-label" for="cf-' + p + '-req">Would you be willing to…</label><input id="cf-' + p + '-req" type="text" data-rel-input="cf-' + p + '-req" value="' + esc(d.request) + '" autocomplete="off">' +
+      '</div>';
+  }
+  function q(s) { return esc((s || '…').replace(/[?.]$/, '')); }
+  function cfScript() {
+    var A = S.cf.a, B = S.cf.b, pick = S.cf.both[S.cf.pick] || '';
+    var an = esc(A.name || 'Me'), bn = esc(B.name || 'Them');
+    function line(k, who, text) { return '<li class="k-' + k + '"><b>' + who + '</b><p>' + text + '</p></li>'; }
+    return line('request', an, '“When I see ' + q(A.obs) + ', I feel ' + esc(list(A.feelings) || '…') + ', because I need ' + esc(list(A.needs) || '…') + '. Would you be willing to ' + q(A.request) + '?”') +
+      line('dialogue', bn, '“So you’re feeling ' + esc(list(A.feelings) || '…') + ', because you need ' + esc(list(A.needs) || '…') + '?”') +
+      line('request', bn, '“Yes, and when I hear that, I feel ' + esc(list(B.feelings) || '…') + ', because I need ' + esc(list(B.needs) || '…') + (B.context ? ' (' + esc(B.context) + ')' : '') + '. Would you be willing to ' + q(B.request) + '?”') +
+      line('dialogue', an, '“So you’re feeling ' + esc(list(B.feelings) || '…') + ', because you need ' + esc(list(B.needs) || '…') + '. That matters to me too.”') +
+      (pick ? line('dialogue', an, '“Would you be willing to try this for a week: ' + esc(pick.replace(/\.$/, '').replace(/^./, function (c) { return c.toLowerCase(); })) + '?”') : '') +
+      line('dialogue', bn, '“Thank you for hearing me. I feel ' + esc(list(S.cf.thanks) || '…') + ', because what I need (' + esc(list(B.needs) || '…') + ') is met, and what you need (' + esc(list(A.needs) || '…') + ') is too.”');
+  }
+  function conflictTool() {
+    var A = S.cf.a, B = S.cf.b;
+    return '<p class="rel-q">A worked example is filled in. Change anything; the conversation rewrites itself.</p>' +
+      '<div class="rel-sides">' + cfSide('a') + cfSide('b') + '</div>' +
+      '<div class="rel-table"><span class="eyebrow">Both sets of needs</span><p>' +
+      A.needs.map(function (x) { return '<span class="rel-pill a">' + esc(x) + '</span>'; }).join('') +
+      B.needs.map(function (x) { return '<span class="rel-pill b">' + esc(x) + '</span>'; }).join('') +
+      '</p><p class="hint">' + (A.needs.length && B.needs.length ? 'None of these conflict. Only the first two requests did.' : 'Fill in both sides to see both sets of needs together.') + '</p></div>' +
+      '<div class="rel-both"><span class="eyebrow">Strategies that could meet both</span><ul>' +
+      S.cf.both.map(function (x, i) { return '<li><button type="button" class="rel-pick' + (i === S.cf.pick ? ' on' : '') + '" data-rel="cf-pick" data-v="' + i + '" aria-pressed="' + (i === S.cf.pick) + '">' + esc(x) + '</button></li>'; }).join('') +
+      '</ul><div class="rel-row"><input type="text" data-rel-input="cf-add" value="' + esc(S.cf.add) + '" placeholder="Add your own idea" aria-label="Add a strategy" autocomplete="off"><button type="button" class="btn ghost sm" data-rel="cf-add">Add</button></div></div>' +
+      '<div class="rel-both"><span class="eyebrow">Gratitude: how does it feel now?</span><div class="rel-chips xs">' +
+      THANKS_PICK.map(function (w) { return chip('cf-thanks', w, w, S.cf.thanks.indexOf(w) !== -1); }).join('') + '</div></div>' +
+      '<div class="rel-script-wrap"><span class="eyebrow">The conversation</span><ol class="rel-script" data-out="conflict">' + cfScript() + '</ol>' +
+      '<p class="hint">Request or demand? If a “no” would bring blame, guilt or punishment, it was a demand.</p>' +
+      '<div class="rel-row end"><button type="button" class="btn quiet sm" data-rel="cf-reset">Back to the example</button></div></div>';
+  }
+
+  var TOOLS = { wheel: function () { return wheelTool('solo'); }, needs: needsTool, sorter: sorterTool, translator: translatorTool, finder: finderTool, conflict: conflictTool, 'wheel-finder': function () { return wheelTool('finder'); } };
+  function refreshKeep() { var y = window.scrollY; refresh(); window.scrollTo(0, y); }
+  function refresh() {
+    document.querySelectorAll('[data-tool]').forEach(function (el) {
+      if (el.parentElement && el.parentElement.closest('[data-tool]')) return;
+      var fn = TOOLS[el.getAttribute('data-tool')]; if (fn) el.innerHTML = fn();
+    });
+  }
+
+  /* ---------- router hook ---------- */
+  window.MN_LENS_VIEWS = window.MN_LENS_VIEWS || {};
+  window.MN_LENS_VIEWS.relationships = function (sub) {
+    var parts = (sub || '').split('?'), path = parts[0], qs = {};
+    if (ALIAS[path]) path = ALIAS[path];
+    (parts[1] || '').split('&').forEach(function (kv) { var p = kv.split('='); if (p[0]) qs[p[0]] = decodeURIComponent(p[1] || ''); });
+    var seg = path.split('/');
+    if (qs.w && FAMILY_OF[qs.w]) {
+      var fam = FAMILY_OF[qs.w], fw = S.wheel.finder;
+      S.finder = blankFinder(); S.finder.feelings = [qs.w]; S.finder.fam = fam.id;
+      fw.mode = fam.mode; fw.fam = fam.id;
+      var fs = D.WHEEL[fam.mode].families, st = 360 / fs.length; fw.rot = -(fs.indexOf(fam) * st + st / 2);
+    }
+    if (UNIT[seg[0]]) return viewUnit(UNIT[seg[0]], seg[1]);
+    return viewOverview();
+  };
+
+  /* ---------- events ---------- */
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-rel]');
+    if (!b) return;
+    var a = b.getAttribute('data-rel'), v = b.getAttribute('data-v'), ctx = b.getAttribute('data-ctx'), f = S.finder, p;
+    switch (a) {
+      case 'back':
+        if (history.length > 1) history.back(); else location.hash = BASE;
+        return;
+      case 'wheel-mode':
+        if (S.wheel[ctx].mode === v) return;
+        S.wheel[ctx] = { mode: v, fam: null, word: null, rot: 0 };
+        break;
+      case 'wheel-fam': if (!spinning) spinTo(ctx, v); return;
+      case 'wheel-step':
+        if (spinning) return;
+        var fl = famList(ctx), ci = famIndex(ctx, S.wheel[ctx].fam);
+        spinTo(ctx, fl[(ci < 0 ? (v > 0 ? 0 : fl.length - 1) : ci + Number(v) + fl.length) % fl.length].id);
+        return;
+      case 'wheel-word':
+        var wf = FAMILY_OF[v];
+        if (ctx === 'finder') { toggle(f.feelings, v); f.faux = null; }
+        else S.wheel.solo.word = S.wheel.solo.word === v ? null : v;
+        if (wf && wf.mode === S.wheel[ctx].mode && S.wheel[ctx].fam !== wf.id && !spinning) { spinTo(ctx, wf.id); return; }
+        break;
+      case 'need': toggle(S.needs, v); break;
+      case 'sort': p = v.split(':'); S.sort[p[0]] = p[1]; break;
+      case 'sort-reset': S.sort = {}; break;
+      case 'faux': S.faux = v; break;
+      case 'f-faux': f.faux = f.faux === v ? null : v; break;
+      case 'f-feel': toggle(f.feelings, v); break;
+      case 'f-source': f.source = f.source === v ? null : v; break;
+      case 'f-need': toggle(f.needs, v); break;
+      case 'f-all': f.showAll = !f.showAll; break;
+      case 'f-reset': S.finder = blankFinder(); S.wheel.finder = { mode: 'unmet', fam: null, word: null, rot: 0 }; break;
+      case 'f-copy': copy(fStatement()); return;
+      case 'f-communicate':
+        S.cf = cloneConflict();
+        S.cf.a.feelings = f.feelings.slice(); S.cf.a.needs = f.needs.slice(); S.cf.a.obs = ''; S.cf.a.request = '';
+        S.cf.b = { name: 'Them', feelings: [], needs: [], context: '', request: '' }; S.cf.both = []; S.cf.pick = -1;
+        location.hash = href('dialogue', 'communicate').slice(1);
+        return;
+      case 'cf-feel': p = v.split(':'); toggle(S.cf[p[0]].feelings, p.slice(1).join(':')); break;
+      case 'cf-need': p = v.split(':'); toggle(S.cf[p[0]].needs, p.slice(1).join(':')); break;
+      case 'cf-thanks': toggle(S.cf.thanks, v); break;
+      case 'cf-pick': S.cf.pick = Number(v); break;
+      case 'cf-add': if (S.cf.add.trim()) { S.cf.both.push(S.cf.add.trim()); S.cf.pick = S.cf.both.length - 1; S.cf.add = ''; } break;
+      case 'cf-reset': S.cf = cloneConflict(); break;
+      case 'learn':
+        if (prog.learned[v]) delete prog.learned[v]; else prog.learned[v] = Date.now();
+        saveProgress();
+        b.className = 'btn' + (prog.learned[v] ? ' ghost' : '');
+        b.textContent = prog.learned[v] ? '✓ Unit learned' : 'Mark this unit as learned';
+        var li = document.querySelector('.rel-vt-unit.k-' + v);
+        if (li) { li.classList.toggle('done', !!prog.learned[v]); li.querySelector('.rel-vt-dot').textContent = prog.learned[v] ? '✓' : UNIT[v].num; }
+        mn().toast(prog.learned[v] ? 'Marked as learned' : 'Unmarked');
+        return;
+      default: return;
+    }
+    var y = window.scrollY;
+    refresh();
+    window.scrollTo(0, y);
+  });
+
+  document.addEventListener('input', function (e) {
+    var k = e.target.getAttribute && e.target.getAttribute('data-rel-input');
+    if (!k) return;
+    var v = e.target.value, m;
+    if (k === 'cf-add') { S.cf.add = v; return; }
+    if (k === 'cf-b-ctx') S.cf.b.context = v;
+    else if ((m = k.match(/^cf-(a|b)-(name|obs|req)$/))) S.cf[m[1]][m[2] === 'req' ? 'request' : m[2]] = v;
+    var sc = document.querySelector('[data-out="conflict"]');
+    if (sc) sc.innerHTML = cfScript();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && e.target.getAttribute && e.target.getAttribute('data-rel-input') === 'cf-add') {
+      e.preventDefault();
+      var b = document.querySelector('[data-rel="cf-add"]'); if (b) b.click();
+    }
+  });
+
+  /* Drag the wheel to spin it; on release it settles on the nearest family. */
+  var drag = null, eatClick = false;
+  function angleAt(svg, e) { var r = svg.getBoundingClientRect(), k = r.width / 524; return Math.atan2(e.clientY - (r.top + (CY + 30) * k), e.clientX - (r.left + (CX + 12) * k)) * 180 / Math.PI; }
+  document.addEventListener('pointerdown', function (e) {
+    var svg = e.target.closest && e.target.closest('.rel-wheel-svg');
+    if (!svg || spinning || (e.pointerType === 'mouse' && e.button !== 0)) return;
+    drag = { svg: svg, ctx: svg.getAttribute('data-ctx'), g: svg.querySelector('.rel-spin'), a0: angleAt(svg, e), x: e.clientX, y: e.clientY, d: 0, moved: false, id: e.pointerId };
+  });
+  document.addEventListener('pointermove', function (e) {
+    if (!drag || e.pointerId !== drag.id) return;
+    if (!drag.moved && Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < 6) return;
+    if (!drag.moved) { drag.moved = true; try { drag.svg.setPointerCapture(drag.id); } catch (err) { /* ignore */ } drag.g.style.transition = 'none'; }
+    var d = angleAt(drag.svg, e) - drag.a0;
+    if (d > 180) d -= 360; if (d < -180) d += 360;
+    drag.d = d; drag.g.style.transform = 'rotate(' + d + 'deg)';
+    e.preventDefault();
+  });
+  function endDrag() {
+    if (!drag) return;
+    var dr = drag; drag = null;
+    if (!dr.moved) return;
+    eatClick = true; setTimeout(function () { eatClick = false; }, 0);
+    var ws = S.wheel[dr.ctx], n = famList(dr.ctx).length, step = 360 / n;
+    ws.rot = (ws.rot || 0) + dr.d;
+    var idx = Math.round(norm(-ws.rot - step / 2) / step) % n;
+    refreshKeep();
+    spinTo(dr.ctx, famList(dr.ctx)[idx].id);
+  }
+  document.addEventListener('pointerup', endDrag);
+  document.addEventListener('pointercancel', endDrag);
+  document.addEventListener('click', function (e) { if (eatClick) { e.stopPropagation(); e.preventDefault(); eatClick = false; } }, true);
+
+  function copy(text) {
+    if (!text) return;
+    var fail = function () { mn().toast('Couldn’t copy. Select the text instead.'); };
+    try { navigator.clipboard.writeText(text).then(function () { mn().toast('Copied'); }, fail); } catch (err) { fail(); }
+  }
+})();
