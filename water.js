@@ -404,7 +404,7 @@
       '<p class="wa-lede">Every body needs water, and people have met that need for as long as there have been people. Six short units on how we use it, where it comes from, how to keep it, clean it, know it’s safe and pay for it, at every scale: a studio, a farm, a car, a sidewalk.</p></section>' +
       '<ol class="wa-ucards">' + U.map(function (u) {
         return '<li><a class="wa-ucard wk' + u.num + '" href="' + BASE + '/' + u.id + '"><i class="wa-band"></i><span class="wa-n">0' + u.num + '</span><b>' + u.word + '</b><span>' + u.sub + '</span><ol>' + u.subs.map(function (s) { return '<li>' + s.title + '</li>'; }).join('') + '</ol></a></li>';
-      }).join('') + '</ol>' + '<div id="wa-cows">' + ashley() + '</div>' +
+      }).join('') + '</ol>' + '<div id="wa-cows"></div>' + /* Ashley's take on animal agriculture: removed, being rewritten */
       '<aside class="wa-funfact"><span class="eyebrow">A grateful fun fact</span><p>This course leans on three kinds of knowing, checked against each other: old practice that kept people alive for thousands of years, international guidance (the World Health Organization’s drinking-water guidelines and the Sphere humanitarian handbook), and what you can see, smell and test yourself. Legal limits come from politics as well as science, and they change, so we use them as one input, not the last word. Laws mentioned are California’s; water itself is the same everywhere. Thank you to everyone who keeps this knowledge free.</p></aside>';
   }
   function viewUnit(U, u, subId) {
