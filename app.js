@@ -178,9 +178,9 @@
       return '<a href="' + href + '"' + (active === key ? ' aria-current="page"' : '') + '>' + label + '</a>';
     }
     return '<header class="top glass">' +
-      '<a class="brand" href="#">' + LOGO + '<b>Kinship</b></a>' +
+      '<div class="top-left"><a class="brand" href="#">' + LOGO + '<b>Kinship</b></a>' +
+      '<nav class="nav" aria-label="About">' + link('#about', 'About', 'about') + '</nav></div>' +
       '<nav class="nav" aria-label="Main">' +
-      link('#about', 'About', 'about') +
       eduMenu(active === 'home') +
       plansMenu(active === 'plans') +
       link('#favorites', 'Favorites', 'favorites') +
@@ -274,11 +274,20 @@
       '<section class="hero"><div class="hero-copy">' +
       '<span class="eyebrow">About</span>' +
       '<h1 tabindex="-1">Hi, I’m Ashley.</h1>' +
-      '<p>Based in San Francisco. Kinship is free and open source, made so we can all learn what we need to live.</p>' +
+      '<p>Based in San Francisco. Kinship is simply made from love: free and open source, so we can all learn what we need to live.</p>' +
+      '<p>It’s a modern tribute to the Diggers and the organized hippies: the San Francisco Diggers served free food in the Panhandle and ran free stores in the 1960s, named for the English Diggers who farmed common land in 1649. Alicia Bay Laurel opened <i>Living on the Earth</i> (1970) by dedicating it to people who’d rather chop wood than sit at a desk to pay the power company.</p>' +
+      '<p>My reasons go deeper than free. The system isn’t working for so many people, and we’ve lost touch with what actually meets our needs, putting too much trust in broken systems.</p>' +
       '<p>Most of Kinship aims to be plain, checkable information you can weigh for yourself. My own considerations show up in pink, one sentence each:</p>' +
       opinion('<p>One why, for you to weigh.</p>') +
       '<p>The first is at the end of <a href="#lens-water/uses">Water: Uses</a>.</p>' +
       '</div></section>' + footer();
+  }
+
+  /* On phones each tier's cards scroll sideways one at a time (style.css); these dots show where you are. */
+  function tierDots(n) {
+    var d = '';
+    for (var i = 0; i < n; i++) d += '<i' + (i === 0 ? ' class="on"' : '') + '></i>';
+    return '<div class="tier-dots" aria-hidden="true">' + d + '</div>';
   }
 
   function viewHome() {
@@ -290,6 +299,7 @@
         '<p>' + esc(t.blurb) + '</p></div>' +
         (t.status ? '<span class="tier-status">' + esc(t.status) + '</span>' : '') + '</div>' +
         '<div class="grid">' + t.lenses.map(lensCard).join('') + (t.num === 1 ? setupCard() : '') + '</div>' +
+        tierDots(t.lenses.length + (t.num === 1 ? 1 : 0)) +
         '</section>';
     }).join('');
     return header('home') +
@@ -562,6 +572,22 @@
     if (target) target.scrollIntoView({ block: 'start' });
   }
   window.addEventListener('hashchange', route);
+
+  /* Keep the tier dots in step with the sideways scroll (scroll doesn't bubble, so listen in capture). */
+  var dotFrame = 0;
+  app.addEventListener('scroll', function (e) {
+    var g = e.target;
+    if (!g.classList || !g.classList.contains('grid') || !g.closest('.tier')) return;
+    cancelAnimationFrame(dotFrame);
+    dotFrame = requestAnimationFrame(function () {
+      var first = g.firstElementChild, dots = g.parentNode.querySelectorAll('.tier-dots i');
+      if (!first || !dots.length) return;
+      var step = first.getBoundingClientRect().width + (parseFloat(getComputedStyle(g).columnGap) || 0);
+      var atEnd = g.scrollLeft + g.clientWidth >= g.scrollWidth - 2;
+      var idx = atEnd ? dots.length - 1 : Math.round(g.scrollLeft / step);
+      dots.forEach(function (d, i) { d.classList.toggle('on', i === idx); });
+    });
+  }, true);
 
   var toastEl = document.createElement('div');
   toastEl.className = 'toast'; toastEl.hidden = true; toastEl.setAttribute('role', 'status');

@@ -29,9 +29,9 @@ window.MN_TIERS = [
       },
       {
         id: 'food', name: 'Food', status: 'ready',
-        blurb: 'Find, cleanse, rehydrate, cook and store plant foods safely, with a full kitchen, a hot plate or no kitchen at all.',
-        topics: ['Gather', 'Cleanse', 'Rehydrate', 'Cook', 'Store'],
-        looks: ['Free, shared, bought, grown and foraged food', 'Washing produce, greens, grains and rice well', 'Soaking beans, grains and dried foods, and sprouting', 'Safe heat, little fuel, cooking with kids and a full plate', 'Cold, pantry, leftovers, preserving, and the animals who visit']
+        blurb: 'Find, cleanse, rehydrate, cook and store plant foods safely, soften them for tender bodies and sick days, and feed the animals you live with.',
+        topics: ['Gather', 'Cleanse', 'Rehydrate', 'Cook', 'Store', 'Gentle', 'Companions'],
+        looks: ['Free, shared, bought, grown and foraged food', 'Washing produce, greens, grains and rice well', 'Soaking beans, grains and dried foods, and sprouting', 'Safe heat, little fuel, cooking with kids and a full plate', 'Cold, pantry, leftovers, preserving, and the animals who visit', 'Babies’ first foods, soft textures for sore mouths, and food as medicine', 'What companion animals eat in nature, kibble and raw, and plant-based options']
       },
       {
         id: 'air', name: 'Air', status: 'ready',
@@ -49,7 +49,7 @@ window.MN_TIERS = [
         id: 'toxins', name: 'Toxins', status: 'ready',
         blurb: 'See what is in the pan, the can, the couch and the ground, and swap what matters most first, one at a time.',
         topics: ['Exposures', 'Plastics', 'In the home', 'Pesticides', 'Soil', 'Living toxins', 'Neighbors'],
-        looks: ['How exposures work, and what a healthy home is made of', 'Plastics, can linings, PFAS and pans', 'Cleaners, fragrance, furniture, dust and washing produce', 'Glyphosate, treated wood, potting mix and drift', 'Lead and legacy metals, tested once in one batch', 'Molds, algal blooms and plants that harm companions', 'Freeways, factories, wells, fire and changing it together']
+        looks: ['How exposures work, and what a healthy home is made of', 'Plastics, when a tarp is the safer bet, can linings, PFAS and pans', 'Cleaners, fragrance, furniture, dust and washing produce', 'Glyphosate, treated wood, potting mix and drift', 'Lead and legacy metals, tested once in one batch', 'Molds, algal blooms and plants that harm companions', 'Freeways, factories, wells, fire and changing it together']
       }
     ]
   },
@@ -62,19 +62,13 @@ window.MN_TIERS = [
         id: 'body-care', name: 'Body care', status: 'next',
         blurb: 'Care for every body in the home: little ones and aging ones, honoring the diversity of bodies including disabilities, and the animals who live with you.',
         topics: ['Children', 'Aging', 'Diversity', 'Sun', 'Animal care'],
-        looks: ['Sun on skin: shade, clothing and mineral (zinc oxide) sunscreen', 'Skin, teeth and sleep for children and growing bodies', 'Aging bodies, and the care that keeps them comfortable', 'Disabilities and different bodies, plus the animals who share your home']
+        looks: ['Sun on skin: shade, clothing and mineral (zinc oxide) sunscreen', 'Skin, teeth and sleep for children and growing bodies', 'Aging bodies, and the care that keeps them comfortable', 'Disabilities and different bodies, plus the animals who share your home', 'Gentle foods for sick days and food as medicine (starts in Food → Gentle)']
       },
       {
         id: 'gardening', name: 'Gardening', status: 'next',
         blurb: 'Your teacher and planner: how to plant, your climate zone, a 12-month plan, and what to expect.',
         topics: ['Learn', 'Plan', 'Seed saving'],
         looks: ['Your growing zone, frost dates and the light you actually get', 'Soil you can build instead of buy', 'A month-by-month plan for the space you have']
-      },
-      {
-        id: 'identification', name: 'Identification', status: 'next',
-        blurb: 'Name the plants and animals around you, and learn the few real local dangers.',
-        topics: ['Plants', 'Fungi', 'Animals'],
-        looks: ['The features that actually separate species', 'Edible plants and their dangerous twins', 'Tracks, calls and signs of who lives nearby']
       },
       {
         id: 'household-tools', name: 'Household tools', status: 'next',
@@ -87,6 +81,12 @@ window.MN_TIERS = [
         blurb: 'Turn scraps into soil and handle waste safely. For most homes the grid is the best bet, but it’s good to know septic and other alternatives.',
         topics: ['Scraps', 'Sewage', 'Worms'],
         looks: ['Compost and worm bins that don’t smell', 'How sewage and septic systems work, and why the grid is usually safest', 'Sending less of everything else away']
+      },
+      {
+        id: 'self-defense', name: 'Self-defense', status: 'next',
+        blurb: 'Keep yourself, the people you love and your home safe: noticing early, calming things with words, getting away, and a home that’s ready.',
+        topics: ['Noticing', 'De-escalation', 'Getting away', 'Home'],
+        looks: ['Trusting the early feeling that something is off, and leaving early', 'De-escalation: distance, calm and words before anything else', 'Simple protective moves for breaking free and getting away', 'Home preparation: locks, lights, a safe room, a plan and neighbors who check in (with Emergency prep)']
       }
     ]
   },
@@ -105,13 +105,13 @@ window.MN_TIERS = [
         id: 'first-aid', name: 'First aid', status: 'later',
         blurb: 'Cuts, burns, sprains, choking and bites: what to do in the first minutes.',
         topics: ['Wounds', 'Burns', 'Sprains', 'Emergencies'],
-        looks: ['Stopping bleeding and cleaning a wound', 'Burns, breaks and sprains: what helps and what makes it worse', 'When to call emergency services, and what to do until they arrive']
+        looks: ['Stopping bleeding and cleaning a wound', 'Burns, breaks and sprains: what helps and what makes it worse', 'When to call emergency services, and what to do until they arrive', 'Fluids and gentle food after vomiting, diarrhea or heat (from Food → Gentle)']
       },
       {
         id: 'emergency-prep', name: 'Emergency prep', status: 'building',
-        blurb: 'Natural disasters, personal self-defense and securing your home: plan ahead so you can stay calm when it counts.',
+        blurb: 'Natural disasters, personal safety and securing your home: plan ahead so you can stay calm when it counts.',
         topics: ['What to prep for', 'Disasters', 'Self-defense', 'Home security'],
-        looks: ['What to prep for: wildfire, earthquakes, heat, floods, outages and animals', 'Go-bags, water and supplies for earthquakes, fires and floods', 'Personal safety and self-defense basics', 'Simple ways to secure doors, windows and your home']
+        looks: ['What to prep for: wildfire, earthquakes, heat, floods, outages and animals', 'Go-bags, water and supplies for earthquakes, fires and floods', 'Personal safety, building on the Self-defense lens', 'Simple ways to secure doors, windows and your home']
       },
       {
         id: 'weather', name: 'Weather', status: 'later',
@@ -120,10 +120,10 @@ window.MN_TIERS = [
         looks: ['Cloud types and which ones turn to rain', 'Wind, pressure and the signs before a storm', 'Your local seasons, frost and rainfall patterns']
       },
       {
-        id: 'death-seasons', name: 'Death & cycles', status: 'later',
-        blurb: 'How nature runs itself: seasons, death feeding new life, and the natural consensus and peaceful self-governance that keep ecosystems in balance.',
-        topics: ['Cycles', 'Renewal', 'Consensus'],
-        looks: ['Seasons and the cycles of growth, decay and return', 'How death and decomposition feed new life', 'Consensus and peaceful self-governance in nature']
+        id: 'identification', name: 'Identification', status: 'next',
+        blurb: 'Name the plants and animals around you, and learn the few real local dangers.',
+        topics: ['Plants', 'Fungi', 'Animals'],
+        looks: ['The features that actually separate species', 'Edible plants and their dangerous twins', 'Tracks, calls and signs of who lives nearby']
       }
     ]
   },
@@ -175,10 +175,22 @@ window.MN_TIERS = [
         looks: ['Finding the actual fault before buying anything', 'Opening things that were built to stay shut', 'Fixes that keep things out of the landfill']
       },
       {
+        id: 'digital', name: 'Digital world', status: 'next',
+        blurb: 'Rethink which needs digital life meets: libraries, open tools and connection on one side, surveillance and attention-for-profit on the other.',
+        topics: ['Needs it meets', 'Libraries', 'Surveillance', 'Open tools'],
+        looks: ['Which needs a screen is meeting right now (learning, connection, help) and which it’s pulling from (rest, presence, play)', 'Public libraries: free internet, devices, classes and quiet, and the librarians who protect your privacy', 'Surveillance: what apps, ad trackers, data brokers and cameras collect, and the free settings that cut most of it', 'Open-source tools, repair and keeping old devices going, so digital life serves people instead of profit']
+      },
+      {
         id: 'governance', name: 'Governance', status: 'building',
         blurb: 'Who decides where shared water, air and land go, and the stairs from noticing to changing it.',
         topics: ['Decision-makers', 'Transparency', 'Stairs for change'],
         looks: ['Who controls California’s water, and how they’re chosen', 'Where the water goes', 'Stairs for change: art, talk, public comment, representatives, organizing, voting, peaceful protest']
+      },
+      {
+        id: 'death-seasons', name: 'Death & cycles', status: 'later',
+        blurb: 'How nature runs itself: seasons, death feeding new life, and the natural consensus and peaceful self-governance that keep ecosystems in balance.',
+        topics: ['Cycles', 'Renewal', 'Consensus'],
+        looks: ['Seasons and the cycles of growth, decay and return', 'How death and decomposition feed new life', 'Consensus and peaceful self-governance in nature']
       }
     ]
   }

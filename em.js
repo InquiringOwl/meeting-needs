@@ -126,8 +126,8 @@
       { id: 'supplies', num: 2, word: 'Water, food &amp; supplies', sub: 'Two weeks on hand', planned: ['Water: a gallon per person a day, two weeks if you can', 'Food that keeps without power', 'Medicines, glasses and the things that are hard to replace'] },
       { id: 'gobag', num: 3, word: 'Go-bags &amp; kits', sub: 'Ready by the door', planned: ['One bag per person and per animal', 'Car, work and school kits', 'Documents and photos, kept safe'] },
       { id: 'plans', num: 4, word: 'Plans &amp; people', sub: 'Who, where, how we reach each other', planned: ['A meeting place and an out-of-area contact', 'Neighbors, check-ins and mutual aid', 'Kids, elders and access needs'] },
-      { id: 'home', num: 5, word: 'Securing your home', sub: 'Doors, windows, and calm', planned: ['Locks, lights and simple reinforcements', 'Shutting off gas, water and power', 'Renters and shared buildings'] },
-      { id: 'safety', num: 6, word: 'Personal safety', sub: 'Staying safe with others', planned: ['Noticing and leaving early', 'De-escalation: words before anything else', 'Self-defense basics for getting away'] }
+      { id: 'home', num: 5, word: 'Securing your home', sub: 'Doors, windows, and calm', planned: ['Locks, lights and simple reinforcements', 'Shutting off gas, water and power', 'Renters and shared buildings', 'A safe room and a household plan (with <a href="#lens-self-defense">Self-defense</a>)'] },
+      { id: 'safety', num: 6, word: 'Personal safety', sub: 'Staying safe with others', planned: ['Noticing and leaving early', 'De-escalation: words before anything else', 'Getting away, in full in <a href="#lens-self-defense">Self-defense</a>'] }
     ];
   }
 

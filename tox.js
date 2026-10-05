@@ -213,6 +213,19 @@
               ['Free → $', 'Collect glass jars from food you already buy; they replace most tubs at no cost.']],
               add: ['Move #3/#6/#7 and scratched plastics out of food use'] }) +
             src('Endocrine Society EDC-2 (2015); Leslie et al., <i>Environment International</i> 2022 (blood); Marfella et al., <i>NEJM</i> 2024 (carotid plaque); Nihart et al., <i>Nature Medicine</i> 2025 (brain tissue).'); } },
+          { id: 'lifesaver', short: 'When it saves you', title: 'When plastic is the safer bet', html: function () { return '<p>Plastic does things almost nothing else does at its weight and price: it’s waterproof, light, cheap, and it doesn’t rot. For someone living outside, in a vehicle or camping, a tarp, a tent fly or a water jug can be the difference between a dry night and soaked bedding, lost papers and hypothermia. Everyone deserves to know plastic carries the chemicals this unit describes, and everyone deserves to stay dry. Both are true.</p>' +
+            ul(['<b>A calculated risk:</b> chemicals move out of plastic mostly with heat, fat, acid, wear and time (' + r('plastics', 'heat') + '). A tarp overhead in the rain is a small, slow exposure; wet clothes and a wet sleeping bag in the cold can become life-threatening within hours.',
+              '<b>Lower the dose where it’s easy:</b> keep food and water in plastic out of hot sun, put a cotton or wool layer between you and a vinyl pad, and let a new tarp or tent air out outside for a day or two (the “new” smell is off-gassing).',
+              '<b>Gentler plastics when there’s a choice:</b> the common blue, green or brown polyethylene tarps (#2, #4) carry fewer additives than vinyl (PVC, #3), which is softened with phthalates. Water jugs of #2 plastic, kept in shade.',
+              '<b>Keep it in use:</b> repair tape and grommet kits make a tarp last, which means less new plastic made.',
+              'Waterproof rain gear and tents often carry PFAS repellents (' + r('plastics', 'pfas') + '); PFAS-free gear exists and is getting easier to find.']) +
+            fix({ modes: [['habit']], cost: 'Free', steps: [
+              ['Free · today', 'Keep the tarp up. Move food and water stored in plastic into shade.'],
+              ['Free', 'Air new tarps, tents and pads outside before sleeping under or on them; wash hands after handling old, cracked ones.'],
+              ['Free → $', 'When one wears out, choose polyethylene over vinyl, and PFAS-free rain gear if it’s within reach.']],
+              add: ['Air out new tarps and tents; keep plastic food and water out of the sun'] }) +
+            accs(acc('nohome portable', 'Living outside or on the move', 'Staying dry comes first', '<p>Shelter, dry clothes, warmth and drinking water come before anything else on this page. Outreach teams and 211 often hand out tarps, tents and blankets. More in <a href="#lens-relationships/special/distress">People in distress</a>.</p>')) +
+            src('ATSDR, phthalates; California AB 1817 (2022), PFAS in textiles; National Weather Service, hypothermia safety.'); } },
           { id: 'heat', short: 'Heat, fat, acid', title: 'Heat, fat and acid', html: function () { return '<p>Plastic gives up more into food when it’s <b>hot</b>, when the food is <b>fatty</b> (oil, nut butters, coconut milk) or <b>acidic</b> (tomato, citrus, vinegar), when it’s <b>old and scratched</b>, and the longer they touch. In one lab study, microwaving plastic containers released millions of microplastic and billions of nanoplastic pieces per square centimeter in three minutes.</p>' +
             ul(['Hot drinks through plastic lids or plastic tea bags.', 'Hot food poured into plastic tubs, or warmed in them.', 'Dishwashers: heat plus detergent wears plastic fast.', 'Plastic cutting boards shed into food as they’re scored.']) +
             fix({ modes: [['swap']], cost: 'Free first', steps: [

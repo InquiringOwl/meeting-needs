@@ -1,8 +1,8 @@
 /* Food lens: course content, profile tailoring and tools. Registers window.MN_LENS_VIEWS.food.
-   Routes: #lens-food (overview) · #lens-food/<unit>[/<sub>]. Units are dark greens, darkest (1) to lightest (5).
+   Routes: #lens-food (overview) · #lens-food/<unit>[/<sub>]. Units are dark greens, darkest (1) to lightest (7).
    Tailoring: answers from the Profile (Place, Food, Household) become tags; accordions tagged data-for open with a "For you" badge.
    The "Power's out" switch is per visit and not saved. Every section stays available to everyone.
-   Every food here is plant-based (FOUNDATION.md section 4). Laws mentioned are California's; the practices are general. */
+   Every recipe here is plant-based (FOUNDATION.md section 4). Unit 7 describes what other species eat in nature, plainly, and offers complete plant-based foods as one option. Laws mentioned are California's; the practices are general. */
 (function () {
   var BASE = '#lens-food';
   function mn() { return window.MN; }
@@ -24,6 +24,10 @@
     if (p.kitchen === 'No way to cook right now') t.nocook = 1;
     if (p.cold === 'A small or shared fridge') t.smallcold = 1;
     if (p.cold === 'A cooler, or no fridge') t.nocold = 1;
+    var pets = String(p.pets || '');
+    if (/cat|kitten/i.test(pets)) t.cat = 1;
+    if (/dog|pupp/i.test(pets)) t.dog = 1;
+    if (/rabbit|bunn|guinea|rat|mouse|mice|hamster|bird|parrot|tortoise|turtle|fish/i.test(pets)) t.small = 1;
     if (Number(p.kids) > 0 || (p.consider || []).some(function (c) { return /Pregnancy|Babies/.test(c); })) t.kids = 1;
     return t;
   }
@@ -233,6 +237,95 @@
             old('Bay leaves in the flour bin are a common old remedy for weevils. Studies are thin, but they smell nice and do no harm.') +
             links('<a href="#lens-relationships/special/animals">Emotions &amp; love: Animals</a> · Cleaning'); } },
           { id: 'keeps', tool: true, short: 'How long it keeps', title: 'How long does it keep?', html: function () { return '<div class="fo-row"><label class="fo-f">Food<select data-fo id="fo-kp-food">' + opts(KP) + '</select></label></div><div class="fo-out" id="fo-kp-out"></div>'; } }
+        ] },
+
+      { id: 'gentle', num: 6, word: 'Gentle', sub: 'Soft food for tender bodies',
+        lede: 'New eaters, sore mouths, missing teeth, a sick tummy, an old cat with tender gums: some bodies need food that asks less of them, for a while or for good. Most of it is the same food, made softer, wetter and smaller.',
+        subs: [
+          { id: 'babies', short: 'Babies', title: 'First foods for babies', html: function () { return '<p>Breast milk or infant formula carries a baby through the first year. Solids start around <b>6 months</b>, when a baby sits up with support, holds their head steady, and leans in and opens up for food.</p>' +
+            ul(['<b>Iron first.</b> The iron a baby is born with runs low by about 6 months. Mashed lentils and beans, soft tofu and iron-fortified oat or multigrain cereal meet it; a little fruit or vegetable alongside helps the body take it in.',
+              '<b>Common allergens early.</b> Offering peanut (smooth peanut butter thinned into a puree, or peanut powder), soy, wheat, sesame and tree-nut butters early and often lowers the chance of an allergy. Babies with severe eczema or a known food allergy see a doctor first.',
+              '<b>Drinks:</b> sips of water from an open cup from 6 months. Under 12 months, no plant milk or cow’s milk as a main drink; soy-based infant formula is the plant-based formula. After 1, fortified unsweetened soy milk is the plant milk closest in protein to cow’s milk. Rice milk isn’t for young children (' + a('cleanse/grains', 'arsenic, 2.4') + ').',
+              'No added salt or sugar, and no honey before 1 (botulism).']) +
+            care('<b>Choking:</b> round, firm and sticky foods are the risk. Quarter grapes and cherry tomatoes lengthwise; no whole nuts, popcorn, hard raw carrot or apple pieces, or spoonfuls of nut butter before age 4. First foods squish between finger and thumb. Always seated upright, with an adult watching. Gagging (noisy, coughing, red face) is a normal part of learning; choking is quiet, and that’s First aid.') +
+            note('Plant-based babies', '<p>Well-planned vegan diets fit infancy and childhood. A few to plan with a pediatrician: <b>B12</b> (for a breastfeeding parent and for the baby), <b>vitamin D</b> drops for breastfed babies (400 IU a day), <b>DHA</b> (algae oil), and enough iron, zinc and iodine.</p>') +
+            together('A baby at the family table, eating a soft, mashed spoonful of what everyone else is having, learns food as belonging.') +
+            '<p class="fo-src"><small>Sources: American Academy of Pediatrics (HealthyChildren.org); NIAID peanut allergy prevention guidelines (2017); Healthy Eating Research, <i>Healthy Beverage Consumption in Early Childhood</i> (2019); Academy of Nutrition and Dietetics position on vegetarian diets (2016).</small></p>'; } },
+          { id: 'chewing', short: 'Chewing', title: 'Sore mouths, few teeth and trouble swallowing', html: function () { return '<p>Tooth pain, missing teeth, new dentures, braces, mouth sores, dry mouth from medicines, a healing extraction: when chewing gets hard, people often quietly start eating less. The same foods, made softer, keep meeting the need. Speech and swallowing specialists use a shared ladder of textures (IDDSI):</p>' +
+            rungs([['Level 7', 'Easy to chew', 'Normal food that’s soft and tender: ripe fruit, soft bread, well-cooked beans and vegetables.'],
+              ['Level 6', 'Soft &amp; bite-sized', 'Pieces about the size of a thumbnail that mash under a fork: tofu, soft pasta, banana.'],
+              ['Level 5', 'Minced &amp; moist', 'Small soft bits held in a thick sauce: lentil dal, mashed beans in gravy, soft polenta.'],
+              ['Level 4', 'Pureed', 'Smooth, holds its shape on a spoon: hummus, blended soup thickened, smooth porridge, avocado, silken tofu pudding.']]) +
+            ul(['<b>Keep protein in.</b> Soft food drifts toward plain starch. Beans, lentils, tofu, soy milk and nut butters at each meal keep muscles and healing going.',
+              '<b>Moisture helps:</b> sauces, gravies and broth for dry mouth, and sips between bites.',
+              '<b>After a tooth is pulled:</b> cool, soft food the first day, chew on the other side, and no straws for a few days (the suction can pull out the healing clot).',
+              '<b>Smoothies</b> with soy milk, oats, banana and a spoon of nut butter are a full meal when chewing isn’t possible.']) +
+            tryit('The fork test: press a piece with the back of a fork until your thumbnail turns pale. If it squashes and stays squashed, it’s soft enough for level 6.') +
+            care('<b>Trouble swallowing</b> (dysphagia): coughing or clearing the throat during meals, a wet or gurgly voice after drinking, food that sticks, or repeated chest infections. A speech-language pathologist can assess it and say which level fits; thin liquids are often the hardest. Sit fully upright for meals and for about 30 minutes after.') +
+            '<p class="fo-src"><small>Source: International Dysphagia Diet Standardisation Initiative (iddsi.org).</small></p>'; } },
+          { id: 'medicine', short: 'Food as medicine', title: 'Food as medicine', html: function () { return '<p>Food doesn’t replace care, and it’s part of it. Every culture has gentle foods for sick days: they’re easy on a body putting its energy into healing, and they carry back the water, salt and sugar that fever, vomiting and diarrhea pull out.</p>' +
+            ul(['<b>Fluids first.</b> Small sips often (a spoonful every few minutes after vomiting) stay down better than big gulps.',
+              '<b>Oral rehydration solution:</b> 1 liter (about 4¼ cups) of clean drinking water, 6 level teaspoons of sugar and ½ level teaspoon of salt, stirred until dissolved (WHO). Pharmacy packets work the same way. Frozen into popsicles, kids often take it more happily.',
+              '<b>Babies:</b> keep breastfeeding or giving formula; ask a doctor how much oral rehydration solution to add.',
+              '<b>Then gentle food, as soon as it’s wanted:</b> rice, congee, oats, toast, bananas, applesauce, potatoes, soup. The strict old “BRAT” diet (bananas, rice, applesauce, toast) is no longer advised for more than a day or so: a usual diet again soon helps recovery.',
+              '<b>Nausea:</b> ginger (fresh slices steeped as tea, or crystallized) has fair evidence for some kinds of nausea, including in pregnancy. Small dry snacks, often.',
+              '<b>Sore throat or a cold:</b> warm (not hot) soups and teas, or cool smoothies and fruit popsicles.',
+              '<b>Constipation:</b> water, prunes, pears, oats, beans, and moving around.']) +
+            old('Jook (rice porridge) across East Asia, khichdi (rice and lentils cooked soft) in South Asia, miso soup in Japan, vegetable broth nearly everywhere: sick-day foods are some of the oldest recipes people share.') +
+            note('Every day, too', '<p>Over years, the plate in ' + a('cook/plate', '4.5') + ' is food medicine: diets high in fiber, beans, whole grains, fruit and vegetables are linked with less heart disease, type 2 diabetes and some cancers.</p>') +
+            care('Get care right away for signs of dehydration: very little or no pee, no tears, a dry mouth, a sunken soft spot on a baby’s head, unusual sleepiness or confusion. Also for blood in vomit or stool, vomiting that won’t stop, or a fever in a baby under 3 months (100.4°F / 38°C or higher).') +
+            links('Body care (in progress) and First aid (in progress) take this further.') +
+            '<p class="fo-src"><small>Sources: World Health Organization (oral rehydration); American Academy of Pediatrics; Viljoen et al., <i>Nutrition Journal</i> (2014), ginger for nausea in pregnancy.</small></p>'; } },
+          { id: 'animals', short: 'Animals', title: 'Tender times for companion animals', html: function () { return ul([
+              '<b>Kittens and puppies</b> nurse for about 4 weeks, then move onto soft wet food mashed with warm water over the next few weeks. An orphaned kitten or puppy needs a milk replacer made for their species, warmth and a vet: cow’s milk upsets their stomachs.',
+              '<b>Sore teeth are common.</b> Most cats and dogs have some gum disease by age 3. Dropping food, chewing on one side, drooling, pawing at the mouth and bad breath are signals. Wet food, or kibble soaked in warm water, helps while a vet looks.',
+              '<b>Old noses fade.</b> Warming wet food to about body temperature makes it smell stronger, which helps an older cat or dog want to eat.',
+              '<b>Sick days:</b> fresh water close by, and the bland food a vet suggests. Small meals often.']) +
+            care('Animals get into trouble from not eating faster than people do. A cat who hasn’t eaten for more than a day or two, or a rabbit or guinea pig who stops eating or pooping for more than about 12 hours, needs a vet soon. A male cat straining to pee with little coming out is an emergency.') +
+            accs(acc('cat dog small', 'Your companions', 'The animals on your profile', '<p>The next unit (' + a('companions', 'Unit 7') + ') covers what each species eats in nature, and how to meet the same needs at home.</p>')) +
+            links(a('companions', 'Unit 7: What animals eat') + ' · <a href="#lens-toxins/exposures/companions">Toxins: what each species can’t process</a>'); } },
+          { id: 'tool', tool: true, short: 'Make it gentle', title: 'Make it gentle', html: function () { return '<div class="fo-row"><label class="fo-f">Who’s eating<select data-fo id="fo-gn-who">' + opts(GN) + '</select></label></div><div class="fo-out" id="fo-gn-out"></div>'; } }
+        ] },
+
+      { id: 'companions', num: 7, word: 'Companions', sub: 'What animals eat',
+        lede: 'Each species grew up eating something different. Knowing what a body evolved on, and which needs that food was meeting, opens more than one way to feed the animals we live with.',
+        subs: [
+          { id: 'nature', short: 'In nature', title: 'What each animal eats in nature', html: function () { return table(['Animal', 'In nature', 'At home, meeting the same needs'], [
+              ['Cats', 'Small prey eaten whole (mice, birds, insects), many small meals a day; their food is about 70% water', 'A complete cat food, wet or with water added; small meals; water away from the food bowl'],
+              ['Dogs', 'Descended from wolves, then lived beside people for thousands of years, eating what people left; their genes adapted to digest starch', 'A complete dog food; dogs do well on many diets, plant-based included'],
+              ['Rabbits', 'Grasses and leafy plants, grazed all day', 'Unlimited hay (most of the diet), leafy greens, a few pellets; fruit as a rare treat'],
+              ['Guinea pigs', 'Grasses; like us, they can’t make their own vitamin C', 'Hay, vitamin C–rich greens and peppers, guinea pig pellets'],
+              ['Rats and mice', 'Seeds, grains, fruit and insects', 'A complete block or pellet, plus vegetables'],
+              ['Parrots and other birds', 'Fruit, seeds, nuts, flowers and buds, varying hugely by species', 'Pellets plus vegetables; seed-only diets fall short'],
+              ['Tortoises', 'Weeds, grasses and flowers', 'Weeds and leafy greens, plus sun or a UVB lamp'],
+              ['Fish', 'Plankton, insects, plants or other fish, by species', 'Food made for that species, in small amounts']]) +
+            '<p>The pattern: <b>herbivores</b> (rabbits, guinea pigs, tortoises) already eat plants. <b>Omnivores</b> (dogs, rats, many birds) are flexible. <b>Cats</b> are obligate carnivores, which ' + a('companions/cats', '7.2') + ' unpacks.</p>' +
+            '<p class="fo-src"><small>Sources: Axelsson et al., <i>Nature</i> (2013), starch digestion in dogs; House Rabbit Society; RSPCA.</small></p>'; } },
+          { id: 'cats', short: 'Cats', title: 'Cats: “obligate carnivore”, explained', html: function () { return '<p>“Obligate carnivore” describes <b>nutrients</b>, not ingredients. A cat’s body can’t make certain nutrients from plant sources the way a dog’s or ours can, so in nature those come from eating other animals:</p>' +
+            ul(['<b>Taurine</b> for the heart and eyes; without it, cats develop heart disease and blindness.', '<b>Arachidonic acid</b>, a fat.', '<b>Vitamin A</b> ready-made: cats can’t turn the beta-carotene in carrots into it.', '<b>Niacin and vitamin D</b>, and more protein than most animals.']) +
+            '<p>Each of these can be made without animals. Synthetic taurine is already added to nearly all cat food, including meat-based food, because cooking destroys much of what’s there.</p>' +
+            ul(['<b>Water:</b> cats evolved to drink little and get water from prey. On dry food alone many cats run low, which is linked to urinary and kidney trouble. Wet food, or water stirred in, helps whatever the protein.',
+              '<b>Cat grass</b> (oat, wheat or barley sprouts) is a safe nibble many cats love; it isn’t a meal. <b>Catnip</b> is a mint they play with, not a food.']) +
+            '<p class="fo-src"><small>Source: National Research Council, <i>Nutrient Requirements of Dogs and Cats</i> (2006).</small></p>'; } },
+          { id: 'kibble', short: 'Kibble &amp; raw', title: 'Kibble, canned and raw', html: function () { return ul([
+              '<b>Kibble</b> is a dough of grains, legumes and rendered parts of animals (the leftovers of slaughterhouses: organs, bones and trimmings, cooked and dried into “meal”), pushed through an extruder at high heat, then sprayed with fat and vitamins. Cheap, keeps for months, and very dry.',
+              '<b>Canned (wet)</b> food has far more water and usually more protein. It costs more and keeps a day or two once opened.',
+              '<b>Raw</b> food is closest to prey in texture, and it carries germs: <i>Salmonella</i>, <i>Listeria</i> and, since 2024, H5N1 bird flu, which has killed cats who ate contaminated raw food or raw milk. Several brands, including California ones, were recalled. Germs reach the people handling the bowls too, especially children and older people.',
+              '<b>Homemade</b> food easily misses a nutrient. A recipe from a board-certified veterinary nutritionist is the reliable way.']) +
+            care('The words to look for on any label: <b>“complete and balanced”</b> for the animal’s life stage, meeting AAFCO (US) or FEDIAF (Europe) nutrient profiles. Without them, a food is a treat or a topper, not a diet.') +
+            '<p class="fo-src"><small>Sources: US Food and Drug Administration, H5N1 and pet food updates (2024–2025); AAFCO; FEDIAF.</small></p>'; } },
+          { id: 'plants', short: 'Plant-based', title: 'Plant-based food for dogs and cats', html: function () { return '<p>Complete plant-based foods for dogs and cats use the same synthetic nutrients mainstream foods add. In guardian surveys, dogs (2,536 of them) and cats (1,418) fed vegan diets were reported as no less healthy than meat-fed ones, and on some measures healthier. These rely on what guardians report, and long controlled trials are still few, so many vets stay cautious. Dogs are the easier fit; cats take more care.</p>' +
+            ul(['<b>Choose a food labeled complete and balanced</b> for that species and life stage. Benevo, Ami and Evolution make plant-based foods for cats and dogs; formulas change, so check the label each time.',
+              '<b>Switch slowly</b>, mixing more of the new food in over 1–2 weeks.',
+              '<b>Add water or choose wet</b>, especially for cats.',
+              '<b>A vet check before and a few months in</b>, then yearly: weight, coat, bloodwork, and for cats a urine test.',
+              '<b>Watch their body:</b> energy, coat, weight, stool, appetite and litter box are how they tell you it’s working.']) +
+            accs(acc('cat', 'Cats', 'Plant-based food for cats', ul(['Plant foods can make urine less acidic, which raises the chance of crystals (struvite). Many plant-based cat foods add a urine acidifier; a urine test tells you.', 'A male cat straining to pee with little coming out is an emergency, whatever the food.', 'Kittens, pregnant cats and cats with kidney or heart conditions: plan the food with a vet.'])),
+              acc('dog', 'Dogs', 'Plant-based food for dogs', ul(['Dogs digest starch and meet their needs on many diets. V-dog and others make complete plant-based dog food.', 'Large-breed puppies need a food made for their growth; check the life stage on the label.']))) +
+            tryit('Next vet visit, ask: “What would you look for to know this food is meeting their needs?”') +
+            '<p class="fo-src"><small>Sources: Knight et al., <i>PLOS ONE</i> (2022), dogs; Knight et al., <i>PLOS ONE</i> (2023), cats; Dodd et al., <i>PLOS ONE</i> (2021).</small></p>' +
+            links('<a href="#lens-relationships/special/animals">Emotions &amp; love: Animals</a> · <a href="#lens-toxins/exposures/companions">Toxins: what each species can’t process</a>') +
+            (mn().opinion ? mn().opinion('<p>I stay out of judging predators and prey, so a cat’s health comes first here; I offer plant-based food as one option because the animals who became kibble were someone too, with needs it never met (more in <a href="#lens-relationships/special/animals">Animals</a>).</p><p class="opinion-src">In the US, dogs and cats eat about a third as much animal-sourced food energy as all of the country’s people do (Okin, <i>PLOS ONE</i>, 2017).</p>') : ''); } }
         ] }
     ];
   }
@@ -272,6 +365,18 @@
     nuts: ['Nuts and seeds', 'About 6 months', 'About 1 year', '1–3 months', ''],
     drybean: ['Dried beans', '—', '—', 'Years (best within 1–2)', 'Older beans cook slower, still safe.']
   };
+  /* Make it gentle: [who, texture, foods to try, take care]. */
+  var GN = {
+    b6: ['A baby starting solids (about 6–8 months)', 'Smooth to lumpy mash, or soft strips the length of a finger to hold', 'Mashed lentils or beans, iron-fortified oat cereal, mashed avocado or banana, soft-cooked sweet potato, tofu strips, smooth peanut butter thinned into a puree', 'Breast milk or formula stays the main food. No honey, no added salt, nothing round and firm.'],
+    b9: ['A baby 9–12 months', 'Small soft pieces that squish between finger and thumb', 'Pea-sized soft tofu, soft pasta, flattened beans, ripe pear, toast strips with hummus', 'Quarter grapes and cherry tomatoes lengthwise. Seated upright, with an adult watching.'],
+    tod: ['A toddler (1–3 years)', 'Most family food, cut small and soft', 'The family meal; fortified unsweetened soy milk as a drink alongside food', 'Before age 4: no whole nuts, popcorn, hard raw carrot or apple chunks, or spoonfuls of nut butter.'],
+    sore: ['A sore mouth, braces or after dental work', 'Soft, and cool or lukewarm; not spicy, salty or sour', 'Smoothies, silken tofu, oats, mashed potatoes, blended soups, banana', 'After a tooth is pulled: no straws for a few days, and nothing crunchy or seedy near the spot.'],
+    teeth: ['Few or no teeth, or new dentures', 'Soft & bite-sized: pieces that mash under a fork (IDDSI level 6)', 'Lentil dal, soft beans in sauce, tofu, well-cooked vegetables, ripe fruit, polenta', 'Keep protein at every meal, and add sauce or broth for a dry mouth.'],
+    swallow: ['Trouble swallowing', 'The level a speech-language pathologist sets (IDDSI)', 'Pureed soups and dals, hummus, smooth porridge, avocado', 'Coughing or a wet voice at meals is a signal to ask for a swallow assessment. Sit fully upright.'],
+    tummy: ['An upset stomach, vomiting or diarrhea', 'Sips first, then plain soft food', 'Oral rehydration solution (1 L water, 6 level tsp sugar, ½ level tsp salt), rice, congee, toast, banana, applesauce, potatoes', 'A usual diet again within a day or two. Get care for signs of dehydration (6.3).'],
+    cold: ['A cold, fever or sore throat', 'Warm (not hot) and wet, or cool and smooth', 'Soups, miso soup, ginger tea, smoothies, fruit popsicles, oats', 'Plenty to drink. A fever in a baby under 3 months needs a doctor.'],
+    pet: ['A cat or dog with sore teeth or a weak appetite', 'Wet food, or their kibble soaked in warm water', 'Their usual complete food, softened and warmed to about body temperature', 'A cat who hasn’t eaten for more than a day or two needs a vet.']
+  };
   function $(id) { return document.getElementById(id); }
   function frac(n) { return (Math.round(n * 4) / 4).toString().replace('.25', '¼').replace('.5', '½').replace('.75', '¾').replace(/^0(?=[¼½¾])/, ''); }
   function runTools() {
@@ -281,6 +386,11 @@
         '<b>Soak:</b> ' + f[1] + '<br><b>Cook:</b> ' + (pc ? f[3] : f[2]) +
         (f[5] ? care(f[5]) : '') +
         '<small>Typical times; older beans and higher altitude take longer. Taste a few: done when creamy all the way through.</small>';
+    }
+    if ($('fo-gn-out')) {
+      var g = GN[$('fo-gn-who').value];
+      $('fo-gn-out').innerHTML = '<strong>' + esc(g[1]) + '</strong><b>Try:</b> ' + esc(g[2]) + care(esc(g[3])) +
+        '<small>Rough guides. A doctor, dentist, speech-language pathologist or vet knows the body in front of them.</small>';
     }
     if ($('fo-kp-out')) {
       var k = KP[$('fo-kp-food').value];
@@ -330,12 +440,12 @@
   }
   function viewOverview(U) {
     return '<section class="fo-hero"><span class="fo-lens-pill">Tier 2 · Roots · Course</span><h1 tabindex="-1">Food</h1>' +
-      '<p class="fo-lede">Every body needs food, and feeding each other is one of the oldest pleasures there is. Five short units on finding food, washing it, waking up dried food, cooking it safely and keeping it good, at every scale: a full kitchen, a hot plate, a cooler, no kitchen at all.</p></section>' +
+      '<p class="fo-lede">Every body needs food, and feeding each other is one of the oldest pleasures there is. Seven short units on finding food, washing it, waking up dried food, cooking it safely, keeping it good, softening it for tender bodies and sick days, and feeding the animals we live with, at every scale: a full kitchen, a hot plate, a cooler, no kitchen at all.</p></section>' +
       '<ol class="fo-ucards">' + U.map(function (u) {
         return '<li><a class="fo-ucard fk' + u.num + '" href="' + BASE + '/' + u.id + '"><i class="fo-band"></i><span class="fo-n">0' + u.num + '</span><b>' + u.word + '</b><span>' + u.sub + '</span><ol>' + u.subs.filter(function (s) { return !s.tool; }).map(function (s) { return '<li>' + s.title + '</li>'; }).join('') + '</ol></a></li>';
       }).join('') + '</ol>' +
-      '<aside class="fo-funfact"><span class="eyebrow">Fun fact</span><p>Every food in this course comes from plants, the cheapest, longest-keeping and most shareable way to meet the need for food. Beans and rice alone have fed much of the world for thousands of years. More on the <a href="#lens-relationships/special/animals">Animals</a> page.</p>' +
-      '<p>Safety numbers come from public food-safety guidance (USDA, FDA, the UK’s NHS and the National Center for Home Food Preservation). Laws mentioned are California’s; food itself is the same everywhere. Thank you to everyone who keeps this knowledge free.</p></aside>';
+      '<aside class="fo-funfact"><span class="eyebrow">Fun fact</span><p>Every recipe in this course comes from plants, the cheapest, longest-keeping and most shareable way to meet the need for food. Beans and rice alone have fed much of the world for thousands of years. More on the <a href="#lens-relationships/special/animals">Animals</a> page.</p>' +
+      '<p>Safety numbers come from public food-safety and health guidance (USDA, FDA, the UK’s NHS, the National Center for Home Food Preservation, WHO, the American Academy of Pediatrics and IDDSI). Laws mentioned are California’s; food itself is the same everywhere. Thank you to everyone who keeps this knowledge free.</p></aside>';
   }
   function viewUnit(U, u, subId) {
     var i = U.indexOf(u), prev = U[i - 1], next = U[i + 1], n = 0;

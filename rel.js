@@ -149,12 +149,13 @@
   function src(t) { return '<p class="rel-q"><small>' + t + '</small></p>'; }
   function animalsAfter() {
     var items = [
-      ['Food', 'every food in the course comes from plants: the cheapest, longest-keeping and most shareable way to meet the need for food.', '#lens-food', 'Food'],
+      ['Food', 'every recipe in the course comes from plants: the cheapest, longest-keeping and most shareable way to meet the need for food.', '#lens-food', 'Food'],
+      ['Food', 'what each companion species eats in nature, kibble and raw food told plainly, and complete plant-based food as one option.', '#lens-food/companions', 'Food → Companions'],
       ['Water', 'where California’s farm water goes, including the feed grown for farmed animals.', '#lens-water/sources/take', 'Water → Sources'],
       ['Toxins', 'wool, leather, down and silk kept in use secondhand, instead of new.', '#lens-toxins/exposures/healthy', 'Toxins → What healthy looks like'],
       ['Toxins', 'poison-free ways to share a home with ants, mice and other wild neighbors.', '#lens-toxins/pesticides/yard', 'Toxins → Yard, home and companions']
     ];
-    return '<section class="rel-sec" id="sec-animals-5"><div class="rel-sec-head"><span class="rel-sec-n">A.5</span><div><h2>Across Kinship</h2><p>Where peace with animals shows up in the other lenses.</p></div></div>' +
+    return '<section class="rel-sec" id="sec-animals-3"><div class="rel-sec-head"><span class="rel-sec-n">A.3</span><div><h2>Across Kinship</h2><p>Where peace with animals shows up in the other lenses.</p></div></div>' +
       '<ul class="rel-keys">' + items.map(function (x) { return '<li><strong>' + x[0] + ':</strong> ' + esc(x[1]) + ' <a href="' + x[2] + '">' + esc(x[3]) + '</a></li>'; }).join('') + '</ul></section>' +
       (mn().opinion ? mn().opinion('<p>Modern commodification of animal bodies as products is something I never trust enough to recommend, especially new.</p>') : '');
   }
@@ -170,11 +171,6 @@
           '**Call animals by who they are:** a cow, a pig, a chicken, a fish. Words like “beef”, “pork”, “poultry” and “seafood” are names for what animals become after they die. Language that hides the animal makes the harm easier to look past.',
           '**Farmed animals,** not “livestock” or “stock”, which count living beings as inventory.'
         ]],
-        ['Reading their signals', 'Behavior is communication.', [
-          'Ears, tail, posture, appetite, hiding, pacing and play are all signals. “Bad dog” becomes “what is he needing?”',
-          'Shared needs: food, water, safety, rest, play, company and choice. Each species has its own strategies: cats need high places and hunting games, dogs need to sniff, rabbits need another rabbit.',
-          '**Choice and consent:** let animals approach you, and notice when they move away. A “no” from an animal counts too.'
-        ]],
         ['Cows, in their own right', 'More than the water their lives use.', [
           'The Water course counts how much water goes into one cow raised for meat (about 99% of it grows their feed). That matters, and it isn’t the main reason a cow matters. She matters because she’s someone.',
           '**Cows have friends.** Studies find cows are calmer and less stressed when they’re with a preferred companion.',
@@ -182,21 +178,69 @@
           '**Cows feel and learn.** Young cows have shown excitement when they solve a problem themselves. Cows can live 15–20 years; those raised for meat in US feedlots are usually killed at about 18–22 months.',
           'Scientists agree that mammals and birds have the brain systems for conscious experience, and evidence for fish keeps growing. Pigs, chickens and fish feel fear and pain too.'
         ], '<p class="rel-q">Water lens: <a href="#lens-water/sources/take">how much water goes into animal foods</a></p>' +
-          src('Sources: McLennan, <i>Social bonds in dairy cattle</i> (University of Northampton, 2013); Hagen &amp; Broom, “Emotional reactions to learning in cattle,” <i>Applied Animal Behaviour Science</i> (2004); <i>Cambridge Declaration on Consciousness</i> (2012); <i>New York Declaration on Animal Consciousness</i> (2024).')],
-        ['Wild neighbors', '“Pests” are neighbors with needs.', [
-          'Mice, ants, raccoons and pigeons come because a home is meeting their needs: food, water, warmth, shelter. Change what the home offers and they move on.',
-          'Seal food, fix drips and close gaps: when a home stops offering food, water and shelter, its visitors move on.',
-          'Poisons travel: rat poison kills owls, hawks, foxes and cats who eat a poisoned animal. California has restricted the strongest rodenticides since 2021 for this reason.'
-        ], src('Source: California AB 1788 (2020), restrictions on second-generation anticoagulant rodenticides.') +
-          tryIt('Next time you talk about an animal, notice your pronoun. Try “they”, “he” or “she”.')]
+          src('Sources: McLennan, <i>Social bonds in dairy cattle</i> (University of Northampton, 2013); Hagen &amp; Broom, “Emotional reactions to learning in cattle,” <i>Applied Animal Behaviour Science</i> (2004); <i>Cambridge Declaration on Consciousness</i> (2012); <i>New York Declaration on Animal Consciousness</i> (2024).')]
       ],
       intro: '<p class="rel-sp-lead">When Kinship says meeting everyone’s needs, everyone includes animals. They’re sentient, they feel, and they share the same universal needs we do: food, water, safety, rest, play, company and choice. So every strategy gets the same question: does it meet the animals’ needs too?</p>',
       after: animalsAfter(),
-      note: 'The full Animals unit (companion animals by species, sanctuaries, and wildlife at home) is in progress.',
+      note: 'Family animals and Wild animals each have their own section. The full Animals unit (farmed animals and sanctuaries) is in progress.',
       related: ['#lens-water/sources/take', 'Water: farm water']
     },
+      family: {
+        id: 'family', letter: 'F', name: 'Family animals', sub: 'Companions who share our homes, routines and moods',
+        lede: 'Cats, dogs, rabbits, birds and the rest of a household’s animals are family. They share our rooms and routines, they pick up on our moods, and they have emotional lives of their own. The same four steps work with them: notice their signals, wonder what they’re feeling, find the need, and change what you offer.',
+        secs: [
+          ['Reading their signals', 'Behavior is communication.', [
+            'Ears, tail, posture, appetite, hiding, pacing and play are all signals. “Bad dog” becomes “what is he needing?”',
+            'Shared needs: food, water, safety, rest, play, company and choice. Each species has its own strategies: cats need high places and hunting games, dogs need to sniff, rabbits need another rabbit.',
+            '**Choice and consent:** let animals approach you, and notice when they move away. A “no” from an animal counts too.'
+          ]],
+          ['Their emotional needs', 'Safety, play, company and a say.', [
+            '**Predictability:** regular meals, walks and quiet times help animals feel safe. Moves, new people and loud days ask a lot of them.',
+            '**Play** is a need, not a luxury: chasing a toy meets a cat’s need to hunt, sniffing a new street meets a dog’s need to explore.',
+            '**Company of their own kind:** rabbits, guinea pigs, rats and many birds are lonely alone. Many cats like company on their own terms.',
+            '**Places to retreat:** a box, a high shelf, a crate left open, a room where nobody follows.',
+            'Hiding, over-grooming, not eating, or peeing outside the litter box are often stress or pain. A vet first, then a look at what changed at home.'
+          ]],
+          ['Feelings across species', 'They read us, and we can read them.', [
+            'Dogs match human faces with voices by emotion, and cats recognize their own people’s voices. Stress and calm in a home reach the animals in it.',
+            'Being with a companion animal can be a real comfort, and they’re not a tool for it: their needs count on the hard days too.',
+            '**Grief is real.** Losing an animal family member is a loss like any other. Children need room to grieve them too, with honest, simple words.',
+            'People facing eviction or homelessness often keep their animals close at great cost. Pet-friendly shelters and pet food banks keep families together, animals included.'
+          ], src('Sources: Albuquerque et al., “Dogs recognize dog and human emotions,” <i>Biology Letters</i> (2016); Saito &amp; Shinozuka, “Vocal recognition of owners by domestic cats,” <i>Animal Cognition</i> (2013).') +
+            '<p class="rel-q">Food lens: <a href="#lens-food/companions">what each animal eats</a> · <a href="#lens-food/gentle/animals">tender times</a> · Toxins: <a href="#lens-toxins/exposures/companions">what their bodies can’t process</a></p>' +
+            tryIt('Watch one animal at home for five minutes. What need is each thing they do trying to meet?')]
+        ],
+        note: 'The full Family animals unit (species by species, introductions, and end-of-life care) is in progress.',
+        related: [spHref('animals'), 'Animals']
+      },
+      wild: {
+        id: 'wild', letter: 'W', name: 'Wild animals', sub: 'Neighbors who live by their own rules',
+        lede: 'Crows, raccoons, coyotes, bees, mice and the birds on the wire live alongside us without being ours. Kinship with wild animals mostly means giving them room, closing the accidental offers our homes make, and leaving the land a little more livable for them.',
+        secs: [
+          ['Wild neighbors', '“Pests” are neighbors with needs.', [
+            'Mice, ants, raccoons and pigeons come because a home is meeting their needs: food, water, warmth, shelter. Change what the home offers and they move on.',
+            'Seal food, fix drips and close gaps: when a home stops offering food, water and shelter, its visitors move on.',
+            'Poisons travel: rat poison kills owls, hawks, foxes and cats who eat a poisoned animal. California has restricted the strongest rodenticides since 2021 for this reason.'
+          ], src('Source: California AB 1788 (2020), restrictions on second-generation anticoagulant rodenticides.')],
+          ['Watching, not handling', 'Room is the kindest gift.', [
+            'Wild animals do best when they stay wary of people. Feeding raccoons, ducks or coyotes draws them close to roads, dogs and conflict.',
+            'Bird feeders and baths are lovely when they’re cleaned often; dirty ones spread disease between birds.',
+            '**A baby bird on the ground** is often a fledgling learning to fly, with parents nearby. Watch from a distance before stepping in.',
+            '**Hurt or orphaned?** Call a licensed wildlife rehabilitator (California Department of Fish and Wildlife keeps a list) rather than caring for the animal at home.',
+            'Cats kept indoors or in a catio stay safer, and so do birds: free-roaming cats kill an estimated 1.3–4 billion birds a year in the US.'
+          ], src('Sources: Loss, Will &amp; Marra, <i>Nature Communications</i> (2013); California Department of Fish and Wildlife, wildlife rehabilitation facilities.')],
+          ['Sharing the land', 'Leave room in the places we shape.', [
+            'Native plants, a wild corner, a log left to rot and a shallow dish of water in a heat wave meet a lot of needs at once.',
+            '**Nesting season** (roughly February to August in California): check trees and hedges before trimming. Active nests of most wild birds are protected by federal law.',
+            'Dark nights help: shielded, warm-colored outdoor lights confuse fewer birds and insects.',
+            'Slow down at dusk and dawn, when deer and many others cross roads.'
+          ], tryIt('Next time you see a wild animal near home, ask: what is this place offering them?')]
+        ],
+        note: 'The full Wild animals unit (urban wildlife by species and coexisting on land) is in progress.',
+        related: ['#lens-toxins/pesticides/yard', 'Toxins: yard, home and companions']
+      },
       children: {
-        id: 'children', letter: 'K', name: 'Children', sub: 'Togetherness instead of split labor; kids pitching in beside you',
+        id: 'children', letter: 'K', name: 'Children', sub: 'Togetherness instead of split labor, and families staying close',
         lede: 'Children share every universal need adults have, and one they show early and often: to contribute. This unit grows from the ideas the whole of Kinship sits on.',
         secs: [
           ['Togetherness, not split labor', 'Kids belong beside the adults.', [
@@ -210,6 +254,14 @@
             '**Requests, not demands,** with kids too: a “not now” is a real answer, and the search goes back to the needs on both sides.',
             '**Protective force isn’t punishment.** Grabbing a hand before the street keeps a child safe; making a child suffer to “learn a lesson” is something else.'
           ], src('Sources: Michaeleen Doucleff, <i>Hunt, Gather, Parent</i> (2021), including her TEAM summary; Barbara Rogoff’s research on children learning by observing and pitching in; Marshall B. Rosenberg, <i>Nonviolent Communication</i>.')],
+          ['Families staying close', 'Closeness is a need, and poverty puts it at risk.', [
+            '**Closeness is a need.** For babies and children, a steady bond with their own people is how their bodies learn safety. Long or sudden separations can be traumatic, and the stress can shape health for years.',
+            '**Poverty often reads as “neglect” on paper.** In the US, neglect is the most common reason children are taken into foster care, and much of it traces to poverty: no stable housing, no childcare, not enough food. Poor families, and Black and Native families most of all, are separated more often.',
+            '**Meeting the family’s needs keeps children home.** Studies find that cash support, housing help and childcare lower neglect reports and foster-care entries.',
+            '**When a separation can’t be avoided:** kinship care (with grandparents, aunts, uncles or family friends) keeps a child with people they know. Frequent visits and calls, and keeping siblings together, soften the loss.',
+            '**Inside systems:** asking for a family room in a shelter, staying beside a child in the hospital, and family-friendly visiting when a parent is incarcerated all keep families close. More than 5 million US children have had a parent in jail or prison.'
+          ], src('Sources: Harvard Center on the Developing Child, toxic stress; American Academy of Pediatrics on family separation (2018); US HHS, AFCARS foster care reports; Chapin Hall, economic and concrete supports and child welfare; Annie E. Casey Foundation, <i>A Shared Sentence</i> (2016).') +
+            '<p class="rel-q">Related: <a href="' + spHref('distress') + '">People in distress</a> · <a href="' + spHref('power') + '">Power &amp; peace</a> (abolition)</p>'],
           ['Kids across Kinship', 'Where children already show up.', [
             '**Food:** cooking together, with real tools and real jobs.',
             '**Water:** turning over creek stones to count the little creatures, a real field test.',
@@ -217,7 +269,7 @@
           ], '<p class="rel-q"><a href="#lens-food/cook/together">Food: cooking together</a> · <a href="#lens-water/testing">Water: testing</a> · <a href="#lens-toxins/exposures/dose">Toxins: dose and timing</a></p>' +
             tryIt('Next chore, invite a child in at whatever level they can manage, and let them do it their way.')]
         ],
-        note: 'The full Children unit (ages and stages, chores as play, conflict between siblings) is in progress.'
+        note: 'The full Children unit (ages and stages, chores as play, conflict between siblings, keeping families together) is in progress.'
       },
       neighbors: {
       id: 'neighbors', letter: 'N', name: 'Neighbors', sub: 'The people, plants and animals you share a place with',
@@ -245,6 +297,50 @@
       note: 'The full Neighbors unit (housemates, buildings, blocks, land and wildlife) is in progress.',
       related: ['#lens-water', 'Water']
     },
+      distress: {
+        id: 'distress', letter: 'D', name: 'People in distress', sub: 'Meeting someone unhoused or struggling: respect, capacity, boundaries, who can help',
+        lede: 'Sometimes a need shows up right in front of us: someone asking for change outside the store, sleeping in a doorway, living in a car down the street, crying on the bus. It’s delicate, and often we can’t meet the whole need, which can feel unbearable. The same four steps help: notice, feel, find the needs (theirs and ours), and choose what we can actually give.',
+        secs: [
+          ['Seeing someone', 'Acknowledgment is a gift almost anyone can give.', [
+            'Looking away, speeding up, pretending not to hear: feigning total disconnect usually feels stranger, on both sides, than a nod, eye contact and “Hi.”',
+            'In one study, people felt more connected after a stranger passed with eye contact than after a stranger looked through them “as though air”.',
+            '**You don’t owe anyone a smile, money or time.** Basic respect (seeing the person, a kind “not today”, “sorry, I don’t have anything”) is the standard most of us would want for ourselves, and offering it keeps that standard alive in a shared place.',
+            'Speak to the person, not about them. Use their name if they offer it. Ask before giving: “Would you like some water?”'
+          ], src('Source: Wesselmann, Cardoso, Slater &amp; Williams, “To be looked at as though air: civil attention matters,” <i>Psychological Science</i> (2012).')],
+          ['Guilt and capacity', 'Guilt is a signal, not an order.', [
+            'Guilt, discomfort or helplessness in these moments often point to needs of your own: **contribution, care, integrity, a fair world.** There’s no need to push them down, and no need to obey them either.',
+            'A lot of people are running on empty: stretched money, time, health or grief. **When you’re suffering too, you can’t give generously from nothing**, and that’s capacity, not coldness.',
+            '**Anything is better than nothing.** A nod, a bottle of water, a snack, directions to a free meal: small gifts meet real needs, and none of them has to solve everything.',
+            'Self-empathy first: “I’m tired and scared about my own rent, and I care about him.” Both are true at once.'
+          ]],
+          ['Gifts and boundaries', 'Giving in a way that works for you too.', [
+            'Help that could last (a ride, a phone, a place to park, regular meals) can bring a scared “now I’m on the hook” feeling. That fear points to needs for choice and sustainability, and boundaries meet them.',
+            '**A boundary is about your own actions,** said plainly up front: “I can bring water on Tuesdays. I can’t give rides.” “I can buy you lunch today; I can’t give cash.”',
+            'Decide ahead what you can give, so the moment asks less of you: a few care bags in the car (water, socks, snacks, wipes), or a monthly amount for a mutual-aid fund.',
+            '**Help in a concentrated place** if one-on-one feels like too much: soup kitchens, community fridges, shower and laundry days, outreach walks. Groups share the load and come with structure.',
+            'Trust your body. Distress isn’t danger, and you can still leave any moment that doesn’t feel safe.'
+          ]],
+          ['Who can meet these needs', 'Learn the local web of help.', [
+            '**211** (call or text) knows local shelters, meals, showers, safe parking and benefits.',
+            '**988** (call or text) is the crisis line for anyone in emotional distress, including calling on someone else’s behalf. Many California counties also run mobile crisis teams, which don’t send police to a mental-health crisis. For a medical emergency, 911.',
+            'Living in a vehicle is how many people keep a roof as rents outpace wages, and it brings its own needs: a safe place to park overnight (many California cities run **safe parking** programs), water, bathrooms, laundry and showers.',
+            '**Showers are a real need.** Gym memberships, beaches, truck stops and mobile shower buses (like LavaMaex, started in San Francisco in 2014) are how many people stay clean, and every added shower meets more needs.',
+            'Harm-reduction groups, street medicine teams and outreach workers meet people where they are. Asking them what’s most needed (often socks, water, tents, transit passes) beats guessing.'
+          ], '<p class="rel-q">Related: <a href="#lens-food/gather/free">Food: free food, and food without a kitchen</a> · <a href="' + spHref('neighbors') + '">Neighbors</a></p>'],
+          ['Advocacy', 'The least powerful are the most governed.', [
+            'People with the least power are the most shaped by the rules: where it’s legal to sleep, park, sit or wash. Since **City of Grants Pass v. Johnson** (US Supreme Court, 2024), cities can fine or jail people for sleeping outside even when there’s no shelter bed.',
+            'Being unhoused is life-threatening: heat, cold, illness and violence all hit harder without walls, and people without homes die much younger on average.',
+            'California has more unhoused people than any other state, and most are unsheltered. A 2023 UCSF statewide study found most became homeless in the county they still live in, after losing housing they could no longer afford.',
+            '**Housing First** (a home with no preconditions, then support) keeps most people housed in study after study.',
+            'Show up where decisions are made: city council meetings, public comment, budget hearings. Bring the needs, not only the complaints: showers, bathrooms, parking, water, homes.'
+          ], src('Sources: <i>City of Grants Pass v. Johnson</i> (US Supreme Court, 2024); HUD, <i>Annual Homeless Assessment Report to Congress</i>; UCSF Benioff Homelessness and Housing Initiative, <i>California Statewide Study of People Experiencing Homelessness</i> (2023).') +
+            '<p class="rel-q">Next: <a href="' + spHref('power') + '">Power &amp; peace</a> · <a href="' + spHref('coops') + '">Cooperatives</a> (housing co-ops and land trusts) · <a href="#lens-governance">Governance</a></p>' +
+            tryIt('Look up what your city offers for showers and safe parking. Who runs it, and what do they need?')]
+        ],
+        after: (mn().opinion ? mn().opinion('<p>Renting has stopped meeting the need for shelter for a lot of people, so rather than wait on it I’d meet needs where people actually live now, in cars and vans, with more showers, parking and water, the way good neighbors would.</p><p class="opinion-src">In the UCSF study, the median household income in the six months before losing housing was $960 a month (CASPEH, 2023).</p>') : ''),
+        note: 'The full People in distress unit (scripts for hard moments, care bags, and local programs by county) is in progress.',
+        related: [spHref('neighbors'), 'Neighbors']
+      },
       coops: {
       id: 'coops', letter: 'C', name: 'Cooperatives', sub: 'Workplaces and homes owned and run together',
       lede: 'Most workplaces and most housing are set up so that someone outside the work, or outside the home, owns it and collects the profit. Cooperatives flip that: the people doing the work, or living in the homes, own them together and decide together. It’s one of the oldest ways to share power, and it’s growing.',
@@ -598,7 +694,8 @@
     }
     if (UNIT[seg[0]]) return viewUnit(UNIT[seg[0]], seg[1]);
     if (seg[0] === 'special') return viewSpecial(seg[1]);
-    if (seg[0] === 'pets' || seg[0] === 'wild') return viewSpecial('animals');
+    if (seg[0] === 'pets') return viewSpecial('family');
+    if (seg[0] === 'wild') return viewSpecial('wild');
     if (D.APPS.some(function (a) { return a.id === seg[0]; })) return viewSpecial(seg[0]);
     return viewOverview();
   };

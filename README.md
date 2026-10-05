@@ -10,16 +10,16 @@ Plain HTML, CSS and JavaScript. No build step, no server, no accounts.
 | File | What |
 | --- | --- |
 | `index.html` | The page shell |
-| `style.css` | Look: colour tokens (light only), glass panels, layout |
+| `style.css` | Look: colour tokens (light only), glass panels, layout. On phones (≤720px) each tier's cards scroll sideways one at a time inside the tier panel, with dots below (`tierDots` in `app.js`) |
 | `lenses.js` | The lens catalogue (`window.MN_TIERS`): tiers (each with one colour), lenses, status, copy |
-| `app.js` | Home, About, lens pages, profile; hash routes `#`, `#about`, `#plans`, `#favorites`, `#profile`, `#lens-<id>[/<sub>]` |
+| `app.js` | Home, About (linked beside the Kinship logo in the header), lens pages, profile; hash routes `#`, `#about`, `#plans`, `#favorites`, `#profile`, `#lens-<id>[/<sub>]` |
 | `FOUNDATION.md` | The principles behind every lens |
 | `rel-data.js` | Relationships course data: skill tree, feelings wheel, needs, accusation words, examples |
 | `rel.js` | Relationships course: overview, one page per unit (feel, need, request, dialogue) with the vertical skill-tree sidebar, and tools (`#lens-relationships`, `#lens-relationships/<unit>[/<sub-unit>]`). Special situations: one page with an accordion each, Animals first (`#lens-relationships/special[/<id>]`; older routes like `#lens-relationships/animals` open the matching accordion) |
 | `rel.css` | Relationships course styles |
 | `water.js` | Water course: six units (Uses, Sources, Storage, Purify, Testing, Costs), one page each, tailored from the profile, with tools (`#lens-water`, `#lens-water/<unit>[/<sub-unit>]`) |
 | `water.css` | Water course styles (units in blues, darkest to lightest) |
-| `food.js` | Food course: five units (Gather, Cleanse, Rehydrate, Cook, Store), one page each, tailored from the profile, with tools: Soak & cook, How long it keeps (no-fridge living opens from the profile's `cold` answer or a portable-only place) (`#lens-food`, `#lens-food/<unit>[/<sub-unit>]`) |
+| `food.js` | Food course: seven units (Gather, Cleanse, Rehydrate, Cook, Store, Gentle, Companions), one page each, tailored from the profile (including `pets`: cat, dog, small animals), with tools: Soak & cook, How long it keeps, Make it gentle (no-fridge living opens from the profile's `cold` answer or a portable-only place) (`#lens-food`, `#lens-food/<unit>[/<sub-unit>]`) |
 | `food.css` | Food course styles (units in dark greens, darkest to lightest; `fo-` prefix) |
 | `tox.js` | Toxins course: seven units (Exposures, Plastics, In the home, Pesticides, Soil, Living toxins, Neighbors), each sub-unit ending in a “How to fix” card (mode: One by one, Test once, Habit, Together; cost; steps free first) that can be added to **My list**, a reorderable one-by-one tracker (`localStorage` `meeting-needs.tox.v1`). Tools: Where to start, Soil batch planner (`#lens-toxins`, `#lens-toxins/list`, `#lens-toxins/<unit>[/<sub-unit>]`) |
 | `tox.css` | Toxins course styles (units in reds, darkest to lightest; `tx-` prefix) |
@@ -81,8 +81,14 @@ Laws mentioned in courses are California's; the practices themselves are general
 
 ## Where shared topics live
 - **Mold and poisons live in Toxins** (Living toxins → Mold in the house and Mold on food; Exposures → Companion animals, what each species can’t process). Air, Water and Food mention damp or spoilage where it fits their own job and link there rather than repeating it.
+- **Self-defense** (tier 3) holds noticing, de-escalation, getting away and home preparation; Emergency prep → Securing your home and Personal safety link to it rather than repeating it.
 - **Natural disasters** are planned in Emergency prep; Air covers what each event puts into the air and how to read it, and links both ways.
 - **Sun on skin** is introduced in Air (Sun & temperature) and lives in full in Body care.
+- **Food as medicine** (gentle foods, oral rehydration, soft textures) starts in Food → Gentle; Body care and First aid will build on it and link back.
+- **What companion animals eat** lives in Food → Companions; what their bodies can’t process stays in Toxins → Exposures → Companion animals.
+- **People in distress** (unhoused neighbors and people struggling in public) is a special situation in Emotions & love, beside Neighbors.
+- **Animals in Emotions & love** come in three accordions: Animals (respectful language, farmed animals, Across Kinship), Family animals (companions and their emotional needs) and Wild animals (wild neighbors and shared land). Old `/pets` and `/wild` routes open the matching one.
+- **Plastic nuance:** Toxins → Plastics → When plastic is the safer bet holds the calculated-risk view (tarps, tents, water jugs for people living outside or camping).
 - **Tools never gate the teaching.** Every unit is open to read in order; tools are shortcuts into it.
 
 ## Courses inside a lens
