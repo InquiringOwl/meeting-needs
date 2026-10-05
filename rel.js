@@ -66,8 +66,8 @@
           return '<li><a href="' + href(u.id, s.id) + '" data-spy="' + u.id + '-' + s.id + '"' + (s.isTool ? ' class="tool"' : '') + '>' + esc(s.title) + (s.isTool ? ' <span class="rel-tooltag">tool</span>' : '') + '</a></li>';
         }).join('') + '</ol></li>';
     }).join('');
-    return '<nav class="rel-nav" aria-label="Relationships course">' +
-      '<details class="rel-nav-wrap"' + (wide ? ' open' : '') + '><summary class="rel-nav-head"><span class="eyebrow">Course map</span><b>Relationships</b></summary>' +
+    return '<nav class="rel-nav" aria-label="Emotions &amp; love course">' +
+      '<details class="rel-nav-wrap"' + (wide ? ' open' : '') + '><summary class="rel-nav-head"><span class="eyebrow">Course map</span><b>Emotions &amp; love</b></summary>' +
       '<a class="rel-nav-over" href="' + BASE + '"' + (!cur ? ' aria-current="page"' : '') + '>Overview</a>' +
       '<ol class="rel-vt">' + units + '</ol>' +
       '<div class="rel-vt-apps"><span class="eyebrow">Then, special applications</span><p>' + D.APPS.map(function (a) { return esc(a.name); }).join(' · ') + '</p><span class="rel-later">Coming later</span></div>' +
@@ -85,9 +85,9 @@
         '<ol>' + u.subs.map(function (s) { return '<li><a href="' + href(u.id, s.id) + '">' + esc(s.title) + (s.isTool ? ' <span class="rel-tooltag">tool</span>' : '') + '</a></li>'; }).join('') + '</ol></li>';
     }).join('');
     return {
-      title: 'Relationships · Meeting Needs',
+      title: 'Emotions & love · Meeting Needs',
       html: layout(null,
-        '<section class="rel-hero"><span class="eyebrow">Tier 1 · Roots · Course</span><h1 tabindex="-1">Relationships</h1>' +
+        '<section class="rel-hero"><span class="eyebrow">Tier 1 · Signals · Course</span><h1 tabindex="-1">Emotions &amp; love</h1>' +
         '<p class="lede">Every conflict is two people trying to meet their universal needs through ineffective strategies. Learn to hear your own needs, meet others’ generously while keeping yours met, and bring that same care to kids, housemates, groups, animals and plants.</p></section>' +
         '<ol class="rel-ucards" aria-label="The four units">' + cards + '</ol>' +
         '<section class="rel-tools" aria-label="Tools">' +
@@ -125,7 +125,7 @@
       '</nav>';
     if (subId) setTimeout(function () { var el = document.getElementById('sec-' + u.id + '-' + subId); if (el) el.scrollIntoView({ block: 'start' }); }, 0);
     setTimeout(spy, 0);
-    return { title: u.word + ' · Relationships · Meeting Needs', html: layout(u.id, html) };
+    return { title: u.word + ' · Emotions & love · Meeting Needs', html: layout(u.id, html) };
   }
 
   /* Highlight the sub-unit you're reading in the sidebar. */
