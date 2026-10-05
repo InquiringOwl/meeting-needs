@@ -1,4 +1,4 @@
-/* Governance lens (tier 5, in progress): a lens on what stops people, legally, from meeting basic needs, who decides over shared needs,
+/* Governance lens (tier 6, in progress): a lens on what stops people, legally, from meeting basic needs, who decides over shared needs,
    and how to advocate in the systems we have (and outside them) for better ones. Starts with California water and criminalization;
    housing (who owns homes, including private equity) is next. Registers window.MN_LENS_VIEWS.governance. */
 (function () {
@@ -30,7 +30,7 @@
 
   function view() {
     var html =
-      '<section class="gv-hero"><span class="gv-pill">Tier 5 · Craft · In progress</span><h1 tabindex="-1">Governance</h1>' +
+      '<section class="gv-hero"><span class="gv-pill">Tier 6 · Craft · In progress</span><h1 tabindex="-1">Governance</h1>' +
       '<p class="gv-lede">Governance is one more lens on meeting needs: what stops people, legally, from meeting their basic needs, and how to advocate for yourself in the systems we have while building better ones. Every shared need (water, air, land, a place to sleep) is governed by someone, often far from the people it touches. Some paths run through law; plenty don’t, like asking your church, a co-op or your block to meet a need directly. It starts with California water and criminalization; more will gather here as other lenses open.</p></section>' +
 
       sec(1, 'Two views, the same needs', 'Strategies differ by place; the needs underneath are shared.',

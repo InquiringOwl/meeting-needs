@@ -260,8 +260,8 @@
     var solid = l.tier.num === 1 || l.status === 'ready';
     var linked = !l.tier.locked || l.status === 'ready';
     var cls = 'lens is-' + l.status + (solid ? ' is-solid' : '');
-    /* Tier 2 cards skip the top row when ready: the solid card already says so, and the row only took space. */
-    var top = l.tier.num === 2 && l.status === 'ready' ? '' : (STATUS[l.status] ? '<span class="badge ' + l.status + '">' + STATUS[l.status] + '</span>' : '');
+    /* Tier 1 and 2 cards skip the top row when ready: the solid card already says so, and the row only took space. */
+    var top = l.tier.num <= 2 && l.status === 'ready' ? '' : (STATUS[l.status] ? '<span class="badge ' + l.status + '">' + STATUS[l.status] + '</span>' : '');
     var tag = linked ? 'a' : 'div';
     if (!linked) cls += ' is-static';
     return '<' + tag + ' class="' + cls + '"' + (linked ? ' href="#lens-' + l.id + '"' : '') + ' style="--lc:' + l.color + '">' +

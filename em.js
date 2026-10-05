@@ -1,4 +1,4 @@
-/* Emergency prep lens (tier 4, in progress): course content, profile tailoring, My prep list and a hazard tool.
+/* Emergency prep lens (tier 5, in progress): course content, profile tailoring, My prep list and a hazard tool.
    Registers window.MN_LENS_VIEWS['emergency-prep'].
    Routes: #lens-emergency-prep (overview) · #lens-emergency-prep/list · #lens-emergency-prep/<unit>[/<sub>].
    Unit 1 (What to prep for) is written; later units are planned and shown dashed. Units are blues, darkest (1) to lightest.
@@ -225,7 +225,7 @@
   }
   function layout(U, cur, main) { return mn().header('home') + '<div class="em-layout">' + sidebar(U, cur) + '<main class="em-main">' + main + '</main></div>' + mn().footer(); }
   function viewOverview(U) {
-    return '<section class="em-hero"><span class="em-lens-pill">Tier 4 · Resilience · In progress</span><h1 tabindex="-1">Emergency prep</h1>' +
+    return '<section class="em-hero"><span class="em-lens-pill">Tier 5 · Resilience · In progress</span><h1 tabindex="-1">Emergency prep</h1>' +
       '<p class="em-lede">Plan ahead so you can stay calm when it counts. Preparing is care done early: for yourself, the people and animals you live with, and your neighbors. It starts with the events your place actually asks you to plan for, then builds out supplies, go-bags, plans and a safe home.</p></section>' +
       '<ol class="em-ucards">' + U.map(function (u) {
         if (u.planned) return '<li><div class="em-ucard ek' + u.num + ' is-planned"><i class="em-band"></i><span class="em-n">0' + u.num + ' · Planned</span><b>' + u.word + '</b><span>' + u.sub + '</span><ol>' + u.planned.map(function (p) { return '<li>' + p + '</li>'; }).join('') + '</ol></div></li>';

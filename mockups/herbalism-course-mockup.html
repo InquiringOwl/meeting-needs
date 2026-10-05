@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kinship · Herbalism (course mock-up)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500..800&family=Instrument+Sans:wght@400..700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Mock-up only. Mirrors Kinship's style.css + the Food mock-up so it can move into herb.css later. */
+:root {
+  --bg:#F1EEF5; --ink:#1F1A28; --ink-2:#352D42; --muted:#4F465E; --accent:#5B3A8C;
+  --glass:rgba(255,255,255,.42); --glass-strong:rgba(255,255,255,.64); --glass-faint:rgba(255,255,255,.24);
+  --glass-edge:rgba(255,255,255,.78); --chip:rgba(255,255,255,.62); --line:rgba(31,26,40,.16);
+  --soft-line:rgba(31,26,40,.08); --focus:#2F6E9E; --lens:#7A4FB0;
+  --f-head:'Manrope','Instrument Sans',system-ui,sans-serif;
+  --f-body:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  /* Herbalism lens theme (Craft tier purple), darkest (1) to lightest (5); kr rosemary, kl lavender, kp pile tool. */
+  --c1-bg:#ECE5F4; --c1-mid:#DCCEEB; --c1-edge:#CBB8E1; --c1-dot:#3F2466; --c1-on:#fff;
+  --c2-bg:#EFE9F6; --c2-mid:#E1D5EE; --c2-edge:#D2C1E6; --c2-dot:#5A3889; --c2-on:#fff;
+  --c3-bg:#F2EDF8; --c3-mid:#E6DCF1; --c3-edge:#D9CAEA; --c3-dot:#7A4FB0; --c3-on:#fff;
+  --c4-bg:#F5F1F9; --c4-mid:#EBE3F4; --c4-edge:#E0D4EE; --c4-dot:#A386CB; --c4-on:#1F1A28;
+  --c5-bg:#F8F5FB; --c5-mid:#F0EAF7; --c5-edge:#E7DDF2; --c5-dot:#C9B6E3; --c5-on:#1F1A28;
+  --k-bg:var(--glass-faint); --k-mid:var(--chip); --k-edge:var(--line); --k-dot:var(--muted); --k-on:#fff;
+}
+.k1{--k-bg:var(--c1-bg);--k-mid:var(--c1-mid);--k-edge:var(--c1-edge);--k-dot:var(--c1-dot);--k-on:var(--c1-on)}
+.k2{--k-bg:var(--c2-bg);--k-mid:var(--c2-mid);--k-edge:var(--c2-edge);--k-dot:var(--c2-dot);--k-on:var(--c2-on)}
+.k3{--k-bg:var(--c3-bg);--k-mid:var(--c3-mid);--k-edge:var(--c3-edge);--k-dot:var(--c3-dot);--k-on:var(--c3-on)}
+.k4{--k-bg:var(--c4-bg);--k-mid:var(--c4-mid);--k-edge:var(--c4-edge);--k-dot:var(--c4-dot);--k-on:var(--c4-on)}
+.k5{--k-bg:var(--c5-bg);--k-mid:var(--c5-mid);--k-edge:var(--c5-edge);--k-dot:var(--c5-dot);--k-on:var(--c5-on)}
+
+*{box-sizing:border-box}
+html{overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;overflow-x:clip}
+h1,h2,h3{font-family:var(--f-head);margin:0;text-wrap:balance}
+p{margin:0}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:8px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+.sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.sky span{position:absolute;border-radius:50%;filter:blur(12px)}
+.sky .a{left:-12vw;top:-18vh;width:60vw;height:60vw;max-width:780px;max-height:780px;background:radial-gradient(circle,rgba(160,126,203,.42),transparent 68%)}
+.sky .b{right:-14vw;top:8vh;width:58vw;height:58vw;max-width:780px;max-height:780px;background:radial-gradient(circle,rgba(126,170,140,.32),transparent 68%)}
+.sky .c{left:25vw;bottom:-30vh;width:64vw;height:64vw;max-width:860px;max-height:860px;background:radial-gradient(circle,rgba(190,160,225,.35),transparent 68%)}
+
+.wrap{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:20px clamp(16px,3vw,40px) 72px;display:flex;flex-direction:column;gap:24px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px;border-radius:999px;background:var(--glass);border:1px solid var(--glass-edge)}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink)}
+.brand b{font-family:var(--f-head);font-weight:800;font-size:20px;letter-spacing:-.02em}
+.mock{font-family:var(--f-mono);font-size:12px;padding:4px 10px;border-radius:999px;border:1.5px dashed var(--line);color:var(--muted)}
+
+.layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:28px;align-items:start}
+.main{min-width:0;display:flex;flex-direction:column;gap:20px}
+
+/* Sidebar tree */
+.nav{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;scrollbar-width:thin;padding:14px;border-radius:26px;background:rgba(255,255,255,.72);border:1px solid var(--glass-edge)}
+.nav-head{display:flex;flex-direction:column;padding:2px 6px 8px}
+.nav-head b{font-family:var(--f-head);font-size:21px;font-weight:800;letter-spacing:-.02em}
+.nav-over{display:flex;align-items:center;min-height:36px;padding:0 8px;margin-bottom:6px;border-radius:12px;color:var(--ink);text-decoration:none;font-weight:600;font-size:15px}
+.nav-over:hover,.nav-over.cur{background:var(--chip)}
+.vt{list-style:none;margin:0;padding:0;position:relative}
+.vt::before{content:'';position:absolute;left:21px;top:22px;bottom:22px;width:2px;border-radius:2px;background:linear-gradient(var(--c1-dot),var(--c3-dot),var(--c5-dot))}
+.vt-unit{position:relative;padding:3px 0}
+.vt-head{display:flex;align-items:center;gap:12px;min-height:46px;padding:4px 8px;border-radius:16px;color:var(--ink);text-decoration:none}
+.vt-head:hover{background:var(--k-bg)}
+.vt-unit.cur>.vt-head{background:var(--k-mid)}
+.vt-dot{position:relative;z-index:1;width:28px;height:28px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--k-dot);color:var(--k-on);box-shadow:0 0 0 4px var(--bg);font-family:var(--f-mono);font-size:13px}
+.vt-head b{display:block;font-family:var(--f-head);font-size:17px;font-weight:800;line-height:1.1}
+.vt-head small{display:block;font-size:13px;color:var(--muted)}
+.vt-subs{list-style:none;margin:2px 0 4px;padding:0 0 0 36px;display:none;flex-direction:column}
+.vt-unit.cur .vt-subs{display:flex}
+.vt-subs a{position:relative;display:flex;align-items:center;min-height:30px;padding:3px 8px;border-radius:10px;color:var(--ink-2);text-decoration:none;font-size:14px;line-height:1.25}
+.vt-subs a::before{content:'';position:absolute;left:-19px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:var(--k-dot)}
+.vt-subs a:hover{background:var(--k-bg);color:var(--ink)}
+
+/* Situation panel (reads and writes the Kinship profile) */
+.sit{border-radius:22px;background:var(--glass-strong);border:1px solid var(--soft-line)}
+.sit>summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:14px 18px}
+.sit>summary::-webkit-details-marker{display:none}
+.sit-sum{font-size:14.5px;color:var(--ink-2)}
+.sit-chips{display:flex;flex-wrap:wrap;gap:6px}
+.sit-chips span{font-size:13px;padding:3px 10px;border-radius:999px;background:#fff;border:1px solid var(--soft-line)}
+.sit-edit{margin-left:auto;font-size:14px;font-weight:600;color:var(--accent)}
+.sit-body{padding:0 18px 16px;display:flex;flex-direction:column;gap:12px}
+.qgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.qgrid label.f select{width:100%}
+.sit-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:13.5px;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;min-height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--soft-line);background:#fff;color:var(--ink);font:inherit;font-size:14.5px;font-weight:600;cursor:pointer;text-decoration:none}
+.btn.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.outage{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;padding:6px 14px;border-radius:999px;border:1px dashed var(--line);background:var(--glass-faint);cursor:pointer}
+.outage:has(input:checked){background:#FFF1E6;border-style:solid;border-color:#E9C29F}
+
+/* Overview */
+.hero{display:flex;flex-direction:column;gap:12px}
+.lens-pill{align-self:flex-start;padding:6px 12px;border-radius:999px;background:var(--lens);color:#fff;font-family:var(--f-mono);font-size:12px;line-height:1}
+.hero h1{font-weight:800;font-size:clamp(46px,6.4vw,84px);line-height:.95;letter-spacing:-.04em}
+.lede{font-size:clamp(17px,1.6vw,20px);color:var(--ink-2);max-width:66ch}
+.ucards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.ucard{display:flex;flex-direction:column;gap:8px;height:100%;padding:0 0 16px;border-radius:24px;background:var(--k-bg);border:1px solid var(--k-edge);text-decoration:none;color:var(--ink);overflow:hidden}
+.ucard>*{margin-inline:18px}
+.ucard .band{margin:0;height:10px;background:var(--k-dot)}
+.ucard:hover{background:var(--k-mid)}
+.ucard .n{font-family:var(--f-mono);font-size:13px;color:var(--muted);margin-top:6px}
+.ucard b{font-family:var(--f-head);font-weight:800;font-size:clamp(24px,2.4vw,30px);line-height:1;letter-spacing:-.03em}
+.ucard span{font-size:15px;color:var(--ink-2)}
+.ucard ol{margin-top:4px;padding:8px 0 0 18px;border-top:1px solid var(--k-edge);font-size:13.5px;color:var(--ink-2)}
+.funfact,.review{display:flex;flex-direction:column;gap:6px;padding:16px 20px;border-radius:20px;font-size:15px;color:var(--ink-2)}
+.funfact{background:var(--glass-faint);border:1px solid var(--soft-line)}
+.review{border:1.5px dashed var(--line)}
+.review ul{margin:0;padding-left:18px}
+.truths{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.truth{padding:14px 16px;border-radius:18px;background:rgba(255,255,255,.7);border:1px solid var(--soft-line)}
+.truth b{display:block;font-family:var(--f-head);font-size:16.5px;margin-bottom:2px}
+.truth p{font-size:14.5px;color:var(--ink-2)}
+
+/* Unit page */
+.page[hidden]{display:none}
+.unit-hero{display:flex;flex-direction:column;gap:6px;padding:clamp(22px,3vw,32px);border-radius:28px;background:var(--k-bg);border:1px solid var(--k-edge);border-top:10px solid var(--k-dot)}
+.unit-hero h1{font-weight:800;font-size:clamp(44px,5.6vw,72px);line-height:.95;letter-spacing:-.04em}
+.unit-sub{font-family:var(--f-head);font-size:19px;font-weight:600;color:var(--ink-2)}
+.unit-hero .lede{font-size:16.5px;margin-top:4px}
+.jumps{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.jumps a{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 14px;border-radius:999px;background:var(--glass-strong);color:var(--ink);text-decoration:none;font-size:14px;font-weight:600}
+.jumps a span{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-weight:400}
+.jumps a:hover{background:var(--k-mid)}
+
+.sub{display:flex;flex-direction:column;gap:12px;padding:22px 24px;border-radius:24px;background:rgba(255,255,255,.74);border:1px solid var(--k-edge);scroll-margin-top:16px}
+.sub-top{display:flex;align-items:baseline;gap:10px}
+.sub-n{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);flex:none}
+.sub h2{font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+.sub>p{font-size:15.5px;max-width:78ch}
+.sub ul,.sub ol{margin:0;padding-left:20px;font-size:15px;color:var(--ink-2);display:flex;flex-direction:column;gap:4px;max-width:80ch}
+.do,.home,.old,.ca{font-size:14.5px;padding:10px 12px;border-radius:14px}
+.home{background:var(--k-bg);color:var(--ink-2)}
+.home::before{content:'At home · '}
+.do{background:var(--k-mid)}
+.do::before{content:'Try it · '}
+.old{background:#F6F1E7;color:var(--ink-2);border-left:4px solid #C9AE7C}
+.old::before{content:'Old ways · '}
+.ca{background:#FFF7E8;color:var(--ink-2);border-left:4px solid #E3B25B}
+.ca::before{content:'In California · '}
+.home::before,.do::before,.old::before,.ca::before{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.links{font-size:13px;color:var(--muted)}
+.links::before{content:'Links to → ';font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.kind{padding:12px 16px;border-radius:16px;background:#F3EEF8;border:1px solid #E1D6EE;font-size:14.5px;color:var(--ink-2)}
+
+/* Grade ladder (unit 1): the grades step lighter like the units */
+.ladder{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.rung{display:flex;flex-direction:column;gap:6px;padding:14px 16px;border-radius:18px;border:1px solid var(--soft-line)}
+.rung b{font-family:var(--f-head);font-size:18px}
+.rung small{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.rung p{font-size:14px;color:var(--ink-2)}
+.r1{background:#D4E6F7}.r2{background:#E7F2EA}.r3{background:#F3EAD8}.r4{background:#EFE3E3}
+
+/* Accordions */
+.accs{display:flex;flex-direction:column;gap:8px}
+.acc{border-radius:16px;background:var(--k-bg);border:1px solid var(--k-edge)}
+.acc>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;min-height:48px;padding:8px 14px;font-weight:600;font-size:15.5px}
+.acc>summary::-webkit-details-marker{display:none}
+.acc>summary::after{content:'+';margin-left:auto;font-family:var(--f-mono);font-size:18px;color:var(--muted);flex:none}
+.acc[open]>summary::after{content:'–'}
+.acc>summary:hover{background:var(--k-mid);border-radius:16px}
+.acc .who{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:#fff;color:var(--ink-2);font-weight:400;flex:none}
+.acc .for-you{display:none;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:var(--k-dot);color:var(--k-on);font-weight:400;flex:none}
+.acc.match{box-shadow:0 0 0 2px var(--k-dot)}
+.acc.match .for-you{display:inline-block}
+.acc .in{padding:2px 16px 14px;display:flex;flex-direction:column;gap:8px;font-size:15px;color:var(--ink-2)}
+
+/* Notes, tables, tools */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.note{display:flex;flex-direction:column;gap:6px;padding:14px 18px;border-radius:18px;background:#FFF8EC;border:1px solid #EFDDB8;font-size:14.5px;color:var(--ink-2)}
+.note b.h{font-family:var(--f-head);font-size:16.5px;color:var(--ink)}
+.tbl-wrap{overflow-x:auto;border-radius:18px;border:1px solid var(--k-edge);background:#fff}
+table{border-collapse:collapse;width:100%;min-width:600px;font-size:14px}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--soft-line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--k-bg)}
+td:first-child{font-weight:600}
+td.y{color:#2E6B35}td.p{color:#8A6418}td.n{color:#9A4A3A}
+.legend{font-size:12.5px;color:var(--muted)}
+.tool{display:flex;flex-direction:column;gap:10px;padding:16px 18px;border-radius:20px;background:var(--k-mid);border:1px solid var(--k-edge)}
+.tool b.t{font-family:var(--f-head);font-size:19px;font-weight:800}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);font-family:var(--f-mono);min-width:0;max-width:100%}
+input[type=number],select{font:inherit;font-family:var(--f-body);font-size:15.5px;min-height:40px;padding:0 12px;border-radius:12px;border:1px solid var(--soft-line);background:#fff;color:var(--ink);max-width:100%}
+input[type=number]{width:100px}
+.chk{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--ink-2);min-height:40px}
+.out{padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.85);font-size:15px}
+.out strong{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.02em;display:block;line-height:1.1}
+.out small{display:block;color:var(--muted);font-size:13px;margin-top:4px}
+
+.pager{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.pager a{display:inline-flex;flex-direction:column;gap:2px;padding:12px 18px;border-radius:18px;background:var(--glass-strong);border:1px solid var(--soft-line);color:var(--ink);text-decoration:none;min-width:200px}
+.pager a small{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.pager a b{font-family:var(--f-head);font-size:18px}
+.pager a.next{margin-left:auto;text-align:right}
+.pager a:hover{background:#fff}
+
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr}
+  .nav{position:static;max-height:none}
+  .pager a{min-width:0;flex:1}
+}
+/* Shared additions (from the Food mock-up) */
+.vt-subs a.tool-link{font-weight:600}
+.danger{font-size:14.5px;padding:10px 12px;border-radius:14px;background:#FBEDEA;color:var(--ink-2);border-left:4px solid #C9806F}
+.danger::before{content:'Take care · ';font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.together{font-size:14.5px;padding:10px 12px;border-radius:14px;background:#F3EEF8;color:var(--ink-2);border-left:4px solid #B69AD3}
+.together::before{content:'Together · ';font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.plate{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.plate div{padding:12px 14px;border-radius:16px;background:var(--k-bg);border:1px solid var(--k-edge)}
+.plate b{display:block;font-family:var(--f-head);font-size:16px}
+.plate p{font-size:14px;color:var(--ink-2)}
+.status{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:12px;letter-spacing:.04em;padding:3px 10px;border-radius:999px}
+.st-ok{background:#E3F1E1;color:#2E6B35}.st-warn{background:#FBF0D9;color:#7A5714}.st-no{background:#F7E3DF;color:#8A3E31}
+
+
+/* Herbalism additions */
+.kr{--k-bg:#EAF1EC;--k-mid:#D6E6DB;--k-edge:#C2D9C9;--k-dot:#2F5E48;--k-on:#fff}
+.kl{--k-bg:#F1ECF8;--k-mid:#E3D8F1;--k-edge:#D4C4EA;--k-dot:#7B5BB6;--k-on:#fff}
+.kp{--k-bg:#F5F0E6;--k-mid:#EBE1CD;--k-edge:#DFD0B2;--k-dot:#8A6A2E;--k-on:#fff}
+.nav-label{display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:10px 8px 4px}
+.vt.herbs::before{background:linear-gradient(#2F5E48,#7B5BB6)}
+.vt-unit.planned .vt-dot{background:transparent;color:var(--k-dot);border:2px dashed var(--k-dot)}
+.vt-unit.planned .vt-head small::after{content:' · planned'}
+.planned-herb .vt-dot{background:transparent;border:2px dashed var(--line);color:var(--muted)}
+.planned-herb .vt-head b{font-size:14px;font-weight:700}
+.pile-link{background:#F5F0E6}
+.sec-h{font-size:26px;font-weight:800;letter-spacing:-.02em;margin-top:8px}
+.ucard.planned-card{border-style:dashed;background:var(--glass-faint)}
+.ucard.planned-card .band{background:var(--line)}
+.pile-cta{display:flex;flex-direction:column;gap:4px;padding:18px 22px;border-radius:24px;background:#F5F0E6;border:1px solid #DFD0B2;border-left:10px solid #8A6A2E;text-decoration:none;color:var(--ink)}
+.pile-cta b{font-family:var(--f-head);font-size:24px;font-weight:800;letter-spacing:-.02em}
+.pile-cta span:last-child{color:var(--ink-2);font-size:15px}
+.pile-cta:hover{background:#EFE6D3}
+.e1{background:#DCEBDD}.e2{background:#E8EFDA}.e3{background:#F3EAD8}.e4{background:#EEE9EF}
+.ev{display:inline-block;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.03em;padding:3px 9px;border-radius:999px;white-space:nowrap;color:var(--ink-2)}
+.ev.e1{background:#CFE5D1}.ev.e2{background:#E1EBCD}.ev.e3{background:#EFE0C2}.ev.e4{background:#E6DFE8}
+td small{font-weight:400;color:var(--muted)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:12px}
+.steps>div{padding:12px 14px;border-radius:14px;background:var(--k-bg);border:1px solid var(--k-edge)}
+.steps ol{margin:6px 0 0;padding-left:18px;font-size:14.5px;color:var(--ink-2);display:flex;flex-direction:column;gap:5px}
+.tool select{min-width:200px}
+</style>
+</head>
+<body>
+<div class="sky" aria-hidden="true"><span class="a"></span><span class="b"></span><span class="c"></span></div>
+<div class="wrap">
+
+<header class="top">
+  <a class="brand" href="#"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="#C2477F" d="M12 21s-7.5-4.6-9.3-9.6C1.5 8 3.6 4.5 7 4.5c2 0 3.4 1.1 5 3 1.6-1.9 3-3 5-3 3.4 0 5.5 3.5 4.3 6.9C19.5 16.4 12 21 12 21z"/></svg><b>Kinship</b></a>
+  <span class="mock">Mock-up v1 · Herbalism lens</span>
+</header>
+
+<div class="layout">
+<nav class="nav" aria-label="Herbalism course">
+  <div class="nav-head"><span class="eyebrow">Tier 4 · Nurture</span><b>Herbalism</b></div>
+  <a class="nav-over" href="#">Overview</a>
+  <a class="nav-over pile-link" href="#pile">Tool: Big pile, short time</a>
+  <span class="nav-label">The course</span>
+  <ol class="vt">
+    <li class="vt-unit k1 planned" data-unit="u1"><a class="vt-head" href="#u1"><span class="vt-dot">1</span><span><b>Grow</b><small>What herbs need</small></span></a></li>
+    <li class="vt-unit k2 planned" data-unit="u2"><a class="vt-head" href="#u2"><span class="vt-dot">2</span><span><b>Harvest</b><small>Cutting so the plant thrives</small></span></a></li>
+    <li class="vt-unit k3 planned" data-unit="u3"><a class="vt-head" href="#u3"><span class="vt-dot">3</span><span><b>Dry &amp; store</b><small>Keeping their strength</small></span></a></li>
+    <li class="vt-unit k4 planned" data-unit="u4"><a class="vt-head" href="#u4"><span class="vt-dot">4</span><span><b>Prepare</b><small>Teas, oils, vinegars, salves</small></span></a></li>
+    <li class="vt-unit k5 planned" data-unit="u5"><a class="vt-head" href="#u5"><span class="vt-dot">5</span><span><b>Dose &amp; evidence</b><small>How much, and how sure</small></span></a></li>
+  </ol>
+  <span class="nav-label">Herb by herb</span>
+  <ol class="vt herbs">
+    <li class="vt-unit kr" data-unit="rosemary"><a class="vt-head" href="#rosemary"><span class="vt-dot">R</span><span><b>Rosemary</b><small>Kitchen first, then medicine</small></span></a>
+      <ul class="vt-subs"><li><a href="#rosemary/s1">Meet rosemary</a></li><li><a href="#rosemary/s2">Sort the pile</a></li><li><a href="#rosemary/s3">Clean</a></li><li><a href="#rosemary/s4">Dry</a></li><li><a href="#rosemary/s5">Store and freeze</a></li><li><a href="#rosemary/s6">In the kitchen</a></li><li><a href="#rosemary/s7">As medicine</a></li><li><a href="#rosemary/s8">Make: oil, salve, rinse</a></li><li><a href="#rosemary/s9">Harvest next time</a></li><li><a href="#rosemary/s10">Grow more from scraps</a></li></ul></li>
+    <li class="vt-unit kl" data-unit="lavender"><a class="vt-head" href="#lavender"><span class="vt-dot">L</span><span><b>Lavender</b><small>Scent, sleep and a little in the kitchen</small></span></a>
+      <ul class="vt-subs"><li><a href="#lavender/s1">Which lavender?</a></li><li><a href="#lavender/s2">Sort the pile</a></li><li><a href="#lavender/s3">Clean</a></li><li><a href="#lavender/s4">Dry</a></li><li><a href="#lavender/s5">Store</a></li><li><a href="#lavender/s6">In the kitchen</a></li><li><a href="#lavender/s7">As medicine</a></li><li><a href="#lavender/s8">Make: sachets, spray, bath</a></li><li><a href="#lavender/s9">Harvest next time</a></li><li><a href="#lavender/s10">Grow more from scraps</a></li></ul></li>
+    <li class="vt-unit planned-herb"><span class="vt-head"><span class="vt-dot">·</span><span><b>Mint, lemon balm, calendula, chamomile, sage, thyme</b><small>Planned</small></span></span></li>
+  </ol>
+</nav>
+
+<main class="main">
+
+<!-- ============ OVERVIEW ============ -->
+<section class="page" data-page="">
+  <div class="main">
+  <div class="hero">
+    <span class="lens-pill">TIER 4 · NURTURE</span>
+    <h1>Herbalism</h1>
+    <p class="lede">Herbs meet a lot of needs at once: flavor, comfort, rest, a home that smells good, and the pleasure of making something from the garden. Five units on growing, harvesting, drying, preparing and dosing, then a page for each herb, with how strong the evidence is written right beside every use.</p>
+  </div>
+
+  <ol class="ucards">
+    <li><a class="ucard k1" href="#u1"><i class="band"></i><span class="n">01 · planned</span><b>Grow</b><span>Light, water, soil and pruning, from a windowsill pot to a hedge.</span><ol><li>What herbs need</li><li>Herbs for small or portable spaces</li><li>Pruning that keeps plants young</li><li>Free plants from cuttings</li></ol></a></li>
+    <li><a class="ucard k2" href="#u2"><i class="band"></i><span class="n">02 · planned</span><b>Harvest</b><span>When to cut, how much, and gathering beyond your own garden.</span><ol><li>The time of day and year</li><li>The one-third rule</li><li>Gathering with care</li><li>Sorting and cleaning</li></ol></a></li>
+    <li><a class="ucard k3" href="#u3"><i class="band"></i><span class="n">03 · planned</span><b>Dry &amp; store</b><span>Air, racks, dehydrators and jars that keep scent and strength.</span><ol><li>Five ways to dry</li><li>How to tell it’s dry</li><li>Jars, labels and light</li><li>Freezing instead</li></ol></a></li>
+    <li><a class="ucard k4" href="#u4"><i class="band"></i><span class="n">04 · planned</span><b>Prepare</b><span>Teas, infused oils, vinegars, tinctures, salves and baths.</span><ol><li>Teas and stronger brews</li><li>Infused oils and salves</li><li>Vinegars and syrups</li><li>Tinctures</li><li>Baths and steam</li></ol></a></li>
+    <li><a class="ucard k5" href="#u5"><i class="band"></i><span class="n">05 · planned</span><b>Dose &amp; evidence</b><span>How much, how sure we are, and when to see a clinician.</span><ol><li>The evidence ladder</li><li>Grams, cups and drops</li><li>Medicines that don’t mix</li><li>Kids, pregnancy, elders, animals</li><li>When to see a clinician</li></ol></a></li>
+  </ol>
+
+  <h2 class="sec-h">Herb by herb</h2>
+  <ol class="ucards herbcards">
+    <li><a class="ucard kr" href="#rosemary"><i class="band"></i><span class="n">Ready to read</span><b>Rosemary</b><span>Sort, clean and dry a big pile, cook with it, then the medicinal uses with doses.</span></a></li>
+    <li><a class="ucard kl" href="#lavender"><i class="band"></i><span class="n">Ready to read</span><b>Lavender</b><span>Which lavender you have, drying the buds, sachets and sleep, and a little for baking.</span></a></li>
+    <li><span class="ucard planned-card"><i class="band"></i><span class="n">Planned</span><b>Six more</b><span>Mint, lemon balm, calendula, chamomile, sage and thyme.</span></span></li>
+  </ol>
+
+  <a class="pile-cta" href="#pile"><span class="eyebrow">Just trimmed a hedge?</span><b>Big pile, short time</b><span>A plan for today, this week and next month, sized to your pile.</span></a>
+
+  <h2 class="sec-h">How sure are we?</h2>
+  <p class="lede" style="font-size:16px">Every use on an herb page carries one of these four tags, so a cup of tea for a sore stomach and a claim about memory never look equally certain.</p>
+  <div class="ladder">
+    <div class="rung e1"><small>Tested</small><b>Good trials</b><p>Several well-run human trials agree. Still worth checking with a clinician if you take medicines.</p></div>
+    <div class="rung e2"><small>Some</small><b>Small studies</b><p>A few small or short trials point the same way. Promising, not settled.</p></div>
+    <div class="rung e3"><small>Traditional</small><b>Long use</b><p>Used safely for generations, and recognised by regulators for mild problems, without strong trials.</p></div>
+    <div class="rung e4"><small>Unknown</small><b>Not yet known</b><p>Too little research, or results that disagree. Fine to enjoy, unwise to rely on.</p></div>
+  </div>
+
+  <div class="funfact"><span class="eyebrow">Fun fact</span>
+    <p>Rosemary is so good at slowing fats from going stale that its extract is added to cooking oils and snacks as a natural preservative. The plant that keeps your oil fresh is the same one you just cut off the hedge.</p>
+    <p>Doses on the herb pages come from the European Medicines Agency’s herbal monographs, which list traditional uses, amounts and cautions for each plant. Drying times come from university extension guides. Animal safety comes from the ASPCA’s plant lists.</p>
+  </div>
+  <div class="review"><span class="eyebrow">For review · mock-up notes</span>
+    <ul>
+      <li><b>Herb pages before the core units.</b> Rosemary and Lavender are fully written; units 1–5 are outlines. Each herb page already covers its slice of Grow, Harvest, Dry, Prepare and Dose, so the core units can link into the herb pages for examples.</li>
+      <li><b>Vegan swaps are quiet:</b> salves use candelilla wax, syrups use sugar, no honey or beeswax. No note about why.</li>
+      <li><b>Animals:</b> every herb page has a “Who else lives here?” line for cats, dogs and other companions (lavender is the one to watch with cats).</li>
+      <li><b>Possible profile question:</b> <code>herbs</code> (which herbs you grow or can get). Not built yet; the pile tool asks inline instead.</li>
+    </ul>
+  </div>
+  </div>
+</section>
+
+<!-- ============ PLANNED CORE UNIT STUB (filled by script) ============ -->
+<section class="page" data-page="stub" hidden><div class="main" id="stub"></div></section>
+
+<!-- ============ HERB: ROSEMARY ============ -->
+<section class="page kr" data-page="rosemary" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Herb by herb</span><h1>Rosemary</h1><p class="unit-sub"><i>Salvia rosmarinus</i> · kitchen first, then medicine</p>
+    <p class="lede">A hard trim leaves a mountain of the most useful herb in the garden. Sort it today, dry it this week, and it seasons a year of cooking, with plenty left for tea, baths and hair oil.</p>
+    <ul class="jumps"><li><a href="#rosemary/s1"><span>R.1</span>Meet</a></li><li><a href="#rosemary/s2"><span>R.2</span>Sort</a></li><li><a href="#rosemary/s3"><span>R.3</span>Clean</a></li><li><a href="#rosemary/s4"><span>R.4</span>Dry</a></li><li><a href="#rosemary/s5"><span>R.5</span>Store</a></li><li><a href="#rosemary/s6"><span>R.6</span>Kitchen</a></li><li><a href="#rosemary/s7"><span>R.7</span>Medicine</a></li><li><a href="#rosemary/s8"><span>R.8</span>Make</a></li><li><a href="#rosemary/s9"><span>R.9</span>Harvest</a></li><li><a href="#rosemary/s10"><span>R.10</span>Grow more</a></li></ul>
+  </div>
+
+  <article class="sub" id="rosemary-s1">
+    <div class="sub-top"><span class="sub-n">R.1</span><h2>Meet rosemary</h2></div>
+    <p>A woody Mediterranean shrub with needle-like leaves, green on top and silvery underneath, and small blue to purple flowers. Every kind sold as rosemary (upright, trailing, ‘Tuscan Blue’, ‘Arp’) is the same species, and all of it is edible.</p>
+    <ul>
+      <li><b>What it needs:</b> full sun, soil that drains fast, and very little water once settled. Wet roots are its main trouble.</li>
+      <li><b>After a hard trim:</b> rosemary regrows from green, leafy stems, but rarely from bare brown wood. If whole branches were cut back to bare wood, those may stay bare. A deep watering now helps the rest push new growth before winter.</li>
+      <li><b>Who else lives here?</b> Rosemary is on the ASPCA’s non-toxic list for cats, dogs and horses, so the drying rack can sit where they roam. Rosemary <i>essential oil</i> is a different matter (R.7).</li>
+    </ul>
+    <p class="ca">Rosemary is made for California: drought-tolerant, loved by bees in the winter months when little else flowers, and happy on almost no summer water.</p>
+    <p class="old">“There’s rosemary, that’s for remembrance.” Rosemary was tucked into wedding wreaths and laid on graves across Europe as a sign of memory. Modern research has started to test that link (R.7).</p>
+  </article>
+
+  <article class="sub" id="rosemary-s2">
+    <div class="sub-top"><span class="sub-n">R.2</span><h2>Sort the pile (today)</h2></div>
+    <p>Cut herbs start to wilt and heat up in a heap within a day, so sorting comes first. Tip the pile onto a tarp or old sheet in the shade and make three piles.</p>
+    <div class="plate">
+      <div><b>Kitchen &amp; medicine</b><p>Green, leafy tips and soft stems, roughly the top 4–6 in (10–15 cm). No brown leaves, no dust. This is the treasure.</p></div>
+      <div><b>Craft &amp; fire</b><p>Straight woody stems thicker than a pencil: strip them for skewers, bundle them as kindling, or simmer for a hair rinse (R.8).</p></div>
+      <div><b>Compost</b><p>Brown or dusty leaves, flowers gone over, anything that smells musty, and grass or leaf litter swept up with it.</p></div>
+    </div>
+    <ul>
+      <li><b>Ask the gardeners one question:</b> was anything sprayed on or near these bushes? If yes, or if the bush sits by a road or where dogs mark it, that pile goes to craft and compost, not food. (More in <a href="#">Poisons → Pesticides</a>.)</li>
+      <li><b>Small visitors:</b> spittlebug foam, spiders and beetles ride in on trimmings. Shake each armful over the garden bed so they can walk home.</li>
+      <li><b>Too much?</b> Bundles of fresh rosemary are a lovely thing to give away. A box on the curb, a local Buy Nothing group, or the neighbors who cook.</li>
+    </ul>
+    <p class="together">Sorting is perfect work for small hands: the green pile and the brown pile, plus a smell test for each. Children learn the herb by touch and smell long before they learn its name.</p>
+    <p class="do">Start with the kitchen pile. If time runs out today, those are the stems worth saving first.</p>
+  </article>
+
+  <article class="sub" id="rosemary-s3">
+    <div class="sub-top"><span class="sub-n">R.3</span><h2>Clean</h2></div>
+    <p>Garden trimmings carry dust and the odd insect, so a quick rinse helps. The goal is clean <i>and</i> dry, because water left on the leaves turns into mold on the drying rack.</p>
+    <ol>
+      <li>Fill a sink or big bowl with cool water. Swish a handful of sprigs, then lift them out so the grit stays at the bottom.</li>
+      <li>Change the water when it looks cloudy. Twice through is usually enough.</li>
+      <li>Shake hard, spin in a salad spinner if you have one, or roll in a towel.</li>
+      <li>Spread on a towel in the shade or indoors until no water shows on the leaves, usually 1–3 hours. Then dry or store.</li>
+    </ol>
+    <p class="home">Leaves that look clean and came from a high branch away from paths can skip the rinse. Rosemary’s oils sit on the leaf surface, so less handling keeps more scent.</p>
+  </article>
+
+  <article class="sub" id="rosemary-s4">
+    <div class="sub-top"><span class="sub-n">R.4</span><h2>Dry</h2></div>
+    <p>Rosemary is one of the easiest herbs to dry: thin leaves, little water, sturdy stems. Air drying keeps the most flavor and costs nothing.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Way</th><th>How</th><th>Time</th><th>Good for</th></tr></thead>
+      <tbody>
+        <tr><td>Hang in bundles</td><td>5–10 sprigs per bundle, a rubber band at the stems (it tightens as they shrink), upside down somewhere warm, dark and airy. A paper bag with holes over each bundle catches falling leaves and dust.</td><td>1–2 weeks</td><td class="y">Big piles, best flavor, free</td></tr>
+        <tr><td>Flat on a rack</td><td>One layer on a window screen, cooling rack or basket. Turn every day or two.</td><td>1–2 weeks</td><td class="y">Short tips and loose leaves</td></tr>
+        <tr><td>Dehydrator</td><td>95–115°F (35–46°C), one layer.</td><td>1–4 hours</td><td class="p">Humid weather, speed</td></tr>
+        <tr><td>Oven</td><td>Lowest setting with the door propped open, or the oven light on overnight. Rosemary loses more scent this way.</td><td>2–4 hours</td><td class="p">When nothing else is free</td></tr>
+        <tr><td>Microwave</td><td>One layer between paper towels, 30-second bursts.</td><td>2–3 min</td><td class="p">A handful, today</td></tr>
+      </tbody>
+    </table></div>
+    <p class="legend">Air drying works best above about 85°F (29°C) and below 60% humidity. Keep bundles away from the stove, kettle and sink. Times and temperatures from the University of Minnesota Extension.</p>
+    <ul>
+      <li><b>Dry enough:</b> the needles snap instead of bend, and fall off when you run a finger down the stem.</li>
+      <li><b>Strip:</b> hold the stem tip, run your fingers down toward the cut end over a tray. Keep the needles whole; crush them only when you cook, so the oils stay locked in.</li>
+      <li><b>The jar test:</b> fill a jar, close it, and check after 2–3 days. Fog on the glass means more drying time.</li>
+    </ul>
+    <p class="do">Hang three bundles today and label them with the date on a strip of masking tape.</p>
+  </article>
+
+  <article class="sub" id="rosemary-s5">
+    <div class="sub-top"><span class="sub-n">R.5</span><h2>Store and freeze</h2></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Form</th><th>How</th><th>Keeps</th></tr></thead>
+      <tbody>
+        <tr><td>Fresh sprigs</td><td>Wrapped loosely in a damp towel in a bag or box in the fridge, or standing in a jar of water like flowers</td><td>1–2 weeks</td></tr>
+        <tr><td>Dried, whole needles</td><td>Glass jar with a tight lid, in a dark cupboard away from the stove</td><td>Best flavor 3 months in the cupboard; up to 1 year in the fridge or freezer</td></tr>
+        <tr><td>Frozen sprigs</td><td>Laid on a tray to freeze, then packed into a bag or box</td><td>About 1 year; use straight into cooking</td></tr>
+        <tr><td>Frozen in cubes</td><td>Chopped leaves in an ice-cube tray, topped with water or olive oil</td><td>Several months, frozen the whole time</td></tr>
+      </tbody>
+    </table></div>
+    <p class="danger">Fresh rosemary in oil is a botulism risk at room temperature, and you can’t smell or taste it. Keep fresh herb-in-oil in the fridge and use it within 4 days, or freeze it. Infused oils for the skin start from <i>dried</i> rosemary (R.8).</p>
+    <p class="links">Food → 5.4 Keeping it longer</p>
+  </article>
+
+  <article class="sub" id="rosemary-s6">
+    <div class="sub-top"><span class="sub-n">R.6</span><h2>In the kitchen</h2></div>
+    <p>Rosemary loves olive oil, garlic, lemon, beans, potatoes and bread. It is strong, so a little goes far: 1 teaspoon dried equals about 1 tablespoon fresh.</p>
+    <div class="plate">
+      <div><b>Rosemary salt</b><p>Blitz 1 part fresh leaves with 4 parts coarse salt, spread on a tray for a day or two until dry. Keeps a year. A good gift.</p></div>
+      <div><b>Roast anything</b><p>Potatoes, squash, chickpeas, carrots: oil, salt, a few chopped sprigs, hot oven.</p></div>
+      <div><b>White beans</b><p>Simmer cooked white beans with garlic, a sprig and olive oil. Mash half for toast.</p></div>
+      <div><b>Focaccia</b><p>Press whole needles and flaky salt into the dough before baking.</p></div>
+      <div><b>Rosemary syrup</b><p>Simmer 1 cup sugar, 1 cup water and 3 sprigs for 5 minutes; strain. For lemonade or tea. Fridge, about 2 weeks.</p></div>
+      <div><b>Skewers</b><p>Stripped woody stems, sharpened at one end, for grilled vegetables and tofu. Soak them first.</p></div>
+    </div>
+    <p class="together">Pulling needles off sprigs is a job a three-year-old can do right next to you, and the smell stays on their hands all afternoon.</p>
+    <p class="do">Make one jar of rosemary salt from today’s pile.</p>
+  </article>
+
+  <article class="sub" id="rosemary-s7">
+    <div class="sub-top"><span class="sub-n">R.7</span><h2>As medicine</h2></div>
+    <p>Rosemary has a long record of easing a heavy stomach and sore muscles, and a few small studies on hair and memory. Here is each use with how sure we are.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Use</th><th>How</th><th>Amount</th><th>How sure</th></tr></thead>
+      <tbody>
+        <tr><td>Bloating, a heavy or crampy stomach</td><td>Tea: pour boiling water over the leaves, cover, steep 10 min</td><td>1–2 g dried leaf (1–1½ tsp) in 150–250 ml water, 2–3 times a day</td><td><span class="ev e3">Traditional</span></td></tr>
+        <tr><td>Sore muscles and joints, cold hands and feet</td><td>Bath: simmer leaves in 1 liter of water, strain into a warm bath, soak 10–20 min</td><td>50 g dried leaf per bath (a scant cup), 2–3 times a week</td><td><span class="ev e3">Traditional</span></td></tr>
+        <tr><td>Thinning hair</td><td>Diluted rosemary oil massaged into the scalp</td><td>Daily for months; one trial ran 6 months</td><td><span class="ev e2">Small studies</span></td></tr>
+        <tr><td>Focus and memory</td><td>Smelling rosemary while working; tea</td><td>No set amount</td><td><span class="ev e2">Small studies</span></td></tr>
+        <tr><td>Colds, “boosting immunity”, blood sugar</td><td>Various</td><td>—</td><td><span class="ev e4">Not yet known</span></td></tr>
+      </tbody>
+    </table></div>
+    <p class="legend">Tea and bath amounts are the European Medicines Agency’s traditional-use doses for rosemary leaf. If a problem lasts past 2 weeks (tea) or 4 weeks (bath), that’s a good time to see a clinician. The hair trial compared rosemary oil with 2% minoxidil in 100 people; the memory studies are small.</p>
+    <div class="cols">
+      <div class="note"><b class="h">Food amounts are fine for everyone</b><p>The cautions below are about medicinal amounts: daily teas, baths and oils. A sprig in the soup is just cooking.</p></div>
+      <div class="note"><b class="h">Talk with a clinician first if…</b><p>You’re pregnant or breastfeeding, it’s for a child under 12, or you have gallstones, a liver or bile-duct condition, high blood pressure (before hot herbal baths), or epilepsy (rosemary essential oil contains camphor).</p></div>
+    </div>
+    <p class="danger">Rosemary essential oil is far stronger than the leaf. It isn’t swallowed, it’s always diluted before touching skin, and it stays off broken or irritated skin. Diffusers are best kept away from cats, birds and small animals, whose bodies clear oils slowly.</p>
+    <p class="links">Herbalism → 5 Dose &amp; evidence</p>
+  </article>
+
+  <article class="sub" id="rosemary-s8">
+    <div class="sub-top"><span class="sub-n">R.8</span><h2>Make: oil, salve, rinse</h2></div>
+    <div class="accs">
+      <details class="acc"><summary>Rosemary infused oil <span class="who">Skin, scalp, massage</span></summary><div class="in">
+        <p>Use fully <b>dried</b> rosemary so no water gets into the oil.</p>
+        <ol><li>Fill a clean jar about half full with dried leaves; cover with olive, sunflower or jojoba oil by an inch.</li><li><b>Slow:</b> lid on, sunny windowsill, shake daily for 4–6 weeks. <b>Fast:</b> jar in a pan of barely simmering water, 2–4 hours, never boiling.</li><li>Strain through cloth, squeeze, bottle, label with the date.</li></ol>
+        <p>Keeps 6–12 months somewhere cool and dark. A bit of the rosemary keeps the oil from going stale, too.</p></div></details>
+      <details class="acc"><summary>Muscle salve <span class="who">From the infused oil</span></summary><div class="in">
+        <p>Melt 1 part candelilla wax into 8 parts rosemary oil by weight, gently. Drop a spoonful on a cold plate: too soft, add wax; too hard, add oil. Pour into tins.</p></div></details>
+      <details class="acc"><summary>Hair rinse <span class="who">Uses the woody stems</span></summary><div class="in">
+        <p>Simmer a big handful of stems and leaves in 4 cups of water for 20 minutes, cool, strain. Pour over hair after washing. Fridge, about a week.</p></div></details>
+      <details class="acc"><summary>Rosemary vinegar <span class="who">Cooking or cleaning</span></summary><div class="in">
+        <p>Pack dried sprigs into a jar, cover with vinegar, steep 2 weeks, strain. Apple cider vinegar for salads; plain white vinegar, diluted half and half with water, for wiping counters and glass.</p>
+        <p class="links">Cleaning → The gentle shelf</p></div></details>
+    </div>
+  </article>
+
+  <article class="sub" id="rosemary-s9">
+    <div class="sub-top"><span class="sub-n">R.9</span><h2>Harvest next time</h2></div>
+    <p>A light, regular harvest keeps rosemary bushy and gives you fresh sprigs all year, with fewer giant piles.</p>
+    <ul>
+      <li>Cut soft, green tips 2–4 in (5–10 cm) long, just above a pair of leaves.</li>
+      <li>Take up to a third of the plant at a time, and stay in the leafy part.</li>
+      <li>Mid-morning, after the dew dries, is when the leaves hold the most oil.</li>
+      <li>The biggest harvest for drying: late spring or early summer, just before or as it flowers.</li>
+    </ul>
+    <p class="do">If you share a garden with a gardening crew, a note asking for the trimmings to be left in a pile turns their visit into your harvest day.</p>
+  </article>
+
+  <article class="sub" id="rosemary-s10">
+    <div class="sub-top"><span class="sub-n">R.10</span><h2>Grow more from scraps</h2></div>
+    <p>Some of today’s tips can become new plants for free.</p>
+    <ol>
+      <li>Pick soft green tips 4–6 in (10–15 cm) long.</li>
+      <li>Strip the leaves from the bottom half.</li>
+      <li>Push them into a pot of damp sand or seed mix, or stand them in a glass of water on a bright windowsill.</li>
+      <li>Roots in 3–8 weeks. Pot them up and give them away, or start a hedge of your own.</li>
+    </ol>
+  </article>
+
+  <nav class="pager"><a href="#"><small>← Back</small><b>Overview</b></a><a class="next" href="#lavender"><small>Next herb →</small><b>Lavender</b></a></nav>
+  </div>
+</section>
+
+<!-- ============ HERB: LAVENDER ============ -->
+<section class="page kl" data-page="lavender" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Herb by herb</span><h1>Lavender</h1><p class="unit-sub"><i>Lavandula</i> · scent, sleep and a little in the kitchen</p>
+    <p class="lede">Lavender trimmings dry in days and keep their scent for a year. Most of the pile goes to sachets, baths and linen; a small, careful pinch goes into baking and tea.</p>
+    <ul class="jumps"><li><a href="#lavender/s1"><span>L.1</span>Which?</a></li><li><a href="#lavender/s2"><span>L.2</span>Sort</a></li><li><a href="#lavender/s3"><span>L.3</span>Clean</a></li><li><a href="#lavender/s4"><span>L.4</span>Dry</a></li><li><a href="#lavender/s5"><span>L.5</span>Store</a></li><li><a href="#lavender/s6"><span>L.6</span>Kitchen</a></li><li><a href="#lavender/s7"><span>L.7</span>Medicine</a></li><li><a href="#lavender/s8"><span>L.8</span>Make</a></li><li><a href="#lavender/s9"><span>L.9</span>Harvest</a></li><li><a href="#lavender/s10"><span>L.10</span>Grow more</a></li></ul>
+  </div>
+
+  <article class="sub" id="lavender-s1">
+    <div class="sub-top"><span class="sub-n">L.1</span><h2>Which lavender is it?</h2></div>
+    <p>Unlike rosemary, “lavender” covers several plants that taste and act differently. Which one you have decides whether it goes in the cake or the sock drawer.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Kind</th><th>How to spot it</th><th>Scent</th><th>Best for</th></tr></thead>
+      <tbody>
+        <tr><td>English lavender<br><small><i>L. angustifolia</i></small></td><td>Compact bush, short stems, small tight flower heads; ‘Hidcote’ and ‘Munstead’ are common</td><td>Sweet, soft</td><td class="y">Food, tea, sleep, everything</td></tr>
+        <tr><td>Lavandin<br><small><i>L. × intermedia</i></small></td><td>Big bush, long stems (often 18 in / 45 cm+), long pointed heads; ‘Grosso’, ‘Provence’</td><td>Strong, sharper, a little camphor</td><td class="p">Sachets, cleaning, bath; food only lightly</td></tr>
+        <tr><td>Spanish lavender<br><small><i>L. stoechas</i></small></td><td>Fat heads topped with purple “rabbit ears”</td><td>Piney, camphor</td><td class="n">Scent and wreaths, not food or tea</td></tr>
+        <tr><td>French or fringed lavender<br><small><i>L. dentata</i></small></td><td>Leaves with toothed, ruffled edges</td><td>Rosemary-like</td><td class="n">Scent and wreaths, not food or tea</td></tr>
+      </tbody>
+    </table></div>
+    <p class="home">Not sure? Rub a flower and smell it. Sweet and soft is probably English; sharp and medicinal leans lavandin or Spanish. When in doubt, use it for scent, not food.</p>
+    <p class="danger">Who else lives here? The ASPCA lists lavender as toxic to cats, dogs and horses: nibbling the plant can upset their stomachs. Lavender <i>essential oil</i> is much stronger and especially hard on cats, so diffusers and sprays stay out of rooms where cats sleep and eat.</p>
+  </article>
+
+  <article class="sub" id="lavender-s2">
+    <div class="sub-top"><span class="sub-n">L.2</span><h2>Sort the pile (today)</h2></div>
+    <p>An autumn trim is mostly spent flower stalks and leafy tips. The buds hold less scent than a summer harvest, but still plenty for sachets, baths and oil.</p>
+    <div class="plate">
+      <div><b>Buds</b><p>Any stalk still holding color and scent. Bundle these to dry; the buds get rubbed off later.</p></div>
+      <div><b>Leafy tips</b><p>Gray-green leaves smell of lavender too. Dry them for sachets, bath bags and fire starters.</p></div>
+      <div><b>Bare stalks</b><p>Bundled tight with string, they make scented kindling or fire starters. Long ones weave into small wreaths.</p></div>
+      <div><b>Compost</b><p>Brown, moldy or dusty bits, and sweepings.</p></div>
+    </div>
+    <p class="together">Bundling stalks with string is a calm job to share at a table, and the room smells wonderful afterwards. Bees often linger on lavender, so shake armfuls gently over the bed first and let them fly off.</p>
+  </article>
+
+  <article class="sub" id="lavender-s3">
+    <div class="sub-top"><span class="sub-n">L.3</span><h2>Clean</h2></div>
+    <p>Lavender is usually best left unwashed: the buds hold water and can mold, and most of it won’t be eaten. Shake bundles hard, outdoors, to loosen dust and insects.</p>
+    <p class="home">For the small amount going into food or tea, rinse quickly in cool water, shake, and dry on a towel until no water shows before bundling, about 2–3 hours.</p>
+  </article>
+
+  <article class="sub" id="lavender-s4">
+    <div class="sub-top"><span class="sub-n">L.4</span><h2>Dry</h2></div>
+    <ol>
+      <li>Make small bundles, about as thick as a thumb, and wrap a rubber band around the stems.</li>
+      <li>Hang them upside down somewhere dark, dry and airy. Darkness keeps the purple color.</li>
+      <li>Or lay stalks in one layer on a screen or in a shallow basket.</li>
+      <li>Dry in 1–2 weeks: stems snap, and buds fall off when rubbed. A dehydrator at 95–115°F (35–46°C) takes 2–4 hours.</li>
+      <li>To collect buds, roll the dry heads between your palms over a tray, then shake through a colander or sieve to drop out bits of stem.</li>
+    </ol>
+    <p class="do">Hang a bundle in a closet. It dries there and scents the clothes at the same time.</p>
+  </article>
+
+  <article class="sub" id="lavender-s5">
+    <div class="sub-top"><span class="sub-n">L.5</span><h2>Store</h2></div>
+    <p>Dried buds go into a glass jar with a tight lid, in the dark. Scent stays strong for about a year. Label kitchen lavender separately from scent-only lavender so they don’t mix.</p>
+    <p class="home">To wake up old buds in a sachet, squeeze it. Crushing releases a fresh round of oil.</p>
+  </article>
+
+  <article class="sub" id="lavender-s6">
+    <div class="sub-top"><span class="sub-n">L.6</span><h2>In the kitchen</h2></div>
+    <p>English lavender tastes floral and a little like rosemary; too much tastes like soap. Start with ¼–½ teaspoon of dried buds for a whole recipe, ground or steeped.</p>
+    <div class="plate">
+      <div><b>Lavender sugar</b><p>Pulse 1 tsp dried buds with 1 cup sugar. Sift out the bits if you like. For shortbread, tea and lemonade.</p></div>
+      <div><b>Lavender lemonade</b><p>Steep 1 tsp buds in 1 cup boiling water for 10 min, strain, sweeten, add lemon juice and cold water.</p></div>
+      <div><b>Shortbread</b><p>Plant butter, flour, lavender sugar. A classic, and very forgiving.</p></div>
+      <div><b>Herbes de Provence</b><p>Mix dried thyme, savory, rosemary, oregano and a pinch of lavender for roasted vegetables.</p></div>
+    </div>
+    <p class="links">Rosemary → R.6 (the two herbs pair well)</p>
+  </article>
+
+  <article class="sub" id="lavender-s7">
+    <div class="sub-top"><span class="sub-n">L.7</span><h2>As medicine</h2></div>
+    <p>Lavender is best known for calm and sleep, and it has the strongest evidence of the two herbs, though for a specific capsule rather than garden lavender.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Use</th><th>How</th><th>Amount</th><th>How sure</th></tr></thead>
+      <tbody>
+        <tr><td>Mild stress, tiredness, trouble falling asleep</td><td>Tea: boiling water over the buds, cover, steep 5–10 min</td><td>1–2 g dried flower (about 1 tbsp) in 150 ml water, up to 3 times a day</td><td><span class="ev e3">Traditional</span></td></tr>
+        <tr><td>Ongoing anxiety</td><td>Lavender oil capsules made for medicine (Silexan), from a clinician or pharmacy, not homemade</td><td>80 mg a day in trials</td><td><span class="ev e1">Good trials</span></td></tr>
+        <tr><td>Sleep and calm through scent</td><td>Sachet by the pillow, bath, diffuser</td><td>No set amount</td><td><span class="ev e2">Small studies</span></td></tr>
+        <tr><td>Small burns, bites, headaches</td><td>Various</td><td>—</td><td><span class="ev e4">Not yet known</span></td></tr>
+      </tbody>
+    </table></div>
+    <p class="legend">Tea amount is the European Medicines Agency’s traditional-use dose for lavender flower. If stress or sleep troubles last or get worse, that’s a good time to see a clinician.</p>
+    <div class="cols">
+      <div class="note"><b class="h">Lavender can make you drowsy</b><p>Go easy before driving or using machines, and check with a clinician if you take sleep, anxiety or seizure medicines, since effects can add up.</p></div>
+      <div class="note"><b class="h">Talk with a clinician first if…</b><p>You’re pregnant or breastfeeding, or it’s a daily tea for a child under 12. Medicinal safety isn’t established there; a sachet by the bed is a gentler choice.</p></div>
+    </div>
+    <p class="danger">Lavender essential oil isn’t swallowed, and it’s diluted before it touches skin (about 1–2 drops per teaspoon of oil). A few reports have linked regular use of lavender and tea tree oil products in young boys to breast growth that went away when use stopped; the link is debated, but it’s a reason to keep oils off children day after day.</p>
+  </article>
+
+  <article class="sub" id="lavender-s8">
+    <div class="sub-top"><span class="sub-n">L.8</span><h2>Make: sachets, spray, bath</h2></div>
+    <div class="accs">
+      <details class="acc"><summary>Sachets <span class="who">Drawers, closets, pillows</span></summary><div class="in">
+        <p>Fill small cloth bags or tied squares of old cotton with buds and dried leaves. Clothes moths dislike the smell, so sachets help as one part of keeping wool safe, with regular airing and brushing. Squeeze to refresh.</p>
+        <p class="links">Cleaning → Laundry</p></div></details>
+      <details class="acc"><summary>Sleep pillow <span class="who">A gift for a tired friend</span></summary><div class="in">
+        <p>A small cloth pouch, half buds and half dried rosemary or plain rice, tucked inside the pillowcase.</p></div></details>
+      <details class="acc"><summary>Linen spray <span class="who">Sheets, curtains, a stuffy room</span></summary><div class="in">
+        <p>Steep 2 tbsp buds in ½ cup boiling water, covered, 20 min; strain. Add ½ cup vodka or witch hazel so it keeps. Spray bottle, fridge, about 1 month. Spray away from cats.</p></div></details>
+      <details class="acc"><summary>Bath bag <span class="who">With rosemary for sore muscles</span></summary><div class="in">
+        <p>Tie a handful of buds (and rosemary, R.7) in a cloth, hang it under the hot tap, then let it float. No bits in the drain.</p></div></details>
+      <details class="acc"><summary>Fire starters <span class="who">Uses the bare stalks</span></summary><div class="in">
+        <p>Tight bundles of dry stalks, tied with cotton string. They catch fast and smell lovely in a fireplace or wood stove.</p></div></details>
+    </div>
+  </article>
+
+  <article class="sub" id="lavender-s9">
+    <div class="sub-top"><span class="sub-n">L.9</span><h2>Harvest next time</h2></div>
+    <ul>
+      <li><b>For drying and scent:</b> cut when about a third to half of the buds on a stalk have opened, usually early summer. Scent is strongest then.</li>
+      <li>Cut the stalk just above the leaves, mid-morning after the dew dries.</li>
+      <li><b>To keep the bush young:</b> after flowering, shape it back by about a third, staying in the green, leafy growth. Like rosemary, lavender rarely regrows from bare wood.</li>
+    </ul>
+    <p class="ca">In mild California climates many lavenders flower more than once. A light cut after the first bloom often brings a second, smaller one.</p>
+  </article>
+
+  <article class="sub" id="lavender-s10">
+    <div class="sub-top"><span class="sub-n">L.10</span><h2>Grow more from scraps</h2></div>
+    <p>Non-flowering side shoots 3–4 in (8–10 cm) long root well in damp sand or seed mix. Strip the bottom leaves, keep them bright but out of hot sun, and look for roots in 4–8 weeks. Cuttings from your own bush grow into the same kind of lavender.</p>
+  </article>
+
+  <nav class="pager"><a href="#rosemary"><small>← Back</small><b>Rosemary</b></a><a class="next" href="#pile"><small>Tool →</small><b>Big pile, short time</b></a></nav>
+  </div>
+</section>
+
+<!-- ============ TOOL: BIG PILE, SHORT TIME ============ -->
+<section class="page kp" data-page="pile" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Tool</span><h1>Big pile, short time</h1><p class="unit-sub">A plan for fresh trimmings</p>
+    <p class="lede">The gardeners just left, and there’s a mountain on the patio. Three questions, then a plan for today, this week and when it’s dry.</p>
+  </div>
+  <div class="tool">
+    <div class="row">
+      <label class="f">Which herb?<select id="pl-herb"><option value="r">Rosemary</option><option value="l">Lavender</option><option value="b">Both</option></select></label>
+      <label class="f">How much?<select id="pl-size"><option value="1">A bowlful</option><option value="2" selected>A grocery bag or two</option><option value="3">A yard-waste bin or more</option></select></label>
+      <label class="f">Where can it dry?<select id="pl-space"><option value="hang">A spot to hang bundles</option><option value="flat">Racks, screens or baskets</option><option value="dehy">A dehydrator</option><option value="oven">Only the oven</option></select></label>
+    </div>
+    <div class="out" id="pl-out"></div>
+  </div>
+  <p class="legend">Yields are rough: dried herbs weigh about a quarter to a third of fresh, and stems are lost when you strip them.</p>
+  <nav class="pager"><a href="#"><small>← Back</small><b>Overview</b></a><a class="next" href="#rosemary"><small>Herb →</small><b>Rosemary</b></a></nav>
+  </div>
+</section>
+
+</main>
+</div>
+</div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ---------- Planned core units: outline stubs ---------- */
+  var STUBS = {
+    u1: ['1', 'Grow', 'What herbs need', 'Herbs tell us what they need through their leaves: yellow for too much water, leggy for too little light. This unit reads those signals, from a windowsill pot to a hedge.', ['What herbs need: sun, water, soil, air', 'Herbs for small, shared or portable spaces', 'Pruning that keeps plants young', 'Free plants from cuttings (see R.10 and L.10)']],
+    u2: ['2', 'Harvest', 'Cutting so the plant thrives', 'Good harvesting leaves the plant stronger than before. When to cut, how much to take, and how to gather from shared and wild places with care.', ['The time of day and year', 'The one-third rule', 'Gathering beyond your garden, with care', 'Sorting and cleaning (see R.2 and R.3)']],
+    u3: ['3', 'Dry & store', 'Keeping their strength', 'Heat, light and air carry off an herb’s scent and strength. Five ways to dry, how to tell when it’s done, and jars that keep it for a year.', ['Five ways to dry (see R.4)', 'How to tell it’s dry', 'Jars, labels and light', 'Freezing instead']],
+    u4: ['4', 'Prepare', 'Teas, oils, vinegars, salves', 'Water, oil, vinegar, alcohol and sugar each pull different things out of a plant. One page per way, with what each is good for.', ['Teas and stronger brews', 'Infused oils and salves (see R.8)', 'Vinegars and syrups', 'Tinctures', 'Baths and steam']],
+    u5: ['5', 'Dose & evidence', 'How much, and how sure', 'Plants are real medicine, so amounts and mixes matter. The evidence ladder, doses in grams and spoons, medicines that don’t mix, and the signs that call for a clinician.', ['The evidence ladder', 'Grams, cups and drops', 'Medicines that don’t mix', 'Kids, pregnancy, elders and animals', 'When to see a clinician']]
+  };
+  function stub(id) {
+    var s = STUBS[id];
+    $('stub').innerHTML = '<div class="unit-hero k' + s[0] + '"><span class="eyebrow">Unit ' + s[0] + ' · planned</span><h1>' + s[1] + '</h1><p class="unit-sub">' + s[2] + '</p><p class="lede">' + s[3] + '</p></div>' +
+      '<article class="sub k' + s[0] + '"><div class="sub-top"><span class="sub-n">Outline</span><h2>What this unit will cover</h2></div><ol>' + s[4].map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ol>' +
+      '<p class="home">Written in full after the herb pages, so every idea has a real example to link to.</p></article>' +
+      '<nav class="pager"><a href="#"><small>← Back</small><b>Overview</b></a><a class="next" href="#rosemary"><small>Read now →</small><b>Rosemary</b></a></nav>';
+  }
+
+  /* ---------- Routing: #rosemary opens the page; #rosemary/s4 scrolls to R.4 ---------- */
+  function route() {
+    var parts = location.hash.replace('#', '').split('/'), page = parts[0] || '', show = page;
+    if (STUBS[page]) { stub(page); show = 'stub'; }
+    else if (page && !document.querySelector('.page[data-page="' + page + '"]')) page = show = '';
+    document.querySelectorAll('.page').forEach(function (p) { p.hidden = p.dataset.page !== show; });
+    document.querySelectorAll('.vt-unit').forEach(function (u) { u.classList.toggle('cur', u.dataset.unit === page); });
+    document.querySelectorAll('.nav-over')[0].classList.toggle('cur', page === '');
+    document.querySelector('.pile-link').classList.toggle('cur', page === 'pile');
+    var target = parts[1] && $(page + '-' + parts[1]);
+    if (target) target.scrollIntoView({ block: 'start' }); else window.scrollTo(0, 0);
+  }
+  window.addEventListener('hashchange', route);
+
+  /* ---------- Tool: Big pile, short time ---------- */
+  var DRY = {
+    hang: ['Hang small bundles (5–10 sprigs or a thumb-thick bunch of lavender) upside down, rubber band at the stems, somewhere dark, warm and airy.', '1–2 weeks'],
+    flat: ['Spread in one layer on screens, cooling racks or baskets, and turn every day or two. Stack screens on bricks or books to fit more.', '1–2 weeks'],
+    dehy: ['Run the dehydrator at 95–115°F (35–46°C), one layer per tray. Hang or rack whatever doesn’t fit while you wait.', '1–4 hours per load'],
+    oven: ['Use the lowest setting with the door propped open, or the oven light on overnight. It loses some scent, so for anything beyond a bowlful, a sheet over a clothes-drying rack works too.', '2–4 hours per tray']
+  };
+  var YIELD = {
+    r: ['about ½ cup of dried needles', 'about 2–4 cups of dried needles', 'several quart jars, more than a household uses in years'],
+    l: ['a few tablespoons of buds', 'about 1–2 cups of buds and leaves', 'a big tin of buds plus armfuls of stalks']
+  };
+  function plan() {
+    var h = $('pl-herb').value, n = +$('pl-size').value - 1, sp = $('pl-space').value, d = DRY[sp];
+    var r = h !== 'l', l = h !== 'r';
+    var today = [
+      'Tip the pile onto a sheet in the shade and shake each armful over the garden so insects can walk home.',
+      'Ask whether anything was sprayed nearby. If yes, skip food and tea and keep it for craft.',
+      (r ? 'Rosemary: sort green tips (kitchen), woody stems (skewers, kindling, hair rinse) and brown bits (compost). ' : '') +
+      (l ? 'Lavender: sort stalks with buds, leafy tips, bare stalks and compost. ' : ''),
+      (r ? 'Rinse the rosemary kitchen pile in a bowl of cool water and dry it on towels. ' : '') + (l ? 'Leave lavender unwashed, just shaken well.' : ''),
+      'Start drying: ' + d[0]
+    ];
+    if (n === 2) today.splice(2, 0, 'Pull out what you can use this month and offer the rest: a curb box, a Buy Nothing post, the neighbors who cook. Fresh bundles are a welcome gift.');
+    var week = [
+      'Keep a few fresh sprigs in the fridge in a damp towel, and cook with them this week (R.6).',
+      (r ? 'Root a handful of rosemary tips in damp sand for new plants (R.10). ' : '') + (l ? 'Root a few non-flowering lavender shoots too (L.10).' : ''),
+      'Check the drying herbs every couple of days. Done when ' + (r ? 'rosemary needles snap off the stem' : 'stems snap') + (l ? (r ? ' and lavender buds rub off easily' : ' and the buds rub off easily') : '') + '. Expect ' + d[1] + '.'
+    ];
+    var dry = [
+      (r ? 'Strip rosemary needles whole into jars. ' : '') + (l ? 'Roll lavender heads between your palms over a tray and sieve out the stems.' : ''),
+      'Jar test: close the jar and check in 2–3 days. Fog on the glass means more drying.',
+      'Label every jar with the herb, kind and date' + (l ? ', and keep kitchen lavender apart from scent-only lavender' : '') + '.',
+      'Make something: ' + [r ? 'rosemary salt or infused oil (R.6, R.8)' : '', l ? 'sachets or linen spray (L.8)' : ''].filter(Boolean).join(', and ') + '.'
+    ];
+    var y = [r ? 'Rosemary: ' + YIELD.r[n] : '', l ? 'Lavender: ' + YIELD.l[n] : ''].filter(Boolean).join(' · ');
+    var li = function (a) { return '<ol>' + a.filter(Boolean).map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ol>'; };
+    $('pl-out').innerHTML = '<strong>' + y + '</strong><small>Rough yield once dry</small>' +
+      '<div class="steps"><div><span class="eyebrow">Today</span>' + li(today) + '</div><div><span class="eyebrow">This week</span>' + li(week) + '</div><div><span class="eyebrow">When it’s dry</span>' + li(dry) + '</div></div>';
+  }
+  ['pl-herb', 'pl-size', 'pl-space'].forEach(function (id) { $(id).addEventListener('change', plan); });
+
+  plan(); route();
+})();
+</script>
+</body>
+</html>

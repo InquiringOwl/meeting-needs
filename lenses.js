@@ -29,13 +29,13 @@ window.MN_TIERS = [
       },
       {
         id: 'food', name: 'Food', status: 'ready',
-        blurb: 'Find, cleanse, rehydrate, cook and store plant foods safely, soften them for tender bodies and sick days, and feed the animals you live with.',
+        blurb: 'Find, cleanse, rehydrate, cook and store plant foods safely, soften them for sick days, and feed your animals.',
         topics: ['Gather', 'Cleanse', 'Rehydrate', 'Cook', 'Store', 'Gentle', 'Companions'],
         looks: ['Free, shared, bought, grown and foraged food', 'Washing produce, greens, grains and rice well', 'Soaking beans, grains and dried foods, and sprouting', 'Safe heat, little fuel, cooking with kids and a full plate', 'Cold, pantry, leftovers, preserving, and the animals who visit', 'Babies’ first foods, soft textures for sore mouths, and food as medicine', 'What companion animals eat in nature, kibble and raw, and plant-based options']
       },
       {
         id: 'air', name: 'Air', status: 'ready',
-        blurb: 'What’s in the air, how to read it around fires and storms, and how ventilation, vacuuming, lower heat and shade clear it.',
+        blurb: 'What’s in the air, reading it around fires and storms, and how ventilation, vacuuming and shade clear it.',
         topics: ['What’s in it', 'Ventilation', 'Dust', 'Heat & smoke', 'Sun & temperature'],
         looks: ['Particles, gases, living things, and what disasters add to the air', 'Moving air to cleanse it: windows, fans, filters and damp', 'Vacuuming and damp cleaning, new things, asbestos and lead', 'Cooking, gas, nonstick, smoke and solvents, and companions’ lungs', 'Heat waves, shade, cold, and sun on skin']
       },
@@ -48,19 +48,19 @@ window.MN_TIERS = [
     ]
   },
   {
-    id: 'nurture', num: 3, name: 'Nurture', color: '#3E7B3A',
-    blurb: 'Maintenance-minded care for your body, your home and the people in it.',
+    id: 'safety', num: 3, name: 'Safety', color: '#A87700',
+    blurb: 'Keep every body and the home safe and well: cleaning, care, energy and protection.',
     status: 'Next',
     lenses: [
       {
         id: 'cleaning', name: 'Cleaning', status: 'ready',
-        blurb: 'Water first, then a short ladder of gentle helpers (soap, baking soda, vinegar, peroxide) for counters, stains and laundry, safe around kids and companion animals.',
+        blurb: 'Water first, then a short ladder of gentle helpers for counters, stains and laundry, safe around kids and animals.',
         topics: ['Water', 'Gentle shelf', 'Surfaces', 'Stains', 'Laundry'],
         looks: ['Why water and a good cloth do most of the work', 'Soap, baking soda, vinegar and peroxide: what each is for, and what never mixes', 'Counters by material, boards, oven, bathroom, floors and ants', 'Which stain is which, and what lifts it', 'Laundry that is gentler on fabric, skin and water']
       },
       {
         id: 'body-care', name: 'Body care', status: 'next',
-        blurb: 'Care for every body in the home: little ones and aging ones, honoring the diversity of bodies including disabilities, and the animals who live with you.',
+        blurb: 'Care for every body at home: little and aging ones, disabled and different bodies, and the animals you live with.',
         topics: ['Children', 'Aging', 'Diversity', 'Sun', 'Animal care'],
         looks: ['Sun on skin: shade, clothing and mineral (zinc oxide) sunscreen', 'Skin, teeth and sleep for children and growing bodies', 'Aging bodies, and the care that keeps them comfortable', 'Disabilities and different bodies, plus the animals who share your home', 'Gentle foods for sick days and food as medicine (starts in Food → Gentle)']
       },
@@ -72,27 +72,38 @@ window.MN_TIERS = [
       },
       {
         id: 'self-defense', name: 'Self-defense', status: 'next',
-        blurb: 'Keep yourself, the people you love and your home safe: noticing early, calming things with words, getting away, and a home that’s ready.',
+        blurb: 'Keep yourself, your people and your home safe: noticing early, calming things with words, and getting away.',
         topics: ['Noticing', 'De-escalation', 'Getting away', 'Home'],
         looks: ['Trusting the early feeling that something is off, and leaving early', 'De-escalation: distance, calm and words before anything else', 'Simple protective moves for breaking free and getting away', 'Home preparation: locks, lights, a safe room, a plan and neighbors who check in (with Emergency prep)']
+      },
+      {
+        id: 'household-tools', name: 'Household tools', status: 'next',
+        blurb: 'The toolbox, the cleaning shelf and the medicine cabinet: what tools do, and how to use them safely.',
+        topics: ['Tools', 'Chemistry', 'Safety'],
+        looks: ['The few tools that handle most jobs', 'Reading a label for what is actually in it', 'Pairs that must never meet, like bleach and ammonia']
       }
-
     ]
   },
   {
-    id: 'resilience', num: 4, name: 'Resilience', color: '#2F6E9E',
-    blurb: 'Grow, cycle and withstand harder times: gardens, waste, storms, emergencies and injuries.',
+    id: 'nurture', num: 4, name: 'Nurture', color: '#3E7B3A',
+    blurb: 'Tend the living world: grow, harvest, compost, and know your plant neighbors.',
     status: 'Later',
     lenses: [
       {
-        id: 'gardening', name: 'Gardening', status: 'next',
-        blurb: 'Your teacher and planner: how to plant, your climate zone, a 12-month plan, and what to expect.',
-        topics: ['Learn', 'Plan', 'Seed saving'],
-        looks: ['Your growing zone, frost dates and the light you actually get', 'Soil you can build instead of buy', 'A month-by-month plan for the space you have']
+        id: 'gardening', name: 'Growing', status: 'next',
+        blurb: 'Your teacher and planner: climate zone, soil, a 12-month plan, pruning, and new plants from cuttings.',
+        topics: ['Learn', 'Plan', 'Prune', 'Seed saving'],
+        looks: ['Your growing zone, frost dates and the light you actually get', 'Soil you can build instead of buy', 'A month-by-month plan for the space you have', 'Pruning that keeps plants young, and free plants from cuttings']
+      },
+      {
+        id: 'harvesting', name: 'Harvesting', status: 'next',
+        blurb: 'Cut, dry and store what plants give, herb by herb from rosemary and lavender, and what’s safe for cats and dogs.',
+        topics: ['Cutting', 'Drying', 'Storing', 'Herb by herb', 'Animals'],
+        looks: ['When and how much to cut so the plant thrives', 'Sorting a big pile of trimmings, then rinsing and drying it', 'Jars, freezing, and how long dried herbs keep', 'Herb by herb: rosemary for the kitchen, lavender for scent and baking', 'Which plants and oils are safe for cats, dogs, horses and birds (lavender and essential oils are hard on cats)']
       },
       {
         id: 'composting-waste', name: 'Composting & waste', status: 'next',
-        blurb: 'Turn scraps into soil and handle waste safely. For most homes the grid is the best bet, but it’s good to know septic and other alternatives.',
+        blurb: 'Turn scraps into soil and handle waste safely, with the grid as the usual best bet and septic as an option.',
         topics: ['Scraps', 'Sewage', 'Worms'],
         looks: ['Compost and worm bins that don’t smell', 'How sewage and septic systems work, and why the grid is usually safest', 'Sending less of everything else away']
       },
@@ -102,6 +113,25 @@ window.MN_TIERS = [
         topics: ['Clouds', 'Wind', 'Seasons'],
         looks: ['Cloud types and which ones turn to rain', 'Wind, pressure and the signs before a storm', 'Your local seasons, frost and rainfall patterns']
       },
+      {
+        id: 'identification', name: 'Identification', status: 'next',
+        blurb: 'Name the plants and animals around you, and learn the few real local dangers.',
+        topics: ['Plants', 'Fungi', 'Animals'],
+        looks: ['The features that actually separate species', 'Edible plants and their dangerous twins', 'Tracks, calls and signs of who lives nearby']
+      },
+      {
+        id: 'herbalism', name: 'Herbalism', status: 'later',
+        blurb: 'Plant medicines: teas, oils, salves and tinctures, with dose, evidence and interactions beside each.',
+        topics: ['Preparations', 'Dosing', 'Evidence'],
+        looks: ['Which plant medicines have evidence behind them, and how much', 'Teas, infused oils, salves and tinctures made at home', 'Doses, medicines that don’t mix, kids, pregnancy and animals, and when to see a clinician']
+      }
+    ]
+  },
+  {
+    id: 'resilience', num: 5, name: 'Resilience', color: '#2F6E9E',
+    blurb: 'Withstand hard times: emergencies, injuries, and mending what breaks.',
+    status: 'Later',
+    lenses: [
       {
         id: 'emergency-prep', name: 'Emergency prep', status: 'building',
         blurb: 'Natural disasters, personal safety and securing your home: plan ahead so you can stay calm when it counts.',
@@ -115,30 +145,24 @@ window.MN_TIERS = [
         looks: ['Stopping bleeding and cleaning a wound', 'Burns, breaks and sprains: what helps and what makes it worse', 'When to call emergency services, and what to do until they arrive', 'Fluids and gentle food after vomiting, diarrhea or heat (from Food → Gentle)']
       },
       {
-        id: 'identification', name: 'Identification', status: 'next',
-        blurb: 'Name the plants and animals around you, and learn the few real local dangers.',
-        topics: ['Plants', 'Fungi', 'Animals'],
-        looks: ['The features that actually separate species', 'Edible plants and their dangerous twins', 'Tracks, calls and signs of who lives nearby']
+        id: 'repair', name: 'Repair', status: 'later',
+        blurb: 'Diagnose, open up and mend what usually gets thrown out.',
+        topics: ['Tools', 'Electronics', 'Mending'],
+        looks: ['Finding the actual fault before buying anything', 'Opening things that were built to stay shut', 'Fixes that keep things out of the landfill']
       },
-      {
-        id: 'household-tools', name: 'Household tools', status: 'next',
-        blurb: 'The toolbox, the cleaning shelf and the medicine cabinet: what tools do, and how to use them safely.',
-        topics: ['Tools', 'Chemistry', 'Safety'],
-        looks: ['The few tools that handle most jobs', 'Reading a label for what is actually in it', 'Pairs that must never meet, like bleach and ammonia']
-      }
-    ]
-  },
-  {
-    id: 'craft', num: 5, name: 'Craft', color: '#7A4FB0',
-    blurb: 'Hands-on skills to make, mend and build.',
-    status: 'Later',
-    lenses: [
       {
         id: 'sewing', name: 'Sewing', status: 'later',
         blurb: 'Patch, hem, alter and make clothes and soft things, by hand or machine.',
         topics: ['Mending', 'Patterns', 'Machines'],
         looks: ['Patches, darns and seams that last', 'Reading and adjusting a pattern', 'Hand stitching and getting along with a machine']
-      },
+      }
+    ]
+  },
+  {
+    id: 'craft', num: 6, name: 'Craft', color: '#7A4FB0',
+    blurb: 'Hands-on skills to make, mend and build.',
+    status: 'Later',
+    lenses: [
       {
         id: 'bikes', name: 'Bikes', status: 'later',
         blurb: 'True a wheel, tune gears, fix a flat on the road.',
@@ -158,38 +182,26 @@ window.MN_TIERS = [
         looks: ['How a frame carries its load', 'Earth and lime walls that breathe', 'Materials that are kinder to build with and live in']
       },
       {
-        id: 'herbalism', name: 'Herbalism', status: 'later',
-        blurb: 'Grow, dry and prepare herbs, with dose and evidence beside each.',
-        topics: ['Growing', 'Drying', 'Dosing'],
-        looks: ['Which herbs have evidence behind them, and how much', 'Drying and storing so they keep their strength', 'Doses, interactions and when to see a clinician']
-      },
-      {
         id: 'interior-design', name: 'Interior design', status: 'later',
         blurb: 'Sunlight, layout, and permanent stations built around your natural habits.',
         topics: ['Sunlight', 'Layout', 'Stations'],
         looks: ['Following the sun through your rooms', 'Layouts that make daily paths easy', 'Stations that sit where your habits already happen']
       },
       {
-        id: 'repair', name: 'Repair', status: 'later',
-        blurb: 'Diagnose, open up and mend what usually gets thrown out.',
-        topics: ['Tools', 'Electronics', 'Mending'],
-        looks: ['Finding the actual fault before buying anything', 'Opening things that were built to stay shut', 'Fixes that keep things out of the landfill']
-      },
-      {
         id: 'digital', name: 'Digital world', status: 'next',
-        blurb: 'Rethink which needs digital life meets: libraries, open tools and connection on one side, surveillance and attention-for-profit on the other.',
+        blurb: 'Libraries, open tools and connection on one side; surveillance and attention-for-profit on the other.',
         topics: ['Needs it meets', 'Libraries', 'Surveillance', 'Open tools'],
         looks: ['Which needs a screen is meeting right now (learning, connection, help) and which it’s pulling from (rest, presence, play)', 'Public libraries: free internet, devices, classes and quiet, and the librarians who protect your privacy', 'Surveillance: what apps, ad trackers, data brokers and cameras collect, and the free settings that cut most of it', 'Open-source tools, repair and keeping old devices going, so digital life serves people instead of profit']
       },
       {
         id: 'governance', name: 'Governance', status: 'building',
-        blurb: 'What stops people, legally, from meeting basic needs, and how to advocate for yourself in the systems we have while building better ones, in law or outside it.',
+        blurb: 'What legally stops people from meeting basic needs, and how to advocate, in the systems we have and beyond them.',
         topics: ['Decision-makers', 'Criminalization', 'Stairs for change'],
         looks: ['Who controls California’s water, and how they’re chosen', 'Where the water goes', 'Criminalization and incarceration: when meeting a need becomes a crime', 'Stairs for change: art, talk, public comment, representatives, organizing, voting, peaceful protest, and paths outside law']
       },
       {
         id: 'death-seasons', name: 'Death & cycles', status: 'later',
-        blurb: 'How nature runs itself: seasons, death feeding new life, and the natural consensus and peaceful self-governance that keep ecosystems in balance.',
+        blurb: 'Seasons, death feeding new life, and the peaceful consensus that keeps ecosystems in balance.',
         topics: ['Cycles', 'Renewal', 'Consensus'],
         looks: ['Seasons and the cycles of growth, decay and return', 'How death and decomposition feed new life', 'Consensus and peaceful self-governance in nature']
       }

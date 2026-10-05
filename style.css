@@ -166,7 +166,7 @@ p { margin: 0; }
 .tier[data-tier="1"] { background: var(--glass-strong); }
 .tier[data-tier="2"] { background: var(--glass); }
 .tier[data-tier="3"] { background: var(--glass-faint); }
-.tier[data-tier="4"], .tier[data-tier="5"] { background: var(--glass-faint); box-shadow: none; }
+.tier[data-tier="4"], .tier[data-tier="5"], .tier[data-tier="6"] { background: var(--glass-faint); box-shadow: none; }
 .tier-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 24px; }
 .tier-title { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; min-width: 0; }
 .tier h2 { font-weight: 800; font-size: clamp(28px, 3vw, 38px); line-height: 1; letter-spacing: -0.03em; }
@@ -180,8 +180,11 @@ p { margin: 0; }
 .tier[data-tier="1"] .grid { grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); }
 .tier[data-tier="2"] .grid { grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); }
 .tier[data-tier="3"] .grid { grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); }
-.tier[data-tier="4"] .grid, .tier[data-tier="5"] .grid { grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); }
-@media (min-width: 900px) { .tier[data-tier="5"] .grid { grid-template-columns: repeat(4, 1fr); } }
+.tier[data-tier="4"] .grid, .tier[data-tier="5"] .grid, .tier[data-tier="6"] .grid { grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); }
+@media (min-width: 900px) {
+  .tier[data-tier="4"] .grid { grid-template-columns: repeat(3, 1fr); }
+  .tier[data-tier="5"] .grid, .tier[data-tier="6"] .grid { grid-template-columns: repeat(4, 1fr); }
+}
 .tier-dots { display: none; }
 /* Phones: each tier's cards become a sideways row inside the tier panel, one card per swipe,
    with the next card peeking in so it's clear there's more. Dots below track the position (app.js). */

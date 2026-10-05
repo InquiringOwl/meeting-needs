@@ -1,6 +1,6 @@
 # Kinship
 
-Free, open education for meeting our needs, in five tiers: Signals, Roots, Nurture, Resilience and Craft. Each lens is a way of looking at your home and life: what is quietly making you sick, what it costs, and what you can fix yourself.
+Free, open education for meeting our needs, in six tiers: Signals, Roots, Safety, Nurture, Resilience and Craft. Each lens is a way of looking at your home and life: what is quietly making you sick, what it costs, and what you can fix yourself.
 
 Plain HTML, CSS and JavaScript. No build step, no server, no accounts.
 
@@ -27,9 +27,9 @@ Plain HTML, CSS and JavaScript. No build step, no server, no accounts.
 | `air.css` | Air course styles (units in yellows, darkest to lightest; `ai-` prefix; generated from `tox.css`) |
 | `clean.js` | Cleaning course (tier 3): the gentle ladder (Water → Soap → Baking soda → Vinegar or 3% peroxide → Beyond, which hands off to Poisons) and five units (Water, The gentle shelf, Surfaces, Stains, Laundry). Every “How to fix” card shows its rung and can be added to **My list** (`localStorage` `meeting-needs.clean.v1`). Tools: What needs cleaning? (`#lens-cleaning/now`) and Stain finder (`#lens-cleaning/stains/finder`). Reads `counter`, `laundry`, `pets`, `kids` and `consider` (`#lens-cleaning`, `#lens-cleaning/list`, `#lens-cleaning/beyond`, `#lens-cleaning/<unit>[/<sub-unit>]`) |
 | `clean.css` | Cleaning course styles (units in whites, darkest to lightest; `cl-` prefix; generated from `air.css`) |
-| `em.js` | Emergency prep course (tier 4, in progress): unit 1 What to prep for (hazard lookup tool, wildfire, earthquakes, heat, floods, outages, animals), each ending in a Before · During · After “Get ready” card and **My prep list** (`meeting-needs.em.v1`); units 2–6 planned (`#lens-emergency-prep`) |
+| `em.js` | Emergency prep course (tier 5, in progress): unit 1 What to prep for (hazard lookup tool, wildfire, earthquakes, heat, floods, outages, animals), each ending in a Before · During · After “Get ready” card and **My prep list** (`meeting-needs.em.v1`); units 2–6 planned (`#lens-emergency-prep`) |
 | `em.css` | Emergency prep styles (units in blues; `em-` prefix; generated from `tox.css`) |
-| `gov.js` | Governance course (tier 5, in progress): what legally stops people from meeting basic needs and how to advocate in and outside existing systems. Who controls California water, where it goes, criminalization and incarceration, stairs for change, paths outside law; housing (who owns homes, including private equity) is next (`#lens-governance`) |
+| `gov.js` | Governance course (tier 6, in progress): what legally stops people from meeting basic needs and how to advocate in and outside existing systems. Who controls California water, where it goes, criminalization and incarceration, stairs for change, paths outside law; housing (who owns homes, including private equity) is next (`#lens-governance`) |
 | `gov.css` | Governance course styles |
 
 ## Run it locally
