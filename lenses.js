@@ -28,10 +28,10 @@ window.MN_TIERS = [
         looks: ['Which water each job needs, and gray water', 'Taps, refills, rain, wells, springs and wild water', 'Containers that keep water safe', 'Filters and permanent systems, plus crisis methods', 'Knowing it’s safe, at the tap and in a lake', 'What water costs, and the household math']
       },
       {
-        id: 'food', name: 'Food', status: 'building',
-        blurb: 'Cleanse, rehydrate dried foods, cook and store safely.',
-        topics: ['Cleansing', 'Cooking', 'Storage'],
-        looks: ['Washing produce and grains well', 'Soaking and rehydrating beans, grains and dried foods', 'Cooking and storing so food stays safe']
+        id: 'food', name: 'Food', status: 'ready',
+        blurb: 'Find, cleanse, rehydrate, cook and store plant foods safely, with a full kitchen, a hot plate or no kitchen at all.',
+        topics: ['Gather', 'Cleanse', 'Rehydrate', 'Cook', 'Store'],
+        looks: ['Free, shared, bought, grown and foraged food', 'Washing produce, greens, grains and rice well', 'Soaking beans, grains and dried foods, and sprouting', 'Safe heat, little fuel, cooking with kids and a full plate', 'Cold, pantry, leftovers, preserving, and the animals who visit']
       },
       {
         id: 'air', name: 'Air', status: 'building',

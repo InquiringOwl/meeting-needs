@@ -39,6 +39,9 @@
     filters: ['Pitcher filter', 'Faucet filter', 'Countertop reverse osmosis (like AquaTru)', 'Under-sink filter', 'Under-sink reverse osmosis', 'Whole-house filter', 'Gravity filter', 'Squeeze or backpacking filter', 'UV purifier', 'Water softener', 'None yet'],
     pipes: ['Before 1986 (older pipes)', '1986 or later', 'Not sure'],
     rain: ['Rarely (desert or long droughts)', 'Mostly one season (like most of California)', 'Through much of the year'],
+    /* Food: how you can cook and keep food cold right now. */
+    kitchen: ['A full kitchen', 'A hot plate, rice cooker or microwave', 'A shared kitchen', 'No way to cook right now'],
+    cold: ['Fridge and freezer', 'A small or shared fridge', 'A cooler, or no fridge'],
     space: ['Windowsill', 'Balcony', 'Shared yard', 'Private yard', 'Community plot', 'Acreage or farmland', 'None yet'],
     consider: ['Asthma', 'Allergies', 'Pregnancy', 'Babies or toddlers', 'Chronic illness', 'Limited mobility'],
     hours: ['Under 1', '1 to 3', '3 to 6', 'More than 6'],
@@ -80,7 +83,7 @@
   }
 
   function blank() {
-    return { address: '', zone: '', home: '', stay: '', shape: '', space: [], sources: {}, filters: [], pipes: '', rain: '', adults: '', kids: '', pets: '', consider: [], hours: '', budget: '', priorities: [] };
+    return { address: '', zone: '', home: '', stay: '', shape: '', space: [], sources: {}, filters: [], pipes: '', rain: '', kitchen: '', cold: '', adults: '', kids: '', pets: '', consider: [], hours: '', budget: '', priorities: [] };
   }
   function load() {
     try {
@@ -122,7 +125,7 @@
   }
   function saveSoon() { clearTimeout(saveTimer); saveTimer = setTimeout(function () { save(); }, 500); }
   function isEmpty(p) {
-    return !p.home && !p.stay && !p.shape && !p.rain && !p.pipes && !Object.keys(p.sources).length && !p.filters.length && !p.zone && !p.address && !p.adults && !p.kids && !p.pets && !p.hours && !p.budget &&
+    return !p.home && !p.stay && !p.shape && !p.rain && !p.pipes && !p.kitchen && !p.cold && !Object.keys(p.sources).length && !p.filters.length && !p.zone && !p.address && !p.adults && !p.kids && !p.pets && !p.hours && !p.budget &&
       !p.space.length && !p.consider.length && !p.priorities.length;
   }
 
@@ -398,13 +401,14 @@
     var p = profile;
     if (step === 'place') return !!(p.home || p.stay || p.shape || p.zone || p.address || p.space.length);
     if (step === 'water') return !!(Object.keys(p.sources).length || p.filters.length || p.pipes || p.rain);
+    if (step === 'food') return !!(p.kitchen || p.cold);
     if (step === 'household') return !!(p.adults || p.kids || p.pets || p.consider.length);
     if (step === 'resources') return !!(p.hours || p.budget);
     if (step === 'priorities') return p.priorities.length > 0;
     return false;
   }
   function stepsNav() {
-    var steps = [['place', 'Place'], ['water', 'Water'], ['household', 'Household'], ['resources', 'Time & money'], ['priorities', 'Priorities']];
+    var steps = [['place', 'Place'], ['water', 'Water'], ['food', 'Food'], ['household', 'Household'], ['resources', 'Time & money'], ['priorities', 'Priorities']];
     return '<nav class="steps glass" aria-label="Profile sections">' + steps.map(function (s, i) {
       return '<button type="button" data-jump="' + s[0] + '" class="' + (stepDone(s[0]) ? 'done' : '') + '"><span class="n" aria-hidden="true">' + (i + 1) + '</span>' + esc(s[1]) + '</button>';
     }).join('') + '</nav>';
@@ -437,6 +441,11 @@
       pickField('filters', 'Water filters you already have', OPT.filters, '(pick any)') +
       '<div class="row">' + selectField('pipes', 'When were your building’s pipes put in?', OPT.pipes, p.pipes) + selectField('rain', 'How often does rain or snow fall?', OPT.rain, p.rain) + '</div>' +
       '<p class="hint">These change rarely. When something does (say, you now have a safe tap), update it here and the Water course follows.</p>' +
+      '</fieldset>' +
+
+      '<fieldset id="s-food" class="glass"><legend>Food</legend>' +
+      '<div class="row">' + selectField('kitchen', 'How can you cook right now?', OPT.kitchen, p.kitchen) + selectField('cold', 'How do you keep food cold?', OPT.cold, p.cold) + '</div>' +
+      '<p class="hint">The Food course opens the parts that fit: one-pot cooking, cold soaking, a small fridge or none.</p>' +
       '</fieldset>' +
 
       '<fieldset id="s-household" class="glass"><legend>Household</legend>' +
@@ -484,7 +493,7 @@
   var sky = '<div class="sky" aria-hidden="true"><span class="a"></span><span class="b"></span><span class="c"></span><span class="d"></span></div>';
 
   /* Course files load only when someone opens that lens, so the home page stays light. */
-  var LAZY = { relationships: { css: 'rel.css', js: ['rel-data.js', 'rel.js'] }, water: { css: 'water.css', js: ['water.js'] }, governance: { css: 'gov.css', js: ['gov.js'] } };
+  var LAZY = { relationships: { css: 'rel.css', js: ['rel-data.js', 'rel.js'] }, water: { css: 'water.css', js: ['water.js'] }, food: { css: 'food.css', js: ['food.js'] }, governance: { css: 'gov.css', js: ['gov.js'] } };
   var lazyState = {};
   function needsLazy(r) {
     var lid = r.indexOf('lens-') === 0 ? r.slice(5).split(/[\/?]/)[0] : '';

@@ -1,0 +1,838 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kinship · Food (course mock-up)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500..800&family=Instrument+Sans:wght@400..700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Mock-up only. Mirrors Kinship's style.css + the Water mock-up so it can move into food.css later. */
+:root {
+  --bg:#EEF2E8; --ink:#17241C; --ink-2:#2C3D32; --muted:#3F5546; --accent:#2F5E2C;
+  --glass:rgba(255,255,255,.42); --glass-strong:rgba(255,255,255,.64); --glass-faint:rgba(255,255,255,.24);
+  --glass-edge:rgba(255,255,255,.78); --chip:rgba(255,255,255,.62); --line:rgba(23,36,28,.16);
+  --soft-line:rgba(23,36,28,.08); --focus:#2F6E9E; --lens:#B85A14;
+  --f-head:'Manrope','Instrument Sans',system-ui,sans-serif;
+  --f-body:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  /* Food lens theme: dark greens, darkest (1) to lightest (5).
+     bg: page wash · mid: filled · edge: soft border · dot: the unit's green · on: text on dot */
+  --c1-bg:#E3EEE0; --c1-mid:#C9DEC4; --c1-edge:#B2CFAB; --c1-dot:#1E4A23; --c1-on:#fff;
+  --c2-bg:#E7F1E4; --c2-mid:#D0E4CB; --c2-edge:#BBD7B4; --c2-dot:#2D6A31; --c2-on:#fff;
+  --c3-bg:#ECF4E9; --c3-mid:#D8E9D3; --c3-edge:#C6DFBF; --c3-dot:#478A4A; --c3-on:#fff;
+  --c4-bg:#F1F7EF; --c4-mid:#E1EFDC; --c4-edge:#D2E7CB; --c4-dot:#77AE6F; --c4-on:#17241C;
+  --c5-bg:#F6FAF4; --c5-mid:#EAF4E6; --c5-edge:#DDEDD7; --c5-dot:#ABCF9F; --c5-on:#17241C;
+  --k-bg:var(--glass-faint); --k-mid:var(--chip); --k-edge:var(--line); --k-dot:var(--muted); --k-on:#fff;
+}
+.k1{--k-bg:var(--c1-bg);--k-mid:var(--c1-mid);--k-edge:var(--c1-edge);--k-dot:var(--c1-dot);--k-on:var(--c1-on)}
+.k2{--k-bg:var(--c2-bg);--k-mid:var(--c2-mid);--k-edge:var(--c2-edge);--k-dot:var(--c2-dot);--k-on:var(--c2-on)}
+.k3{--k-bg:var(--c3-bg);--k-mid:var(--c3-mid);--k-edge:var(--c3-edge);--k-dot:var(--c3-dot);--k-on:var(--c3-on)}
+.k4{--k-bg:var(--c4-bg);--k-mid:var(--c4-mid);--k-edge:var(--c4-edge);--k-dot:var(--c4-dot);--k-on:var(--c4-on)}
+.k5{--k-bg:var(--c5-bg);--k-mid:var(--c5-mid);--k-edge:var(--c5-edge);--k-dot:var(--c5-dot);--k-on:var(--c5-on)}
+
+*{box-sizing:border-box}
+html{overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;overflow-x:clip}
+h1,h2,h3{font-family:var(--f-head);margin:0;text-wrap:balance}
+p{margin:0}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:8px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+.sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.sky span{position:absolute;border-radius:50%;filter:blur(12px)}
+.sky .a{left:-12vw;top:-18vh;width:60vw;height:60vw;max-width:780px;max-height:780px;background:radial-gradient(circle,rgba(124,176,104,.5),transparent 68%)}
+.sky .b{right:-14vw;top:8vh;width:58vw;height:58vw;max-width:780px;max-height:780px;background:radial-gradient(circle,rgba(236,196,110,.32),transparent 68%)}
+.sky .c{left:25vw;bottom:-30vh;width:64vw;height:64vw;max-width:860px;max-height:860px;background:radial-gradient(circle,rgba(150,200,140,.35),transparent 68%)}
+
+.wrap{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:20px clamp(16px,3vw,40px) 72px;display:flex;flex-direction:column;gap:24px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px;border-radius:999px;background:var(--glass);border:1px solid var(--glass-edge)}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink)}
+.brand b{font-family:var(--f-head);font-weight:800;font-size:20px;letter-spacing:-.02em}
+.mock{font-family:var(--f-mono);font-size:12px;padding:4px 10px;border-radius:999px;border:1.5px dashed var(--line);color:var(--muted)}
+
+.layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:28px;align-items:start}
+.main{min-width:0;display:flex;flex-direction:column;gap:20px}
+
+/* Sidebar tree */
+.nav{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;scrollbar-width:thin;padding:14px;border-radius:26px;background:rgba(255,255,255,.72);border:1px solid var(--glass-edge)}
+.nav-head{display:flex;flex-direction:column;padding:2px 6px 8px}
+.nav-head b{font-family:var(--f-head);font-size:21px;font-weight:800;letter-spacing:-.02em}
+.nav-over{display:flex;align-items:center;min-height:36px;padding:0 8px;margin-bottom:6px;border-radius:12px;color:var(--ink);text-decoration:none;font-weight:600;font-size:15px}
+.nav-over:hover,.nav-over.cur{background:var(--chip)}
+.vt{list-style:none;margin:0;padding:0;position:relative}
+.vt::before{content:'';position:absolute;left:21px;top:22px;bottom:22px;width:2px;border-radius:2px;background:linear-gradient(var(--c1-dot),var(--c3-dot),var(--c5-dot))}
+.vt-unit{position:relative;padding:3px 0}
+.vt-head{display:flex;align-items:center;gap:12px;min-height:46px;padding:4px 8px;border-radius:16px;color:var(--ink);text-decoration:none}
+.vt-head:hover{background:var(--k-bg)}
+.vt-unit.cur>.vt-head{background:var(--k-mid)}
+.vt-dot{position:relative;z-index:1;width:28px;height:28px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--k-dot);color:var(--k-on);box-shadow:0 0 0 4px var(--bg);font-family:var(--f-mono);font-size:13px}
+.vt-head b{display:block;font-family:var(--f-head);font-size:17px;font-weight:800;line-height:1.1}
+.vt-head small{display:block;font-size:13px;color:var(--muted)}
+.vt-subs{list-style:none;margin:2px 0 4px;padding:0 0 0 36px;display:none;flex-direction:column}
+.vt-unit.cur .vt-subs{display:flex}
+.vt-subs a{position:relative;display:flex;align-items:center;min-height:30px;padding:3px 8px;border-radius:10px;color:var(--ink-2);text-decoration:none;font-size:14px;line-height:1.25}
+.vt-subs a::before{content:'';position:absolute;left:-19px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:var(--k-dot)}
+.vt-subs a:hover{background:var(--k-bg);color:var(--ink)}
+
+/* Situation panel (reads and writes the Kinship profile) */
+.sit{border-radius:22px;background:var(--glass-strong);border:1px solid var(--soft-line)}
+.sit>summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:14px 18px}
+.sit>summary::-webkit-details-marker{display:none}
+.sit-sum{font-size:14.5px;color:var(--ink-2)}
+.sit-chips{display:flex;flex-wrap:wrap;gap:6px}
+.sit-chips span{font-size:13px;padding:3px 10px;border-radius:999px;background:#fff;border:1px solid var(--soft-line)}
+.sit-edit{margin-left:auto;font-size:14px;font-weight:600;color:var(--accent)}
+.sit-body{padding:0 18px 16px;display:flex;flex-direction:column;gap:12px}
+.qgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.qgrid label.f select{width:100%}
+.sit-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:13.5px;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;min-height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--soft-line);background:#fff;color:var(--ink);font:inherit;font-size:14.5px;font-weight:600;cursor:pointer;text-decoration:none}
+.btn.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.outage{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;padding:6px 14px;border-radius:999px;border:1px dashed var(--line);background:var(--glass-faint);cursor:pointer}
+.outage:has(input:checked){background:#FFF1E6;border-style:solid;border-color:#E9C29F}
+
+/* Overview */
+.hero{display:flex;flex-direction:column;gap:12px}
+.lens-pill{align-self:flex-start;padding:6px 12px;border-radius:999px;background:var(--lens);color:#fff;font-family:var(--f-mono);font-size:12px;line-height:1}
+.hero h1{font-weight:800;font-size:clamp(46px,6.4vw,84px);line-height:.95;letter-spacing:-.04em}
+.lede{font-size:clamp(17px,1.6vw,20px);color:var(--ink-2);max-width:66ch}
+.ucards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.ucard{display:flex;flex-direction:column;gap:8px;height:100%;padding:0 0 16px;border-radius:24px;background:var(--k-bg);border:1px solid var(--k-edge);text-decoration:none;color:var(--ink);overflow:hidden}
+.ucard>*{margin-inline:18px}
+.ucard .band{margin:0;height:10px;background:var(--k-dot)}
+.ucard:hover{background:var(--k-mid)}
+.ucard .n{font-family:var(--f-mono);font-size:13px;color:var(--muted);margin-top:6px}
+.ucard b{font-family:var(--f-head);font-weight:800;font-size:clamp(24px,2.4vw,30px);line-height:1;letter-spacing:-.03em}
+.ucard span{font-size:15px;color:var(--ink-2)}
+.ucard ol{margin-top:4px;padding:8px 0 0 18px;border-top:1px solid var(--k-edge);font-size:13.5px;color:var(--ink-2)}
+.funfact,.review{display:flex;flex-direction:column;gap:6px;padding:16px 20px;border-radius:20px;font-size:15px;color:var(--ink-2)}
+.funfact{background:var(--glass-faint);border:1px solid var(--soft-line)}
+.review{border:1.5px dashed var(--line)}
+.review ul{margin:0;padding-left:18px}
+.truths{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.truth{padding:14px 16px;border-radius:18px;background:rgba(255,255,255,.7);border:1px solid var(--soft-line)}
+.truth b{display:block;font-family:var(--f-head);font-size:16.5px;margin-bottom:2px}
+.truth p{font-size:14.5px;color:var(--ink-2)}
+
+/* Unit page */
+.page[hidden]{display:none}
+.unit-hero{display:flex;flex-direction:column;gap:6px;padding:clamp(22px,3vw,32px);border-radius:28px;background:var(--k-bg);border:1px solid var(--k-edge);border-top:10px solid var(--k-dot)}
+.unit-hero h1{font-weight:800;font-size:clamp(44px,5.6vw,72px);line-height:.95;letter-spacing:-.04em}
+.unit-sub{font-family:var(--f-head);font-size:19px;font-weight:600;color:var(--ink-2)}
+.unit-hero .lede{font-size:16.5px;margin-top:4px}
+.jumps{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.jumps a{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 14px;border-radius:999px;background:var(--glass-strong);color:var(--ink);text-decoration:none;font-size:14px;font-weight:600}
+.jumps a span{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-weight:400}
+.jumps a:hover{background:var(--k-mid)}
+
+.sub{display:flex;flex-direction:column;gap:12px;padding:22px 24px;border-radius:24px;background:rgba(255,255,255,.74);border:1px solid var(--k-edge);scroll-margin-top:16px}
+.sub-top{display:flex;align-items:baseline;gap:10px}
+.sub-n{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);flex:none}
+.sub h2{font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+.sub>p{font-size:15.5px;max-width:78ch}
+.sub ul,.sub ol{margin:0;padding-left:20px;font-size:15px;color:var(--ink-2);display:flex;flex-direction:column;gap:4px;max-width:80ch}
+.do,.home,.old,.ca{font-size:14.5px;padding:10px 12px;border-radius:14px}
+.home{background:var(--k-bg);color:var(--ink-2)}
+.home::before{content:'At home · '}
+.do{background:var(--k-mid)}
+.do::before{content:'Try it · '}
+.old{background:#F6F1E7;color:var(--ink-2);border-left:4px solid #C9AE7C}
+.old::before{content:'Old ways · '}
+.ca{background:#FFF7E8;color:var(--ink-2);border-left:4px solid #E3B25B}
+.ca::before{content:'In California · '}
+.home::before,.do::before,.old::before,.ca::before{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.links{font-size:13px;color:var(--muted)}
+.links::before{content:'Links to → ';font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.kind{padding:12px 16px;border-radius:16px;background:#F3EEF8;border:1px solid #E1D6EE;font-size:14.5px;color:var(--ink-2)}
+
+/* Grade ladder (unit 1): the grades step lighter like the units */
+.ladder{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.rung{display:flex;flex-direction:column;gap:6px;padding:14px 16px;border-radius:18px;border:1px solid var(--soft-line)}
+.rung b{font-family:var(--f-head);font-size:18px}
+.rung small{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.rung p{font-size:14px;color:var(--ink-2)}
+.r1{background:#D4E6F7}.r2{background:#E7F2EA}.r3{background:#F3EAD8}.r4{background:#EFE3E3}
+
+/* Accordions */
+.accs{display:flex;flex-direction:column;gap:8px}
+.acc{border-radius:16px;background:var(--k-bg);border:1px solid var(--k-edge)}
+.acc>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;min-height:48px;padding:8px 14px;font-weight:600;font-size:15.5px}
+.acc>summary::-webkit-details-marker{display:none}
+.acc>summary::after{content:'+';margin-left:auto;font-family:var(--f-mono);font-size:18px;color:var(--muted);flex:none}
+.acc[open]>summary::after{content:'–'}
+.acc>summary:hover{background:var(--k-mid);border-radius:16px}
+.acc .who{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:#fff;color:var(--ink-2);font-weight:400;flex:none}
+.acc .for-you{display:none;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:var(--k-dot);color:var(--k-on);font-weight:400;flex:none}
+.acc.match{box-shadow:0 0 0 2px var(--k-dot)}
+.acc.match .for-you{display:inline-block}
+.acc .in{padding:2px 16px 14px;display:flex;flex-direction:column;gap:8px;font-size:15px;color:var(--ink-2)}
+
+/* Notes, tables, tools */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.note{display:flex;flex-direction:column;gap:6px;padding:14px 18px;border-radius:18px;background:#FFF8EC;border:1px solid #EFDDB8;font-size:14.5px;color:var(--ink-2)}
+.note b.h{font-family:var(--f-head);font-size:16.5px;color:var(--ink)}
+.tbl-wrap{overflow-x:auto;border-radius:18px;border:1px solid var(--k-edge);background:#fff}
+table{border-collapse:collapse;width:100%;min-width:600px;font-size:14px}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--soft-line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--k-bg)}
+td:first-child{font-weight:600}
+td.y{color:#2E6B35}td.p{color:#8A6418}td.n{color:#9A4A3A}
+.legend{font-size:12.5px;color:var(--muted)}
+.tool{display:flex;flex-direction:column;gap:10px;padding:16px 18px;border-radius:20px;background:var(--k-mid);border:1px solid var(--k-edge)}
+.tool b.t{font-family:var(--f-head);font-size:19px;font-weight:800}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);font-family:var(--f-mono);min-width:0;max-width:100%}
+input[type=number],select{font:inherit;font-family:var(--f-body);font-size:15.5px;min-height:40px;padding:0 12px;border-radius:12px;border:1px solid var(--soft-line);background:#fff;color:var(--ink);max-width:100%}
+input[type=number]{width:100px}
+.chk{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--ink-2);min-height:40px}
+.out{padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.85);font-size:15px}
+.out strong{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.02em;display:block;line-height:1.1}
+.out small{display:block;color:var(--muted);font-size:13px;margin-top:4px}
+
+.pager{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.pager a{display:inline-flex;flex-direction:column;gap:2px;padding:12px 18px;border-radius:18px;background:var(--glass-strong);border:1px solid var(--soft-line);color:var(--ink);text-decoration:none;min-width:200px}
+.pager a small{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.pager a b{font-family:var(--f-head);font-size:18px}
+.pager a.next{margin-left:auto;text-align:right}
+.pager a:hover{background:#fff}
+
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr}
+  .nav{position:static;max-height:none}
+  .pager a{min-width:0;flex:1}
+}
+/* Food additions */
+.vt-subs a.tool-link{font-weight:600}
+.danger{font-size:14.5px;padding:10px 12px;border-radius:14px;background:#FBEDEA;color:var(--ink-2);border-left:4px solid #C9806F}
+.danger::before{content:'Take care · ';font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.together{font-size:14.5px;padding:10px 12px;border-radius:14px;background:#F3EEF8;color:var(--ink-2);border-left:4px solid #B69AD3}
+.together::before{content:'Together · ';font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.plate{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.plate div{padding:12px 14px;border-radius:16px;background:var(--k-bg);border:1px solid var(--k-edge)}
+.plate b{display:block;font-family:var(--f-head);font-size:16px}
+.plate p{font-size:14px;color:var(--ink-2)}
+.status{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:12px;letter-spacing:.04em;padding:3px 10px;border-radius:999px}
+.st-ok{background:#E3F1E1;color:#2E6B35}.st-warn{background:#FBF0D9;color:#7A5714}.st-no{background:#F7E3DF;color:#8A3E31}
+
+</style>
+</head>
+<body>
+<div class="sky" aria-hidden="true"><span class="a"></span><span class="b"></span><span class="c"></span></div>
+<div class="wrap">
+
+<header class="top">
+  <a class="brand" href="#"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="#C2477F" d="M12 21s-7.5-4.6-9.3-9.6C1.5 8 3.6 4.5 7 4.5c2 0 3.4 1.1 5 3 1.6-1.9 3-3 5-3 3.4 0 5.5 3.5 4.3 6.9C19.5 16.4 12 21 12 21z"/></svg><b>Kinship</b></a>
+  <span class="mock">Mock-up v1 · Food lens</span>
+</header>
+
+<div class="layout">
+<nav class="nav" aria-label="Food course">
+  <div class="nav-head"><span class="eyebrow">Tier 2 · Roots</span><b>Food</b></div>
+  <a class="nav-over" href="#">Overview</a>
+  <ol class="vt">
+    <li class="vt-unit k1" data-unit="u1"><a class="vt-head" href="#u1"><span class="vt-dot">1</span><span><b>Gather</b><small>Where food comes from</small></span></a>
+      <ul class="vt-subs"><li><a href="#u1/s1">Know your food sources</a></li><li><a href="#u1/s2">Free and shared food</a></li><li><a href="#u1/s3">Stretching what you spend</a></li><li><a href="#u1/s4">Growing and foraging</a></li><li><a href="#u1/s5">Passing it on</a></li></ul></li>
+    <li class="vt-unit k2" data-unit="u2"><a class="vt-head" href="#u2"><span class="vt-dot">2</span><span><b>Cleanse</b><small>Washing food well</small></span></a>
+      <ul class="vt-subs"><li><a href="#u2/s1">Why we wash</a></li><li><a href="#u2/s2">Fruits and vegetables</a></li><li><a href="#u2/s3">Leafy greens and herbs</a></li><li><a href="#u2/s4">Grains, beans and rice</a></li><li><a href="#u2/s5">Hands, boards and sponges</a></li></ul></li>
+    <li class="vt-unit k3" data-unit="u3"><a class="vt-head" href="#u3"><span class="vt-dot">3</span><span><b>Rehydrate</b><small>Waking up dried food</small></span></a>
+      <ul class="vt-subs"><li><a href="#u3/s1">Why dried food</a></li><li><a href="#u3/s2">Soaking beans</a></li><li><a href="#u3/s3">Grains, nuts and seeds</a></li><li><a href="#u3/s4">Fruit, mushrooms, vegetables</a></li><li><a href="#u3/s5">Sprouting</a></li><li><a class="tool-link" href="#u3/tool">Tool: Soak &amp; cook</a></li></ul></li>
+    <li class="vt-unit k4" data-unit="u4"><a class="vt-head" href="#u4"><span class="vt-dot">4</span><span><b>Cook</b><small>Heat, fuel and the plate</small></span></a>
+      <ul class="vt-subs"><li><a href="#u4/s1">Heat makes food safe</a></li><li><a href="#u4/s2">Cooking with little</a></li><li><a href="#u4/s3">Cooking together</a></li><li><a href="#u4/s4">Pots, pans and stoves</a></li><li><a href="#u4/s5">A plate that meets needs</a></li></ul></li>
+    <li class="vt-unit k5" data-unit="u5"><a class="vt-head" href="#u5"><span class="vt-dot">5</span><span><b>Store</b><small>Keeping food good</small></span></a>
+      <ul class="vt-subs"><li><a href="#u5/s1">Cold</a></li><li><a href="#u5/s2">The pantry</a></li><li><a href="#u5/s3">Leftovers</a></li><li><a href="#u5/s4">Keeping it longer</a></li><li><a href="#u5/s5">Animals in the pantry</a></li><li><a class="tool-link" href="#u5/tool">Tools: Keeps &amp; outage</a></li></ul></li>
+  </ol>
+</nav>
+
+<main class="main">
+
+<!-- Situation: filled from the Profile when answered; asked here only when it isn't. Every section stays available either way. -->
+<details class="sit" id="sit">
+  <summary><span class="eyebrow">Your situation</span><span class="sit-sum" id="sitSum"></span><span class="sit-chips" id="sitChips"></span><span class="sit-edit" id="sitEdit">Change</span></summary>
+  <div class="sit-body">
+    <div class="qgrid">
+      <label class="f">Kind of place<select data-q="home"></select></label>
+      <label class="f">How long do you expect to stay?<select data-q="stay"></select></label>
+      <label class="f">How much can you change the place?<select data-q="shape"></select></label>
+      <label class="f">How can you cook right now?<select data-q="kitchen"></select></label>
+      <label class="f">How do you keep food cold?<select data-q="cold"></select></label>
+    </div>
+    <div class="sit-foot"><span>Saved to your Profile in this browser, so every lens can use it. Sections for you open and get a “For you” tag; everything else stays one tap away.</span><a class="btn" href="../index.html#profile">Open Profile</a></div>
+  </div>
+</details>
+<label class="outage" style="align-self:flex-start"><input type="checkbox" id="outage"> Power’s out or the fridge is down</label>
+
+<!-- ============ OVERVIEW ============ -->
+<section class="page" data-page="">
+  <div class="main">
+  <div class="hero">
+    <span class="lens-pill">TIER 2 · ROOTS</span>
+    <h1>Food</h1>
+    <p class="lede">Every body needs food, and feeding each other is one of the oldest pleasures there is. Five short units on finding food, washing it, waking up dried food, cooking it safely and keeping it good, at every scale: a full kitchen, a hot plate, a cooler, no kitchen at all.</p>
+  </div>
+  <ol class="ucards">
+    <li><a class="ucard k1" href="#u1"><i class="band"></i><span class="n">01</span><b>Gather</b><span>Free, shared, bought, grown and foraged food.</span><ol><li>Know your food sources</li><li>Free and shared food</li><li>Stretching what you spend</li><li>Growing and foraging</li><li>Passing it on</li></ol></a></li>
+    <li><a class="ucard k2" href="#u2"><i class="band"></i><span class="n">02</span><b>Cleanse</b><span>Washing produce, greens, grains and the tools that touch them.</span><ol><li>Why we wash</li><li>Fruits and vegetables</li><li>Leafy greens and herbs</li><li>Grains, beans and rice</li><li>Hands, boards and sponges</li></ol></a></li>
+    <li><a class="ucard k3" href="#u3"><i class="band"></i><span class="n">03</span><b>Rehydrate</b><span>Soaking beans, grains and dried foods, and sprouting.</span><ol><li>Why dried food</li><li>Soaking beans</li><li>Grains, nuts and seeds</li><li>Fruit, mushrooms, vegetables</li><li>Sprouting</li></ol></a></li>
+    <li><a class="ucard k4" href="#u4"><i class="band"></i><span class="n">04</span><b>Cook</b><span>Safe heat, little fuel, many hands and a full plate.</span><ol><li>Heat makes food safe</li><li>Cooking with little</li><li>Cooking together</li><li>Pots, pans and stoves</li><li>A plate that meets needs</li></ol></a></li>
+    <li><a class="ucard k5" href="#u5"><i class="band"></i><span class="n">05</span><b>Store</b><span>Cold, pantry, leftovers, preserving, and the animals who visit.</span><ol><li>Cold</li><li>The pantry</li><li>Leftovers</li><li>Keeping it longer</li><li>Animals in the pantry</li></ol></a></li>
+  </ol>
+  <div class="funfact"><span class="eyebrow">Fun fact</span>
+    <p>Every food in this course comes from plants. Kinship is a vegan project, a practice of peace with animals, and plants turn out to be the cheapest, longest-keeping and most shareable way to meet the need for food. Beans and rice alone fed much of the world for thousands of years. (More on the <a href="../index.html#lens-relationships/animals">Animals</a> page.)</p>
+    <p>Safety numbers come from public food-safety guidance (USDA, FDA, the UK’s NHS and the National Center for Home Food Preservation). Laws mentioned are California’s; food itself is the same everywhere.</p>
+  </div>
+  <div class="review"><span class="eyebrow">For review · mock-up notes</span>
+    <ul>
+      <li><b>Unit 1 “Gather” is new.</b> The lens card lists Cleansing, Cooking and Storage; Gather adds where food comes from (free food, budget, growing), which the “no fixed home” and “unplug from the profit loop” ideas lean on. Easy to drop or merge into Store.</li>
+      <li><b>Two new profile questions:</b> <code>kitchen</code> (how you can cook) and <code>cold</code> (how you keep food cold). Everything else reads the existing <code>home</code>, <code>stay</code>, <code>shape</code>, <code>space</code> and <code>kids</code>.</li>
+      <li>A spot for an <i>Ashley’s take</i> opinion box would fit at the end of 4.5 (the plate), if you want one.</li>
+    </ul>
+  </div>
+  </div>
+</section>
+
+<!-- ============ UNIT 1: GATHER ============ -->
+<section class="page k1" data-page="u1" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 1</span><h1>Gather</h1><p class="unit-sub">Where food comes from</p>
+    <p class="lede">Food reaches us from shops, gardens, neighbors, food banks and the wild. Knowing all the ways in means more than one strategy for the same need, so a hard week has options.</p>
+    <ul class="jumps"><li><a href="#u1/s1"><span>1.1</span>Sources</a></li><li><a href="#u1/s2"><span>1.2</span>Free food</a></li><li><a href="#u1/s3"><span>1.3</span>Spend less</a></li><li><a href="#u1/s4"><span>1.4</span>Grow &amp; forage</a></li><li><a href="#u1/s5"><span>1.5</span>Pass it on</a></li></ul>
+  </div>
+
+  <article class="sub" id="u1-s1">
+    <div class="sub-top"><span class="sub-n">1.1</span><h2>Know your food sources</h2></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Source</th><th>Good for</th><th>Costs</th></tr></thead>
+      <tbody>
+        <tr><td>Shops and markets</td><td>Everything, any day</td><td class="p">Money</td></tr>
+        <tr><td>Co-ops and buying clubs</td><td>Bulk beans, grains, oil, spices</td><td class="p">Money, less of it</td></tr>
+        <tr><td>Food banks and pantries</td><td>Staples, produce, canned food</td><td class="y">Free</td></tr>
+        <tr><td>Shared meals and community fridges</td><td>A meal today, company</td><td class="y">Free</td></tr>
+        <tr><td>Gardens</td><td>Greens, herbs, fruit, squash, beans</td><td class="p">Time, water, seeds</td></tr>
+        <tr><td>Gleaning and foraging</td><td>Fruit, greens, nuts in season</td><td class="y">Time and knowledge</td></tr>
+      </tbody>
+    </table></div>
+    <p class="old">Most households once had several food sources at once: a garden, a market, neighbors to trade with, a wild patch to forage. Leaning on one store is quite new.</p>
+    <p class="do">List every place food came from this month. Circle one you’d like to add.</p>
+  </article>
+
+  <article class="sub" id="u1-s2">
+    <div class="sub-top"><span class="sub-n">1.2</span><h2>Free and shared food</h2></div>
+    <p>Free food is a strategy like any other, and using it frees money for other needs. Food banks often have more than they can give out, especially fresh produce.</p>
+    <ul>
+      <li>Calling or texting <b>211</b> finds local food banks, pantries and free meals.</li>
+      <li>Community fridges (“free fridges”): take what you need, leave what you can.</li>
+      <li>Food Not Bombs groups share free vegetarian or vegan meals in many cities.</li>
+    </ul>
+    <p class="ca">CalFresh (California’s name for SNAP) puts money for food on a card; many farmers’ markets match it through <b>Market Match</b>. All public school students can get free breakfast and lunch under the state’s universal school meals program.</p>
+    <div class="accs">
+      <details class="acc" data-for="nohome"><summary><span class="who">No fixed home</span>Food without a kitchen<span class="for-you">For you</span></summary><div class="in">
+        <p class="kind">Without a home, food takes far more time and planning, because most food systems assume a kitchen and a fridge of your own. That’s a gap in how things are built, not a personal failing.</p>
+        <ul><li>Shelters, day centers and churches often serve hot meals; 211 has the times.</li><li>Ask pantries for “no-cook” or “ready-to-eat” bags: many keep them.</li><li>Food that keeps without cold: nut butter, crackers, bread, whole fruit, canned beans with pull-tab lids, oats for cold soaking (4.2).</li></ul></div></details>
+      <details class="acc" data-for="kids"><summary><span class="who">With kids</span>Food for children<span class="for-you">For you</span></summary><div class="in"><ul><li>WIC helps pregnant people, babies and children under 5 with food and nutrition support.</li><li>Many districts run free summer meals for anyone under 18; 211 finds sites.</li></ul></div></details>
+    </div>
+    <p class="links">Emotions &amp; love (asking for help) · Cooperatives</p>
+  </article>
+
+  <article class="sub" id="u1-s3">
+    <div class="sub-top"><span class="sub-n">1.3</span><h2>Stretching what you spend</h2></div>
+    <ul>
+      <li><b>Dried beans</b> usually cost half or less per serving than canned, and keep for years (Unit 3).</li>
+      <li><b>Buy the staples in bulk</b> with friends or a co-op: a 25-lb sack of rice or beans split three ways.</li>
+      <li><b>Cook once, eat three times:</b> a big pot of beans becomes soup, tacos and a spread.</li>
+      <li>Frozen vegetables and fruit are picked ripe, cost less than fresh out of season, and don’t go to waste.</li>
+    </ul>
+    <p class="home">A shared spreadsheet with two neighbors: who’s buying the oats sack this month, who has the jars.</p>
+  </article>
+
+  <article class="sub" id="u1-s4">
+    <div class="sub-top"><span class="sub-n">1.4</span><h2>Growing and foraging</h2></div>
+    <p>Even a windowsill grows herbs and sprouts. More space adds greens, beans, squash and fruit trees. Gleaning, picking what farms and backyard trees leave behind, puts fruit that would rot to use.</p>
+    <p class="danger">Only eat a wild plant you can name with certainty, from a clean place (away from roads and sprayed edges). Wild mushrooms need an expert, every time.</p>
+    <p class="ca">Picking plants in state parks is generally not allowed; rules differ on other land. Ask before picking from a tree on someone else’s property, and fallen-fruit maps show public trees.</p>
+    <div class="accs">
+      <details class="acc" data-for="portable"><summary><span class="who">Portable</span>A windowsill harvest<span class="for-you">For you</span></summary><div class="in"><p>Sprouts in a jar (3.5), herbs in pots, scallions regrowing in a glass of water. Everything moves with you.</p></div></details>
+      <details class="acc" data-for="outdoor invest"><summary><span class="who">Yard</span>Beds and fruit trees<span class="for-you">For you</span></summary><div class="in"><p>Greens and beans in spring and fall, squash and tomatoes in summer. Fruit trees are a long gift: plant where you’ll stay.</p><p class="links">Gardening · Water (gray water to trees)</p></div></details>
+      <details class="acc" data-for="land"><summary><span class="who">Land</span>Staple crops<span class="for-you">For you</span></summary><div class="in"><p>Dry beans, winter squash, potatoes and grains store for months without power, so a land garden can carry the pantry, not just the salad.</p></div></details>
+    </div>
+  </article>
+
+  <article class="sub" id="u1-s5">
+    <div class="sub-top"><span class="sub-n">1.5</span><h2>Passing it on</h2></div>
+    <p>Too many lemons, half a pot of soup, a sack that’s too big: extra food meets someone else’s need. Neighbors, Buy Nothing groups, community fridges and food banks all take it.</p>
+    <p class="ca">Since 2022, many grocery stores, distributors and large kitchens must donate edible food they’d otherwise throw away to food recovery groups (SB 1383). Federal and state law protect people who donate food in good faith.</p>
+    <p class="together">A fruit-picking afternoon with the kids next door, then a box on the curb with a “free” sign.</p>
+  </article>
+
+  <nav class="pager"><a href="#"><small>← Back</small><b>Overview</b></a><a class="next" href="#u2"><small>Next unit →</small><b>2 · Cleanse</b></a></nav>
+  </div>
+</section>
+
+<!-- ============ UNIT 2: CLEANSE ============ -->
+<section class="page k2" data-page="u2" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 2</span><h1>Cleanse</h1><p class="unit-sub">Washing food well</p>
+    <p class="lede">Clean running water and a bit of rubbing do most of the work. No soap, no bleach, no special sprays.</p>
+    <ul class="jumps"><li><a href="#u2/s1"><span>2.1</span>Why</a></li><li><a href="#u2/s2"><span>2.2</span>Produce</a></li><li><a href="#u2/s3"><span>2.3</span>Greens</a></li><li><a href="#u2/s4"><span>2.4</span>Grains &amp; beans</a></li><li><a href="#u2/s5"><span>2.5</span>Hands &amp; tools</a></li></ul>
+  </div>
+
+  <article class="sub" id="u2-s1">
+    <div class="sub-top"><span class="sub-n">2.1</span><h2>Why we wash</h2></div>
+    <p>Washing lifts off soil, germs from the field and many hands, and some of the residue from sprays. It matters most for food eaten raw, and for anything you cut, since a knife carries what’s on the skin into the flesh.</p>
+    <ul>
+      <li>Wash just before eating or cooking, not before storing: damp produce spoils faster.</li>
+      <li>Wash even if you’ll peel it (melons, oranges, avocados).</li>
+      <li>Bags labelled “pre-washed” or “triple-washed” are ready as they are; rewashing adds more chances for germs from the sink.</li>
+    </ul>
+    <p class="links">Water (1.2 · drinking-grade water for food eaten raw)</p>
+  </article>
+
+  <article class="sub" id="u2-s2">
+    <div class="sub-top"><span class="sub-n">2.2</span><h2>Fruits and vegetables</h2></div>
+    <ul>
+      <li><b>Firm produce</b> (potatoes, carrots, apples, melons): rinse under running water and scrub with a clean brush.</li>
+      <li><b>Soft fruit</b> (berries, tomatoes, peaches): a gentle rinse in a colander, then let them dry.</li>
+      <li><b>Mushrooms:</b> a quick rinse or a damp cloth, right before cooking.</li>
+      <li>Dry with a clean towel: rubbing removes a little more.</li>
+    </ul>
+    <p class="do">For less surface residue on apples and other firm fruit: soak 12–15 minutes in 1 tsp baking soda per 2 cups of water, then rinse. A 2017 study found this beat plain water and bleach washes.</p>
+    <p class="old">Many cooks soak produce in vinegar water. It’s pleasant and harmless, though studies find it does little more than plain water.</p>
+  </article>
+
+  <article class="sub" id="u2-s3">
+    <div class="sub-top"><span class="sub-n">2.3</span><h2>Leafy greens and herbs</h2></div>
+    <p>Grit hides between leaves. Separate them, drop them into a big bowl of cold water, swish, wait a minute, then <b>lift</b> the greens out so the grit stays at the bottom. Repeat until the bowl is clean.</p>
+    <ul>
+      <li>Toss the outer leaves of heads of lettuce and cabbage.</li>
+      <li>Spin or roll in a towel: dry greens last longer and hold dressing.</li>
+    </ul>
+    <p class="home">The swishing water is clean enough for houseplants (Water 1.2, grade 2).</p>
+    <p class="together">Swishing and spinning is perfect work for small hands.</p>
+  </article>
+
+  <article class="sub" id="u2-s4">
+    <div class="sub-top"><span class="sub-n">2.4</span><h2>Grains, beans and rice</h2></div>
+    <ul>
+      <li><b>Dried beans and lentils:</b> spread on a tray and pick out small stones and shrivelled beans, then rinse.</li>
+      <li><b>Quinoa:</b> rinse well in a fine sieve. Its coating (saponins) tastes soapy and bitter.</li>
+      <li><b>Rice:</b> rinse until the water runs mostly clear for fluffier rice.</li>
+    </ul>
+    <div class="note"><b class="h">Rice and arsenic</b>
+      <p>Rice soaks up more arsenic from soil and water than most grains, brown rice more than white. Cooking it like pasta, in plenty of water (6–10 parts water to 1 rice) and draining, removes about 40–60%. A 2020 University of Sheffield method removed about half from brown rice and nearly three-quarters from white: boil 5 minutes in fresh water, drain, then add fresh water and finish cooking with the lid on.</p>
+      <p>Variety helps too: oats, millet, quinoa, barley and buckwheat for some of rice’s meals, especially for babies and toddlers.</p>
+    </div>
+  </article>
+
+  <article class="sub" id="u2-s5">
+    <div class="sub-top"><span class="sub-n">2.5</span><h2>Hands, boards and sponges</h2></div>
+    <ul>
+      <li>Wash hands with soap for about 20 seconds before cooking and after handling soil or raw sprouts.</li>
+      <li>Hot soapy water for boards and knives. Deep grooves in a board hold germs: sand wood, retire scarred plastic.</li>
+      <li>Sponges grow germs fast. Let them dry between uses and replace often; cloths that go in the laundry stay cleaner.</li>
+    </ul>
+    <p class="links">Cleaning (surfaces) · Toxins (plastic boards and heat)</p>
+    <div class="accs">
+      <details class="acc" data-for="nohome nocook"><summary><span class="who">No sink</span>Washing food with little water<span class="for-you">For you</span></summary><div class="in"><ul><li>Choose food you peel: bananas, oranges, avocados, carrots you can scrape.</li><li>A bottle of drinking water poured over produce in a bag or bowl does the job.</li><li>Hand sanitizer is a backup for hands, not a wash for food.</li></ul></div></details>
+    </div>
+  </article>
+
+  <nav class="pager"><a href="#u1"><small>← Back</small><b>1 · Gather</b></a><a class="next" href="#u3"><small>Next unit →</small><b>3 · Rehydrate</b></a></nav>
+  </div>
+</section>
+
+<!-- ============ UNIT 3: REHYDRATE ============ -->
+<section class="page k3" data-page="u3" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 3</span><h1>Rehydrate</h1><p class="unit-sub">Waking up dried food</p>
+    <p class="lede">Dried food is food with the water taken out, so it keeps. Putting the water back, slowly and cleanly, turns a jar of hard beans into dinner.</p>
+    <ul class="jumps"><li><a href="#u3/s1"><span>3.1</span>Why dried</a></li><li><a href="#u3/s2"><span>3.2</span>Beans</a></li><li><a href="#u3/s3"><span>3.3</span>Grains &amp; nuts</a></li><li><a href="#u3/s4"><span>3.4</span>Fruit &amp; mushrooms</a></li><li><a href="#u3/s5"><span>3.5</span>Sprouting</a></li><li><a href="#u3/tool"><span>Tool</span>Soak &amp; cook</a></li></ul>
+  </div>
+
+  <article class="sub" id="u3-s1">
+    <div class="sub-top"><span class="sub-n">3.1</span><h2>Why dried food</h2></div>
+    <p>Germs and molds need water to grow. Take it out and food keeps for months or years with no fridge, weighs a fraction as much, and costs less. Beans, lentils, grains, dried fruit, mushrooms and seaweed are the backbone of a pantry that doesn’t need power.</p>
+    <p class="old">Sun-dried fruit, beans hung in their pods, strings of chilies and mushrooms on thread: drying is one of the oldest ways people have carried food through winter and across distance.</p>
+  </article>
+
+  <article class="sub" id="u3-s2">
+    <div class="sub-top"><span class="sub-n">3.2</span><h2>Soaking beans</h2></div>
+    <ul>
+      <li><b>Overnight soak:</b> cover sorted, rinsed beans with about three times their volume of water for 8–12 hours. In a hot kitchen, soak in the fridge.</li>
+      <li><b>Quick soak:</b> bring to a boil, boil 2–3 minutes, cover and rest 1 hour.</li>
+      <li>Pour off the soaking water and cook in fresh water. Soaking cuts cooking time and, for many people, gas.</li>
+      <li><b>No soak needed:</b> lentils, split peas and mung beans cook in under an hour.</li>
+      <li>A spoon of salt per quart of soaking water gives softer skins. Very old beans may never fully soften; a pinch of baking soda helps.</li>
+    </ul>
+    <p class="danger">Red kidney beans (and, less so, other beans) carry a natural toxin that a hard boil destroys. Soak, drain, then <b>boil hard for at least 10 minutes</b> before simmering or putting them in a slow cooker. Warm-but-not-boiling beans can be worse than raw, so never start kidney beans in a slow cooker from dry.</p>
+  </article>
+
+  <article class="sub" id="u3-s3">
+    <div class="sub-top"><span class="sub-n">3.3</span><h2>Grains, nuts and seeds</h2></div>
+    <ul>
+      <li><b>Oats:</b> rolled oats soaked overnight in water or plant milk are ready to eat with no cooking. Steel-cut oats soaked overnight cook in about 10 minutes.</li>
+      <li><b>Brown rice and whole grains:</b> a few hours’ soak shortens cooking and gives a softer grain. Optional.</li>
+      <li><b>Nuts:</b> cashews soaked 2–4 hours blend into a smooth cream for sauces.</li>
+      <li><b>Chia and flax:</b> 1 tbsp ground flax or chia in 3 tbsp water, rested 10 minutes, binds like an egg in baking.</li>
+    </ul>
+    <p class="home">Overnight oats in a jar, made with the kids before bed: breakfast is waiting.</p>
+  </article>
+
+  <article class="sub" id="u3-s4">
+    <div class="sub-top"><span class="sub-n">3.4</span><h2>Fruit, mushrooms and vegetables</h2></div>
+    <ul>
+      <li><b>Dried mushrooms:</b> hot water for 20–30 minutes. Strain the soaking liquid through a cloth (grit) and keep it: it’s a rich broth.</li>
+      <li><b>Dried fruit:</b> warm water or tea for 10–30 minutes, for baking or softening for little ones.</li>
+      <li><b>Seaweed:</b> wakame and kombu swell a lot in 5–10 minutes. Start small.</li>
+      <li><b>Dried vegetables and TVP</b> (textured soy protein): equal parts boiling water, 10 minutes.</li>
+    </ul>
+    <p class="do">Use soaked food within a few hours, or put it in the fridge. Once wet, it spoils like fresh food.</p>
+  </article>
+
+  <article class="sub" id="u3-s5">
+    <div class="sub-top"><span class="sub-n">3.5</span><h2>Sprouting</h2></div>
+    <p>A jar, a mesh lid and two rinses a day turn lentils, mung beans, chickpeas or alfalfa seeds into crunchy sprouts in 2–5 days. The cheapest fresh greens there are, grown on a counter.</p>
+    <ol><li>Soak seeds overnight, drain.</li><li>Tip the jar upside down at an angle so it drains.</li><li>Rinse with fresh drinking water morning and evening.</li><li>Eat when the tails are as long as the seed; fridge after that.</li></ol>
+    <p class="danger">The warm, damp jar that grows sprouts also grows germs. Cooking sprouts makes them safe for young children, pregnant people, older people and anyone with a weaker immune system. Don’t sprout kidney beans to eat raw. Use seeds sold for sprouting.</p>
+  </article>
+
+  <article class="tool" id="u3-tool">
+    <b class="t">Soak &amp; cook</b>
+    <div class="row">
+      <label class="f">Food<select id="sc-food"></select></label>
+      <label class="f">Dry amount (cups)<input type="number" id="sc-cups" min="0.25" step="0.25" value="1"></label>
+      <label class="f">Cooking with<select id="sc-way"><option value="pot">A pot on a stove</option><option value="pc">Pressure cooker</option></select></label>
+    </div>
+    <div class="out" id="sc-out"></div>
+  </article>
+
+  <nav class="pager"><a href="#u2"><small>← Back</small><b>2 · Cleanse</b></a><a class="next" href="#u4"><small>Next unit →</small><b>4 · Cook</b></a></nav>
+  </div>
+</section>
+
+<!-- ============ UNIT 4: COOK ============ -->
+<section class="page k4" data-page="u4" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 4</span><h1>Cook</h1><p class="unit-sub">Heat, fuel and the plate</p>
+    <p class="lede">Cooking makes food safer, easier to digest and better to share. It needs less fuel and fewer tools than most kitchens suggest.</p>
+    <ul class="jumps"><li><a href="#u4/s1"><span>4.1</span>Safe heat</a></li><li><a href="#u4/s2"><span>4.2</span>With little</a></li><li><a href="#u4/s3"><span>4.3</span>Together</a></li><li><a href="#u4/s4"><span>4.4</span>Pots &amp; stoves</a></li><li><a href="#u4/s5"><span>4.5</span>The plate</a></li></ul>
+  </div>
+
+  <article class="sub" id="u4-s1">
+    <div class="sub-top"><span class="sub-n">4.1</span><h2>Heat makes food safe</h2></div>
+    <p>Most germs that make people sick grow fastest between 40°F and 140°F (4–60°C), the <b>danger zone</b>. Food is safest kept cold below it or hot above it, and passing through it quickly.</p>
+    <ul>
+      <li>Reheat leftovers until steaming all the way through: 165°F (74°C) on a thermometer.</li>
+      <li>Soups and stews: bring back to a rolling boil.</li>
+      <li>Kidney beans: a hard 10-minute boil (3.2).</li>
+    </ul>
+    <p class="do">Stick a cheap food thermometer into tonight’s reheated leftovers. Is the middle as hot as the edge?</p>
+  </article>
+
+  <article class="sub" id="u4-s2">
+    <div class="sub-top"><span class="sub-n">4.2</span><h2>Cooking with little</h2></div>
+    <p>Fuel, time and money go further with a few tricks.</p>
+    <ul>
+      <li><b>Lids on:</b> a covered pot boils faster and simmers on the lowest flame.</li>
+      <li><b>Pressure cookers</b> cook soaked beans in minutes instead of an hour or two.</li>
+      <li><b>Retained heat:</b> bring a pot to a boil, then wrap it in blankets or set it in an insulated box. It keeps cooking for hours with no fuel.</li>
+    </ul>
+    <p class="old">The haybox: a wooden crate packed with hay, used across Europe and Africa to finish porridges, beans and stews while the household went about its day.</p>
+    <div class="accs">
+      <details class="acc" data-for="smallkit"><summary><span class="who">One appliance</span>Hot plate, rice cooker or microwave<span class="for-you">For you</span></summary><div class="in"><ul><li>A rice cooker steams vegetables in a basket above the rice, and makes oats and lentil stew.</li><li>A single electric pressure cooker does beans, grains, soups and steaming.</li><li>Microwave: red lentils in a big bowl with water (they foam), potatoes, frozen vegetables, oats.</li></ul></div></details>
+      <details class="acc" data-for="shared"><summary><span class="who">Shared kitchen</span>Cooking in a shared kitchen<span class="for-you">For you</span></summary><div class="in"><p>Batch-cook on quiet hours, label your shelf, and keep one crate of your own tools. A shared pot of soup is a lovely way to meet housemates.</p><p class="links">Emotions &amp; love (housemates) · Cleaning (shared chores)</p></div></details>
+      <details class="acc" data-for="nocook nohome"><summary><span class="who">No cooking</span>Cold soaking and no-cook meals<span class="for-you">For you</span></summary><div class="in"><ul><li>Cold soak in a jar with a tight lid: rolled oats (overnight), couscous (1–2 hours), instant noodles (about an hour), instant mashed potatoes (minutes).</li><li>Canned beans, chickpeas and lentils are already cooked: rinse and eat.</li><li>Nut butter, bread, fruit and canned beans meet protein, energy and fiber with no heat.</li></ul></div></details>
+      <details class="acc" data-for="crisis"><summary><span class="who">Outage</span>Cooking without power<span class="for-you">For you</span></summary><div class="in"><ul><li>Camp stoves and grills are outdoor tools only: their fumes can kill indoors, even with a window open.</li><li>Eat from the fridge first, then the freezer, then the pantry (5.1).</li><li>A pot brought to a boil on a camp stove and wrapped in blankets saves fuel.</li></ul><p class="links">Air (carbon monoxide) · Emergency preparedness</p></div></details>
+      <details class="acc" data-for="land outdoor"><summary><span class="who">Outdoors</span>Sun and fire<span class="for-you">For you</span></summary><div class="in"><p>A solar oven (a box, a black pot, foil and glass) slow-cooks beans and rice on sunny days. Rocket stoves burn small sticks hot and clean.</p></div></details>
+    </div>
+    <p class="danger">Food left wrapped for many hours can cool into the danger zone. If a retained-heat pot has sat more than about 4 hours, bring it back to a boil before eating.</p>
+  </article>
+
+  <article class="sub" id="u4-s3">
+    <div class="sub-top"><span class="sub-n">4.3</span><h2>Cooking together</h2></div>
+    <p>Children belong in the kitchen, at whatever level they can manage. Real tools, real jobs, next to the adults.</p>
+    <div class="ladder">
+      <div class="rung r1"><small>Toddlers</small><b>Wash and carry</b><p>Swishing greens, scrubbing potatoes, tearing lettuce, carrying the bowl to the table.</p></div>
+      <div class="rung r2"><small>Preschool</small><b>Pour and mash</b><p>Measuring beans into a jar, mashing chickpeas, stirring cold batters, sorting stones from lentils.</p></div>
+      <div class="rung r3"><small>Early school</small><b>Cut and mix</b><p>A small sharp knife on soft food with a claw grip, cracking open pods, rinsing quinoa.</p></div>
+      <div class="rung r4"><small>Older kids</small><b>Cook a dish</b><p>The stove with an adult nearby, then a whole meal of their own for everyone.</p></div>
+    </div>
+    <p class="together">Sorting a tray of dried beans for stones is a favorite: it’s a treasure hunt that makes dinner.</p>
+    <p class="links">Emotions &amp; love (children) · Foundation 2 (togetherness)</p>
+  </article>
+
+  <article class="sub" id="u4-s4">
+    <div class="sub-top"><span class="sub-n">4.4</span><h2>Pots, pans and stoves</h2></div>
+    <ul>
+      <li><b>Cast iron, carbon steel, stainless steel and glass</b> last a lifetime and turn up secondhand.</li>
+      <li><b>Nonstick coatings:</b> keep the heat low and retire pans once scratched or flaking. See Toxins for what’s in them.</li>
+      <li><b>Gas stoves</b> put fumes into the room. Run the hood fan or open a window while cooking.</li>
+      <li>Hot food goes into glass, steel or ceramic rather than plastic.</li>
+    </ul>
+    <p class="links">Toxins (cookware, plastics) · Air (gas stoves, ventilation)</p>
+  </article>
+
+  <article class="sub" id="u4-s5">
+    <div class="sub-top"><span class="sub-n">4.5</span><h2>A plate that meets needs</h2></div>
+    <p>Bodies need energy, protein, fats, fiber, vitamins and minerals. A plant plate meets nearly all of them with variety across the day. Major dietetic associations find well-planned vegan diets healthy at every stage of life, including pregnancy and childhood.</p>
+    <div class="plate">
+      <div><b>Beans and lentils</b><p>Protein, iron, fiber. Tofu, tempeh, peanuts count too.</p></div>
+      <div><b>Whole grains</b><p>Energy and more protein: rice, oats, wheat, millet, corn.</p></div>
+      <div><b>Vegetables and fruit</b><p>Vitamins, fiber; vitamin C helps the body take in iron.</p></div>
+      <div><b>Nuts and seeds</b><p>Fats; ground flax, chia and walnuts for omega-3.</p></div>
+    </div>
+    <div class="note"><b class="h">A few to plan for</b>
+      <ul>
+        <li><b>B12:</b> made by bacteria, not plants. A supplement or fortified foods (plant milks, nutritional yeast) are the reliable source. Many older adults need one whatever they eat.</li>
+        <li><b>Calcium:</b> fortified plant milk, calcium-set tofu, kale, bok choy.</li>
+        <li><b>Vitamin D:</b> sun and fortified foods. <b>Iodine:</b> iodized salt or seaweed in small amounts.</li>
+      </ul>
+      <p>A doctor or dietitian can check levels and doses, especially in pregnancy and for young children.</p>
+    </div>
+    <p class="do">Look at one day’s plates. Which of the four groups showed up? Which one would be easy to add tomorrow?</p>
+  </article>
+
+  <nav class="pager"><a href="#u3"><small>← Back</small><b>3 · Rehydrate</b></a><a class="next" href="#u5"><small>Next unit →</small><b>5 · Store</b></a></nav>
+  </div>
+</section>
+
+<!-- ============ UNIT 5: STORE ============ -->
+<section class="page k5" data-page="u5" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 5</span><h1>Store</h1><p class="unit-sub">Keeping food good</p>
+    <p class="lede">Every way of keeping food takes away something germs need: warmth, water, air or a friendly pH. Cold, dry, sealed and sour are the four big tools.</p>
+    <ul class="jumps"><li><a href="#u5/s1"><span>5.1</span>Cold</a></li><li><a href="#u5/s2"><span>5.2</span>Pantry</a></li><li><a href="#u5/s3"><span>5.3</span>Leftovers</a></li><li><a href="#u5/s4"><span>5.4</span>Longer</a></li><li><a href="#u5/s5"><span>5.5</span>Visitors</a></li><li><a href="#u5/tool"><span>Tools</span>Keeps &amp; outage</a></li></ul>
+  </div>
+
+  <article class="sub" id="u5-s1">
+    <div class="sub-top"><span class="sub-n">5.1</span><h2>Cold</h2></div>
+    <ul>
+      <li>Fridge at <b>40°F (4°C) or below</b>, freezer at <b>0°F (−18°C)</b>. A $5 thermometer tells you.</li>
+      <li>Greens in a container lined with a dry towel. Herbs like basil and cilantro in a glass of water, like flowers.</li>
+      <li>Apples, bananas, avocados and tomatoes give off ethylene, a ripening gas: keep them away from greens and carrots.</li>
+      <li>Tomatoes, potatoes, onions, garlic, winter squash and bananas keep better out of the fridge.</li>
+    </ul>
+    <div class="accs">
+      <details class="acc" data-for="nocold nohome"><summary><span class="who">No fridge</span>Living without cold<span class="for-you">For you</span></summary><div class="in"><ul><li>Buy fresh food for a day or two at a time; lean on the pantry (5.2) for the rest.</li><li>Whole fruit and hard vegetables keep for days in shade: apples, citrus, carrots, cabbage, potatoes, onions, squash.</li><li>A clay pot-in-pot cooler (a pot inside a bigger pot, wet sand between) cools by evaporation in dry heat.</li><li>Cook only what gets eaten in one go.</li></ul></div></details>
+      <details class="acc" data-for="smallcold"><summary><span class="who">Small fridge</span>Making a small fridge go further<span class="for-you">For you</span></summary><div class="in"><p>Save cold space for what needs it: cooked food, cut fruit, tofu, opened plant milk, greens. Everything in the list above that keeps better outside can live on the counter.</p></div></details>
+      <details class="acc" data-for="crisis"><summary><span class="who">Outage</span>When the power goes out<span class="for-you">For you</span></summary><div class="in"><ul><li>Keep the doors shut. A closed fridge stays cold about 4 hours; a full freezer about 48 hours, a half-full one about 24.</li><li>Use the outage tool below to sort what’s safe.</li><li>Frozen jugs of water (Water 3.5) keep a freezer cold longer, and become drinking water.</li></ul></div></details>
+    </div>
+  </article>
+
+  <article class="sub" id="u5-s2">
+    <div class="sub-top"><span class="sub-n">5.2</span><h2>The pantry</h2></div>
+    <p>Cool, dark, dry and sealed. Glass jars with good lids keep out air, damp and visitors (5.5).</p>
+    <ul>
+      <li><b>Keep for years:</b> white rice, dried beans, salt, sugar, dried pasta. Old beans are still safe, they just cook slower.</li>
+      <li><b>Keep for months:</b> brown rice, whole-wheat flour, nuts and seeds. Their oils go rancid (a smell like crayons or old paint); the fridge or freezer doubles their life.</li>
+      <li><b>First in, first out:</b> new jars behind old ones, and a date on the lid.</li>
+    </ul>
+    <p class="ca">Since July 2026, “BEST if Used by” means quality and “USE by” means safety on food labels (AB 660). “Best by” food past its date is usually fine: look, smell, taste a little.</p>
+    <p class="do">Take everything off one shelf. Eat the oldest thing this week.</p>
+  </article>
+
+  <article class="sub" id="u5-s3">
+    <div class="sub-top"><span class="sub-n">5.3</span><h2>Leftovers</h2></div>
+    <ul>
+      <li>Into the fridge within 2 hours of cooking (1 hour on a day over 90°F).</li>
+      <li>Shallow containers cool fast. A big pot of soup can stay warm in the middle for hours: split it up.</li>
+      <li>Most leftovers keep 3–4 days cold, or months frozen. Freeze in single portions with a date.</li>
+    </ul>
+    <p class="danger"><b>Cooked rice</b> can carry spores that survive cooking and make a toxin reheating won’t destroy. Cool it within an hour, keep it cold, and eat it within a day (the UK’s NHS advice; US guidance allows 3–4 days). Reheat only once. Your nose can’t tell you about this one.</p>
+  </article>
+
+  <article class="sub" id="u5-s4">
+    <div class="sub-top"><span class="sub-n">5.4</span><h2>Keeping it longer</h2></div>
+    <div class="accs">
+      <details class="acc" data-for="portable invest land"><summary><span class="who">Easy</span>Freezing<span class="for-you">For you</span></summary><div class="in"><p>Blanch most vegetables 1–3 minutes first so they keep color and taste. Freeze fruit on a tray, then bag it. Bread, cooked beans, grains and soup all freeze well.</p></div></details>
+      <details class="acc" data-for="portable invest land"><summary><span class="who">Easy</span>Fermenting<span class="for-you">For you</span></summary><div class="in"><p>Sauerkraut and kimchi: shred vegetables, mix with 2% salt by weight (20 g per kg), pack into a jar and keep them under the brine. Ready in 1–4 weeks at room temperature.</p><p>A flat white film (kahm yeast) can be skimmed. Fuzzy blue, green, black or pink mold means the batch goes to compost.</p></div></details>
+      <details class="acc" data-for="outdoor land invest"><summary><span class="who">Some gear</span>Drying<span class="for-you">For you</span></summary><div class="in"><p>Sun, an oven at its lowest setting with the door ajar, or a dehydrator. Fruit is done when leathery with no wet pockets, vegetables when brittle.</p></div></details>
+      <details class="acc" data-for="invest land"><summary><span class="who">Some gear</span>Canning<span class="for-you">For you</span></summary><div class="in"><ul><li><b>High-acid food</b> (most fruit, pickles, tomatoes with added lemon juice) goes in a boiling water bath.</li><li><b>Low-acid food</b> (beans, most vegetables, soups) needs a pressure canner. A water bath isn’t hot enough to kill botulism spores.</li><li>Use tested recipes (the National Center for Home Food Preservation or the USDA guide) and adjust for altitude.</li></ul></div></details>
+      <details class="acc" data-for="land outdoor"><summary><span class="who">Land</span>Root cellars and cool rooms<span class="for-you">For you</span></summary><div class="in"><p>Potatoes, carrots, beets, cabbage, apples and winter squash keep for months somewhere cold (32–40°F), dark and damp. A buried bin, a north-side closet or an unheated garage can work.</p></div></details>
+    </div>
+    <p class="danger">Bulging, leaking or spurting cans and jars, or an off smell: throw out without tasting, in a sealed bag. Garlic or herbs in oil: keep in the fridge and use within 4 days, or freeze.</p>
+    <p class="old">Every culture has its keeping foods: kimchi, sauerkraut, miso, pickled plums, dried tomatoes, fruit leather. Each one turns a glut into a year of meals.</p>
+  </article>
+
+  <article class="sub" id="u5-s5">
+    <div class="sub-top"><span class="sub-n">5.5</span><h2>Animals in the pantry</h2></div>
+    <p>Moths in the flour, ants on the counter, a mouse behind the rice: they’re neighbors whose need for food our pantry is meeting by accident. Change what we offer and they move on, no poison needed.</p>
+    <ul>
+      <li><b>Pantry moths and weevils:</b> freeze new flour and grain for about four days, then store in glass or metal. Compost what they’ve moved into, wipe the shelf.</li>
+      <li><b>Ants:</b> follow the trail to the door, wipe it with soapy water or vinegar (it erases their scent path), and seal the crack.</li>
+      <li><b>Mice:</b> food in jars and tins, crumbs swept, and gaps around pipes stuffed with steel wool. Live traps if someone’s already living in.</li>
+    </ul>
+    <p class="old">Bay leaves in the flour bin are a common old remedy for weevils. Studies are thin, but they smell nice and do no harm.</p>
+    <p class="links">Emotions &amp; love (Animals) · Cleaning</p>
+  </article>
+
+  <article class="tool" id="u5-tool">
+    <b class="t">How long does it keep?</b>
+    <div class="row"><label class="f">Food<select id="kp-food"></select></label></div>
+    <div class="out" id="kp-out"></div>
+  </article>
+
+  <article class="tool">
+    <b class="t">Power’s out: what’s still good?</b>
+    <div class="row">
+      <label class="f">Hours without power<input type="number" id="po-hrs" min="0" step="1" value="3"></label>
+      <label class="f">Freezer<select id="po-frz"><option value="48">Full</option><option value="24">About half full</option><option value="0">No freezer</option></select></label>
+      <label class="chk"><input type="checkbox" id="po-shut" checked> Doors kept shut</label>
+    </div>
+    <div class="out" id="po-out"></div>
+  </article>
+
+  <nav class="pager"><a href="#u4"><small>← Back</small><b>4 · Cook</b></a><a class="next" href="#"><small>Back to →</small><b>Overview</b></a></nav>
+  </div>
+</section>
+
+</main>
+</div>
+</div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ---------- Profile: same key as app.js; kitchen + cold are new for Food ---------- */
+  var KEY = 'meeting-needs.profile.v1';
+  var OPT = {
+    home: ['Apartment or room', 'House', 'Land or farm', 'Vehicle or boat', 'Shelter or no fixed place', 'Other'],
+    stay: ['No fixed place right now', 'Under a year', 'A few years', 'Long-term, putting down roots', 'Not sure'],
+    shape: ['Nothing: it all has to be portable', 'Small, removable things', 'Bigger changes, with an owner who’s on board', 'It’s ours to shape'],
+    kitchen: ['A full kitchen', 'A hot plate, rice cooker or microwave', 'A shared kitchen', 'No way to cook right now'],
+    cold: ['Fridge and freezer', 'A small or shared fridge', 'A cooler, or no fridge']
+  };
+  var profile = {};
+  try { profile = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { profile = {}; }
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(profile)); } catch (e) {} }
+
+  /* Answers → tags. Accordions carry data-for="<tags>"; a match opens and outlines them. */
+  function tags() {
+    var p = profile, t = {};
+    var space = Array.isArray(p.space) ? p.space : [];
+    if (p.home === 'Shelter or no fixed place' || p.stay === 'No fixed place right now') t.nohome = 1;
+    var rooted = p.stay === 'A few years' || p.stay === 'Long-term, putting down roots';
+    var canShape = p.shape === 'Bigger changes, with an owner who’s on board' || p.shape === 'It’s ours to shape';
+    if (rooted && canShape) t.invest = 1;
+    else if (p.shape || p.stay === 'Under a year' || p.home === 'Vehicle or boat') t.portable = 1;
+    if (p.home === 'Land or farm' || space.indexOf('Acreage or farmland') > -1) { t.land = 1; t.outdoor = 1; }
+    if (p.home === 'House' || space.some(function (s) { return /Balcony|yard|plot/i.test(s); })) t.outdoor = 1;
+    if (p.kitchen === 'A hot plate, rice cooker or microwave') t.smallkit = 1;
+    if (p.kitchen === 'A shared kitchen') t.shared = 1;
+    if (p.kitchen === 'No way to cook right now') t.nocook = 1;
+    if (p.cold === 'A small or shared fridge') t.smallcold = 1;
+    if (p.cold === 'A cooler, or no fridge') t.nocold = 1;
+    if (Number(p.kids) > 0 || (Array.isArray(p.consider) && p.consider.some(function (c) { return /Pregnancy|Babies/.test(c); }))) t.kids = 1;
+    if ($('outage').checked) t.crisis = 1;
+    return t;
+  }
+  function apply() {
+    var t = tags();
+    document.querySelectorAll('.acc').forEach(function (a) {
+      var hit = (a.dataset.for || '').split(' ').some(function (s) { return t[s]; });
+      a.classList.toggle('match', hit); a.open = hit;
+    });
+    var answered = ['home', 'stay', 'shape', 'kitchen', 'cold'].filter(function (k) { return profile[k]; });
+    $('sitChips').innerHTML = answered.map(function (k) { return '<span>' + profile[k].replace(/ \(.*\)/, '') + '</span>'; }).join('');
+    $('sitSum').textContent = answered.length ? 'From your profile:' : 'Five quick questions tailor this course. Everything stays available either way.';
+    $('sitEdit').textContent = answered.length ? 'Change' : 'Answer';
+  }
+  document.querySelectorAll('[data-q]').forEach(function (sel) {
+    var k = sel.dataset.q;
+    sel.innerHTML = '<option value="">Choose…</option>' + OPT[k].map(function (o) { return '<option' + (o === profile[k] ? ' selected' : '') + '>' + o + '</option>'; }).join('');
+    sel.addEventListener('change', function () { profile[k] = sel.value; persist(); apply(); });
+  });
+  $('outage').addEventListener('change', apply);
+  if (!['home', 'kitchen', 'cold'].some(function (k) { return profile[k]; })) $('sit').open = true;
+
+  /* ---------- Routing: #u3 opens unit 3; #u3/s2 scrolls to 3.2 ---------- */
+  function route() {
+    var parts = location.hash.replace('#', '').split('/'), page = parts[0] || '';
+    if (page && !document.querySelector('.page[data-page="' + page + '"]')) page = '';
+    document.querySelectorAll('.page').forEach(function (p) { p.hidden = p.dataset.page !== page; });
+    document.querySelectorAll('.vt-unit').forEach(function (u) { u.classList.toggle('cur', u.dataset.unit === page); });
+    document.querySelector('.nav-over').classList.toggle('cur', page === '');
+    var target = parts[1] && $(page + '-' + parts[1]);
+    if (target) target.scrollIntoView({ block: 'start' }); else window.scrollTo(0, 0);
+  }
+  window.addEventListener('hashchange', route);
+
+  /* ---------- Tool: Soak & cook. Times are typical ranges; altitude and bean age add time. ---------- */
+  var SC = {
+    black:   ['Black beans', '8–12 hours, or a quick soak', '60–90 min', '6–8 min, natural release', 2.5],
+    chick:   ['Chickpeas', '8–12 hours, or a quick soak', '1½–2 hours', '12–15 min, natural release', 2.5],
+    kidney:  ['Red kidney beans', '8–12 hours, then drain', '60–90 min, after a hard 10-min boil', '8–10 min, natural release', 2.5, 'Boil hard for 10 minutes first, uncovered. Never from dry in a slow cooker.'],
+    pinto:   ['Pinto beans', '8–12 hours, or a quick soak', '60–90 min', '6–9 min, natural release', 2.5],
+    white:   ['White beans (navy, cannellini)', '8–12 hours, or a quick soak', '45–75 min', '6–8 min, natural release', 2.5],
+    lentil:  ['Brown or green lentils', 'None needed', '20–30 min', '8–10 min', 2.5],
+    red:     ['Red lentils', 'None needed', '15–20 min, until they melt', 'Stovetop is fast enough (they foam)', 2],
+    split:   ['Split peas', 'None needed', '30–45 min', '8–10 min', 2],
+    brown:   ['Brown rice', 'Optional, a few hours', '40–45 min in 2¼ cups water per cup', '20–22 min', 3, 'Or cook like pasta and drain to lower arsenic (2.4).'],
+    whiterice: ['White rice', 'None; rinse well', '15–18 min in 1½ cups water per cup', '3–4 min + 10 min natural release', 3, 'Cool leftovers within an hour (5.3).'],
+    quinoa:  ['Quinoa', 'None; rinse well (2.4)', '15 min in 2 cups water per cup', '1 min + 10 min natural release', 3],
+    steel:   ['Steel-cut oats', 'Optional overnight, cuts cooking to ~10 min', '20–30 min in 3–4 cups water per cup', '10–12 min', 3.5],
+    rolled:  ['Rolled oats', 'Overnight in the fridge, no cooking needed', '5 min', 'Stovetop is fast enough', 2]
+  };
+  $('sc-food').innerHTML = Object.keys(SC).map(function (k) { return '<option value="' + k + '">' + SC[k][0] + '</option>'; }).join('');
+  function fmt(n) { return (Math.round(n * 4) / 4).toString().replace('.25', '¼').replace('.5', '½').replace('.75', '¾').replace(/^0(?=[¼½¾])/, ''); }
+  function soak() {
+    var f = SC[$('sc-food').value], c = Math.max(0.25, +$('sc-cups').value || 1), pc = $('sc-way').value === 'pc';
+    $('sc-out').innerHTML = '<strong>About ' + fmt(c * f[4]) + ' cups cooked</strong>' +
+      '<b>Soak:</b> ' + f[1] + '<br><b>Cook:</b> ' + (pc ? f[3] : f[2]) +
+      (f[5] ? '<p class="danger" style="margin-top:8px">' + f[5] + '</p>' : '') +
+      '<small>Typical times; older beans and higher altitude take longer. Taste a few: done when creamy all the way through.</small>';
+  }
+  ['sc-food', 'sc-cups', 'sc-way'].forEach(function (id) { $(id).addEventListener('input', soak); $(id).addEventListener('change', soak); });
+
+  /* ---------- Tool: How long does it keep? [fridge, freezer, pantry, note] ---------- */
+  var KP = {
+    beans:  ['Cooked beans or lentils', '3–5 days', 'About 6 months', '—', ''],
+    rice:   ['Cooked rice', '1 day (NHS) to 3–4 days (USDA)', 'About 1 month', 'Not safe: cool within 1 hour', 'Smell won’t warn you. Reheat once only.'],
+    grains: ['Other cooked grains', '3–5 days', '2–3 months', '—', ''],
+    soup:   ['Soups and stews', '3–4 days', '4–6 months', '—', 'Bring back to a rolling boil.'],
+    veg:    ['Cooked vegetables', '3–4 days', '2–3 months', '—', ''],
+    tofu:   ['Tofu, opened', '3–5 days in fresh water, changed daily', '3–5 months (gets chewier, nice in stir-fries)', '—', ''],
+    milk:   ['Plant milk, opened', '7–10 days (check carton)', 'Separates; fine for cooking', 'Unopened shelf-stable cartons: months', ''],
+    hummus: ['Hummus and dips', '4–7 days', '2–3 months', '—', ''],
+    fruit:  ['Cut fruit', '3–5 days', '8–12 months', '—', ''],
+    greens: ['Leafy greens', '3–7 days, dry, in a lined box', 'Cooked only, for soups', '—', ''],
+    oil:    ['Garlic or herbs in oil', '4 days', 'Months', 'Never at room temperature', 'Botulism risk: no smell or taste.'],
+    brownr: ['Brown rice, dry', 'About 1 year', '1–2 years', 'About 6 months', 'Rancid smells like crayons.'],
+    flour:  ['Whole-wheat flour', 'Up to 6 months', '6–12 months', '1–3 months', 'Freeze new bags 4 days for moths.'],
+    nuts:   ['Nuts and seeds', 'About 6 months', 'About 1 year', '1–3 months', ''],
+    drybean:['Dried beans', '—', '—', 'Years (best within 1–2)', 'Older beans cook slower, still safe.']
+  };
+  $('kp-food').innerHTML = Object.keys(KP).map(function (k) { return '<option value="' + k + '">' + KP[k][0] + '</option>'; }).join('');
+  function keeps() {
+    var k = KP[$('kp-food').value];
+    $('kp-out').innerHTML = '<div class="cols"><div><span class="eyebrow">Fridge</span><br><b>' + k[1] + '</b></div><div><span class="eyebrow">Freezer</span><br><b>' + k[2] + '</b></div><div><span class="eyebrow">Pantry</span><br><b>' + k[3] + '</b></div></div>' +
+      '<small>' + (k[4] ? k[4] + ' ' : '') + 'Rough guides for a fridge at 40°F / 4°C or colder. For most foods, looks, smell and a small taste tell you the rest.</small>';
+  }
+  $('kp-food').addEventListener('change', keeps);
+
+  /* ---------- Tool: Outage. USDA: ~4 h closed fridge; full freezer ~48 h, half ~24 h. ---------- */
+  function outage() {
+    var h = Math.max(0, +$('po-hrs').value || 0), frz = +$('po-frz').value, shut = $('po-shut').checked;
+    var fridgeOk = shut ? h <= 4 : h <= 2, frzOk = frz && (shut ? h <= frz : h <= frz / 2);
+    var tag = function (ok, warn) { return '<span class="status ' + (ok ? 'st-ok">Still cold' : (warn ? 'st-warn">Check each item' : 'st-no">Compost or toss')) + '</span>'; };
+    $('po-out').innerHTML =
+      '<p><b>Fridge</b> ' + tag(fridgeOk) + '</p>' +
+      '<p style="margin-top:4px">' + (fridgeOk ? 'Keep the door shut and eat from it first.' : 'Cooked food, leftovers, cut fruit, tofu, opened plant milk and dips that sat above 40°F for over 2 hours can’t be trusted. Whole fruit and vegetables, bread, nut butter, mustard and pickles are fine.') + '</p>' +
+      (frz ? '<p style="margin-top:8px"><b>Freezer</b> ' + tag(frzOk, !frzOk && h <= frz * 1.5) + '</p><p style="margin-top:4px">' + (frzOk ? 'Food with ice crystals, or at 40°F or colder, can be refrozen.' : 'Anything still with ice crystals or at 40°F or colder can be refrozen or cooked now; the rest that’s fully thawed and warm goes.') + '</p>' : '') +
+      '<small>Based on USDA guidance. A fridge thermometer turns guesses into answers.</small>';
+  }
+  ['po-hrs', 'po-frz', 'po-shut'].forEach(function (id) { $(id).addEventListener('input', outage); $(id).addEventListener('change', outage); });
+
+  soak(); keeps(); outage(); apply(); route();
+})();
+</script>
+</body>
+</html>

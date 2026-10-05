@@ -19,6 +19,8 @@ Plain HTML, CSS and JavaScript. No build step, no server, no accounts.
 | `rel.css` | Relationships course styles |
 | `water.js` | Water course: six units (Uses, Sources, Storage, Purify, Testing, Costs), one page each, tailored from the profile, with tools (`#lens-water`, `#lens-water/<unit>[/<sub-unit>]`) |
 | `water.css` | Water course styles (units in blues, darkest to lightest) |
+| `food.js` | Food course: five units (Gather, Cleanse, Rehydrate, Cook, Store), one page each, tailored from the profile, with tools: Soak & cook, How long it keeps, Power's out (`#lens-food`, `#lens-food/<unit>[/<sub-unit>]`) |
+| `food.css` | Food course styles (units in dark greens, darkest to lightest; `fo-` prefix) |
 | `gov.js` | Governance course (tier 5, in progress): who controls California water, where it goes, stairs for change (`#lens-governance`) |
 | `gov.css` | Governance course styles |
 
@@ -32,7 +34,7 @@ Open `index.html` in a browser, or run `python3 -m http.server` in this folder a
 ## Profile data
 Saved only in the visitor's browser (`localStorage`, key `meeting-needs.profile.v1`). Nothing is sent anywhere. The profile page has Copy backup / Restore for moving between devices.
 
-Place questions describe the place and how long and how much you can shape it, never who owns it: `home` (kind of place), `stay` (how long you expect to stay), `shape` (how much you can change it; a friend who owns it counts) and `space` (outdoor or growing space, including acreage). The Water section (`#profile/water`) holds `sources` (each source with how much it carries you: Sometimes, Often, Main source; plus “No safe tap water at home”), `filters` you already own, `pipes` (before or after 1986) and `rain`. Courses read these to open the sections that fit and tag them "For you", and link back to the profile (with a hover summary of what's on file) for the rare times something changes. Every section stays available either way. Older profiles are migrated on load: renting/owning in `home` becomes the kind of place, “Land or farm” becomes a house plus acreage, and the old single `water` answer becomes a main source.
+Place questions describe the place and how long and how much you can shape it, never who owns it: `home` (kind of place), `stay` (how long you expect to stay), `shape` (how much you can change it; a friend who owns it counts) and `space` (outdoor or growing space, including acreage). The Water section (`#profile/water`) holds `sources` (each source with how much it carries you: Sometimes, Often, Main source; plus “No safe tap water at home”), `filters` you already own, `pipes` (before or after 1986) and `rain`. The Food section (`#profile/food`) holds `kitchen` (how you can cook right now) and `cold` (how you keep food cold). Courses read these to open the sections that fit and tag them "For you", and link back to the profile (with a hover summary of what's on file) for the rare times something changes. Every section stays available either way. Older profiles are migrated on load: renting/owning in `home` becomes the kind of place, “Land or farm” becomes a house plus acreage, and the old single `water` answer becomes a main source.
 
 ## Adding or changing a lens
 Edit `lenses.js`. Status is one of `ready`, `building`, `next`, `later`. A lens takes its tier's `color`. A tier with `locked: true` shows its cards on the home page without linking them (Roots, for now).
