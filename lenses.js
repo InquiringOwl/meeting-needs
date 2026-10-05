@@ -1,20 +1,33 @@
 /* Meeting Needs: the lens catalogue.
    A lens is a way of looking at your home and life: what to notice, what it costs you,
-   and what you can fix yourself. Status: demo | building | next | later. */
+   and what you can fix yourself. Status: ready | building | next | later. */
 window.MN_TIERS = [
   {
-    id: 'roots', num: 1, name: 'Roots',
-    blurb: 'The basics of a healthy home. Start here.',
+    id: 'signals', num: 1, name: 'Signals',
+    blurb: 'Notice what you actually need, and what is asking to be met. Start here.',
+    status: '',
+    lenses: [
+      {
+        id: 'relationships', name: 'Emotions & love', color: '#C2477F', status: 'ready',
+        blurb: 'Listening, repair and boundaries at home and next door, plus sharing tools and bulk orders.',
+        topics: ['Listening', 'Repair', 'Mutual aid'],
+        looks: ['How a disagreement starts and how it gets repaired', 'Boundaries that hold without a fight', 'Neighbours, tool libraries and splitting the bulk order']
+      }
+    ]
+  },
+  {
+    id: 'roots', num: 2, name: 'Roots',
+    blurb: 'The basics of a healthy home.',
     status: 'Being built now',
     lenses: [
       {
-        id: 'water', name: 'Water', color: '#2F6E9E', status: 'demo',
+        id: 'water', name: 'Water', color: '#2F6E9E', status: 'building',
         blurb: 'Follow it from rain to roof to barrel to tap. Find each contaminant, choose each filter.',
         topics: ['Testing', 'Filters', 'Catchment'],
         looks: ['What your water report says, and what it leaves out', 'Lead, nitrates, PFAS and microbes, and which filter stops which', 'Collecting and storing rainwater safely']
       },
       {
-        id: 'gardening', name: 'Gardening', color: '#3E7B3A', status: 'demo',
+        id: 'gardening', name: 'Gardening', color: '#3E7B3A', status: 'building',
         blurb: 'A teacher and a garden planner: your zone, your light, a 12-month plan, seed by seed.',
         topics: ['Learn', 'Plan', 'Seed saving'],
         looks: ['Your growing zone, frost dates and the light you actually get', 'Soil you can build instead of buy', 'A month-by-month plan for the space you have']
@@ -30,17 +43,11 @@ window.MN_TIERS = [
         blurb: 'Stains, laundry, surfaces and mould with a few simple ingredients. Save the shirt.',
         topics: ['Stains', 'Laundry', 'Surfaces'],
         looks: ['Which stain is which, and what lifts it', 'Washing that is gentler on fabric and skin', 'Mould: what you can clean and when to call it in']
-      },
-      {
-        id: 'relationships', name: 'Relationships', color: '#A3457A', status: 'building',
-        blurb: 'Listening, repair and boundaries at home and next door, plus sharing tools and bulk orders.',
-        topics: ['Listening', 'Repair', 'Mutual aid'],
-        looks: ['How a disagreement starts and how it gets repaired', 'Boundaries that hold without a fight', 'Neighbours, tool libraries and splitting the bulk order']
       }
     ]
   },
   {
-    id: 'household', num: 2, name: 'Household',
+    id: 'household', num: 3, name: 'Household',
     blurb: 'The systems that keep a home and body running.',
     status: 'Next',
     lenses: [
@@ -51,16 +58,16 @@ window.MN_TIERS = [
         looks: ['What spoils, what keeps, and why', 'Fermenting safely with salt and time', 'Canning that seals and stays sealed']
       },
       {
-        id: 'airflow', name: 'Airflow', color: '#6A4FC4', status: 'demo',
+        id: 'airflow', name: 'Airflow', color: '#6A4FC4', status: 'next',
         blurb: 'Float through rooms and pop pollution bubbles with the right tool.',
         topics: ['Ventilation', 'Filters', 'Damp'],
         looks: ['Cooking smoke, gas stoves and stale air', 'Damp, condensation and where mould starts', 'Fans, open windows and filters that are worth it']
       },
       {
         id: 'body-care', name: 'Body care', color: '#B04A6A', status: 'next',
-        blurb: 'Skin, teeth, sleep and simple first aid, without the fragrance aisle.',
-        topics: ['Skin', 'Teeth', 'First aid'],
-        looks: ['What your skin and teeth need, and what is marketing', 'Sleep you can actually change', 'A first-aid kit you know how to use']
+        blurb: 'Skin, teeth and sleep, without the fragrance aisle.',
+        topics: ['Skin', 'Teeth', 'Sleep'],
+        looks: ['What your skin and teeth need, and what is marketing', 'Sleep you can actually change', 'Simple daily care that replaces a shelf of products']
       },
       {
         id: 'household-chemistry', name: 'Household chemistry', color: '#8A5A3C', status: 'next',
@@ -71,7 +78,7 @@ window.MN_TIERS = [
     ]
   },
   {
-    id: 'craft', num: 3, name: 'Craft',
+    id: 'craft', num: 4, name: 'Craft',
     blurb: 'Hands-on skills to make, mend and build.',
     status: 'Later',
     lenses: [
@@ -110,6 +117,30 @@ window.MN_TIERS = [
         blurb: 'Timber and metal frames, plus cob, adobe and lime.',
         topics: ['Framing', 'Cob', 'Lime'],
         looks: ['How a frame carries its load', 'Earth and lime walls that breathe', 'Materials that are kinder to build with and live in']
+      },
+      {
+        id: 'caretaking', name: 'Caretaking', color: '#A0566E', status: 'later',
+        blurb: 'Caring for the people and animals who depend on you: elders, disabled loved ones, kids and pets.',
+        topics: ['Eldercare', 'Disability care', 'Childcare', 'Animal care'],
+        looks: ['Daily routines, medications and appointments without burning out', 'Accessible spaces and asking for the help you are owed', 'Childcare swaps, pet care and sharing the load with neighbours']
+      },
+      {
+        id: 'first-aid', name: 'First aid', color: '#B8433A', status: 'later',
+        blurb: 'Cuts, burns, sprains, choking and bites: what to do in the first minutes.',
+        topics: ['Wounds', 'Burns', 'Sprains', 'Emergencies'],
+        looks: ['Stopping bleeding and cleaning a wound', 'Burns, breaks and sprains: what helps and what makes it worse', 'When to call emergency services, and what to do until they arrive']
+      },
+      {
+        id: 'energy', name: 'Energy', color: '#B5791F', status: 'later',
+        blurb: 'Heat, cook and stay warm with less: fireplaces, gas, insulation and more.',
+        topics: ['Fireplaces', 'Cooking', 'Gas', 'Insulation'],
+        looks: ['Fireplaces and wood stoves that burn clean and safe', 'Gas appliances, leaks and carbon monoxide', 'Insulation and draught-proofing that cut the bill']
+      },
+      {
+        id: 'weather', name: 'Weather', color: '#4A7FA8', status: 'later',
+        blurb: 'Read the sky: which clouds bring rain, and the seasonal patterns where you live.',
+        topics: ['Clouds', 'Wind', 'Seasons'],
+        looks: ['Cloud types and which ones turn to rain', 'Wind, pressure and the signs before a storm', 'Your local seasons, frost and rainfall patterns']
       }
     ]
   }

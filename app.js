@@ -1,5 +1,5 @@
 /* Meeting Needs: home, lens pages and profile. Plain JS, no build step.
-   Routes (hash): '' home · 'profile' · 'lens-<id>'.
+   Routes (hash): '' home · 'plans' · 'favorites' · 'profile' · 'lens-<id>'.
    The profile is saved only in this browser (localStorage). */
 (function () {
   'use strict';
@@ -8,11 +8,10 @@
   var LENS = {};
   TIERS.forEach(function (t) { t.lenses.forEach(function (l) { l.tier = t; LENS[l.id] = l; }); });
   var COUNT = Object.keys(LENS).length;
-  var DEMOS = Object.keys(LENS).filter(function (id) { return LENS[id].status === 'demo'; }).length;
 
-  var STATUS = { demo: 'Demo', building: 'In progress', next: 'Next', later: 'Later' };
+  var STATUS = { ready: 'Ready', building: 'In progress', next: 'Next', later: 'Later' };
   var STATUS_NOTE = {
-    demo: 'A playable demo of this lens exists and will move in here soon.',
+    ready: '',
     building: 'This lens is being written now.',
     next: 'This lens comes after the Roots lenses.',
     later: 'This lens is planned for the Craft tier.'
@@ -42,6 +41,25 @@
     'Babies or toddlers': ['toxins', 'water'], 'Chronic illness': ['toxins', 'food'], 'Limited mobility': ['relationships']
   };
   var MAX_PRIORITIES = 3;
+
+  /* Favorites: starred sub-units, stored as 'lensId:index' in this browser. */
+  var FAV_KEY = 'meeting-needs.favorites.v1';
+  var favs = (function () {
+    try { var a = JSON.parse(localStorage.getItem(FAV_KEY) || '[]'); if (Array.isArray(a)) return a.map(String); } catch (e) {}
+    return [];
+  })();
+  function isFav(k) { return favs.indexOf(k) !== -1; }
+  function toggleFav(k) {
+    var i = favs.indexOf(k);
+    if (i === -1) favs.push(k); else favs.splice(i, 1);
+    try { localStorage.setItem(FAV_KEY, JSON.stringify(favs)); } catch (e) { toast('Couldn’t save: this browser is blocking site storage'); }
+    return i === -1;
+  }
+  var STAR = '<svg width="20" height="20" viewBox="0 0 24 24" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg>';
+  function starBtn(k, label) {
+    var on = isFav(k);
+    return '<button type="button" class="star" data-fav="' + esc(k) + '" aria-pressed="' + on + '" aria-label="Star: ' + esc(label) + '">' + STAR + '</button>';
+  }
 
   function blank() {
     return { address: '', zone: '', home: '', water: '', space: [], adults: '', kids: '', pets: '', consider: [], hours: '', budget: '', priorities: [] };
@@ -114,8 +132,9 @@
     return '<header class="top glass">' +
       '<a class="brand" href="#">' + LEAF + '<b>Meeting Needs</b></a>' +
       '<nav class="nav" aria-label="Main">' +
-      link('#', 'Lenses', 'home') +
-      link('#lens-gardening', 'Garden planner', 'planner') +
+      link('#', 'All education', 'home') +
+      link('#plans', 'Plans', 'plans') +
+      link('#favorites', 'Favorites', 'favorites') +
       link('#profile', 'Profile', 'profile') +
       '</nav></header>';
   }
@@ -125,11 +144,12 @@
 
   function setupCard() {
     if (isEmpty(profile)) {
-      return '<aside class="setup glass" aria-label="Your setup">' +
-        '<div class="setup-head"><span class="eyebrow">Your setup</span></div>' +
-        '<h2>Tell Meeting Needs about your home</h2>' +
-        '<p>Where you live, who lives with you and what’s bugging you. It decides which lens to start with. Saved only on this device.</p>' +
-        '<div><a class="btn" href="#profile">Set up your profile</a></div>' +
+      return '<aside class="setup" aria-label="Personalize">' +
+        '<div class="setup-head"><span class="eyebrow">Your profile</span></div>' +
+        '<h3>Personalize</h3>' +
+        '<p>To personalize, share context about your life circumstances and goals.</p>' +
+        '<div><a class="btn personal" href="#profile">Share your context</a></div>' +
+        '<span class="hint">Saved only on this device.</span>' +
         '</aside>';
     }
     var headline = [profile.home, profile.space.join(' + ')].filter(Boolean).join(' · ') || 'Your home';
@@ -142,17 +162,20 @@
     var sugHtml = sug.length
       ? '<p>Start with ' + sug.map(function (l) { return '<a href="#lens-' + l.id + '"><strong>' + esc(l.name) + '</strong></a>'; }).join(sug.length === 2 ? ' then ' : ', ') + '.</p>'
       : '<p>Pick what’s bugging you most in your profile and we’ll suggest where to start.</p>';
-    return '<aside class="setup glass" aria-label="Your setup">' +
-      '<div class="setup-head"><span class="eyebrow">Your setup</span><a href="#profile">Edit</a></div>' +
-      '<h2>' + esc(headline) + '</h2>' +
+    return '<aside class="setup" aria-label="Personalize">' +
+      '<div class="setup-head"><span class="eyebrow">Your profile</span><a class="btn personal sm" href="#profile">Edit</a></div>' +
+      '<h3>' + esc(headline) + '</h3>' +
       (chips.length ? '<div class="chips">' + chips.map(function (c) { return '<span class="chip">' + esc(c) + '</span>'; }).join('') + '</div>' : '') +
       sugHtml + '</aside>';
   }
 
   function lensCard(l) {
-    var cls = 'lens is-' + l.status + (l.tier.num === 1 ? ' is-solid' : '');
+    var solid = l.tier.num <= 2;
+    var cls = 'lens is-' + l.status + (solid ? ' is-solid' : '');
+    var top = (solid ? '<span class="dot" aria-hidden="true"></span>' : '') +
+      (STATUS[l.status] ? '<span class="badge ' + l.status + '">' + STATUS[l.status] + '</span>' : '');
     return '<a class="' + cls + '" href="#lens-' + l.id + '" style="--lc:' + l.color + '">' +
-      '<div class="lens-top"><span class="dot" aria-hidden="true"></span><span class="badge ' + l.status + '">' + STATUS[l.status] + '</span></div>' +
+      (top ? '<div class="lens-top">' + top + '</div>' : '') +
       '<h3>' + esc(l.name) + '</h3>' +
       '<p>' + esc(l.blurb) + '</p>' +
       '<div class="topics">' + l.topics.map(esc).join(' · ') + '</div>' +
@@ -166,17 +189,17 @@
         '<span class="eyebrow">Tier ' + t.num + '</span>' +
         '<h2 id="tier-' + t.id + '">' + esc(t.name) + '</h2>' +
         '<p>' + esc(t.blurb) + '</p></div>' +
-        '<span class="tier-status">' + esc(t.status) + '</span></div>' +
-        '<div class="grid">' + t.lenses.map(lensCard).join('') + '</div>' +
+        (t.status ? '<span class="tier-status">' + esc(t.status) + '</span>' : '') + '</div>' +
+        '<div class="grid">' + t.lenses.map(lensCard).join('') + (t.num === 1 ? setupCard() : '') + '</div>' +
         '</section>';
     }).join('');
     return header('home') +
       '<section class="hero">' +
       '<div class="hero-copy">' +
-      '<span class="eyebrow">Free &amp; open source · ' + COUNT + ' lenses · ' + DEMOS + ' demos</span>' +
-      '<h1 tabindex="-1">Unplug from<br>the profit loop.</h1>' +
-      '<p>Each lens is a way of seeing your home: what’s quietly making you sick, what it’s costing you, and what you can fix yourself. Start with the roots, then build out.</p>' +
-      '</div>' + setupCard() + '</section>' +
+      '<span class="eyebrow">Free &amp; open source · ' + COUNT + ' lenses</span>' +
+      '<h1 tabindex="-1">Unplug from profit extraction loops.</h1>' +
+      '<p>Learn what we all need to live. Fix problems systemically.</p>' +
+      '</div></section>' +
       tiers + footer();
   }
 
@@ -187,22 +210,61 @@
     var planner = l.id === 'gardening'
       ? '<div class="note">The garden planner will live in this lens: your zone and light from your profile, then a 12-month plan for your space.</div>'
       : '';
-    return header(l.id === 'gardening' ? 'planner' : 'home') +
-      '<div><a class="back" href="#">← All lenses</a></div>' +
+    return header('home') +
+      '<div><a class="back" href="#">← All education</a></div>' +
       '<div class="lens-page" style="--lc:' + l.color + '">' +
       '<article class="lens-main glass">' +
       '<div class="lens-top"><span class="eyebrow">Tier ' + l.tier.num + ' · ' + esc(l.tier.name) + '</span>' +
-      '<span class="badge ' + l.status + '">' + STATUS[l.status] + '</span></div>' +
+      (STATUS[l.status] ? '<span class="badge ' + l.status + '">' + STATUS[l.status] + '</span>' : '') + '</div>' +
       '<h1 tabindex="-1">' + esc(l.name) + '</h1>' +
       '<p class="lede">' + esc(l.blurb) + '</p>' +
       '<h2>What this lens looks for</h2>' +
-      '<ul class="looks">' + l.looks.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ul>' +
+      '<p class="hint">Star a sub-unit to keep it in Favorites.</p>' +
+      '<ul class="looks">' + l.looks.map(function (s, i) { return '<li><span>' + esc(s) + '</span>' + starBtn(l.id + ':' + i, s) + '</li>'; }).join('') + '</ul>' +
       planner +
-      '<div class="note">' + STATUS_NOTE[l.status] + '</div>' +
+      (STATUS_NOTE[l.status] ? '<div class="note">' + STATUS_NOTE[l.status] + '</div>' : '') +
       '</article>' +
       '<aside class="side glass" aria-label="Other lenses in ' + esc(l.tier.name) + '">' +
       '<span class="eyebrow">More in ' + esc(l.tier.name) + '</span>' + sibs +
       '</aside></div>' + footer();
+  }
+
+  function viewPlans() {
+    var sug = suggestions(profile);
+    var start = sug.length
+      ? '<p>Based on your profile, start with ' + sug.map(function (l) { return '<a href="#lens-' + l.id + '"><strong>' + esc(l.name) + '</strong></a>'; }).join(', ') + '.</p>'
+      : '<p>Share a little about your life in your profile and a starting plan will appear here.</p><div><a class="btn personal" href="#profile">Share your context</a></div>';
+    return header('plans') +
+      '<section class="intro"><span class="eyebrow">Plans</span>' +
+      '<h1 tabindex="-1">Plans for your actual life.</h1>' +
+      '<p>Step-by-step plans built from your profile. More arrive as each lens is finished.</p></section>' +
+      '<div class="plan-grid">' +
+      '<article class="plan glass"><span class="eyebrow">Your starting plan</span><h2>Where to begin</h2>' + start + '</article>' +
+      '<a class="plan glass" href="#lens-gardening" style="--lc:#3E7B3A"><div class="lens-top"><span class="eyebrow">Garden plan</span><span class="badge building">In progress</span></div>' +
+      '<h2>12 months, seed by seed</h2><p>Your zone and light from your profile, then a month-by-month plan for the space you have.</p></a>' +
+      '</div>' + footer();
+  }
+
+  function viewFavorites() {
+    var groups = {};
+    favs.forEach(function (k) {
+      var parts = k.split(':'), l = LENS[parts[0]], i = Number(parts[1]);
+      if (!l || !l.looks[i]) return;
+      (groups[l.id] = groups[l.id] || []).push(i);
+    });
+    var ids = Object.keys(groups);
+    var body = ids.length ? ids.map(function (id) {
+      var l = LENS[id];
+      return '<section class="fav-group glass" style="--lc:' + l.color + '">' +
+        '<a class="fav-lens" href="#lens-' + l.id + '"><span class="dot" aria-hidden="true"></span>' + esc(l.name) + '</a>' +
+        '<ul class="looks">' + groups[id].map(function (i) { return '<li><span>' + esc(l.looks[i]) + '</span>' + starBtn(id + ':' + i, l.looks[i]) + '</li>'; }).join('') + '</ul>' +
+        '</section>';
+    }).join('') : '<div class="note">Nothing starred yet. Open any lens and tap the star beside a sub-unit to keep it here.</div>';
+    return header('favorites') +
+      '<section class="intro"><span class="eyebrow">Favorites</span>' +
+      '<h1 tabindex="-1">Your starred sub-units.</h1>' +
+      '<p>Everything you’ve starred across all education, saved in this browser.</p></section>' +
+      '<div class="favs">' + body + '</div>' + footer();
   }
 
   function selectField(id, label, list, value) {
@@ -309,6 +371,8 @@
     var r = (location.hash || '').replace(/^#/, '');
     var html, title = 'Meeting Needs';
     if (r === 'profile') { html = viewProfile(); title = 'Profile · Meeting Needs'; }
+    else if (r === 'plans') { html = viewPlans(); title = 'Plans · Meeting Needs'; }
+    else if (r === 'favorites') { html = viewFavorites(); title = 'Favorites · Meeting Needs'; }
     else if (r.indexOf('lens-') === 0 && LENS[r.slice(5)]) { var l = LENS[r.slice(5)]; html = viewLens(l); title = l.name + ' · Meeting Needs'; }
     else html = viewHome();
     app.innerHTML = sky + '<div class="wrap">' + html + '</div>';
@@ -349,6 +413,14 @@
   app.addEventListener('click', function (e) {
     var b = e.target.closest('button');
     if (!b) return;
+
+    var fav = b.getAttribute('data-fav');
+    if (fav) {
+      var on = toggleFav(fav);
+      b.setAttribute('aria-pressed', String(on));
+      toast(on ? 'Added to Favorites' : 'Removed from Favorites');
+      return;
+    }
 
     var pick = b.getAttribute('data-pick');
     if (pick) {
