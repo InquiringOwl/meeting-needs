@@ -8,7 +8,7 @@
   var D = window.MN_REL;
   var BASE = '#lens-relationships';
   var KEY = 'meeting-needs.rel.v3';
-  var ALIAS = { finder: 'need/identify', identify: 'need/identify', dialogue: 'dialogue/communicate', conflict: 'dialogue/communicate', communicate: 'dialogue/communicate' };
+  var ALIAS = { 'feel/narrow': 'need/identify', 'request/observe': 'request/sharing', 'request/kindness': 'request/anticipating', 'dialogue/listening': 'dialogue/ask', 'dialogue/generous': 'dialogue/ask', 'dialogue/gratitude': 'dialogue/narrowing', finder: 'need/identify', identify: 'need/identify', dialogue: 'dialogue/communicate', conflict: 'dialogue/communicate', communicate: 'dialogue/communicate' };
 
   var UNIT = {}, FAMILY_OF = {}, FAUX = {}, SOURCE = {};
   D.UNITS.forEach(function (u) { UNIT[u.id] = u; });
@@ -70,7 +70,7 @@
       '<details class="rel-nav-wrap"' + (wide ? ' open' : '') + '><summary class="rel-nav-head"><span class="eyebrow">Course map</span><b>Emotions &amp; love</b></summary>' +
       '<a class="rel-nav-over" href="' + BASE + '"' + (!cur ? ' aria-current="page"' : '') + '>Overview</a>' +
       '<ol class="rel-vt">' + units + '</ol>' +
-      '<div class="rel-vt-apps"><span class="eyebrow">Then, special applications</span><p>' + D.APPS.map(function (a) { return a.preview ? '<a href="' + href(a.id) + '">' + esc(a.name) + '</a>' : esc(a.name); }).join(' · ') + '</p><span class="rel-later">Previews open · more later</span></div>' +
+      '<div class="rel-vt-apps"><span class="eyebrow">Then, special situations</span><p>' + D.APPS.map(function (a) { return a.preview ? '<a href="' + href(a.id) + '">' + esc(a.name) + '</a>' : esc(a.name); }).join(' · ') + '</p><span class="rel-later">Previews open · more later</span></div>' +
       '</details></nav>';
   }
   function layout(cur, main) {
@@ -78,30 +78,40 @@
       '<div class="rel-topbar"><button type="button" class="rel-back" data-rel="back">← Back</button></div>' + main + '</main></div>' + mn().footer();
   }
 
-  /* ---------- overview ---------- */
+  /* ---------- overview: plant roots up ----------
+     Top to bottom: plant roots (inner life: units 1–2 and the inner tool) → the horizon → the visible plant
+     (people and the physical world: units 3–4 and Communicate) → special situations. */
   function viewOverview() {
-    var cards = D.UNITS.map(function (u) {
-      return '<li class="rel-ucard k-' + u.id + '"><a class="rel-ucard-head" href="' + href(u.id) + '"><span class="rel-ucard-n">' + u.num + '</span><b>' + esc(u.word) + '</b><span class="rel-ucard-sub">' + esc(u.sub) + '</span></a>' +
-        '<ol>' + u.subs.map(function (s) { return '<li><a href="' + href(u.id, s.id) + '">' + esc(s.title) + (s.isTool ? ' <span class="rel-tooltag">tool</span>' : '') + '</a></li>'; }).join('') + '</ol></li>';
+    function card(u) {
+      return '<div class="rel-tu k-' + u.id + (learned(u.id) ? ' done' : '') + '">' +
+        '<span class="rel-tu-n" aria-hidden="true">' + (learned(u.id) ? '✓' : u.num) + '</span><div>' +
+        '<a class="rel-tu-head" href="' + href(u.id) + '"><b>' + esc(u.word) + '</b><small>' + esc(u.sub) + '</small></a>' +
+        '<ol>' + u.subs.filter(function (s) { return !s.isTool; }).map(function (s) { return '<li><a href="' + href(u.id, s.id) + '">' + esc(s.title) + '</a></li>'; }).join('') + '</ol></div></div>';
+    }
+    function tool(u, sub, eyebrow, name, text) {
+      return '<a class="rel-tt k-' + u + '" href="' + href(u, sub) + '"><span class="eyebrow">' + eyebrow + '</span><b>' + name + '</b><span>' + text + '</span><i>Open →</i></a>';
+    }
+    var apps = D.APPS.map(function (a) {
+      var inner = '<b>' + esc(a.name) + '</b><span>' + esc(a.short) + '</span><small>' + esc(a.status) + (a.preview ? ' · preview open →' : '') + '</small>';
+      return a.preview ? '<li class="is-open"><a href="' + href(a.id) + '">' + inner + '</a></li>' : '<li>' + inner + '</li>';
     }).join('');
     return {
       title: 'Emotions & love · Kinship',
       html: layout(null,
         '<section class="rel-hero"><span class="eyebrow">Tier 1 · Signals · Course</span><h1 tabindex="-1">Emotions &amp; love</h1>' +
-        '<p class="lede">Every conflict is two people trying to meet their universal needs through ineffective strategies. Learn to hear your own needs, meet others’ generously while keeping yours met, and bring that same care to kids, housemates, groups, animals and plants.</p></section>' +
-        '<ol class="rel-ucards" aria-label="The four units">' + cards + '</ol>' +
-        '<section class="rel-tools" aria-label="Tools">' +
-        '<a class="rel-toolcard k-need" href="' + href('need', 'identify') + '"><span class="eyebrow">Inner tool · Units 1–2</span><b>Identify a need</b><span>From a big feeling (sad, mad, scared) to the word that fits, where it’s coming from, and the universal need underneath.</span><span class="rel-go">Open →</span></a>' +
-        '<a class="rel-toolcard k-request" href="' + href('dialogue', 'communicate') + '"><span class="eyebrow">Between people · Units 3–4</span><b>Communicate</b><span>Say your need as a request, hear theirs, and find a strategy that meets you both.</span><span class="rel-go">Open →</span></a>' +
+        '<p class="lede">Every conflict is two people trying to meet their universal needs through ineffective strategies. Start with the plant roots, what’s alive inside you, then grow up through the horizon to the people, animals and world around you.</p></section>' +
+        '<section class="rel-tree" aria-label="Course map: plant roots, horizon and visible plant">' +
+          '<div class="rel-side ground"><p class="rel-zone"><b>Plant roots · underground</b><span>Inner life: nobody else has to see it.</span></p>' +
+            card(UNIT.feel) + card(UNIT.need) +
+            tool('need', 'identify', 'Inner tool', 'Identify a need', 'From a big feeling to the word that fits and the need underneath.') + '</div>' +
+          '<div class="rel-horizon"><p><b>The horizon</b><span>↑ Inside: Feelings and needs · ↓ Outside: People and the physical world</span></p></div>' +
+          '<div class="rel-side above">' + card(UNIT.request) + card(UNIT.dialogue) +
+            tool('dialogue', 'communicate', 'Between people', 'Communicate', 'Hear each other’s needs and find a strategy that meets you both.') +
+            '<p class="rel-zone"><b>Visible plant · above ground</b><span>Where your needs meet people, animals and the physical world.</span></p></div>' +
         '</section>' +
-        '<section class="rel-apps" aria-labelledby="rel-apps-h"><div class="rel-apps-head"><div><span class="eyebrow">After the core relational skills</span><h2 id="rel-apps-h">Special applications</h2></div><span class="rel-later">Coming later</span></div>' +
-        '<p class="rel-q">The same four steps, applied to the relationships all around a home.</p><ul>' +
-        D.APPS.map(function (a) {
-          return a.preview
-            ? '<li class="is-open"><a href="' + href(a.id) + '"><b>' + esc(a.name) + '</b><span>' + esc(a.short) + '</span><small>Preview →</small></a></li>'
-            : '<li><b>' + esc(a.name) + '</b><span>' + esc(a.short) + '</span></li>';
-        }).join('') + '</ul></section>' +
-        '<aside class="rel-funfact"><span class="eyebrow">A grateful fun fact</span><p>The idea that feelings point to universal needs, and that conflicts live between strategies, grows out of Marshall B. Rosenberg’s Nonviolent Communication. The feelings and needs words here are adapted from the Center for Nonviolent Communication’s inventories (<a href="https://www.cnvc.org" target="_blank" rel="noopener">cnvc.org</a>). Thank you!</p></aside>')
+        '<section class="rel-apps" aria-labelledby="rel-apps-h"><div class="rel-apps-head"><span class="rel-tu-n">5</span><div><h2 id="rel-apps-h">Special situations</h2><p>The same plant roots and visible plant, applied to the particular people and places in your life.</p></div></div>' +
+        '<ul>' + apps + '</ul></section>' +
+        '<aside class="rel-funfact"><span class="eyebrow">Nonviolence theory origins</span><p>The idea that feelings point to universal needs, and that conflicts live between strategies, grows out of Marshall B. Rosenberg’s Nonviolent Communication. The feelings and needs words here are adapted from the Center for Nonviolent Communication’s inventories (<a href="https://www.cnvc.org" target="_blank" rel="noopener">cnvc.org</a>). Thank you!</p></aside>')
     };
   }
 
@@ -139,7 +149,7 @@
         '<ul class="rel-keys">' + keys.map(function (k) { return '<li>' + md(k) + '</li>'; }).join('') + '</ul>' + (extra || '') + '</section>';
     }
     var html = '<article class="rel-unitpage k-apps">' +
-      '<header class="rel-unit-hero"><span class="eyebrow">Special application · Preview</span><h1 tabindex="-1">Neighbors</h1>' +
+      '<header class="rel-unit-hero"><span class="eyebrow">Special situation · Preview</span><h1 tabindex="-1">Neighbors</h1>' +
       '<p class="rel-unit-sub">The people, plants and animals you share a place with</p>' +
       '<p class="lede">Neighbors are the ones we mostly don’t choose and can’t avoid sharing with: the same water main, the same air, the same street trees and raccoons. The same four steps (notice, feel, find the need, ask) work here, and sharing a place well is one of the oldest ways people have met their needs.</p></header>' +
       sec(1, 'What you share', 'Some needs are met together or not at all.', [
@@ -160,7 +170,7 @@
         '**Share what you learn.** A water test, an air-quality alert, where the raccoons are getting in. Information is the easiest thing to share.',
         '**Start small.** A wave, a name, a tool lent. Trust builds the way soil does.'
       ], '<p class="rel-remember"><span class="eyebrow">Try it</span>Ask one neighbor: “Do you know if your water’s safe to drink?” Offer to split a test.</p>') +
-      '<div class="note">This is a preview. The full Neighbors unit (housemates, buildings, blocks, land and wildlife) comes with the special applications tree.</div>' +
+      '<div class="note">This is a preview. The full Neighbors unit (housemates, buildings, blocks, land and wildlife) comes with the special situations tree.</div>' +
       '</article>' +
       '<nav class="rel-pager" aria-label="Units"><a class="rel-pg prev" href="' + BASE + '"><small>← Back to</small><b>Overview</b></a><a class="rel-pg next" href="#lens-water"><small>Related →</small><b>Water</b></a></nav>';
     return { title: 'Neighbors · Emotions & love · Kinship', html: layout('neighbors', html) };
@@ -175,7 +185,7 @@
         '<ul class="rel-keys">' + x[2].map(function (k) { return '<li>' + md(k) + '</li>'; }).join('') + '</ul>' + (x[3] || '') + '</section>';
     }).join('');
     var html = '<article class="rel-unitpage k-apps">' +
-      '<header class="rel-unit-hero"><span class="eyebrow">Special application · Preview</span><h1 tabindex="-1">' + esc(o.name) + '</h1>' +
+      '<header class="rel-unit-hero"><span class="eyebrow">Special situation · Preview</span><h1 tabindex="-1">' + esc(o.name) + '</h1>' +
       '<p class="rel-unit-sub">' + esc(o.sub) + '</p><p class="lede">' + esc(o.lede) + '</p></header>' +
       secs + (o.after || '') +
       '<div class="note">' + esc(o.note) + '</div></article>' +
@@ -218,7 +228,7 @@
         ], '<p class="rel-q">Next: <a href="' + href('coops') + '">Cooperatives</a> · <a href="' + href('animals') + '">Animals</a> · <a href="#lens-governance">Governance</a></p>' +
           tryIt('Catch one “should” or “deserves” in your own thinking today. Translate it: which need is underneath it?')]
       ],
-      note: 'This is a preview. The full Power & peace unit (circles, agreements, restorative practice, and community safety) comes with the special applications tree.',
+      note: 'This is a preview. The full Power & peace unit (circles, agreements, restorative practice, and community safety) comes with the special situations tree.',
       related: ['#lens-governance', 'Governance']
     });
   }
@@ -255,7 +265,7 @@
           'California help: the **Sustainable Economies Law Center** in Oakland offers free legal resources for co-ops and shared housing.'
         ], tryIt('Name one thing you already share with others: a laundry room, a car, a garden. What agreement would make it work better for everyone?')]
       ],
-      note: 'This is a preview. The full Cooperatives unit (meetings, money, conversions, and how to start a housing co-op or CLT) comes with the special applications tree.',
+      note: 'This is a preview. The full Cooperatives unit (meetings, money, conversions, and how to start a housing co-op or CLT) comes with the special situations tree.',
       related: [href('power'), 'Power & peace']
     });
   }
@@ -295,7 +305,7 @@
           tryIt('Next time you talk about an animal, notice your pronoun. Try “they”, “he” or “she”.')]
       ],
       after: take,
-      note: 'This is a preview. The full Animals unit (companion animals by species, sanctuaries, and wildlife at home) comes with the special applications tree.',
+      note: 'This is a preview. The full Animals unit (companion animals by species, sanctuaries, and wildlife at home) comes with the special situations tree.',
       related: ['#lens-water/cows', 'Water: cows']
     });
   }

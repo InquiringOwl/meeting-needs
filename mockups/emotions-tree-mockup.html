@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kinship · Emotions &amp; love (roots-up tree mock-up)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500..800&family=Instrument+Sans:wght@400..700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Mock-up only. Mirrors style.css + rel.css tokens so it can move into rel.css later.
+   The Kinship model, top to bottom: roots (inner life, underground) → the horizon → the tree (people and the
+   physical world) → special situations. Deepest/innermost is at the top of the page. */
+:root {
+  --bg:#EEF2E8; --ink:#17241C; --ink-2:#2C3D32; --muted:#3F5546; --accent:#2F5E2C;
+  --glass:rgba(255,255,255,.42); --glass-strong:rgba(255,255,255,.64); --chip:rgba(255,255,255,.62);
+  --line:rgba(23,36,28,.16); --soft-line:rgba(23,36,28,.08); --focus:#2F6E9E; --pink:#C2477F;
+  --f-head:'Manrope','Instrument Sans',system-ui,sans-serif;
+  --f-body:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --c-feel-bg:#F6F3FD; --c-feel-mid:#E7E0FA; --c-feel-edge:#DDD4F6; --c-feel-dot:#A898E0;
+  --c-need-bg:#F1F8FE; --c-need-mid:#DCEDFB; --c-need-edge:#CBE3F7; --c-need-dot:#86BCE6;
+  --c-req-bg:#FEF4F8;  --c-req-mid:#FBE3EE;  --c-req-edge:#F6D3E3;  --c-req-dot:#EDAECB;
+  --c-dlg-bg:#F2F9F3;  --c-dlg-mid:#DEF1E3;  --c-dlg-edge:#CDE9D4;  --c-dlg-dot:#93CBA1;
+  --c-app-bg:#FBF7EF;  --c-app-mid:#F2E9D8;  --c-app-edge:#E9DCC4;  --c-app-dot:#CFB68A;
+  /* the tree */
+  --soil-deep:#E4D6BF; --soil:#EFE5D4; --soil-light:#F6F0E5; --root:#9A7650; --bark:#7E5C3E;
+  --air:#F3F8F1; --leaf:#CDE9D4; --leaf-edge:#93CBA1;
+}
+* { box-sizing:border-box; }
+html, body { overflow-x:clip; }
+body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.5 var(--f-body); }
+a { color:var(--accent); }
+:focus-visible { outline:3px solid var(--focus); outline-offset:3px; border-radius:8px; }
+h1,h2,h3 { font-family:var(--f-head); margin:0; text-wrap:balance; }
+p { margin:0; }
+.eyebrow { font-family:var(--f-mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+.wrap { max-width:1080px; margin:0 auto; padding:18px 16px 40px; display:flex; flex-direction:column; gap:22px; }
+
+/* mock-up banner */
+.mock { font-family:var(--f-mono); font-size:12px; color:var(--ink-2); border:1px dashed var(--line); border-radius:12px; padding:8px 12px; background:var(--glass); }
+
+/* header */
+.top { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 14px 10px 16px; border-radius:999px; background:var(--glass-strong); border:1px solid rgba(255,255,255,.8); box-shadow:0 12px 40px rgba(30,60,30,.08); position:relative; z-index:5; }
+.brand { display:flex; align-items:center; gap:8px; text-decoration:none; color:var(--ink); font-family:var(--f-head); font-size:19px; }
+.nav { display:flex; gap:4px; align-items:center; flex-wrap:wrap; justify-content:flex-end; }
+.nav > a, .edu > button { color:var(--ink); text-decoration:none; font:600 15px var(--f-body); padding:8px 13px; border-radius:999px; border:0; background:none; cursor:pointer; }
+.edu { position:relative; }
+.edu > button { background:var(--ink); color:#fff; }
+.edu-menu { display:none; position:absolute; right:0; top:calc(100% + 8px); width:270px; background:#fff; border:1px solid var(--line); border-radius:18px; padding:8px; box-shadow:0 18px 40px rgba(30,60,30,.14); }
+.edu:hover .edu-menu, .edu:focus-within .edu-menu { display:block; }
+.edu-menu a { display:flex; gap:10px; align-items:center; padding:8px 10px; border-radius:12px; text-decoration:none; color:var(--ink); font-size:14.5px; }
+.edu-menu a:hover { background:var(--c-app-bg); }
+.edu-menu i { width:10px; height:10px; border-radius:50%; flex:none; }
+.edu-menu small { margin-left:auto; color:var(--muted); font-size:12px; }
+@media (max-width:640px) { .nav > a:not(.keep) { display:none; } }
+
+/* hero */
+.hero { padding:22px 24px; border-radius:24px; background:var(--glass); border:1px solid rgba(255,255,255,.8); }
+.hero h1 { font-size:clamp(34px,6vw,54px); line-height:1.02; margin:6px 0 10px; }
+.hero .lede { max-width:62ch; color:var(--ink-2); font-size:17px; }
+.legend { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.legend span { font-size:13px; padding:4px 10px; border-radius:999px; background:var(--chip); border:1px solid var(--soft-line); }
+
+/* ---------- the tree stage ---------- */
+.stage { border-radius:28px; overflow:hidden; border:1px solid var(--soft-line); box-shadow:0 12px 40px rgba(30,60,30,.06); }
+.zone-label { display:flex; justify-content:space-between; align-items:baseline; gap:12px; padding:16px 22px 6px; }
+.zone-label h2 { font-size:15px; letter-spacing:.01em; }
+.zone-label p { font-size:13.5px; color:var(--ink-2); text-align:right; }
+.ground { background:linear-gradient(180deg, var(--soil-deep), var(--soil) 55%, var(--soil-light)); }
+.above { background:linear-gradient(180deg, var(--air), #EAF4EC); }
+
+.row { display:grid; grid-template-columns:minmax(64px, 34%) minmax(0,1fr); align-items:stretch; }
+.row > svg { width:100%; height:100%; display:block; min-height:120px; }
+.row .slot { padding:14px 22px 14px 4px; display:flex; align-items:center; }
+svg .rt { fill:none; stroke:var(--root); stroke-linecap:round; vector-effect:non-scaling-stroke; }
+svg .bark { fill:var(--bark); }
+svg .br { fill:none; stroke:var(--bark); stroke-linecap:round; vector-effect:non-scaling-stroke; }
+svg .leaf { fill:var(--leaf); stroke:var(--leaf-edge); stroke-width:1.2; vector-effect:non-scaling-stroke; }
+
+/* horizon */
+.horizon { position:relative; display:grid; grid-template-columns:minmax(64px,34%) minmax(0,1fr); align-items:center; background:linear-gradient(180deg, var(--soil-light) 50%, var(--air) 50%); }
+.horizon::before { content:''; position:absolute; left:0; right:0; top:50%; border-top:2px solid rgba(23,36,28,.35); }
+.horizon svg { width:100%; height:64px; display:block; position:relative; }
+.horizon .tag { position:relative; justify-self:start; margin:10px 22px 10px 4px; padding:7px 14px; border-radius:999px; background:#fff; border:1px solid var(--line); font-size:13.5px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+.horizon .tag b { font-family:var(--f-head); }
+.horizon .tag span { color:var(--muted); }
+
+/* unit cards */
+.unit { width:100%; border-radius:20px; padding:16px 18px; background:var(--k-bg); border:1px solid var(--k-edge); text-decoration:none; color:var(--ink); display:block; transition:transform .15s; }
+.unit:hover { transform:translateY(-2px); }
+.unit-head { display:flex; gap:12px; align-items:center; }
+.unit-n { width:34px; height:34px; border-radius:50%; display:grid; place-items:center; background:var(--k-mid); border:1px solid var(--k-edge); font:700 15px var(--f-head); flex:none; }
+.unit-head b { font:800 22px/1.1 var(--f-head); display:block; }
+.unit-head small { color:var(--ink-2); font-size:14px; }
+.unit ol { list-style:none; padding:0; margin:12px 0 0; display:flex; flex-wrap:wrap; gap:6px; }
+.unit li { font-size:13.5px; padding:4px 10px; border-radius:999px; background:var(--chip); border:1px solid var(--k-edge); }
+.unit li.tool { background:var(--k-mid); font-weight:600; }
+.unit li.tool::after { content:' · tool'; font-family:var(--f-mono); font-size:11px; color:var(--muted); }
+.k-feel { --k-bg:var(--c-feel-bg); --k-mid:var(--c-feel-mid); --k-edge:var(--c-feel-edge); }
+.k-need { --k-bg:var(--c-need-bg); --k-mid:var(--c-need-mid); --k-edge:var(--c-need-edge); }
+.k-request { --k-bg:var(--c-req-bg); --k-mid:var(--c-req-mid); --k-edge:var(--c-req-edge); }
+.k-dialogue { --k-bg:var(--c-dlg-bg); --k-mid:var(--c-dlg-mid); --k-edge:var(--c-dlg-edge); }
+.k-apps { --k-bg:var(--c-app-bg); --k-mid:var(--c-app-mid); --k-edge:var(--c-app-edge); }
+
+/* ---------- 5 · special situations ---------- */
+.special { border-radius:28px; padding:20px 22px 22px; background:var(--c-app-bg); border:1px solid var(--c-app-edge); }
+.special-head { display:flex; gap:12px; align-items:center; margin-bottom:6px; }
+.special-head h2 { font-size:24px; }
+.special > p { color:var(--ink-2); margin-bottom:14px; max-width:64ch; }
+.apps { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:10px; }
+.apps li { border-radius:16px; padding:12px 14px; background:var(--glass-strong); border:1px solid var(--c-app-edge); display:flex; flex-direction:column; gap:3px; }
+.apps li b { font-family:var(--f-head); font-size:16px; }
+.apps li span { font-size:13.5px; color:var(--ink-2); }
+.apps li small { font-family:var(--f-mono); font-size:11px; color:var(--muted); margin-top:4px; }
+.apps li.open { background:#fff; }
+.apps li.open small { color:var(--accent); }
+
+.funfact { padding:14px 18px; border-radius:18px; background:var(--glass); border:1px solid var(--soft-line); font-size:14.5px; color:var(--ink-2); }
+.notes { font-size:13.5px; color:var(--ink-2); border:1px dashed var(--line); border-radius:16px; padding:12px 16px; }
+.notes ul { margin:6px 0 0; padding-left:18px; }
+
+@media (max-width:640px) {
+  .row, .horizon { grid-template-columns:64px minmax(0,1fr); }
+  .row .slot { padding:10px 12px 10px 2px; }
+  .zone-label { flex-direction:column; gap:2px; padding:14px 14px 4px; }
+  .zone-label p { text-align:left; }
+  .horizon .tag { margin:10px 12px 10px 2px; }
+  .unit-head b { font-size:19px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="mock">Mock-up · Emotions &amp; love overview as a roots-up tree. Deepest (inner) at the top, outermost (the tree) below, special situations last.</p>
+
+  <header class="top">
+    <a class="brand" href="#"><svg width="62" height="25" viewBox="0 0 60 24" aria-hidden="true"><g transform="translate(0 -1.4)"><g fill="#C2477F" stroke="#C2477F" stroke-width="3.2" stroke-linejoin="round"><path id="h" d="M12 21.2C7.4 18 3.3 14.6 2.4 10.9 1.6 7.5 3.8 4.6 6.9 4.6c2.1 0 3.6 1.2 5.1 3.1 1.5-1.9 3-3.1 5.1-3.1 3.1 0 5.3 2.9 4.5 6.3C20.7 14.6 16.6 18 12 21.2z" transform="rotate(-5 12 13)"/><use href="#h" transform="translate(17 0.6) rotate(5 12 13)"/><use href="#h" transform="translate(34 0) rotate(10 12 13)"/></g></g></svg><b>Kinship</b></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#">About</a>
+      <div class="edu"><button type="button" aria-haspopup="true">Education ▾</button>
+        <div class="edu-menu" role="menu">
+          <a href="#" role="menuitem"><i style="background:#C2477F"></i>Tier 1 · Signals<small>Emotions &amp; love</small></a>
+          <a href="#" role="menuitem"><i style="background:#B85A14"></i>Tier 2 · Roots<small>Water, Food, Air…</small></a>
+          <a href="#" role="menuitem"><i style="background:#3E7B3A"></i>Tier 3 · Nurture</a>
+          <a href="#" role="menuitem"><i style="background:#2F6E9E"></i>Tier 4 · Resilience</a>
+          <a href="#" role="menuitem"><i style="background:#7A4FB0"></i>Tier 5 · Craft</a>
+        </div>
+      </div>
+      <a href="#">Plans</a>
+      <a href="#">Favorites</a>
+      <a href="#" class="keep">Profile</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <span class="eyebrow">Tier 1 · Signals · Course</span>
+    <h1>Emotions &amp; love</h1>
+    <p class="lede">Every conflict is two people trying to meet their universal needs through ineffective strategies. Start at the roots, with what’s alive inside you. Then grow up through the horizon, out to the people, animals and world around you.</p>
+    <div class="legend" aria-label="How to read this page"><span>↑ Roots: inner life</span><span>— The horizon</span><span>↓ The tree: people and the physical world</span><span>↓ Special situations</span></div>
+  </section>
+
+  <!-- ===================== THE TREE ===================== -->
+  <section class="stage" aria-label="Course map: roots, horizon and tree">
+
+    <!-- UNDERGROUND -->
+    <div class="ground">
+      <div class="zone-label"><h2>Roots · underground</h2><p>Inner life: what you feel, and what you need. Nobody else has to see it.</p></div>
+
+      <!-- 1 FEEL: the finest, deepest root tips -->
+      <div class="row">
+        <svg viewBox="0 0 200 100" preserveAspectRatio="none" aria-hidden="true">
+          <path class="rt" stroke-width="1.2" d="M52 100 C48 70 40 52 22 30 M40 58 C30 52 22 50 12 52 M52 100 C58 70 56 40 62 8 M57 50 C66 40 72 36 80 34"/>
+          <path class="rt" stroke-width="1.4" d="M84 100 C82 76 78 56 84 20 M80 60 C72 46 66 40 56 30 M84 100 C92 80 100 64 104 40 M102 52 C108 40 114 36 122 30"/>
+          <path class="rt" stroke-width="1.2" d="M116 100 C122 74 132 58 146 40 M128 66 C136 64 142 68 152 74 M140 46 C142 34 146 22 152 10"/>
+          <path class="rt" stroke-width="1" d="M148 100 C160 86 172 74 188 66 M162 82 C168 70 170 58 178 44 M100 100 C100 84 96 74 92 64"/>
+        </svg>
+        <div class="slot">
+          <a class="unit k-feel" href="#">
+            <div class="unit-head"><span class="unit-n">1</span><div><b>Feel</b><small>what’s alive inside</small></div></div>
+            <ol><li>Feelings are signals</li><li>Feelings vs accusations</li><li>Narrowing in</li></ol>
+          </a>
+        </div>
+      </div>
+
+      <!-- 2 NEED: roots gather toward the trunk -->
+      <div class="row">
+        <svg viewBox="0 0 200 100" preserveAspectRatio="none" aria-hidden="true">
+          <path class="rt" stroke-width="2.4" d="M52 0 C56 50 86 70 95 100"/>
+          <path class="rt" stroke-width="2.8" d="M84 0 C86 40 94 70 98 100"/>
+          <path class="rt" stroke-width="2" d="M100 0 C100 40 100 70 100 100"/>
+          <path class="rt" stroke-width="2.6" d="M116 0 C112 40 106 70 102 100"/>
+          <path class="rt" stroke-width="2.4" d="M148 0 C140 50 114 72 105 100"/>
+          <path class="rt" stroke-width="1" d="M70 52 C60 46 48 46 36 50 M128 56 C140 52 152 54 166 60"/>
+        </svg>
+        <div class="slot">
+          <a class="unit k-need" href="#">
+            <div class="unit-head"><span class="unit-n">2</span><div><b>Identify the need</b><small>the universal need underneath</small></div></div>
+            <ol><li>Universal needs</li><li>Needs vs strategies</li><li class="tool">Identify a need</li></ol>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- THE HORIZON -->
+    <div class="horizon">
+      <svg viewBox="0 0 200 100" preserveAspectRatio="none" aria-hidden="true"><path class="bark" d="M93 0 L107 0 L108 100 L92 100 Z"/></svg>
+      <p class="tag"><b>The horizon</b><span>↑ inside: feelings and needs · ↓ outside: people and the physical world</span></p>
+    </div>
+
+    <!-- ABOVE GROUND -->
+    <div class="above">
+      <!-- 3 REQUEST: the trunk, the first thing that reaches out -->
+      <div class="row">
+        <svg viewBox="0 0 200 100" preserveAspectRatio="none" aria-hidden="true">
+          <path class="bark" d="M92 0 L108 0 C108 40 109 70 112 100 L88 100 C91 70 92 40 92 0 Z"/>
+          <path class="br" stroke-width="2" d="M108 62 C120 70 128 80 134 96"/>
+        </svg>
+        <div class="slot">
+          <a class="unit k-request" href="#">
+            <div class="unit-head"><span class="unit-n">3</span><div><b>Request</b><small>ask, don’t demand</small></div></div>
+            <ol><li>Observe, don’t judge</li><li>Kindness first</li><li>Requests, not demands</li></ol>
+          </a>
+        </div>
+      </div>
+
+      <!-- 4 DIALOGUE: branches and the canopy -->
+      <div class="row">
+        <svg viewBox="0 0 200 120" preserveAspectRatio="none" aria-hidden="true">
+          <path class="leaf" d="M30 46 C14 52 10 76 26 86 C20 104 44 116 60 106 C70 120 96 120 104 108 C116 120 144 118 150 104 C168 112 190 96 182 78 C196 66 188 44 170 42 C168 26 146 20 134 30 C120 16 92 16 82 28 C66 18 40 26 42 40 C38 42 34 44 30 46 Z"/>
+          <path class="bark" d="M88 0 L112 0 C112 14 110 26 106 36 L94 36 C90 26 88 14 88 0 Z"/>
+          <path class="br" stroke-width="3" d="M98 30 C86 48 70 60 52 72 M102 30 C114 50 132 62 152 70 M100 34 C100 56 98 76 96 96 M74 58 C70 72 72 84 70 96 M128 60 C134 74 136 84 140 94"/>
+        </svg>
+        <div class="slot">
+          <a class="unit k-dialogue" href="#">
+            <div class="unit-head"><span class="unit-n">4</span><div><b>Dialogue</b><small>meet both sets of needs</small></div></div>
+            <ol><li>Listening</li><li>Generous, and still met</li><li>Gratitude &amp; repair</li><li class="tool">Communicate</li></ol>
+          </a>
+        </div>
+      </div>
+      <div class="zone-label" style="padding-bottom:16px"><h2>The tree · above ground</h2><p>Where your needs meet other people, animals and the physical world.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== 5 · SPECIAL SITUATIONS ===================== -->
+  <section class="special" aria-labelledby="sp-h">
+    <div class="special-head"><span class="unit-n k-apps">5</span><div><span class="eyebrow">Below the tree</span><h2 id="sp-h">Special situations</h2></div></div>
+    <p>The same roots and the same tree, applied to the particular people and places in your life.</p>
+    <ul class="apps">
+      <li><b>Children</b><span>Togetherness instead of split labor; kids pitching in beside you.</span><small>Later</small></li>
+      <li class="open"><b>Neighbors</b><span>The people, plants and animals you share water, air, walls and streets with.</span><small>Preview →</small></li>
+      <li><b>Gatherings &amp; groups</b><span>Hosting, rounds and agreements, conflict in a circle.</span><small>Later</small></li>
+      <li><b>Projects</b><span>A shared goal, roles by willingness, check-ins.</span><small>Later</small></li>
+      <li class="open"><b>Cooperatives</b><span>Workplaces and homes owned and run together, without extracting profit.</span><small>Preview →</small></li>
+      <li class="open"><b>Power &amp; peace</b><span>Nonviolence, abolition, and power with instead of power over.</span><small>Preview →</small></li>
+      <li class="open"><b>Animals</b><span>Someone, not something: companion, farmed and wild animals, and their needs.</span><small>Preview →</small></li>
+      <li><b>Plants</b><span>A plant’s signals as needs; continues in Gardening.</span><small>Later</small></li>
+    </ul>
+  </section>
+
+  <aside class="funfact"><span class="eyebrow">A grateful fun fact</span><p>The idea that feelings point to universal needs, and that conflicts live between strategies, grows out of Marshall B. Rosenberg’s Nonviolent Communication. The feelings and needs words are adapted from the Center for Nonviolent Communication’s inventories (cnvc.org). Thank you!</p></aside>
+
+  <div class="notes"><b>Mock-up notes</b>
+    <ul>
+      <li>This replaces the four horizontal unit cards. The two tool cards (Identify a need, Communicate) now sit inside units 2 and 4 as tool chips.</li>
+      <li>The tree is drawn in four slices, one per unit row, so each unit always lines up with its part of the tree, whatever the card height. On phones the tree shrinks to a narrow strip on the left.</li>
+      <li>The same model works for every course: roots (inner signals) → horizon → tree (acting in the world) → special situations.</li>
+      <li>Hover <b>Education</b> to see the tier menu.</li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>
