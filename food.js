@@ -363,7 +363,7 @@
       '<ol class="fo-ucards">' + U.map(function (u) {
         return '<li><a class="fo-ucard fk' + u.num + '" href="' + BASE + '/' + u.id + '"><i class="fo-band"></i><span class="fo-n">0' + u.num + '</span><b>' + u.word + '</b><span>' + u.sub + '</span><ol>' + u.subs.filter(function (s) { return !s.tool; }).map(function (s) { return '<li>' + s.title + '</li>'; }).join('') + '</ol></a></li>';
       }).join('') + '</ol>' +
-      '<aside class="fo-funfact"><span class="eyebrow">A grateful fun fact</span><p>Every food in this course comes from plants. Kinship is a vegan project, a practice of peace with animals, and plants turn out to be the cheapest, longest-keeping and most shareable way to meet the need for food. Beans and rice alone have fed much of the world for thousands of years. More on the <a href="#lens-relationships/animals">Animals</a> page.</p>' +
+      '<aside class="fo-funfact"><span class="eyebrow">A grateful fun fact</span><p>Every food in this course comes from plants, the cheapest, longest-keeping and most shareable way to meet the need for food. Beans and rice alone have fed much of the world for thousands of years. More on the <a href="#lens-relationships/animals">Animals</a> page.</p>' +
       '<p>Safety numbers come from public food-safety guidance (USDA, FDA, the UK’s NHS and the National Center for Home Food Preservation). Laws mentioned are California’s; food itself is the same everywhere. Thank you to everyone who keeps this knowledge free.</p></aside>';
   }
   function viewUnit(U, u, subId) {
