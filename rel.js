@@ -273,7 +273,7 @@
   /* Animals: respect in language, reading signals, cows in their own right, wild neighbors. */
   function viewAnimals() {
     var take = mn().opinion ? mn().opinion(
-      '<p>Kinship is a vegan project at heart, because to me peace includes animals. That isn’t a test anyone has to pass here. Your needs and choices are yours; I just want animals to be seen as someone, with needs of their own.</p>') : '';
+      '<p>Peace includes animals.</p>') : '';
     return viewPreview({
       id: 'animals', letter: 'A', name: 'Animals', sub: 'Someone, not something',
       lede: 'Animals share our homes, our neighborhoods, our water and our food systems. They have feelings and needs, and they tell us about them with their bodies. The same four steps (notice, feel, find the need, ask) work here, starting with how we talk about them.',
@@ -295,7 +295,7 @@
           '**Mothers and calves bond.** In dairy farming, calves are usually separated from their mothers within hours to a day of birth so the milk can be sold.',
           '**Cows feel and learn.** Young cows have shown excitement when they solve a problem themselves. Cows can live 15–20 years; those raised for meat in US feedlots are usually killed at about 18–22 months.',
           'Scientists agree that mammals and birds have the brain systems for conscious experience, and evidence for fish keeps growing. Pigs, chickens and fish feel fear and pain too.'
-        ], '<p class="rel-q">Water lens: <a href="#lens-water/cows">how much water goes into one cow’s life</a></p>' +
+        ], '<p class="rel-q">Water lens: <a href="#lens-water/sources/know">how much water goes into animal foods</a></p>' +
           src('Sources: McLennan, <i>Social bonds in dairy cattle</i> (University of Northampton, 2013); Hagen &amp; Broom, “Emotional reactions to learning in cattle,” <i>Applied Animal Behaviour Science</i> (2004); <i>Cambridge Declaration on Consciousness</i> (2012); <i>New York Declaration on Animal Consciousness</i> (2024).')],
         ['Wild neighbors', '“Pests” are neighbors with needs.', [
           'Mice, ants, raccoons and pigeons come because a home is meeting their needs: food, water, warmth, shelter. Change what the home offers and they move on.',
@@ -306,7 +306,7 @@
       ],
       after: take,
       note: 'This is a preview. The full Animals unit (companion animals by species, sanctuaries, and wildlife at home) comes with the special situations tree.',
-      related: ['#lens-water/cows', 'Water: cows']
+      related: ['#lens-water/sources/know', 'Water: farm water']
     });
   }
 

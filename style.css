@@ -238,7 +238,7 @@ a.plan:hover { background: var(--glass-strong); }
 .side .dot { --lc-ui: color-mix(in oklab, var(--lc), white var(--mixw)); }
 .back { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-weight: 600; text-decoration: none; }
 
-/* Creator opinions (Ashley's take): pink, set apart from the more objective copy */
+/* Creator's considerations: pink, set apart from the more objective copy */
 .opinion { display: flex; flex-direction: column; gap: 8px; padding: 16px 20px; border-radius: 20px; background: #FCEFF4; border: 1px solid #F2CFDF; border-left: 6px solid #C2477F; color: #3B2430; font-size: 15.5px; }
 .opinion-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: var(--f-head); font-weight: 800; font-size: 17px; color: #A3346A; }
 .opinion-head small { font-family: var(--f-mono); font-weight: 400; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #A3346A; opacity: 0.8; }

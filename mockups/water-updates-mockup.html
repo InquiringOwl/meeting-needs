@@ -1,0 +1,512 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Water Updates Mockup</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500..800&family=Instrument+Sans:wght@400..700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>/* Light theme only. Layout: one centred column; frosted panels float over soft blurred light, and each tier steps down in opacity. */
+:root {
+  --bg: #EEF2E8;
+  --ink: #17241C;
+  --ink-2: #2C3D32;
+  --muted: #3F5546;
+  --accent: #2F5E2C;
+  --accent-ink: #F4F7EF;
+  --glass: rgba(255, 255, 255, 0.42);
+  --glass-strong: rgba(255, 255, 255, 0.64);
+  --glass-faint: rgba(255, 255, 255, 0.24);
+  --glass-edge: rgba(255, 255, 255, 0.78);
+  --chip: rgba(255, 255, 255, 0.62);
+  --line: rgba(23, 36, 28, 0.16);
+  --dash: rgba(23, 36, 28, 0.30);
+  --shadow: 0 12px 40px rgba(30, 60, 30, 0.08);
+  --blob-a: rgba(124, 176, 104, 0.55);
+  --blob-b: rgba(110, 170, 210, 0.45);
+  --blob-c: rgba(236, 196, 110, 0.38);
+  --blob-d: rgba(190, 140, 200, 0.30);
+  --mixw: 0%;
+  --on-lens: #FFFFFF;
+  --focus: #2F6E9E;
+  --personal: #9A5412;
+  --personal-ink: #FFFFFF;
+  --personal-soft: rgba(214, 150, 70, 0.16);
+  --progress: #2F6E9E;
+  --progress-bg: rgba(255, 255, 255, 0.85);
+
+  color-scheme: light;
+  --f-head: 'Manrope', 'Instrument Sans', system-ui, sans-serif;
+  --f-body: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; overflow-x: clip; }
+body { overflow-x: clip; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 16px;
+  line-height: 1.5;
+}
+a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 8px; }
+h1, h2, h3 { font-family: var(--f-head); text-wrap: balance; margin: 0; }
+p { margin: 0; }
+
+/* Atmosphere */
+.sky { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.sky span { position: absolute; border-radius: 50%; filter: blur(12px); }
+.sky .a { left: -12vw; top: -18vh; width: 60vw; height: 60vw; max-width: 780px; max-height: 780px; background: radial-gradient(circle, var(--blob-a), transparent 68%); }
+.sky .b { right: -14vw; top: 8vh; width: 58vw; height: 58vw; max-width: 780px; max-height: 780px; background: radial-gradient(circle, var(--blob-b), transparent 68%); }
+.sky .c { left: 25vw; bottom: -30vh; width: 64vw; height: 64vw; max-width: 860px; max-height: 860px; background: radial-gradient(circle, var(--blob-c), transparent 68%); }
+.sky .d { right: -8vw; bottom: -20vh; width: 44vw; height: 44vw; max-width: 600px; max-height: 600px; background: radial-gradient(circle, var(--blob-d), transparent 68%); }
+
+.wrap {
+  position: relative; z-index: 1;
+  max-width: 1560px; margin: 0 auto;
+  padding-inline: clamp(16px, 3vw, 40px);
+  padding-block: 20px 72px;
+  display: flex; flex-direction: column; gap: 32px;
+  zoom: 0.9; /* everything at 90% scale */
+}
+.wrap > * { min-width: 0; }
+
+.glass {
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  box-shadow: var(--shadow);
+}
+.eyebrow { font-family: var(--f-mono); font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+
+/* Header */
+.top {
+  position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px); z-index: 5;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px;
+  padding: 8px 10px 8px 16px; border-radius: 999px;
+}
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); min-height: 44px; }
+.brand svg { stroke: var(--accent); }
+.brand svg.logo { stroke: none; flex: none; }
+.brand b { font-family: var(--f-head); font-weight: 800; font-size: 20px; letter-spacing: -0.02em; }
+.nav { display: flex; flex-wrap: wrap; gap: 4px; }
+.nav a {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 999px;
+  color: var(--ink); text-decoration: none; font-weight: 500; font-size: 15px;
+}
+.nav a:hover { background: var(--chip); }
+.nav a[aria-current="page"] { background: var(--ink); color: var(--bg); font-weight: 600; }
+
+/* Education dropdown (hover / keyboard focus; hidden on touch and small screens) */
+.navdrop { position: relative; display: flex; }
+.nav-menu { display: none; position: absolute; top: 100%; right: 0; padding-top: 8px; z-index: 20; }
+.nav-menu-in, .nav-sub-in {
+  display: flex; flex-direction: column; gap: 2px; padding: 8px; border-radius: 18px;
+  background: #FCFDFB; box-shadow: 0 16px 44px rgba(30, 60, 30, 0.16); border: 1px solid var(--glass-edge);
+}
+.nav-menu-in { width: 210px; }
+.nav-tier { position: relative; display: flex; align-items: center; gap: 10px; min-height: 42px; padding: 0 12px; border-radius: 12px; cursor: default; font-size: 15px; font-weight: 600; }
+.nav-tier:hover, .nav-tier:focus-within { background: var(--chip); background: color-mix(in oklab, var(--tc), white 88%); }
+.nav-tier:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+.nav-tier-pill { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 999px;
+  background: var(--tc); color: #fff; font-family: var(--f-mono); font-size: 12px; font-weight: 500; line-height: 1; }
+.nav-sub { display: none; position: absolute; top: -8px; right: 100%; padding-right: 8px; }
+.nav-sub-in { width: 240px; }
+.nav-sub-head { padding: 6px 12px 4px; font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--tc); font-weight: 500; }
+.nav .nav-item { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 38px; padding: 0 12px; border-radius: 10px;
+  font-size: 15px; font-weight: 500; color: var(--ink); text-decoration: none; }
+.nav a.nav-item:hover, .nav a.nav-item:focus-visible { background: color-mix(in oklab, var(--tc), white 86%); }
+.nav .nav-item.is-off { color: rgba(63, 85, 70, 0.5); cursor: default; }
+.nav-item small { font-size: 11px; font-family: var(--f-mono); }
+@media (hover: hover) and (min-width: 760px) {
+  .navdrop:hover .nav-menu, .navdrop:focus-within .nav-menu { display: block; }
+  .navdrop.is-closed .nav-menu { display: none; }
+  .nav-tier:hover .nav-sub, .nav-tier:focus-within .nav-sub { display: block; }
+  .nav-menu-in:hover .nav-tier:not(:hover) .nav-sub { display: none; }
+}
+
+/* Plans dropdown: name plus a one-line description */
+.nav-menu-in.plans-in { width: 260px; }
+.nav a.plan-item { flex-direction: column; align-items: flex-start; justify-content: center; gap: 1px; min-height: 54px; padding: 6px 12px; }
+.nav a.plan-item b { font-weight: 600; font-size: 15px; }
+.nav a.plan-item small { font-family: var(--f-body); font-size: 12.5px; color: var(--muted); }
+.nav a.plan-item:hover { background: var(--chip); }
+
+/* Hero */
+.hero { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; }
+.hero-copy { flex: 999 1 540px; min-width: 0; display: flex; flex-direction: column; gap: 18px; }
+.hero h1 { font-weight: 800; font-size: clamp(32px, 4.2vw, 54px); line-height: 1; letter-spacing: -0.03em; overflow-wrap: anywhere; }
+.hero p { max-width: 62ch; font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-2); }
+
+.setup {
+  min-width: 0; min-height: 200px;
+  display: flex; flex-direction: column; gap: 10px; padding: 20px; border-radius: 22px;
+  background: var(--personal-soft); border: 2px solid var(--personal);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+}
+.setup .eyebrow { color: var(--personal); }
+.setup h3 { font-weight: 800; font-size: 24px; line-height: 1.1; letter-spacing: -0.02em; }
+.setup .hint { margin-top: auto; }
+.setup-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.setup p { font-size: 15px; color: var(--ink-2); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { padding: 4px 10px; border-radius: 999px; background: var(--chip); border: 1px solid var(--line); font-size: 13px; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px;
+  padding: 0 20px; border-radius: 999px; border: 1px solid transparent;
+  background: var(--ink); color: var(--bg); font: inherit; font-weight: 600; text-decoration: none; cursor: pointer;
+}
+.btn.ghost { background: var(--chip); color: var(--ink); border-color: var(--line); }
+.btn.personal { background: var(--personal); color: var(--personal-ink); }
+.btn.sm { min-height: 36px; padding: 0 14px; font-size: 14px; }
+.btn.quiet { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn:hover { filter: brightness(1.08); }
+
+/* Tiers */
+.tier { display: flex; flex-direction: column; gap: 18px; padding: clamp(18px, 2.4vw, 28px); border-radius: 32px; }
+.tier[data-tier="1"] { background: var(--glass-strong); }
+.tier[data-tier="2"] { background: var(--glass); }
+.tier[data-tier="3"] { background: var(--glass-faint); }
+.tier[data-tier="4"], .tier[data-tier="5"] { background: var(--glass-faint); box-shadow: none; }
+.tier-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 24px; }
+.tier-title { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; min-width: 0; }
+.tier h2 { font-weight: 800; font-size: clamp(28px, 3vw, 38px); line-height: 1; letter-spacing: -0.03em; }
+.tier-title p { font-size: 19px; line-height: 1.3; color: var(--ink-2); }
+/* Tier number as a small coloured pill; --tc is the tier colour (lenses.js). */
+.tier-pill { display: inline-flex; align-items: center; justify-content: center; height: 26px; padding: 1px 12px 0; border-radius: 999px;
+  background: var(--tc); color: #fff; font-family: var(--f-mono); font-size: 13px; font-weight: 500; line-height: 1;
+  letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
+.tier-status { font-family: var(--f-mono); font-size: 13px; color: var(--muted); }
+.grid { display: grid; gap: 16px; }
+.tier[data-tier="1"] .grid { grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); }
+.tier[data-tier="2"] .grid { grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); }
+.tier[data-tier="3"] .grid { grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); }
+.tier[data-tier="4"] .grid, .tier[data-tier="5"] .grid { grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); }
+@media (min-width: 900px) { .tier[data-tier="5"] .grid { grid-template-columns: repeat(4, 1fr); } }
+
+/* Lens cards */
+.lens {
+  --lc-ui: color-mix(in oklab, var(--lc), white var(--mixw));
+  display: flex; flex-direction: column; gap: 10px; min-height: 200px; min-width: 0; padding: 20px; border-radius: 22px;
+  text-decoration: none; color: var(--ink);
+  background: var(--glass-faint); border: 1.5px dashed var(--dash);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+.tier:not([data-tier="1"]) .lens { min-height: 0; }
+.lens:hover { transform: translateY(-3px); background: var(--glass-strong); }
+.lens.is-static { cursor: default; }
+.lens.is-static:hover { transform: none; background: var(--glass-faint); }
+.lens.is-solid { background: var(--glass-strong); border: 2px solid var(--lc-ui); box-shadow: var(--shadow); }
+.lens-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--lc-ui); }
+.is-solid .dot { background: var(--lc-ui); }
+.badge { font-size: 13px; font-weight: 600; padding: 3px 11px; border-radius: 999px; color: var(--muted); }
+.badge.ready { background: var(--lc-ui); color: var(--on-lens); }
+.badge.building { color: var(--progress); border: 1.5px solid var(--progress); background: var(--progress-bg); }
+.badge.next, .badge.later { padding-inline: 0; }
+.lens h3 { font-weight: 800; font-size: 24px; overflow-wrap: anywhere; line-height: 1.1; letter-spacing: -0.02em; }
+.lens p { font-size: 15px; line-height: 1.45; color: var(--ink-2); flex-grow: 1; }
+.topics { font-family: var(--f-mono); font-size: 12px; line-height: 1.6; color: var(--muted); }
+
+/* Lens page */
+.lens-page { --lc-ui: color-mix(in oklab, var(--lc), white var(--mixw)); display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; }
+.lens-main { flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 22px; padding: clamp(22px, 3vw, 40px); border-radius: 32px; border-top: 6px solid var(--lc-ui); }
+.lens-main h1 { font-weight: 800; font-size: clamp(44px, 6vw, 76px); line-height: 0.95; letter-spacing: -0.04em; }
+.lens-main .lede { font-size: clamp(18px, 1.8vw, 21px); color: var(--ink-2); max-width: 60ch; }
+.lens-main h2 { font-weight: 700; font-size: 22px; letter-spacing: -0.01em; }
+.looks { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.looks li { display: flex; gap: 12px; align-items: center; font-size: 17px; }
+.looks li > span { flex: 1; min-width: 0; }
+.star { flex: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 0; background: transparent; cursor: pointer; color: var(--muted); }
+.star svg { stroke: currentColor; fill: none; }
+.star:hover { background: var(--chip); }
+.star[aria-pressed="true"] { color: #C98A12; }
+.star[aria-pressed="true"] svg { fill: currentColor; }
+.plan-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); }
+.plan { scroll-margin-top: 96px; --lc-ui: color-mix(in oklab, var(--lc, var(--accent)), white var(--mixw)); display: flex; flex-direction: column; gap: 12px; padding: 24px; border-radius: 24px; color: var(--ink); text-decoration: none; }
+.plan h2 { font-weight: 800; font-size: 26px; letter-spacing: -0.02em; }
+.plan p { color: var(--ink-2); }
+a.plan:hover { background: var(--glass-strong); }
+.favs { display: flex; flex-direction: column; gap: 16px; }
+.fav-group { --lc-ui: color-mix(in oklab, var(--lc), white var(--mixw)); display: flex; flex-direction: column; gap: 8px; padding: 20px 24px; border-radius: 24px; border-left: 6px solid var(--lc-ui); }
+.fav-group .dot { background: var(--lc-ui); }
+.fav-lens { display: inline-flex; align-items: center; gap: 10px; font-family: var(--f-head); font-weight: 800; font-size: 22px; color: var(--ink); text-decoration: none; }
+.looks li::before { content: ''; flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--lc-ui); transform: translateY(-1px); }
+.note { padding: 14px 16px; border-radius: 16px; background: var(--chip); border: 1px solid var(--line); color: var(--ink-2); }
+.side { flex: 1 1 280px; max-width: 360px; min-width: 0; display: flex; flex-direction: column; gap: 12px; padding: 20px; border-radius: 24px; }
+.side a.sib { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 12px; border-radius: 14px; color: var(--ink); text-decoration: none; }
+.side a.sib:hover { background: var(--chip); }
+.side .dot { --lc-ui: color-mix(in oklab, var(--lc), white var(--mixw)); }
+.back { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-weight: 600; text-decoration: none; }
+
+/* Creator opinions (Ashley's take): pink, set apart from the more objective copy */
+.opinion { display: flex; flex-direction: column; gap: 8px; padding: 16px 20px; border-radius: 20px; background: #FCEFF4; border: 1px solid #F2CFDF; border-left: 6px solid #C2477F; color: #3B2430; font-size: 15.5px; }
+.opinion-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: var(--f-head); font-weight: 800; font-size: 17px; color: #A3346A; }
+.opinion-head small { font-family: var(--f-mono); font-weight: 400; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #A3346A; opacity: 0.8; }
+.opinion-dot { width: 12px; height: 12px; border-radius: 50%; background: #C2477F; }
+.opinion p { max-width: 78ch; }
+.opinion a { color: #A3346A; }
+.opinion .opinion-facts { display: flex; flex-direction: column; gap: 6px; padding: 12px 16px; border-radius: 14px; background: rgba(255, 255, 255, 0.8); color: var(--ink-2); font-size: 14.5px; }
+.opinion .opinion-facts ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; }
+.opinion .opinion-facts .eyebrow { font-size: 11px; }
+.opinion .opinion-src { font-size: 12.5px; color: var(--muted); }
+.hero-copy .opinion { margin: 4px 0; }
+
+/* Profile: water sources, each with how much it carries you */
+.srcs { display: flex; flex-direction: column; gap: 6px; }
+.src { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px; padding: 8px 8px 8px 14px; border-radius: 16px; background: var(--glass-faint); border: 1px solid var(--line); }
+.src-name { font-size: 15px; font-weight: 500; }
+.src-name small { display: block; font-size: 12.5px; color: var(--muted); font-weight: 400; }
+.seg { display: inline-flex; flex-wrap: wrap; gap: 4px; }
+.seg button { min-height: 38px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--chip); color: var(--ink); font: inherit; font-size: 14px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: #2C64A0; border-color: #2C64A0; color: #fff; font-weight: 600; }
+
+/* Profile */
+.intro { display: flex; flex-direction: column; gap: 14px; max-width: 760px; }
+.intro h1 { font-weight: 800; font-size: clamp(40px, 5.6vw, 68px); line-height: 0.98; letter-spacing: -0.035em; }
+.intro p { font-size: 19px; color: var(--ink-2); }
+.profile { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; }
+.steps { flex: 1 1 220px; max-width: 280px; display: flex; flex-direction: column; gap: 4px; padding: 12px; border-radius: 24px; position: sticky; top: 96px; }
+.steps button {
+  display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 14px; border-radius: 16px;
+  border: 0; background: transparent; color: var(--ink); font: inherit; font-weight: 500; text-align: left; cursor: pointer;
+}
+.steps button:hover { background: var(--chip); }
+.steps .n { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--dash); display: grid; place-items: center; font-size: 13px; }
+.steps .done .n { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.form { flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+fieldset { scroll-margin-top: 96px; margin: 0; min-width: 0; display: flex; flex-direction: column; gap: 18px; padding: clamp(20px, 2.6vw, 28px); border-radius: 28px; }
+legend { float: left; width: 100%; padding: 0; font-family: var(--f-head); font-weight: 700; font-size: 26px; letter-spacing: -0.02em; }
+legend + * { clear: both; }
+.row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.field label, .field .label { font-size: 14px; font-weight: 600; }
+.hint { font-size: 13px; color: var(--muted); font-weight: 400; }
+input[type="text"], input[type="number"], select, textarea {
+  width: 100%; min-height: 48px; padding: 12px 14px; border-radius: 14px;
+  border: 1px solid var(--line); background: var(--glass-strong); color: var(--ink); font: inherit;
+}
+textarea { min-height: 110px; font-family: var(--f-mono); font-size: 13px; resize: vertical; }
+.pick { display: flex; flex-wrap: wrap; gap: 8px; }
+.pick button {
+  min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line);
+  background: var(--chip); color: var(--ink); font: inherit; font-size: 15px; cursor: pointer;
+}
+.pick button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+.actions { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; align-items: center; }
+.actions .group { display: flex; flex-wrap: wrap; gap: 10px; }
+.confirm { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 16px; border: 1px solid var(--line); background: var(--chip); }
+details.backup { padding: 18px 22px; border-radius: 24px; }
+details.backup summary { cursor: pointer; font-weight: 600; min-height: 32px; }
+details.backup .inner { display: flex; flex-direction: column; gap: 12px; padding-top: 12px; }
+
+.foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-inline: 8px; font-size: 14px; color: var(--muted); }
+.foot .eyebrow { font-size: 12px; }
+
+.toast {
+  position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 20px); z-index: 20;
+  transform: translate(-50%, 0); padding: 10px 18px; border-radius: 999px;
+  background: var(--ink); color: var(--bg); font-size: 14px; font-weight: 600;
+  transition: opacity 0.2s ease;
+}
+.toast[hidden] { display: none !important; }
+
+@media (max-width: 720px) {
+  .steps { position: static; max-width: none; flex-direction: row; flex-wrap: wrap; }
+  .side { max-width: none; }
+  .setup { max-width: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; scroll-behavior: auto !important; }
+  .lens:hover { transform: none; }
+}
+h1[tabindex="-1"]:focus { outline: none; }
+@media (max-width: 560px) { .top { border-radius: 26px; } }
+
+/* Water lens (light theme only; no backdrop blur on the long pages).
+   Units are shades of blue, darkest (1) to lightest (6). Per unit:
+   --w-bg page wash · --w-mid filled · --w-edge soft border · --w-dot the unit's blue · --w-on text on the dot. */
+:root {
+  --w1-bg: #E1ECF7; --w1-mid: #C6DAEF; --w1-edge: #AFCAE8; --w1-dot: #173D69; --w1-on: #fff;
+  --w2-bg: #E5EFF9; --w2-mid: #CCE0F2; --w2-edge: #B8D3ED; --w2-dot: #255B95; --w2-on: #fff;
+  --w3-bg: #E9F2FA; --w3-mid: #D3E6F6; --w3-edge: #C1DBF1; --w3-dot: #3B7BBA; --w3-on: #fff;
+  --w4-bg: #EEF5FC; --w4-mid: #DBEBF8; --w4-edge: #CBE2F5; --w4-dot: #5F9BD0; --w4-on: #fff;
+  --w5-bg: #F2F8FD; --w5-mid: #E3F0FA; --w5-edge: #D5E9F8; --w5-dot: #8DBDE3; --w5-on: #17241C;
+  --w6-bg: #F6FAFE; --w6-mid: #EAF4FC; --w6-edge: #DEEEFA; --w6-dot: #BCDDF4; --w6-on: #17241C;
+  --w-bg: var(--glass-faint); --w-mid: var(--chip); --w-edge: var(--line); --w-dot: var(--muted); --w-on: #fff;
+  --w-soft: rgba(23, 36, 28, 0.08);
+}
+.wk1 { --w-bg: var(--w1-bg); --w-mid: var(--w1-mid); --w-edge: var(--w1-edge); --w-dot: var(--w1-dot); --w-on: var(--w1-on); }
+.wk2 { --w-bg: var(--w2-bg); --w-mid: var(--w2-mid); --w-edge: var(--w2-edge); --w-dot: var(--w2-dot); --w-on: var(--w2-on); }
+.wk3 { --w-bg: var(--w3-bg); --w-mid: var(--w3-mid); --w-edge: var(--w3-edge); --w-dot: var(--w3-dot); --w-on: var(--w3-on); }
+.wk4 { --w-bg: var(--w4-bg); --w-mid: var(--w4-mid); --w-edge: var(--w4-edge); --w-dot: var(--w4-dot); --w-on: var(--w4-on); }
+.wk5 { --w-bg: var(--w5-bg); --w-mid: var(--w5-mid); --w-edge: var(--w5-edge); --w-dot: var(--w5-dot); --w-on: var(--w5-on); }
+.wk6 { --w-bg: var(--w6-bg); --w-mid: var(--w6-mid); --w-edge: var(--w6-edge); --w-dot: var(--w6-dot); --w-on: var(--w6-on); }
+
+/* Layout: vertical course map on the left, page on the right */
+.wa-layout { display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 28px; align-items: start; }
+.wa-main { min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+.wa-nav { position: sticky; top: 92px; max-height: calc(100vh - 110px); overflow-y: auto; scrollbar-width: thin; padding: 14px; border-radius: 26px; background: rgba(255, 255, 255, 0.72); border: 1px solid var(--glass-edge); }
+.wa-nav-wrap > summary { list-style: none; cursor: default; display: flex; flex-direction: column; padding: 2px 6px 6px; }
+.wa-nav-wrap > summary::-webkit-details-marker { display: none; }
+.wa-nav-head b { font-family: var(--f-head); font-size: 21px; font-weight: 800; letter-spacing: -0.02em; }
+.wa-nav-head .eyebrow { font-size: 11px; }
+.wa-nav-over { display: flex; align-items: center; min-height: 38px; padding: 0 8px; margin-bottom: 6px; border-radius: 12px; color: var(--ink); text-decoration: none; font-weight: 600; font-size: 15px; }
+.wa-nav-over:hover, .wa-nav-over[aria-current="page"] { background: var(--chip); }
+.wa-vt { list-style: none; margin: 0; padding: 0; position: relative; }
+.wa-vt::before { content: ''; position: absolute; left: 21px; top: 22px; bottom: 22px; width: 2px; border-radius: 2px; background: linear-gradient(var(--w1-dot), var(--w3-dot), var(--w6-dot)); }
+.wa-vt-unit { position: relative; padding: 3px 0; }
+.wa-vt-head { display: flex; align-items: center; gap: 12px; min-height: 46px; padding: 4px 8px; border-radius: 16px; color: var(--ink); text-decoration: none; }
+.wa-vt-head:hover { background: var(--w-bg); }
+.wa-vt-unit.cur > .wa-vt-head { background: var(--w-mid); }
+.wa-vt-dot { position: relative; z-index: 1; width: 28px; height: 28px; flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--w-dot); color: var(--w-on); box-shadow: 0 0 0 4px var(--bg); font-family: var(--f-mono); font-size: 13px; }
+.wa-vt-head b { display: block; font-family: var(--f-head); font-size: 17px; font-weight: 800; line-height: 1.1; }
+.wa-vt-head small { display: block; font-size: 13px; color: var(--muted); }
+.wa-vt-subs { list-style: none; margin: 2px 0 4px; padding: 0 0 0 36px; display: none; flex-direction: column; }
+.wa-vt-unit.cur .wa-vt-subs { display: flex; }
+.wa-vt-subs a { position: relative; display: flex; align-items: center; min-height: 30px; padding: 3px 8px; border-radius: 10px; color: var(--ink-2); text-decoration: none; font-size: 14px; line-height: 1.25; }
+.wa-vt-subs a::before { content: ''; position: absolute; left: -19px; top: 50%; width: 8px; height: 8px; margin-top: -4px; border-radius: 50%; background: var(--w-dot); }
+.wa-vt-subs a:hover { background: var(--w-bg); color: var(--ink); }
+
+/* Profile panel */
+.wa-sit { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; padding: 12px 18px; border-radius: 20px; background: var(--glass-strong); border: 1px solid var(--w-soft); }
+.wa-sit p { font-size: 14.5px; color: var(--ink-2); flex: 1 1 260px; }
+.wa-review { position: relative; }
+.wa-review > a { font-size: 14.5px; font-weight: 600; }
+.wa-pop { display: none; position: absolute; right: 0; top: calc(100% + 8px); z-index: 10; width: min(380px, 80vw); flex-direction: column; gap: 6px; padding: 14px 16px; border-radius: 16px; background: #FCFDFB; border: 1px solid var(--glass-edge); box-shadow: 0 16px 44px rgba(30, 60, 30, 0.16); font-size: 14px; color: var(--ink-2); }
+.wa-review:hover .wa-pop, .wa-review:focus-within .wa-pop { display: flex; }
+.wa-pop-row b { display: block; font-size: 12px; font-family: var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+.wa-pop-foot { margin-top: 4px; font-size: 13px; color: var(--muted); }
+
+/* Overview */
+.wa-hero { display: flex; flex-direction: column; gap: 12px; }
+.wa-lens-pill { align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #B85A14; color: #fff; font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1; }
+.wa-hero h1 { font-weight: 800; font-size: clamp(46px, 6.4vw, 84px); line-height: 0.95; letter-spacing: -0.04em; }
+.wa-lede { font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-2); max-width: 66ch; }
+.wa-ucards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.wa-ucard { display: flex; flex-direction: column; gap: 8px; height: 100%; padding: 0 0 16px; border-radius: 24px; background: var(--w-bg); border: 1px solid var(--w-edge); text-decoration: none; color: var(--ink); overflow: hidden; }
+.wa-ucard > * { margin-inline: 18px; }
+.wa-ucard .wa-band { margin: 0; height: 10px; background: var(--w-dot); }
+.wa-ucard:hover { background: var(--w-mid); }
+.wa-n { font-family: var(--f-mono); font-size: 13px; color: var(--muted); margin-top: 6px; }
+.wa-ucard b { font-family: var(--f-head); font-weight: 800; font-size: clamp(24px, 2.4vw, 30px); line-height: 1; letter-spacing: -0.03em; }
+.wa-ucard > span:not(.wa-n) { font-size: 15px; color: var(--ink-2); }
+.wa-ucard ol { margin-top: 4px; padding: 8px 0 0 18px; border-top: 1px solid var(--w-edge); font-size: 13.5px; color: var(--ink-2); }
+.wa-funfact { display: flex; flex-direction: column; gap: 4px; padding: 16px 20px; border-radius: 20px; background: var(--glass-faint); border: 1px solid var(--w-soft); }
+.wa-funfact p { font-size: 15px; color: var(--ink-2); max-width: 86ch; }
+
+/* Unit page */
+.wa-unit { display: flex; flex-direction: column; gap: 14px; }
+.wa-unit-hero { display: flex; flex-direction: column; gap: 6px; padding: clamp(22px, 3vw, 32px); border-radius: 28px; background: var(--w-bg); border: 1px solid var(--w-edge); border-top: 10px solid var(--w-dot); }
+.wa-unit-hero h1 { font-weight: 800; font-size: clamp(44px, 5.6vw, 72px); line-height: 0.95; letter-spacing: -0.04em; }
+.wa-unit-sub { font-family: var(--f-head); font-size: 19px; font-weight: 600; color: var(--ink-2); }
+.wa-unit-hero .wa-lede { font-size: 16.5px; margin-top: 4px; }
+.wa-jumps { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.wa-jumps a { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 14px; border-radius: 999px; background: var(--glass-strong); color: var(--ink); text-decoration: none; font-size: 14px; font-weight: 600; }
+.wa-jumps a span { font-family: var(--f-mono); font-size: 12px; color: var(--muted); font-weight: 400; }
+.wa-jumps a:hover { background: var(--w-mid); }
+.wa-sub { scroll-margin-top: 96px; display: flex; flex-direction: column; gap: 12px; padding: 22px 24px; border-radius: 24px; background: rgba(255, 255, 255, 0.74); border: 1px solid var(--w-edge); }
+.wa-sub-top { display: flex; align-items: baseline; gap: 10px; }
+.wa-sub-n { font-family: var(--f-mono); font-size: 12.5px; color: var(--muted); flex: none; }
+.wa-sub h2 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; }
+.wa-sub > p { font-size: 15.5px; max-width: 78ch; }
+.wa-sub ul, .wa-sub ol { margin: 0; padding-left: 20px; font-size: 15px; color: var(--ink-2); display: flex; flex-direction: column; gap: 4px; max-width: 80ch; }
+.wa-box { font-size: 14.5px; padding: 10px 12px; border-radius: 14px; color: var(--ink-2); }
+.wa-box::before { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.wa-home { background: var(--w-bg); }
+.wa-home::before { content: 'At home · '; }
+.wa-do { background: var(--w-mid); color: var(--ink); }
+.wa-do::before { content: 'Try it · '; }
+.wa-old { background: #F6F1E7; border-left: 4px solid #C9AE7C; }
+.wa-old::before { content: 'Old ways · '; }
+.wa-ca { background: #FFF7E8; border-left: 4px solid #E3B25B; }
+.wa-ca::before { content: 'In California · '; }
+.wa-kind { padding: 12px 16px; border-radius: 16px; background: #F3EEF8; border: 1px solid #E1D6EE; font-size: 14.5px; color: var(--ink-2); }
+.wa-links { font-size: 13px; color: var(--muted); }
+.wa-links::before { content: 'Links to → '; font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* Grades and design truths */
+.wa-ladder, .wa-truths { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+.wa-rung { display: flex; flex-direction: column; gap: 6px; padding: 14px 16px; border-radius: 18px; border: 1px solid var(--w-soft); }
+.wa-rung b { font-family: var(--f-head); font-size: 18px; }
+.wa-rung small { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.wa-rung p { font-size: 14px; color: var(--ink-2); }
+.r1 { background: #D4E6F7; } .r2 { background: #E7F2EA; } .r3 { background: #F3EAD8; } .r4 { background: #EFE3E3; }
+.wa-truth { padding: 14px 16px; border-radius: 18px; background: rgba(255, 255, 255, 0.7); border: 1px solid var(--w-soft); }
+.wa-truth b { display: block; font-family: var(--f-head); font-size: 16.5px; margin-bottom: 2px; }
+.wa-truth p { font-size: 14.5px; color: var(--ink-2); }
+
+/* Accordions: situation-specific detail */
+.wa-accs { display: flex; flex-direction: column; gap: 8px; }
+.wa-acc { border-radius: 16px; background: var(--w-bg); border: 1px solid var(--w-edge); }
+.wa-acc > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 8px 14px; font-weight: 600; font-size: 15.5px; }
+.wa-acc > summary::-webkit-details-marker { display: none; }
+.wa-acc > summary::after { content: '+'; margin-left: auto; font-family: var(--f-mono); font-size: 18px; color: var(--muted); flex: none; }
+.wa-acc[open] > summary::after { content: '–'; }
+.wa-acc > summary:hover { background: var(--w-mid); border-radius: 16px; }
+.wa-who { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; background: #fff; color: var(--ink-2); font-weight: 400; flex: none; }
+.wa-foryou { display: inline-block; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; background: #255B95; color: #fff; font-weight: 400; flex: none; }
+.wa-acc.match { box-shadow: 0 0 0 2px var(--w-dot); }
+.wa-in { padding: 2px 16px 14px; display: flex; flex-direction: column; gap: 8px; font-size: 15px; color: var(--ink-2); }
+
+/* Notes, tables, tools */
+.wa-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+.wa-note { display: flex; flex-direction: column; gap: 6px; padding: 14px 18px; border-radius: 18px; background: #FFF8EC; border: 1px solid #EFDDB8; font-size: 14.5px; color: var(--ink-2); }
+.wa-note b { font-family: var(--f-head); font-size: 16.5px; color: var(--ink); }
+.wa-tbl { overflow-x: auto; border-radius: 18px; border: 1px solid var(--w-edge); background: #fff; }
+.wa-tbl table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 14px; }
+.wa-tbl th, .wa-tbl td { padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--w-soft); vertical-align: top; }
+.wa-tbl th { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 500; background: var(--w-bg); }
+.wa-tbl td:first-child { font-weight: 600; }
+.wa-tbl td.y { color: #2E6B35; } .wa-tbl td.p { color: #8A6418; } .wa-tbl td.n { color: #9A4A3A; }
+.wa-legend { font-size: 12.5px; color: var(--muted); }
+.wa-tool { display: flex; flex-direction: column; gap: 10px; padding: 16px 18px; border-radius: 20px; background: var(--w-mid); border: 1px solid var(--w-edge); }
+.wa-tool-t { font-family: var(--f-head); font-size: 19px; font-weight: 800; }
+.wa-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; }
+.wa-f { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--muted); font-family: var(--f-mono); min-width: 0; max-width: 100%; }
+.wa-tool input[type="number"], .wa-tool select { width: auto; min-height: 40px; padding: 0 12px; border-radius: 12px; border: 1px solid var(--w-soft); background: #fff; font-family: var(--f-body); font-size: 15.5px; max-width: 100%; }
+.wa-tool input[type="number"] { width: 110px; }
+.wa-chk { display: flex; align-items: center; gap: 6px; font-size: 14px; color: var(--ink-2); min-height: 40px; }
+.wa-out { padding: 12px 14px; border-radius: 16px; background: rgba(255, 255, 255, 0.85); font-size: 15px; }
+.wa-out strong { font-family: var(--f-head); font-size: 26px; font-weight: 800; letter-spacing: -0.02em; display: block; line-height: 1.1; }
+.wa-out small { display: block; color: var(--muted); font-size: 13px; margin-top: 4px; }
+.wa-out ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+.wa-mathhead { margin-bottom: 8px; }
+.wa-prices { display: flex; flex-direction: column; gap: 6px; }
+.wa-price { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px; padding: 8px 10px 8px 14px; border-radius: 14px; background: rgba(255, 255, 255, 0.7); }
+.wa-price b { display: block; font-size: 15px; }
+.wa-price small { display: block; font-size: 12.5px; color: var(--muted); max-width: 52ch; }
+.wa-money { display: inline-flex; align-items: center; gap: 4px; font-weight: 600; }
+.wa-bars { display: flex; flex-direction: column; gap: 6px; }
+.wa-bar { display: grid; grid-template-columns: 150px 1fr 90px; align-items: center; gap: 10px; font-size: 14px; }
+.wa-bar i { display: block; height: 10px; border-radius: 999px; background: var(--w-dot); }
+.wa-bar b { text-align: right; font-weight: 600; }
+
+.wa-pager { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.wa-pager a { display: flex; flex-direction: column; gap: 2px; padding: 14px 18px; border-radius: 20px; background: var(--glass); border: 1px solid var(--w-soft); color: var(--ink); text-decoration: none; }
+.wa-pager a.next { grid-column: 2; text-align: right; }
+.wa-pager small { font-size: 13px; color: var(--muted); }
+.wa-pager b { font-family: var(--f-head); font-size: 18px; }
+.wa-pager a:hover { background: var(--glass-strong); }
+
+@media (max-width: 900px) {
+  .wa-layout { grid-template-columns: 1fr; }
+  .wa-nav { position: static; max-height: none; }
+  .wa-nav-wrap > summary { cursor: pointer; }
+  .wa-bar { grid-template-columns: 110px 1fr 80px; }
+}
+
+/* California farms list box (Sources 2.1) */
+.wa-ca-list { display: flex; flex-direction: column; gap: 6px; }
+.wa-ca-list ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; }
+.wa-ca-list small { font-size: 12px; color: var(--muted); }
+/* Unit-end creator opinion */
+.wa-take { padding-top: 8px; }
+
+body{background:#F6F8F7;margin:0} .mk-wrap{max-width:860px;margin:0 auto;padding:24px 16px 64px;display:flex;flex-direction:column;gap:14px}
+.mk-head h1{font-family:var(--f-head);margin:0 0 4px} .mk-head p{margin:0;color:#555}
+.mk-label{margin-top:22px;font-size:14px;color:#333;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.mk-tag{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:99px}
+.mk-new{background:#DDF3E4;color:#1F6B3A} .mk-changed{background:#FFF1CC;color:#7A5600}
+.mk-wrap a{pointer-events:none}</style></head><body><div class="mk-wrap"><header class="mk-head"><h1>Water course: updates for review</h1><p>Rendered from the real water.js and water.css, before committing. Six spots, in course order.</p></header><div class="mk-label"><span class="mk-tag mk-changed">Changed</span><b>1 · Uses</b> 1.1 now links to the new drinking page.</div><article class="wa-unit wk1"><section class="wa-sub" id="wa-uses-needs"><div class="wa-sub-top"><span class="wa-sub-n">1.1</span><h2>What we need it for</h2></div><p>A day of water: drinking, cooking, brushing teeth, washing hands and bodies, dishes, laundry, flushing, cleaning, plants and animals. A body needs about 2–3 liters a day to drink, more in heat (<a href="#lens-water/uses/drink">1.2</a>). Humanitarian groups plan around 15 liters (about 4 gallons) per person a day for drinking, cooking and basic washing. A typical US home with taps uses many times that.</p><p class="wa-box wa-old">When every drop was carried, every drop had a job: washing water went to the garden, dishwater to the animals’ trough or the fruit trees.</p><p class="wa-box wa-do">Keep a one-day water diary: every time water runs, jot what it was for. Circle the jobs that didn’t need drinking-quality water.</p></section></article><div class="mk-label"><span class="mk-tag mk-new">New</span><b>1 · Uses</b> 1.2 How much to drink (fold-outs opened for the mockup).</div><article class="wa-unit wk1"><section class="wa-sub" id="wa-uses-drink"><div class="wa-sub-top"><span class="wa-sub-n">1.2</span><h2>How much to drink</h2></div><p>Most adults need about <b>2.7 liters (women) to 3.7 liters (men)</b> of water a day in all. About 20% usually comes from food, which leaves roughly <b>9 to 13 cups to drink</b>. Tea, milk and soup count. Thirst and pale-yellow pee are good everyday guides.</p><div class="wa-accs"><details class="wa-acc" data-for="kids" open=""><summary><span class="wa-who">Babies</span><span class="wa-acc-t">Babies and toddlers</span></summary><div class="wa-in"><p>Under 6 months, breast milk or formula is all the water a baby needs. Extra water can make a young baby seriously ill. From about 6 months, small sips: about 4–8 ounces (½ to 1 cup) a day alongside milk. After a year, water and milk become the main drinks.</p></div></details><details class="wa-acc" data-for="elder" open=""><summary><span class="wa-who">Older bodies</span><span class="wa-acc-t">Older adults</span></summary><div class="wa-in"><p>Thirst fades with age, so waiting to feel thirsty can mean waiting too long. Drink on a rhythm instead: with meals, with medicines, with visits. Some medicines, like water pills, change how much a body needs.</p></div></details><details class="wa-acc" data-for="athlete outdoor" open=""><summary><span class="wa-who">Active bodies</span><span class="wa-acc-t">Sport, work and heat</span></summary><div class="wa-in"><p>Sweat raises needs fast. Drink before, during and after. For long or very sweaty efforts, add salt or electrolytes: lots of plain water without salt can make someone sick too.</p></div></details><details class="wa-acc" data-for="pregnant" open=""><summary><span class="wa-who">Pregnancy</span><span class="wa-acc-t">Pregnancy and breastfeeding</span></summary><div class="wa-in"><p>Needs go up: about 3 liters a day in all while pregnant, and about 3.8 liters while breastfeeding.</p></div></details><details class="wa-acc" data-for="health" open=""><summary><span class="wa-who">Health needs</span><span class="wa-acc-t">Illness and fluid limits</span></summary><div class="wa-in"><p>Fever, vomiting and diarrhea pull water out. Sip often, and use an oral rehydration drink for big losses. Some kidney, heart and liver conditions call for drinking <i>less</i>; there, a doctor’s number comes first.</p></div></details></div><p><b>Water in food:</b> cucumbers, lettuce, melons, citrus and most fresh fruits and vegetables are about 85–96% water. A day full of them, plus soups and stews, means less to drink. A dry, salty day means more.</p></section></article><div class="mk-label"><span class="mk-tag mk-new">New</span><b>1 · Uses</b> Ashley’s take (one sentence), at the bottom of Unit 1.</div><article class="wa-unit wk1"><section class="wa-sub wa-take"><aside class="opinion"><span class="opinion-head"><span class="opinion-dot" aria-hidden="true"></span>Ashley’s take<small>creator opinion</small></span><p>Children feel water scarcity first and hardest, so they’re who I think of first.</p><p class="opinion-src">UNICEF: about 1 in 5 children worldwide don’t have enough water for everyday needs (2021).</p></aside></section></article><div class="mk-label"><span class="mk-tag mk-changed">Changed</span><b>2 · Sources</b> 2.1: two truths, upstream stories, California farms bullets.</div><article class="wa-unit wk2"><section class="wa-sub" id="wa-sources-know"><div class="wa-sub-top"><span class="wa-sub-n">2.1</span><h2>Know your sources</h2></div><p>Two truths come before every source:</p><div class="wa-truths"><div class="wa-truth"><b>Know what’s upstream</b><p>Water carries everything it has passed: towns, farms, roads, mines, factories, someone’s laundry. Clear and fast doesn’t mean clean.</p></div><div class="wa-truth"><b>Unknown until you know</b><p>Until you know a water’s story or have tested it, treat it as unsafe. Today that’s most water you didn’t trace yourself.</p></div></div><p>In <i>Traveler’s Joy</i>, herbalist Juliette de Baïracli Levy tells of being sent to a mountain stream as pure, then finding that upstream, sheets from typhus patients were being washed in it. Today the upstream can be a factory: DuPont’s Washington Works plant in West Virginia released PFOA, a “forever chemical,” into the Ohio River and nearby drinking water for decades. The US Geological Survey estimates at least 45% of US tap water carries some PFAS.</p><div class="wa-tbl"><table><thead><tr><th>Source</th><th>Usually watch for</th><th>Ready to drink?</th></tr></thead><tbody><tr><td>Public tap</td><td>Lead from old pipes, chlorine taste, sometimes PFAS</td><td class="y">Usually</td></tr><tr><td>Rain</td><td>Roof dirt, bird droppings, roof materials</td><td class="n">Treat first</td></tr><tr><td>Well</td><td>Bacteria, nitrate, arsenic, minerals</td><td class="p">After testing</td></tr><tr><td>Spring</td><td>Surface water sneaking in after rain</td><td class="p">After testing</td></tr><tr><td>River, lake</td><td>Germs, farm and road runoff, algae toxins</td><td class="n">Treat first</td></tr><tr><td>Dehumidifier / AC</td><td>Metals and germs from the coils</td><td class="n">Plants only</td></tr></tbody></table></div><div class="wa-box wa-ca wa-ca-list"><b>Farms and water</b><ul><li>Farms use about <b>40%</b> of California’s water.</li><li>That grows nearly half of US vegetables and over three-quarters of US fruits and nuts.</li><li>Water per pound for the top plant crops: almonds (in shell) 960 gal · pistachios 1,360 · grapes 73 · strawberries 42 · lettuce 28 · tomatoes 26 · carrots 23.</li><li>About <b>27%</b> of farm water grows feed for farmed animals: alfalfa, pasture and corn silage, mostly for cows. Much of the corn and soy fed to chickens and pigs is grown out of state, so their water is counted elsewhere.</li><li>Of all the water behind animal foods, about <b>98%</b> grows their feed. What animals drink is about 1.1%, and cleaning barns and animals about 0.8%.</li><li>In all, per pound: beef 1,850 gal · pork 720 · chicken 520 · eggs 400 · milk 120.</li></ul><small>Sources: Public Policy Institute of California; California Department of Food and Agriculture (top crops by value, 2024); Water Footprint Network (world averages, rain included).</small></div><p class="wa-box wa-old">Villages grew up beside springs and rivers. People drew drinking water upstream and washed downstream, and that order still matters.</p><p class="wa-box wa-do">Find your watershed’s name and trace a raindrop from your roof to your tap, then to the sea.</p></section></article><div class="mk-label"><span class="mk-tag mk-new">New</span><b>2 · Sources</b> 2.6 Choosing where to live.</div><article class="wa-unit wk2"><section class="wa-sub" id="wa-sources-place"><div class="wa-sub-top"><span class="wa-sub-n">2.6</span><h2>Choosing where to live</h2></div><p>If you’re choosing where to live, put clean water near the top of the list. Living near clean water is much easier than making dirty water clean.</p><ul><li><b>Public water:</b> read the provider’s yearly water quality report before you sign (<a href="#lens-water/testing/report">5.3</a>).</li><li><b>A well:</b> ask for recent test results and the well log, and test before you buy (<a href="#lens-water/sources/wells">2.4</a>).</li><li><b>Look upstream and uphill:</b> farms, feedlots, mines, factories, landfills, and airports or military bases (firefighting foam is a common PFAS source).</li><li><b>Look ahead:</b> drought history, falling groundwater, and who else draws on the same water.</li></ul></section></article><div class="mk-label"><span class="mk-tag mk-changed">Changed</span><b>5 · Testing</b> 5.2: watching what animals drink, link to Animals.</div><article class="wa-unit wk5"><section class="wa-sub" id="wa-testing-signs"><div class="wa-sub-top"><span class="wa-sub-n">5.2</span><h2>Reading the signs around you</h2></div><div class="wa-tbl"><table><thead><tr><th>You notice</th><th>Often means</th></tr></thead><tbody><tr><td>Rotten-egg smell</td><td>Hydrogen sulfide, or bacteria in a water heater or well</td></tr><tr><td>Orange or red stains</td><td>Iron</td></tr><tr><td>Blue-green stains</td><td>Copper from corroding pipes</td></tr><tr><td>Metallic taste</td><td>Metals from pipes; worth a lead test</td></tr><tr><td>Fuel or chemical smell</td><td>Contamination. Stop drinking it and report it</td></tr><tr><td>Mayfly, stonefly or caddisfly larvae under creek stones</td><td>Clean, well-oxygenated water (they’re sensitive to pollution)</td></tr><tr><td>Only worms, leeches and slime</td><td>Polluted or low-oxygen water</td></tr><tr><td>Fields, feedlots, mines or factories upstream</td><td>Possible chemicals no sense can detect: test or choose another source</td></tr></tbody></table></div><p><b>Watch what animals drink.</b> Many animals smell far better than we do, so an animal who sniffs a source and walks away may be telling you something. It’s a clue, not a test: animals will drink polluted water when it’s all they have, so tracks at the edge don’t prove it’s clean.</p><p class="wa-box wa-home">If an animal you live with refuses the tap or a new source but drinks happily from filtered or bottled water, follow their lead. It may only be chlorine, but switch for now and test (<a href="#lens-water/testing/kits">5.4</a>).</p><p class="wa-box wa-do">Turn over a few stones in a creek with a child and count the little creatures clinging to them. That’s a real field test.</p><p class="wa-links">Identification · <a href="#lens-relationships/animals">Emotions &amp; love: Animals</a> (reading their signals)</p></section></article></div></body></html>

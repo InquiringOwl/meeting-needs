@@ -214,7 +214,7 @@
   }
   /* Creator opinions: pink (tier 1 and logo color), set apart so the rest of the site reads as relatively objective. */
   function opinion(html, title) {
-    return '<aside class="opinion"><span class="opinion-head"><span class="opinion-dot" aria-hidden="true"></span>' + (title ? esc(title) : 'Ashley’s take') + '<small>creator opinion</small></span>' + html + '</aside>';
+    return '<aside class="opinion"><span class="opinion-head"><span class="opinion-dot" aria-hidden="true"></span>' + (title ? esc(title) : 'Creator’s consideration') + '</span>' + html + '</aside>';
   }
   function footer() {
     return '<footer class="foot"><span>Kinship · free and open source</span><span class="eyebrow">Grow · Fix · Share</span></footer>';
@@ -269,9 +269,9 @@
       '<span class="eyebrow">About</span>' +
       '<h1 tabindex="-1">Hi, I’m Ashley.</h1>' +
       '<p>Based in San Francisco. Kinship is free and open source, made so we can all learn what we need to live.</p>' +
-      '<p>Most of Kinship aims to be plain, checkable information you can weigh for yourself. My own opinions show up in pink, set apart like this:</p>' +
-      opinion('<p>This is me talking, not the facts around me. Read it as one person’s heart, take what helps and leave the rest.</p>') +
-      '<p>The first one is about <a href="#lens-water">where California’s water goes</a>, on the Water overview.</p>' +
+      '<p>Most of Kinship aims to be plain, checkable information you can weigh for yourself. My own considerations show up in pink, one sentence each:</p>' +
+      opinion('<p>One why, for you to weigh.</p>') +
+      '<p>The first is at the end of <a href="#lens-water/uses">Water: Uses</a>.</p>' +
       '</div></section>' + footer();
   }
 

@@ -40,7 +40,11 @@ Place questions describe the place and how long and how much you can shape it, n
 Edit `lenses.js`. Status is one of `ready`, `building`, `next`, `later`. A lens takes its tier's `color`. A tier with `locked: true` shows its cards on the home page without linking them (Roots, for now).
 
 ## Creator opinions
-Most copy aims to be plain and checkable. Ashley's own opinions are set apart in pink (the tier 1 and logo color) with `MN.opinion(html, title)`, which renders an "Ashley's take · creator opinion" box (`.opinion` in `style.css`). Keep facts inside an opinion sourced, and keep opinions out of the regular copy. The first one is on the Water overview (water for animal agriculture; deep link `#lens-water/cows`), which links to the Animals page in Emotions & love.
+Most copy aims to be plain and checkable. The creator's own views are set apart in pink (the tier 1 and logo color) with `MN.opinion(html, title)`, which renders a "Creator's consideration" box (no name on it) (`.opinion` in `style.css`).
+
+- **One sentence.** A consideration is a pointer to the creator's perspective, usually a why, not an essay in her voice. Never write paragraphs, backstory or feelings on her behalf; the single sentence is the whole expression.
+- **At the bottom.** Considerations sit at the end of a unit or page, after the regular content.
+- **Sourced.** Any fact in or behind the sentence gets a short source line. Keep opinions out of the regular copy.
 
 ## Language for animals
 Animals are someone, not something: they/them when sex is unknown, he/she when known, never "it". Never call animals by meat names ("beef", "pork", "poultry", "seafood") or "livestock". See FOUNDATION.md section 4.

@@ -1,5 +1,5 @@
 /* Water lens: course content, profile tailoring and tools. Registers window.MN_LENS_VIEWS.water.
-   Routes: #lens-water (overview) · #lens-water/cows (overview, scrolled to Ashley’s take on cows) · #lens-water/<unit>[/<sub>]. Units are shades of blue, darkest (1) to lightest (6).
+   Routes: #lens-water (overview) · #lens-water/cows (old link, opens 2.1 farm water) · #lens-water/<unit>[/<sub>]. Units are shades of blue, darkest (1) to lightest (6).
    Tailoring: answers from the Profile (Place + Water) become tags; accordions tagged data-for open with a "For you" badge.
    Every section stays available to everyone. Laws mentioned are California's; the practices are general. */
 (function () {
@@ -59,11 +59,21 @@
   function units() {
     return [
       { id: 'uses', num: 1, word: 'Uses', sub: 'Using water wisely',
+        take: function () { return mn().opinion ? mn().opinion('<p>Since children’s bodies are smallest, they dehydrate fastest and are most sensitive to drought and famine.</p><p class="opinion-src">Worldwide, 1 in 5 children don’t have enough water for everyday needs (UNICEF, 2021).</p>') : ''; },
         lede: 'Not every job needs drinking water. Knowing what each use really needs is the base of every system later in this course, and the easiest way to need less.',
         subs: [
-          { id: 'needs', short: 'Needs', title: 'What we need it for', html: function () { return '<p>A day of water: drinking, cooking, brushing teeth, washing hands and bodies, dishes, laundry, flushing, cleaning, plants and animals. A body needs only about 2–3 liters a day to drink, more in heat. Humanitarian groups plan around 15 liters (about 4 gallons) per person a day for drinking, cooking and basic washing. A typical US home with taps uses many times that.</p>' +
+          { id: 'needs', short: 'Needs', title: 'What we need it for', html: function () { return '<p>A day of water: drinking, cooking, brushing teeth, washing hands and bodies, dishes, laundry, flushing, cleaning, plants and animals. A body needs about 2–3 liters a day to drink, more in heat (' + a('uses/drink', '1.2') + '). Humanitarian groups plan around 15 liters (about 4 gallons) per person a day for drinking, cooking and basic washing. A typical US home with taps uses many times that.</p>' +
             old('When every drop was carried, every drop had a job: washing water went to the garden, dishwater to the animals’ trough or the fruit trees.') +
             tryit('Keep a one-day water diary: every time water runs, jot what it was for. Circle the jobs that didn’t need drinking-quality water.'); } },
+          { id: 'drink', short: 'Drinking', title: 'How much to drink', html: function () { return '<p>Most adults need about <b>2.7 liters (women) to 3.7 liters (men)</b> of water a day in all. About 20% usually comes from food, which leaves roughly <b>9 to 13 cups to drink</b>. Tea, milk and soup count. Thirst and pale-yellow pee are good everyday guides.</p>' +
+            accs(
+              acc('kids', 'Babies', 'Babies and toddlers', '<p>Under 6 months, breast milk or formula is all the water a baby needs. Extra water can make a young baby seriously ill. From about 6 months, small sips: about 4–8 ounces (½ to 1 cup) a day alongside milk. After a year, water and milk become the main drinks.</p>'),
+              acc('elder', 'Older bodies', 'Older adults', '<p>Thirst fades with age, so waiting to feel thirsty can mean waiting too long. Drink on a rhythm instead: with meals, with medicines, with visits. Some medicines, like water pills, change how much a body needs.</p>'),
+              acc('athlete outdoor', 'Active bodies', 'Sport, work and heat', '<p>Sweat raises needs fast. Drink before, during and after. For long or very sweaty efforts, add salt or electrolytes: lots of plain water without salt can make someone sick too.</p>'),
+              acc('pregnant', 'Pregnancy', 'Pregnancy and breastfeeding', '<p>Needs go up: about 3 liters a day in all while pregnant, and about 3.8 liters while breastfeeding.</p>'),
+              acc('health', 'Health needs', 'Illness and fluid limits', '<p>Fever, vomiting and diarrhea pull water out. Sip often, and use an oral rehydration drink for big losses. Some kidney, heart and liver conditions call for drinking <i>less</i>; there, a doctor’s number comes first.</p>')
+            ) +
+            '<p><b>Water in food:</b> cucumbers, lettuce, melons, citrus and most fresh fruits and vegetables are about 85–96% water. A day full of them, plus soups and stews, means less to drink. A dry, salty day means more.</p>'; } },
           { id: 'grades', short: 'Grades', title: 'Four grades of water', html: function () { return '<p>Match the water to the job, from cleanest to least clean.</p>' +
             '<div class="wa-ladder">' +
             '<div class="wa-rung r1"><small>Grade 1</small><b>Drinking (potable)</b><p>Drinking, cooking, brushing teeth, baby formula, ice, washing produce eaten raw.</p></div>' +
@@ -94,9 +104,20 @@
       { id: 'sources', num: 2, word: 'Sources', sub: 'Where water comes from',
         lede: 'Water reaches us from the sky, the ground or a pipe. Each source carries its own likely problems, which tells you what storage, purifying and testing it needs.',
         subs: [
-          { id: 'know', short: 'Sources', title: 'Know your sources', html: function () { return table(['Source', 'Usually watch for', 'Ready to drink?'], [
+          { id: 'know', short: 'Sources', title: 'Know your sources', html: function () { return '<p>Two truths come before every source:</p>' +
+            truths([['Know what’s upstream', 'Water carries everything it has passed: towns, farms, roads, mines, factories, someone’s laundry. Clear and fast doesn’t mean clean.'], ['Unknown until you know', 'Until you know a water’s story or have tested it, treat it as unsafe. Today that’s most water you didn’t trace yourself.']]) +
+            '<p>In <i>Traveler’s Joy</i>, herbalist Juliette de Baïracli Levy tells of being sent to a mountain stream as pure, then finding that upstream, sheets from typhus patients were being washed in it. Today the upstream can be a factory: DuPont’s Washington Works plant in West Virginia released PFOA, a “forever chemical,” into the Ohio River and nearby drinking water for decades. The US Geological Survey estimates at least 45% of US tap water carries some PFAS.</p>' +
+            table(['Source', 'Usually watch for', 'Ready to drink?'], [
               ['Public tap', 'Lead from old pipes, chlorine taste, sometimes PFAS', '[y]Usually'], ['Rain', 'Roof dirt, bird droppings, roof materials', '[n]Treat first'], ['Well', 'Bacteria, nitrate, arsenic, minerals', '[p]After testing'],
               ['Spring', 'Surface water sneaking in after rain', '[p]After testing'], ['River, lake', 'Germs, farm and road runoff, algae toxins', '[n]Treat first'], ['Dehumidifier / AC', 'Metals and germs from the coils', '[n]Plants only']]) +
+            '<div class="wa-box wa-ca wa-ca-list"><b>Farms and water</b>' + ul([
+              'Farms use about <b>40%</b> of California’s water.',
+              'That grows nearly half of US vegetables and over three-quarters of US fruits and nuts.',
+              'Water per pound for the top plant crops: almonds (in shell) 960 gal · pistachios 1,360 · grapes 73 · strawberries 42 · lettuce 28 · tomatoes 26 · carrots 23.',
+              'About <b>27%</b> of farm water grows feed for farmed animals: alfalfa, pasture and corn silage, mostly for cows. Much of the corn and soy fed to chickens and pigs is grown out of state, so their water is counted elsewhere.',
+              'Of all the water behind animal foods, about <b>98%</b> grows their feed. What animals drink is about 1.1%, and cleaning barns and animals about 0.8%.',
+              'In all, per pound: beef 1,850 gal · pork 720 · chicken 520 · eggs 400 · milk 120.']) +
+              '<small>Sources: Public Policy Institute of California; California Department of Food and Agriculture (top crops by value, 2024); Water Footprint Network (world averages, rain included).</small></div>' +
             old('Villages grew up beside springs and rivers. People drew drinking water upstream and washed downstream, and that order still matters.') +
             tryit('Find your watershed’s name and trace a raindrop from your roof to your tap, then to the sea.'); } },
           { id: 'taps', short: 'Taps &amp; refills', title: 'Taps and free refills', html: function () { return '<p>Public water is already treated and tested, which makes it the cheapest reliable water there is. Refill maps and apps show fountains and businesses happy to fill a bottle.</p>' +
@@ -121,7 +142,9 @@
             ); } },
           { id: 'wild', short: 'Wild water', title: 'Rivers, lakes and the wild', html: function () { return ul(['<b>Running over still:</b> moving water is less likely to breed mosquitoes and algae.', '<b>But ask who’s upstream:</b> towns, farms, roads, mines and factories all drain somewhere. Running water carries their runoff too.', 'Skip water with green or blue-green scum, oily sheen, foam or dead fish.', 'Always purify before drinking (' + a('purify', 'Unit 4') + ').']) +
             old('“Running water is clean water” held when nobody upstream was spraying fields. Keep the habit, and add the question.') +
-            links(a('testing/signs', '5.2 Reading the signs') + ' · ' + a('testing/outdoors', '5.5 Swimming and bathing outdoors')); } }
+            links(a('testing/signs', '5.2 Reading the signs') + ' · ' + a('testing/outdoors', '5.5 Swimming and bathing outdoors')); } },
+          { id: 'place', short: 'Where to live', title: 'Choosing where to live', html: function () { return '<p>If you’re choosing where to live, put clean water near the top of the list. Living near clean water is much easier than making dirty water clean.</p>' +
+            ul(['<b>Public water:</b> read the provider’s yearly water quality report before you sign (' + a('testing/report', '5.3') + ').', '<b>A well:</b> ask for recent test results and the well log, and test before you buy (' + a('sources/wells', '2.4') + ').', '<b>Look upstream and uphill:</b> farms, feedlots, mines, factories, landfills, and airports or military bases (firefighting foam is a common PFAS source).', '<b>Look ahead:</b> drought history, falling groundwater, and who else draws on the same water.']); } }
         ] },
 
       { id: 'storage', num: 3, word: 'Storage', sub: 'Keeping water safe',
@@ -216,7 +239,9 @@
               ['Rotten-egg smell', 'Hydrogen sulfide, or bacteria in a water heater or well'], ['Orange or red stains', 'Iron'], ['Blue-green stains', 'Copper from corroding pipes'], ['Metallic taste', 'Metals from pipes; worth a lead test'],
               ['Fuel or chemical smell', 'Contamination. Stop drinking it and report it'], ['Mayfly, stonefly or caddisfly larvae under creek stones', 'Clean, well-oxygenated water (they’re sensitive to pollution)'],
               ['Only worms, leeches and slime', 'Polluted or low-oxygen water'], ['Fields, feedlots, mines or factories upstream', 'Possible chemicals no sense can detect: test or choose another source']]) +
-            tryit('Turn over a few stones in a creek with a child and count the little creatures clinging to them. That’s a real field test.') + links('Identification'); } },
+            '<p><b>Watch what animals drink.</b> Many animals smell far better than we do, so an animal who sniffs a source and walks away may be telling you something. It’s a clue, not a test: animals will drink polluted water when it’s all they have, so tracks at the edge don’t prove it’s clean.</p>' +
+            home('If an animal you live with refuses the tap or a new source but drinks happily from filtered or bottled water, follow their lead. It may only be chlorine, but switch for now and test (' + a('testing/kits', '5.4') + ').') +
+            tryit('Turn over a few stones in a creek with a child and count the little creatures clinging to them. That’s a real field test.') + links('Identification · <a href="#lens-relationships/animals">Emotions &amp; love: Animals</a> (reading their signals)'); } },
           { id: 'report', short: 'Reports &amp; maps', title: 'Water reports and maps', html: function () { return '<p>Every public water system publishes a yearly report of what it found. Search your water provider’s name + “water quality report.” Each line shows the <b>legal limit</b> and the <b>health goal</b>. Goals are set on health alone and are often stricter (for lead, the goal is zero), so compare to those.</p>' +
             '<p>Maps go further: they show where water is, and what’s been found in it, across a whole region.</p>' +
             '<div class="wa-cols"><div class="wa-note"><b>Where water is</b>' + ul(['Reservoir and snowpack levels (the state’s CDEC data exchange).', 'The US Drought Monitor, updated weekly.', 'Groundwater basins and how stressed they are (the state’s SGMA portal).']) + '</div>' +
@@ -384,27 +409,12 @@
     return mn().header('home') + '<div class="wa-layout">' + sidebar(U, cur) + '<main class="wa-main">' + panel() + main + '</main></div>' + mn().footer();
   }
 
-  /* Ashley's take: the first creator opinion. Facts inside are sourced; the framing is hers. */
-  function ashley() {
-    if (!mn().opinion) return '';
-    return mn().opinion(
-      '<p>I’m Ashley, the person making Kinship. This one is my opinion, and I know it leans against animal agriculture. I’m sharing it from my heart because I believe how much water goes to it hurts all of us: our water rights, our wells and rivers, and the wild places downstream. The rest of the site tries to stay even-handed, so my opinions live in pink like this.</p>' +
-      '<div class="opinion-facts"><span class="eyebrow">The numbers I’m looking at</span><ul>' +
-      '<li><b>Farms use about 40% of California’s water</b> in an average year (roughly half goes to rivers and wetlands, about 10% to cities and homes). That’s about 80% of the water people put to use.</li>' +
-      '<li><b>Feed crops take about 27% of farm water</b>: alfalfa, irrigated pasture and silage corn, on about a quarter of farmed acres. The other ~73% grows nuts, fruit, vegetables, grains, rice and fiber, much of it exported.</li>' +
-      '<li><b>Feed becomes food at a steep loss.</b> Worldwide, about 12 of every 100 feed calories reach people as meat, milk or eggs; for meat from cows it’s about 3. Researchers estimate today’s cropland could feed about 4 billion more people if feed and biofuel crops went to food people eat directly.</li>' +
-      '<li><b>One cow raised for meat, start to finish</b> (a classic worked example): about 1,300 kg of grain, 7,200 kg of hay and pasture, 24,000 liters to drink and 7,000 to clean their stall, for about 200 kg of boneless meat. That’s about 3 million liters (roughly 810,000 gallons) in all. <b>Drinking water is under 1%</b> (about 6,300 gallons); cleaning is about 0.2%; <b>about 99% is the water that grew their feed.</b></li>' +
-      '<li><b>And it’s a short life.</b> The example uses 3 years; in US feedlot systems, cows raised for meat are usually killed at about 18–22 months. Cows can live 15–20 years.</li>' +
-      '</ul><p class="opinion-src">Sources: Public Policy Institute of California, <i>Water Use in California’s Agriculture</i> (farm data 2011–13); Cassidy et al., “Redefining agricultural yields,” <i>Environmental Research Letters</i> (2013); Hoekstra / Water Footprint Network worked example for one cow.</p></div>' +
-      '<p>So my heart says: the biggest, fastest way to free up water for people, rivers and wells isn’t a new dam. It’s eating, and farming, more plants. Your needs and your choices are yours; I just want the numbers on the table. Who decides how the water is split is in <a href="#lens-governance">Governance</a>.</p>' +
-      '<p>And cows matter in their own right, not only for the water: they have friendships, mothers who bond with their calves, and lives that can last 20 years. More in <a href="#lens-relationships/animals">Emotions &amp; love: Animals</a>.</p>');
-  }
   function viewOverview(U) {
     return '<section class="wa-hero"><span class="wa-lens-pill">Tier 2 · Roots · Course</span><h1 tabindex="-1">Water</h1>' +
       '<p class="wa-lede">Every body needs water, and people have met that need for as long as there have been people. Six short units on how we use it, where it comes from, how to keep it, clean it, know it’s safe and pay for it, at every scale: a studio, a farm, a car, a sidewalk.</p></section>' +
       '<ol class="wa-ucards">' + U.map(function (u) {
         return '<li><a class="wa-ucard wk' + u.num + '" href="' + BASE + '/' + u.id + '"><i class="wa-band"></i><span class="wa-n">0' + u.num + '</span><b>' + u.word + '</b><span>' + u.sub + '</span><ol>' + u.subs.map(function (s) { return '<li>' + s.title + '</li>'; }).join('') + '</ol></a></li>';
-      }).join('') + '</ol>' + '<div id="wa-cows"></div>' + /* Ashley's take on animal agriculture: removed, being rewritten */
+      }).join('') + '</ol>' +
       '<aside class="wa-funfact"><span class="eyebrow">A grateful fun fact</span><p>This course leans on three kinds of knowing, checked against each other: old practice that kept people alive for thousands of years, international guidance (the World Health Organization’s drinking-water guidelines and the Sphere humanitarian handbook), and what you can see, smell and test yourself. Legal limits come from politics as well as science, and they change, so we use them as one input, not the last word. Laws mentioned are California’s; water itself is the same everywhere. Thank you to everyone who keeps this knowledge free.</p></aside>';
   }
   function viewUnit(U, u, subId) {
@@ -413,6 +423,7 @@
       '<header class="wa-unit-hero"><span class="eyebrow">Unit ' + u.num + ' of ' + U.length + '</span><h1 tabindex="-1">' + u.word + '</h1><p class="wa-unit-sub">' + u.sub + '</p><p class="wa-lede">' + u.lede + '</p>' +
       '<ul class="wa-jumps">' + u.subs.map(function (s, j) { return '<li><a href="' + BASE + '/' + u.id + '/' + s.id + '"><span>' + u.num + '.' + (j + 1) + '</span>' + s.short + '</a></li>'; }).join('') + '</ul></header>' +
       u.subs.map(function (s, j) { return '<section class="wa-sub" id="wa-' + u.id + '-' + s.id + '"><div class="wa-sub-top"><span class="wa-sub-n">' + u.num + '.' + (j + 1) + '</span><h2>' + s.title + '</h2></div>' + s.html() + '</section>'; }).join('') +
+      (u.take ? '<section class="wa-sub wa-take">' + u.take() + '</section>' : '') +
       '</article><nav class="wa-pager" aria-label="Units">' +
       (prev ? '<a href="' + BASE + '/' + prev.id + '"><small>← Previous</small><b>' + prev.num + ' · ' + prev.word + '</b></a>' : '<a href="' + BASE + '"><small>← Back to</small><b>Overview</b></a>') +
       (next ? '<a class="next" href="' + BASE + '/' + next.id + '"><small>Next unit →</small><b>' + next.num + ' · ' + next.word + '</b></a>' : '<a class="next" href="#plans/budget"><small>Next →</small><b>Improvements &amp; budget plan</b></a>') +
@@ -428,9 +439,10 @@
   window.MN_LENS_VIEWS = window.MN_LENS_VIEWS || {};
   window.MN_LENS_VIEWS.water = function (sub) {
     T = tags();
-    var U = units(), seg = (sub || '').split('/'), u = U.filter(function (x) { return x.id === seg[0]; })[0];
+    var U = units(), seg = (sub || '').split('/');
+    if (seg[0] === 'cows') seg = ['sources', 'know']; /* old link: farm water now lives in 2.1 */
+    var u = U.filter(function (x) { return x.id === seg[0]; })[0];
     if (u) return { title: u.word + ' · Water · Kinship', html: layout(U, u.id, viewUnit(U, u, seg[1])) };
-    if (seg[0] === 'cows') setTimeout(function () { var el = document.getElementById('wa-cows'); if (el) el.scrollIntoView({ block: 'start' }); }, 0);
     return { title: 'Water · Kinship', html: layout(U, null, viewOverview(U)) };
   };
 })();
