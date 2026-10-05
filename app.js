@@ -302,7 +302,8 @@
         '<h2 id="tier-' + t.id + '">' + esc(t.name) + '</h2>' +
         '<p>' + esc(t.blurb) + '</p></div>' +
         (t.status ? '<span class="tier-status">' + esc(t.status) + '</span>' : '') + '</div>' +
-        '<div class="grid">' + t.lenses.map(lensCard).join('') + (t.num === 1 ? setupCard() : '') + '</div>' +
+        /* Tier 1: the first lens, then Personalize, then the rest. */
+        '<div class="grid">' + (t.num === 1 ? lensCard(t.lenses[0]) + setupCard() + t.lenses.slice(1).map(lensCard).join('') : t.lenses.map(lensCard).join('')) + '</div>' +
         tierDots(t.lenses.length + (t.num === 1 ? 1 : 0)) +
         '</section>';
     }).join('');

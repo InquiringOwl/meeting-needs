@@ -5,7 +5,7 @@
 window.MN_TIERS = [
   {
     id: 'signals', num: 1, name: 'Signals', color: '#C2477F',
-    blurb: 'Start here. Notice your emotions, pointing to unmet needs.',
+    blurb: 'Start here. Notice your emotions, pointing to unmet needs, and who lives around you.',
     status: '',
     lenses: [
       {
@@ -13,6 +13,12 @@ window.MN_TIERS = [
         blurb: 'Hear your own needs, meet others’ with kindness, and find strategies that work for everyone.',
         topics: ['Nonviolence', 'Relationships', 'Dialogues'],
         looks: ['Feelings as signals, and the universal needs they point to', 'Requests instead of demands, and dialogue where both sets of needs count', 'Children, neighbors, animals, cooperatives and power shared instead of held over']
+      },
+      {
+        id: 'identification', name: 'Identification', status: 'next',
+        blurb: 'Name the plants and animals around you, and learn the few real local dangers.',
+        topics: ['Plants', 'Fungi', 'Animals'],
+        looks: ['The features that actually separate species', 'Edible plants and their dangerous twins', 'Tracks, calls and signs of who lives nearby']
       }
     ]
   },
@@ -75,20 +81,20 @@ window.MN_TIERS = [
         blurb: 'Keep yourself, your people and your home safe: noticing early, calming things with words, and getting away.',
         topics: ['Noticing', 'De-escalation', 'Getting away', 'Home'],
         looks: ['Trusting the early feeling that something is off, and leaving early', 'De-escalation: distance, calm and words before anything else', 'Simple protective moves for breaking free and getting away', 'Home preparation: locks, lights, a safe room, a plan and neighbors who check in (with Emergency prep)']
-      },
-      {
-        id: 'household-tools', name: 'Household tools', status: 'next',
-        blurb: 'The toolbox, the cleaning shelf and the medicine cabinet: what tools do, and how to use them safely.',
-        topics: ['Tools', 'Chemistry', 'Safety'],
-        looks: ['The few tools that handle most jobs', 'Reading a label for what is actually in it', 'Pairs that must never meet, like bleach and ammonia']
       }
     ]
   },
   {
     id: 'nurture', num: 4, name: 'Nurture', color: '#3E7B3A',
-    blurb: 'Tend the living world: grow, harvest, compost, and know your plant neighbors.',
+    blurb: 'Shelter, grow, harvest and compost, with the tools that keep a home running.',
     status: 'Later',
     lenses: [
+      {
+        id: 'shelter', name: 'Shelter', status: 'later',
+        blurb: 'Temporary shelter: tents, tarps, vehicles and quick fixes for staying dry, warm and safe when home isn’t steady.',
+        topics: ['Tents & tarps', 'Vehicles', 'Warmth', 'Safe places'],
+        looks: ['Pitching a tarp or tent that sheds rain and wind', 'Living in a car, van or RV: sleep, air, heat and parking', 'Staying warm and dry with little: layers, ground insulation and condensation', 'Shelters, safe parking programs and legal places to stay']
+      },
       {
         id: 'gardening', name: 'Growing', status: 'next',
         blurb: 'Your teacher and planner: climate zone, soil, a 12-month plan, pruning, and new plants from cuttings.',
@@ -108,30 +114,24 @@ window.MN_TIERS = [
         looks: ['Compost and worm bins that don’t smell', 'How sewage and septic systems work, and why the grid is usually safest', 'Sending less of everything else away']
       },
       {
-        id: 'weather', name: 'Weather', status: 'later',
-        blurb: 'Read the sky: which clouds bring rain, and the seasonal patterns where you live.',
-        topics: ['Clouds', 'Wind', 'Seasons'],
-        looks: ['Cloud types and which ones turn to rain', 'Wind, pressure and the signs before a storm', 'Your local seasons, frost and rainfall patterns']
-      },
-      {
-        id: 'identification', name: 'Identification', status: 'next',
-        blurb: 'Name the plants and animals around you, and learn the few real local dangers.',
-        topics: ['Plants', 'Fungi', 'Animals'],
-        looks: ['The features that actually separate species', 'Edible plants and their dangerous twins', 'Tracks, calls and signs of who lives nearby']
-      },
-      {
-        id: 'herbalism', name: 'Herbalism', status: 'later',
-        blurb: 'Plant medicines: teas, oils, salves and tinctures, with dose, evidence and interactions beside each.',
-        topics: ['Preparations', 'Dosing', 'Evidence'],
-        looks: ['Which plant medicines have evidence behind them, and how much', 'Teas, infused oils, salves and tinctures made at home', 'Doses, medicines that don’t mix, kids, pregnancy and animals, and when to see a clinician']
+        id: 'household-tools', name: 'Household tools', status: 'next',
+        blurb: 'The toolbox, the cleaning shelf and the medicine cabinet: what tools do, and how to use them safely.',
+        topics: ['Tools', 'Chemistry', 'Safety'],
+        looks: ['The few tools that handle most jobs', 'Reading a label for what is actually in it', 'Pairs that must never meet, like bleach and ammonia']
       }
     ]
   },
   {
     id: 'resilience', num: 5, name: 'Resilience', color: '#2F6E9E',
-    blurb: 'Withstand hard times: emergencies, injuries, and mending what breaks.',
+    blurb: 'Weather hard times: storms, emergencies, injuries, plant medicine, and saving and mending things.',
     status: 'Later',
     lenses: [
+      {
+        id: 'weather', name: 'Weather', status: 'later',
+        blurb: 'Read the sky: which clouds bring rain, and the seasonal patterns where you live.',
+        topics: ['Clouds', 'Wind', 'Seasons'],
+        looks: ['Cloud types and which ones turn to rain', 'Wind, pressure and the signs before a storm', 'Your local seasons, frost and rainfall patterns']
+      },
       {
         id: 'emergency-prep', name: 'Emergency prep', status: 'building',
         blurb: 'Natural disasters, personal safety and securing your home: plan ahead so you can stay calm when it counts.',
@@ -143,6 +143,18 @@ window.MN_TIERS = [
         blurb: 'Cuts, burns, sprains, choking and bites: what to do in the first minutes.',
         topics: ['Wounds', 'Burns', 'Sprains', 'Emergencies'],
         looks: ['Stopping bleeding and cleaning a wound', 'Burns, breaks and sprains: what helps and what makes it worse', 'When to call emergency services, and what to do until they arrive', 'Fluids and gentle food after vomiting, diarrhea or heat (from Food → Gentle)']
+      },
+      {
+        id: 'herbalism', name: 'Herbalism', status: 'later',
+        blurb: 'Plant medicines: teas, oils, salves and tinctures, with dose, evidence and interactions beside each.',
+        topics: ['Preparations', 'Dosing', 'Evidence'],
+        looks: ['Which plant medicines have evidence behind them, and how much', 'Teas, infused oils, salves and tinctures made at home', 'Doses, medicines that don’t mix, kids, pregnancy and animals, and when to see a clinician']
+      },
+      {
+        id: 'salvaging', name: 'Salvaging', status: 'later',
+        blurb: 'Rescue unwanted things: curb finds, free groups, reuse centers and scrap, plus cleaning and storing what you save.',
+        topics: ['Finding', 'Asking', 'Checking', 'Saving'],
+        looks: ['Where unwanted things gather: curbs, free groups, reuse centers and move-out days', 'Asking for, sharing and trading what others are letting go', 'Checking finds for bedbugs, mold, lead and recalls before they come home', 'Cleaning, fixing and storing so saved things stay useful (with Repair)']
       },
       {
         id: 'repair', name: 'Repair', status: 'later',

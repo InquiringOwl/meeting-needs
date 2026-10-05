@@ -175,7 +175,7 @@
             fix({ modes: [["once"]], cost: "Free", c: 0,
               steps: [["Free · today", "Label every bottle you mix, with the date."], ["Free", "If there’s bleach in the house, store it apart from vinegar and ammonia, on a high shelf."]],
               add: ["Label and date every mixed bottle"] }) +
-            links("<a href=\"#lens-toxins/home/cleaners\">Poisons → Cleaning products</a> · Household tools (tier 3, coming) → pairs that must never meet") +
+            links("<a href=\"#lens-toxins/home/cleaners\">Poisons → Cleaning products</a> · Household tools (tier 4, coming) → pairs that must never meet") +
             src("Washington State Department of Health, <i>Don’t mix bleach with ammonia or acids</i>; NIOSH, peracetic acid; America’s Poison Centers, cleaning product exposures."); } },
           { id: "mouths", short: "Paws & mouths", title: "Paws, beaks and little mouths", html: function () { return "<p>Children and companion animals meet a home with their mouths, hands and paws, low to the ground. A cat licks whatever she walked through. A toddler licks the window. A bird breathes in fumes faster than anyone in the house. The gentle shelf suits all of them, used this way:</p>" +
             "<ul>\n<li><b>Dry before paws and hands.</b> Wipe peroxide or vinegar off floors and counters, or let them dry fully, before kids or animals come back.</li>\n<li><b>Store high, even the gentle ones.</b> A swallowed mouthful of baking soda or peroxide can make a small body sick.</li>\n<li><b>Pour onto a cloth</b> rather than spraying into the air, around birds most of all.</li>\n</ul>" +
