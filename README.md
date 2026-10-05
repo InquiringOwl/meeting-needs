@@ -1,6 +1,6 @@
 # Kinship
 
-Free, open education for meeting our needs, in six tiers: Signals, Roots, Safety, Nurture, Resilience and Craft. Each lens is a way of looking at your home and life: what is quietly making you sick, what it costs, and what you can fix yourself.
+Free, open education for meeting our needs, in six tiers: Signals, Roots, Protect, Nurture, Resilience and Craft. Each lens is a way of looking at your home and life: what is quietly making you sick, what it costs, and what you can fix yourself.
 
 Plain HTML, CSS and JavaScript. No build step, no server, no accounts.
 
@@ -45,7 +45,7 @@ Saved only in the visitor's browser (`localStorage`, key `meeting-needs.profile.
 Place questions describe the place and how long and how much you can shape it, never who owns it: `home` (kind of place), `stay` (how long you expect to stay), `shape` (how much you can change it; a friend who owns it counts) and `space` (outdoor or growing space, including acreage). The Water section (`#profile/water`) holds `sources` (each source with how much it carries you: Sometimes, Often, Main source; plus “No safe tap water at home”), `filters` you already own, `pipes` (before or after 1986) and `rain`. The Food section (`#profile/food`) holds `kitchen` (how you can cook right now), `cold` (how you keep food cold), `stove` (gas, electric, induction, hot plate, none) and `hood` (kitchen fan: vents outside, recirculates, none); the Air course reads the last two. The Cleaning section (`#profile/cleaning`) holds `counter` (counter material; marble, limestone and concrete skip vinegar) and `laundry` (machine at home, shared, laundromat, by hand). The Surroundings section (`#profile/toxins`) holds `built` (before or after 1978, for lead paint) and `near` (freeway, industry or wells, farm fields, airport); the Poisons course also reads `kids`, `consider` and `pets` (birds and cats change some advice). Courses read these to open the sections that fit and tag them "For you", and link back to the profile (with a hover summary of what's on file) for the rare times something changes. Every section stays available either way. Older profiles are migrated on load: renting/owning in `home` becomes the kind of place, “Land or farm” becomes a house plus acreage, and the old single `water` answer becomes a main source.
 
 ## Adding or changing a lens
-Edit `lenses.js`. Status is one of `ready`, `building`, `next`, `later`. A lens takes its tier's `color`. A tier with `locked: true` shows its cards on the home page without linking them (Roots, for now).
+Edit `lenses.js`. Status is one of `ready`, `building`, `next`, `soon`, `later`, shown top right on every card (except Ready in tiers 1–2). A lens takes its tier's `color`. A tier with `locked: true` shows its cards on the home page without linking them (Roots, for now).
 
 ## Creator opinions
 Most copy aims to be plain and checkable. The creator's own views are set apart in pink (the tier 1 and logo color) with `MN.opinion(html, title)`, which renders a "Creator's consideration" box (no name on it) (`.opinion` in `style.css`).

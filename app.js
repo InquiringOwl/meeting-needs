@@ -10,11 +10,12 @@
   TIERS.forEach(function (t) { t.lenses.forEach(function (l) { l.tier = t; LENS[l.id] = l; }); });
   var COUNT = Object.keys(LENS).length;
 
-  var STATUS = { ready: 'Ready', building: 'In progress', next: 'Next', later: 'Later' };
+  var STATUS = { ready: 'Ready', building: 'In progress', next: 'Next', soon: 'Soon', later: 'Later' };
   var STATUS_NOTE = {
     ready: '',
     building: 'This lens is being written now.',
     next: 'This lens comes after the Roots lenses.',
+    soon: 'This lens is coming soon, after the Next ones.',
     later: 'This lens is planned for a later tier.'
   };
 
@@ -232,8 +233,7 @@
   function setupCard() {
     if (isEmpty(profile)) {
       return '<aside class="setup" aria-label="Personalize">' +
-        '<div class="setup-head"><span class="eyebrow">Your profile</span></div>' +
-        '<h3>Personalize</h3>' +
+        '<div class="setup-head"><h3>Personalize</h3><span class="eyebrow">Your profile</span></div>' +
         '<p>To personalize, share context about your life circumstances and goals.</p>' +
         '<div><a class="btn personal" href="#profile">Share your context</a></div>' +
         '<span class="hint">Saved only on this device.</span>' +
@@ -250,8 +250,7 @@
       ? '<p>Start with ' + sug.map(function (l) { return '<a href="#lens-' + l.id + '"><strong>' + esc(l.name) + '</strong></a>'; }).join(sug.length === 2 ? ' then ' : ', ') + '.</p>'
       : '<p>Pick what’s bugging you most in your profile and we’ll suggest where to start.</p>';
     return '<aside class="setup" aria-label="Personalize">' +
-      '<div class="setup-head"><span class="eyebrow">Your profile</span><a class="btn personal sm" href="#profile">Edit</a></div>' +
-      '<h3>' + esc(headline) + '</h3>' +
+      '<div class="setup-head"><h3>' + esc(headline) + '</h3><a class="btn personal sm" href="#profile">Edit</a></div>' +
       (chips.length ? '<div class="chips">' + chips.map(function (c) { return '<span class="chip">' + esc(c) + '</span>'; }).join('') + '</div>' : '') +
       sugHtml + '</aside>';
   }
@@ -265,8 +264,7 @@
     var tag = linked ? 'a' : 'div';
     if (!linked) cls += ' is-static';
     return '<' + tag + ' class="' + cls + '"' + (linked ? ' href="#lens-' + l.id + '"' : '') + ' style="--lc:' + l.color + '">' +
-      (top ? '<div class="lens-top">' + top + '</div>' : '') +
-      '<h3>' + esc(l.name) + '</h3>' +
+      '<div class="lens-head"><h3>' + esc(l.name) + '</h3>' + top + '</div>' +
       '<p>' + esc(l.blurb) + '</p>' +
       '<div class="topics">' + l.topics.map(esc).join(' · ') + '</div>' +
       '</' + tag + '>';
@@ -301,7 +299,7 @@
         '<span class="tier-pill">Tier ' + t.num + '</span>' +
         '<h2 id="tier-' + t.id + '">' + esc(t.name) + '</h2>' +
         '<p>' + esc(t.blurb) + '</p></div>' +
-        (t.status ? '<span class="tier-status">' + esc(t.status) + '</span>' : '') + '</div>' +
+        '</div>' +
         /* Tier 1: the first lens, then Personalize, then the rest. */
         '<div class="grid">' + (t.num === 1 ? lensCard(t.lenses[0]) + setupCard() + t.lenses.slice(1).map(lensCard).join('') : t.lenses.map(lensCard).join('')) + '</div>' +
         tierDots(t.lenses.length + (t.num === 1 ? 1 : 0)) +

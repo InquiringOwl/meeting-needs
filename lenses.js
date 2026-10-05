@@ -1,12 +1,11 @@
 /* Kinship: the lens catalogue.
    A lens is a way of looking at your home and life: what to notice, what it costs you,
-   and what you can fix yourself. Status: ready | building | next | later.
+   and what you can fix yourself. Status: ready | building | next | soon | later.
    Each tier has one colour; every lens in it shares that colour. In a locked tier, only ready lenses are clickable. */
 window.MN_TIERS = [
   {
     id: 'signals', num: 1, name: 'Signals', color: '#C2477F',
     blurb: 'Start here. Notice your emotions, pointing to unmet needs, and who lives around you.',
-    status: '',
     lenses: [
       {
         id: 'relationships', name: 'Emotions & love', status: 'ready',
@@ -15,7 +14,7 @@ window.MN_TIERS = [
         looks: ['Feelings as signals, and the universal needs they point to', 'Requests instead of demands, and dialogue where both sets of needs count', 'Children, neighbors, animals, cooperatives and power shared instead of held over']
       },
       {
-        id: 'identification', name: 'Identification', status: 'next',
+        id: 'identification', name: 'Identification', status: 'soon',
         blurb: 'Name the plants and animals around you, and learn the few real local dangers.',
         topics: ['Plants', 'Fungi', 'Animals'],
         looks: ['The features that actually separate species', 'Edible plants and their dangerous twins', 'Tracks, calls and signs of who lives nearby']
@@ -24,8 +23,7 @@ window.MN_TIERS = [
   },
   {
     id: 'roots', num: 2, name: 'Roots', color: '#B85A14',
-    blurb: 'Fundamentals supporting all healthy life.',
-    status: 'In progress', locked: true,
+    blurb: 'Fundamentals supporting all healthy life.', locked: true,
     lenses: [
       {
         id: 'water', name: 'Water', status: 'ready',
@@ -54,10 +52,15 @@ window.MN_TIERS = [
     ]
   },
   {
-    id: 'safety', num: 3, name: 'Safety', color: '#A87700',
-    blurb: 'Keep every body and the home safe and well: cleaning, care, energy and protection.',
-    status: 'Next',
+    id: 'protect', num: 3, name: 'Protect', color: '#A87700',
+    blurb: 'Keep every body and the home safe: shelter, cleaning, care and protection.',
     lenses: [
+      {
+        id: 'shelter', name: 'Shelter', status: 'next',
+        blurb: 'Temporary shelter: tents, tarps, vehicles and quick fixes for staying dry, warm and safe when home isn’t steady.',
+        topics: ['Tents & tarps', 'Vehicles', 'Warmth', 'Safe places'],
+        looks: ['Pitching a tarp or tent that sheds rain and wind', 'Living in a car, van or RV: sleep, air, heat and parking', 'Staying warm and dry with little: layers, ground insulation and condensation', 'Shelters, safe parking programs and legal places to stay']
+      },
       {
         id: 'cleaning', name: 'Cleaning', status: 'ready',
         blurb: 'Water first, then a short ladder of gentle helpers for counters, stains and laundry, safe around kids and animals.',
@@ -71,12 +74,6 @@ window.MN_TIERS = [
         looks: ['Sun on skin: shade, clothing and mineral (zinc oxide) sunscreen', 'Skin, teeth and sleep for children and growing bodies', 'Aging bodies, and the care that keeps them comfortable', 'Disabilities and different bodies, plus the animals who share your home', 'Gentle foods for sick days and food as medicine (starts in Food → Gentle)']
       },
       {
-        id: 'energy', name: 'Energy & light', status: 'later',
-        blurb: 'Heat, light, cook and stay warm with less: fireplaces, gas, lighting, insulation and more.',
-        topics: ['Fireplaces', 'Cooking', 'Gas', 'Light', 'Insulation'],
-        looks: ['Fireplaces and wood stoves that burn clean and safe', 'Gas appliances, leaks and carbon monoxide', 'Daylight, bulbs and staying lit through an outage', 'Insulation and draught-proofing that cut the bill']
-      },
-      {
         id: 'self-defense', name: 'Self-defense', status: 'next',
         blurb: 'Keep yourself, your people and your home safe: noticing early, calming things with words, and getting away.',
         topics: ['Noticing', 'De-escalation', 'Getting away', 'Home'],
@@ -86,52 +83,56 @@ window.MN_TIERS = [
   },
   {
     id: 'nurture', num: 4, name: 'Nurture', color: '#3E7B3A',
-    blurb: 'Shelter, grow, harvest and compost, with the tools that keep a home running.',
-    status: 'Later',
+    blurb: 'Power, salvage, grow, harvest and compost, with good tools and an eye on the weather.',
     lenses: [
       {
-        id: 'shelter', name: 'Shelter', status: 'later',
-        blurb: 'Temporary shelter: tents, tarps, vehicles and quick fixes for staying dry, warm and safe when home isn’t steady.',
-        topics: ['Tents & tarps', 'Vehicles', 'Warmth', 'Safe places'],
-        looks: ['Pitching a tarp or tent that sheds rain and wind', 'Living in a car, van or RV: sleep, air, heat and parking', 'Staying warm and dry with little: layers, ground insulation and condensation', 'Shelters, safe parking programs and legal places to stay']
+        id: 'energy', name: 'Energy & light', status: 'soon',
+        blurb: 'Heat, light, cook and stay warm with less: fireplaces, gas, lighting, insulation and more.',
+        topics: ['Fireplaces', 'Cooking', 'Gas', 'Light', 'Insulation'],
+        looks: ['Fireplaces and wood stoves that burn clean and safe', 'Gas appliances, leaks and carbon monoxide', 'Daylight, bulbs and staying lit through an outage', 'Insulation and draught-proofing that cut the bill']
       },
       {
-        id: 'gardening', name: 'Growing', status: 'next',
+        id: 'salvaging', name: 'Salvaging', status: 'soon',
+        blurb: 'Rescue unwanted things: curb finds, free groups, reuse centers and scrap, plus cleaning and storing what you save.',
+        topics: ['Finding', 'Asking', 'Checking', 'Saving'],
+        looks: ['Where unwanted things gather: curbs, free groups, reuse centers and move-out days', 'Asking for, sharing and trading what others are letting go', 'Checking finds for bedbugs, mold, lead and recalls before they come home', 'Cleaning, fixing and storing so saved things stay useful (with Repair)']
+      },
+      {
+        id: 'gardening', name: 'Growing', status: 'soon',
         blurb: 'Your teacher and planner: climate zone, soil, a 12-month plan, pruning, and new plants from cuttings.',
         topics: ['Learn', 'Plan', 'Prune', 'Seed saving'],
         looks: ['Your growing zone, frost dates and the light you actually get', 'Soil you can build instead of buy', 'A month-by-month plan for the space you have', 'Pruning that keeps plants young, and free plants from cuttings']
       },
       {
-        id: 'harvesting', name: 'Harvesting', status: 'next',
+        id: 'harvesting', name: 'Harvesting', status: 'soon',
         blurb: 'Cut, dry and store what plants give, herb by herb from rosemary and lavender, and what’s safe for cats and dogs.',
         topics: ['Cutting', 'Drying', 'Storing', 'Herb by herb', 'Animals'],
         looks: ['When and how much to cut so the plant thrives', 'Sorting a big pile of trimmings, then rinsing and drying it', 'Jars, freezing, and how long dried herbs keep', 'Herb by herb: rosemary for the kitchen, lavender for scent and baking', 'Which plants and oils are safe for cats, dogs, horses and birds (lavender and essential oils are hard on cats)']
       },
       {
-        id: 'composting-waste', name: 'Composting & waste', status: 'next',
+        id: 'composting-waste', name: 'Composting & waste', status: 'soon',
         blurb: 'Turn scraps into soil and handle waste safely, with the grid as the usual best bet and septic as an option.',
         topics: ['Scraps', 'Sewage', 'Worms'],
         looks: ['Compost and worm bins that don’t smell', 'How sewage and septic systems work, and why the grid is usually safest', 'Sending less of everything else away']
       },
       {
-        id: 'household-tools', name: 'Household tools', status: 'next',
+        id: 'household-tools', name: 'Tools', status: 'soon',
         blurb: 'The toolbox, the cleaning shelf and the medicine cabinet: what tools do, and how to use them safely.',
         topics: ['Tools', 'Chemistry', 'Safety'],
         looks: ['The few tools that handle most jobs', 'Reading a label for what is actually in it', 'Pairs that must never meet, like bleach and ammonia']
+      },
+      {
+        id: 'weather', name: 'Weather', status: 'soon',
+        blurb: 'Read the sky: which clouds bring rain, and the seasonal patterns where you live.',
+        topics: ['Clouds', 'Wind', 'Seasons'],
+        looks: ['Cloud types and which ones turn to rain', 'Wind, pressure and the signs before a storm', 'Your local seasons, frost and rainfall patterns']
       }
     ]
   },
   {
     id: 'resilience', num: 5, name: 'Resilience', color: '#2F6E9E',
-    blurb: 'Weather hard times: storms, emergencies, injuries, plant medicine, and saving and mending things.',
-    status: 'Later',
+    blurb: 'Withstand hard times: emergencies, injuries, plant medicine and basic repairs.',
     lenses: [
-      {
-        id: 'weather', name: 'Weather', status: 'later',
-        blurb: 'Read the sky: which clouds bring rain, and the seasonal patterns where you live.',
-        topics: ['Clouds', 'Wind', 'Seasons'],
-        looks: ['Cloud types and which ones turn to rain', 'Wind, pressure and the signs before a storm', 'Your local seasons, frost and rainfall patterns']
-      },
       {
         id: 'emergency-prep', name: 'Emergency prep', status: 'building',
         blurb: 'Natural disasters, personal safety and securing your home: plan ahead so you can stay calm when it counts.',
@@ -151,30 +152,23 @@ window.MN_TIERS = [
         looks: ['Which plant medicines have evidence behind them, and how much', 'Teas, infused oils, salves and tinctures made at home', 'Doses, medicines that don’t mix, kids, pregnancy and animals, and when to see a clinician']
       },
       {
-        id: 'salvaging', name: 'Salvaging', status: 'later',
-        blurb: 'Rescue unwanted things: curb finds, free groups, reuse centers and scrap, plus cleaning and storing what you save.',
-        topics: ['Finding', 'Asking', 'Checking', 'Saving'],
-        looks: ['Where unwanted things gather: curbs, free groups, reuse centers and move-out days', 'Asking for, sharing and trading what others are letting go', 'Checking finds for bedbugs, mold, lead and recalls before they come home', 'Cleaning, fixing and storing so saved things stay useful (with Repair)']
-      },
-      {
-        id: 'repair', name: 'Repair', status: 'later',
+        id: 'repair', name: 'Basic repairs', status: 'later',
         blurb: 'Diagnose, open up and mend what usually gets thrown out.',
         topics: ['Tools', 'Electronics', 'Mending'],
         looks: ['Finding the actual fault before buying anything', 'Opening things that were built to stay shut', 'Fixes that keep things out of the landfill']
-      },
-      {
-        id: 'sewing', name: 'Sewing', status: 'later',
-        blurb: 'Patch, hem, alter and make clothes and soft things, by hand or machine.',
-        topics: ['Mending', 'Patterns', 'Machines'],
-        looks: ['Patches, darns and seams that last', 'Reading and adjusting a pattern', 'Hand stitching and getting along with a machine']
       }
     ]
   },
   {
     id: 'craft', num: 6, name: 'Craft', color: '#7A4FB0',
     blurb: 'Hands-on skills to make, mend and build.',
-    status: 'Later',
     lenses: [
+      {
+        id: 'sewing', name: 'Sewing', status: 'later',
+        blurb: 'Patch, hem, alter and make clothes and soft things, by hand or machine.',
+        topics: ['Mending', 'Patterns', 'Machines'],
+        looks: ['Patches, darns and seams that last', 'Reading and adjusting a pattern', 'Hand stitching and getting along with a machine']
+      },
       {
         id: 'bikes', name: 'Bikes', status: 'later',
         blurb: 'True a wheel, tune gears, fix a flat on the road.',
@@ -200,7 +194,7 @@ window.MN_TIERS = [
         looks: ['Following the sun through your rooms', 'Layouts that make daily paths easy', 'Stations that sit where your habits already happen']
       },
       {
-        id: 'digital', name: 'Digital world', status: 'next',
+        id: 'digital', name: 'Digital world', status: 'later',
         blurb: 'Libraries, open tools and connection on one side; surveillance and attention-for-profit on the other.',
         topics: ['Needs it meets', 'Libraries', 'Surveillance', 'Open tools'],
         looks: ['Which needs a screen is meeting right now (learning, connection, help) and which it’s pulling from (rest, presence, play)', 'Public libraries: free internet, devices, classes and quiet, and the librarians who protect your privacy', 'Surveillance: what apps, ad trackers, data brokers and cameras collect, and the free settings that cut most of it', 'Open-source tools, repair and keeping old devices going, so digital life serves people instead of profit']

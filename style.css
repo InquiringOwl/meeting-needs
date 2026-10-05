@@ -145,7 +145,8 @@ p { margin: 0; }
 .setup .eyebrow { color: var(--personal); }
 .setup h3 { font-weight: 800; font-size: 24px; line-height: 1.1; letter-spacing: -0.02em; }
 .setup .hint { margin-top: auto; }
-.setup-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.setup-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.setup-head .eyebrow, .setup-head .btn { flex: none; margin-top: 3px; }
 .setup p { font-size: 15px; color: var(--ink-2); }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .chip { padding: 4px 10px; border-radius: 999px; background: var(--chip); border: 1px solid var(--line); font-size: 13px; }
@@ -224,8 +225,11 @@ p { margin: 0; }
 .badge { font-size: 13px; font-weight: 600; padding: 3px 11px; border-radius: 999px; color: var(--muted); }
 .badge.ready { background: var(--lc-ui); color: var(--on-lens); }
 .badge.building { color: var(--lc-ui); border: 1.5px solid var(--lc-ui); background: rgba(255, 255, 255, 0.7); }
-.lens-top .badge.ready, .lens-top .badge.building { margin-left: auto; }
-.badge.next, .badge.later { padding-inline: 0; }
+.lens-top .badge { margin-left: auto; }
+/* Card title and status share one row; the status sits top right. */
+.lens-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.lens-head .badge { flex: none; margin-top: 2px; }
+.badge.next, .badge.soon, .badge.later { border: 1.5px solid var(--line); background: rgba(255, 255, 255, 0.7); }
 .lens h3 { font-weight: 800; font-size: 24px; overflow-wrap: anywhere; line-height: 1.1; letter-spacing: -0.02em; }
 .lens p { font-size: 15px; line-height: 1.45; color: var(--ink-2); flex-grow: 1; }
 .topics { font-family: var(--f-mono); font-size: 12px; line-height: 1.6; color: var(--muted); }

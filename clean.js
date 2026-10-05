@@ -175,7 +175,7 @@
             fix({ modes: [["once"]], cost: "Free", c: 0,
               steps: [["Free · today", "Label every bottle you mix, with the date."], ["Free", "If there’s bleach in the house, store it apart from vinegar and ammonia, on a high shelf."]],
               add: ["Label and date every mixed bottle"] }) +
-            links("<a href=\"#lens-toxins/home/cleaners\">Poisons → Cleaning products</a> · Household tools (tier 4, coming) → pairs that must never meet") +
+            links("<a href=\"#lens-toxins/home/cleaners\">Poisons → Cleaning products</a> · Tools (tier 4, coming) → pairs that must never meet") +
             src("Washington State Department of Health, <i>Don’t mix bleach with ammonia or acids</i>; NIOSH, peracetic acid; America’s Poison Centers, cleaning product exposures."); } },
           { id: "mouths", short: "Paws & mouths", title: "Paws, beaks and little mouths", html: function () { return "<p>Children and companion animals meet a home with their mouths, hands and paws, low to the ground. A cat licks whatever she walked through. A toddler licks the window. A bird breathes in fumes faster than anyone in the house. The gentle shelf suits all of them, used this way:</p>" +
             "<ul>\n<li><b>Dry before paws and hands.</b> Wipe peroxide or vinegar off floors and counters, or let them dry fully, before kids or animals come back.</li>\n<li><b>Store high, even the gentle ones.</b> A swallowed mouthful of baking soda or peroxide can make a small body sick.</li>\n<li><b>Pour onto a cloth</b> rather than spraying into the air, around birds most of all.</li>\n</ul>" +
@@ -592,7 +592,7 @@
       ['r3', 'Rung 3', 'Baking soda', 'A soft scrub for stuck-on food, and a sponge for smells.', 'shelf/soda'],
       ['r4', 'Rung 4', 'Vinegar · peroxide', 'Vinegar for mineral scale and soap scum. 3% hydrogen peroxide when you want to disinfect. Never in one bottle.', 'shelf/vinegar'],
       ['r5', 'Beyond', 'Poisons', 'Big mold, sewage, droppings, ash, lead dust, a stomach bug. Those need a different plan.', 'beyond']];
-    return '<section class="cl-hero"><span class="cl-lens-pill">Tier 3 · Safety · Course</span><h1 tabindex="-1">Cleaning</h1>' +
+    return '<section class="cl-hero"><span class="cl-lens-pill">Tier 3 · Protect · Course</span><h1 tabindex="-1">Cleaning</h1>' +
       '<p class="cl-lede">A clean home is one where dirt, grease and crumbs leave, and nothing harsh stays behind on the counter, in the air or on a cat’s paws. Most of that is done with water and a good cloth. The rest of the course is a short ladder of gentle helpers, climbed one rung at a time, and a clear line where Poisons takes over.</p>' +
       '<div class="cl-btns"><a class="btn" href="' + BASE + '/now">What needs cleaning?</a><a class="btn" href="' + BASE + '/stains/finder">Stain finder</a></div></section>' +
       '<section class="cl-ladder-box"><span class="eyebrow">The gentle ladder · start at the bottom</span><ol class="cl-ladder">' +
