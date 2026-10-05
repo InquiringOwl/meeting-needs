@@ -130,14 +130,14 @@
               'Wash hands with soap for about 20 seconds before cooking and after handling soil or raw sprouts.',
               'Hot soapy water for boards and knives. Deep grooves in a board hold germs: sand wood, retire scarred plastic.',
               'Sponges grow germs fast. Let them dry between uses and replace often; cloths that go in the laundry stay cleaner.']) +
-            links('Cleaning (surfaces) · Toxins (plastic boards and heat)') +
+            links('Cleaning (surfaces) · Poisons (plastic boards and heat)') +
             accs(acc('nohome nocook', 'No sink', 'Washing food with little water', ul(['Choose food you peel: bananas, oranges, avocados, carrots you can scrape.', 'A bottle of drinking water poured over produce in a bowl does the job.', 'Hand sanitizer is a backup for hands, not a wash for food.']))); } }
         ] },
 
       { id: 'rehydrate', num: 3, word: 'Rehydrate', sub: 'Waking up dried food',
         lede: 'Dried food is food with the water taken out, so it keeps. Putting the water back, slowly and cleanly, turns a jar of hard beans into dinner.',
         subs: [
-          { id: 'dried', short: 'Why dried', title: 'Why dried food', html: function () { return '<p>Germs and molds need water to grow (what molds make, and which moldy food to let go, lives in <a href="#lens-toxins/living/food">Toxins: Mold on food</a>). Take it out and food keeps for months or years with no fridge, weighs a fraction as much, and costs less. Beans, lentils, grains, dried fruit, mushrooms and seaweed are the backbone of a pantry that doesn’t need power.</p>' +
+          { id: 'dried', short: 'Why dried', title: 'Why dried food', html: function () { return '<p>Germs and molds need water to grow (what molds make, and which moldy food to let go, lives in <a href="#lens-toxins/living/food">Poisons: Mold on food</a>). Take it out and food keeps for months or years with no fridge, weighs a fraction as much, and costs less. Beans, lentils, grains, dried fruit, mushrooms and seaweed are the backbone of a pantry that doesn’t need power.</p>' +
             old('Sun-dried fruit, beans hung in their pods, strings of chilies and mushrooms on thread: drying is one of the oldest ways people have carried food through winter and across distance.'); } },
           { id: 'beans', short: 'Beans', title: 'Soaking beans', html: function () { return ul([
               '<b>Overnight soak:</b> cover sorted, rinsed beans with about three times their volume of water for 8–12 hours. In a hot kitchen, soak in the fridge.',
@@ -192,10 +192,10 @@
             links('<a href="#lens-relationships">Emotions &amp; love</a> (children) · Foundation 2 (togetherness)'); } },
           { id: 'pots', short: 'Pots &amp; stoves', title: 'Pots, pans and stoves', html: function () { return ul([
               '<b>Cast iron, carbon steel, stainless steel and glass</b> last a lifetime and turn up secondhand.',
-              '<b>Nonstick coatings:</b> keep the heat low and retire pans once scratched or flaking. See Toxins for what’s in them.',
+              '<b>Nonstick coatings:</b> keep the heat low and retire pans once scratched or flaking. See Poisons for what’s in them.',
               '<b>Gas stoves</b> put fumes into the room. Run the hood fan or open a window while cooking.',
               'Hot food goes into glass, steel or ceramic rather than plastic.']) +
-            links('Toxins (cookware, plastics) · Air (gas stoves, ventilation)'); } },
+            links('Poisons (cookware, plastics) · Air (gas stoves, ventilation)'); } },
           { id: 'plate', short: 'The plate', title: 'A plate that meets needs', html: function () { return '<p>Bodies need energy, protein, fats, fiber, vitamins and minerals. A plant plate meets nearly all of them with variety across the day. Major dietetic associations find well-planned vegan diets healthy at every stage of life, including pregnancy and childhood.</p>' +
             '<div class="fo-plate">' +
             '<div><b>Beans and lentils</b><p>Protein, iron, fiber. Tofu, tempeh and peanuts count too.</p></div>' +
@@ -283,7 +283,7 @@
               '<b>Sick days:</b> fresh water close by, and the bland food a vet suggests. Small meals often.']) +
             care('Animals get into trouble from not eating faster than people do. A cat who hasn’t eaten for more than a day or two, or a rabbit or guinea pig who stops eating or pooping for more than about 12 hours, needs a vet soon. A male cat straining to pee with little coming out is an emergency.') +
             accs(acc('cat dog small', 'Your companions', 'The animals on your profile', '<p>The next unit (' + a('companions', 'Unit 7') + ') covers what each species eats in nature, and how to meet the same needs at home.</p>')) +
-            links(a('companions', 'Unit 7: What animals eat') + ' · <a href="#lens-toxins/exposures/companions">Toxins: what each species can’t process</a>'); } },
+            links(a('companions', 'Unit 7: What animals eat') + ' · <a href="#lens-toxins/exposures/companions">Poisons: what each species can’t process</a>'); } },
           { id: 'tool', tool: true, short: 'Make it gentle', title: 'Make it gentle', html: function () { return '<div class="fo-row"><label class="fo-f">Who’s eating<select data-fo id="fo-gn-who">' + opts(GN) + '</select></label></div><div class="fo-out" id="fo-gn-out"></div>'; } }
         ] },
 
@@ -324,7 +324,7 @@
               acc('dog', 'Dogs', 'Plant-based food for dogs', ul(['Dogs digest starch and meet their needs on many diets. V-dog and others make complete plant-based dog food.', 'Large-breed puppies need a food made for their growth; check the life stage on the label.']))) +
             tryit('Next vet visit, ask: “What would you look for to know this food is meeting their needs?”') +
             '<p class="fo-src"><small>Sources: Knight et al., <i>PLOS ONE</i> (2022), dogs; Knight et al., <i>PLOS ONE</i> (2023), cats; Dodd et al., <i>PLOS ONE</i> (2021).</small></p>' +
-            links('<a href="#lens-relationships/special/animals">Emotions &amp; love: Animals</a> · <a href="#lens-toxins/exposures/companions">Toxins: what each species can’t process</a>') +
+            links('<a href="#lens-relationships/special/animals">Emotions &amp; love: Animals</a> · <a href="#lens-toxins/exposures/companions">Poisons: what each species can’t process</a>') +
             (mn().opinion ? mn().opinion('<p>I stay out of judging predators and prey, so a cat’s health comes first here; I offer plant-based food as one option because the animals who became kibble were someone too, with needs it never met (more in <a href="#lens-relationships/special/animals">Animals</a>).</p><p class="opinion-src">In the US, dogs and cats eat about a third as much animal-sourced food energy as all of the country’s people do (Okin, <i>PLOS ONE</i>, 2017).</p>') : ''); } }
         ] }
     ];

@@ -45,9 +45,12 @@
     /* Air: what cooks the food, and where the kitchen air goes (Air course). */
     stove: ['Gas', 'Electric (coil or smooth top)', 'Induction', 'Hot plate or countertop only', 'No stove'],
     hood: ['Vents outside', 'Recirculates (no duct)', 'No hood or fan', 'Not sure'],
-    /* Surroundings: what the building and the neighborhood bring (Toxins course). */
+    /* Surroundings: what the building and the neighborhood bring (Poisons course). */
     built: ['Before 1978', '1978 or later', 'Not sure'],
     near: ['A freeway or busy road', 'Factory, refinery or oil and gas wells', 'Farm fields', 'An airport', 'None of these'],
+    /* Cleaning: what the counters are made of (stone changes the vinegar advice) and where the wash gets done (Cleaning course). */
+    counter: ['Laminate or plastic', 'Sealed granite or quartz', 'Marble, limestone or travertine', 'Wood or butcher block', 'Tile and grout', 'Stainless steel', 'Concrete', 'Not sure'],
+    laundry: ['Machine at home', 'Shared machines in the building', 'Laundromat', 'By hand', 'A mix of these'],
     space: ['Windowsill', 'Balcony', 'Shared yard', 'Private yard', 'Community plot', 'Acreage or farmland', 'None yet'],
     consider: ['Asthma', 'Allergies', 'Pregnancy', 'Babies or toddlers', 'Chronic illness', 'Limited mobility'],
     hours: ['Under 1', '1 to 3', '3 to 6', 'More than 6'],
@@ -89,7 +92,7 @@
   }
 
   function blank() {
-    return { address: '', zone: '', home: '', stay: '', shape: '', space: [], sources: {}, filters: [], pipes: '', rain: '', kitchen: '', cold: '', stove: '', hood: '', built: '', near: [], adults: '', kids: '', pets: '', consider: [], hours: '', budget: '', priorities: [] };
+    return { address: '', zone: '', home: '', stay: '', shape: '', space: [], sources: {}, filters: [], pipes: '', rain: '', kitchen: '', cold: '', stove: '', hood: '', built: '', near: [], counter: '', laundry: '', adults: '', kids: '', pets: '', consider: [], hours: '', budget: '', priorities: [] };
   }
   function load() {
     try {
@@ -131,7 +134,7 @@
   }
   function saveSoon() { clearTimeout(saveTimer); saveTimer = setTimeout(function () { save(); }, 500); }
   function isEmpty(p) {
-    return !p.home && !p.stay && !p.shape && !p.rain && !p.pipes && !p.kitchen && !p.cold && !p.stove && !p.hood && !p.built && !p.near.length && !Object.keys(p.sources).length && !p.filters.length && !p.zone && !p.address && !p.adults && !p.kids && !p.pets && !p.hours && !p.budget &&
+    return !p.home && !p.stay && !p.shape && !p.rain && !p.pipes && !p.kitchen && !p.cold && !p.stove && !p.hood && !p.built && !p.near.length && !p.counter && !p.laundry && !Object.keys(p.sources).length && !p.filters.length && !p.zone && !p.address && !p.adults && !p.kids && !p.pets && !p.hours && !p.budget &&
       !p.space.length && !p.consider.length && !p.priorities.length;
   }
 
@@ -257,8 +260,8 @@
     var solid = l.tier.num === 1 || l.status === 'ready';
     var linked = !l.tier.locked || l.status === 'ready';
     var cls = 'lens is-' + l.status + (solid ? ' is-solid' : '');
-    var top = (solid ? '<span class="dot" aria-hidden="true"></span>' : '') +
-      (STATUS[l.status] ? '<span class="badge ' + l.status + '">' + STATUS[l.status] + '</span>' : '');
+    /* Tier 2 cards skip the top row when ready: the solid card already says so, and the row only took space. */
+    var top = l.tier.num === 2 && l.status === 'ready' ? '' : (STATUS[l.status] ? '<span class="badge ' + l.status + '">' + STATUS[l.status] + '</span>' : '');
     var tag = linked ? 'a' : 'div';
     if (!linked) cls += ' is-static';
     return '<' + tag + ' class="' + cls + '"' + (linked ? ' href="#lens-' + l.id + '"' : '') + ' style="--lc:' + l.color + '">' +
@@ -277,6 +280,7 @@
       '<p>Based in San Francisco. Kinship is simply made from love: free and open source, so we can all learn what we need to live.</p>' +
       '<p>It’s a modern tribute to the Diggers and the organized hippies: the San Francisco Diggers served free food in the Panhandle and ran free stores in the 1960s, named for the English Diggers who farmed common land in 1649. Alicia Bay Laurel opened <i>Living on the Earth</i> (1970) by dedicating it to people who’d rather chop wood than sit at a desk to pay the power company.</p>' +
       '<p>My reasons go deeper than free. The system isn’t working for so many people, and we’ve lost touch with what actually meets our needs, putting too much trust in broken systems.</p>' +
+      '<p>Kinship won’t solve these problems alone. It’s the clearest way I could package self-empowering information, for you to take and apply in your own life.</p>' +
       '<p>Most of Kinship aims to be plain, checkable information you can weigh for yourself. My own considerations show up in pink, one sentence each:</p>' +
       opinion('<p>One why, for you to weigh.</p>') +
       '<p>The first is at the end of <a href="#lens-water/uses">Water: Uses</a>.</p>' +
@@ -419,13 +423,14 @@
     if (step === 'water') return !!(Object.keys(p.sources).length || p.filters.length || p.pipes || p.rain);
     if (step === 'food') return !!(p.kitchen || p.cold || p.stove || p.hood);
     if (step === 'toxins') return !!(p.built || p.near.length);
+    if (step === 'cleaning') return !!(p.counter || p.laundry);
     if (step === 'household') return !!(p.adults || p.kids || p.pets || p.consider.length);
     if (step === 'resources') return !!(p.hours || p.budget);
     if (step === 'priorities') return p.priorities.length > 0;
     return false;
   }
   function stepsNav() {
-    var steps = [['place', 'Place'], ['water', 'Water'], ['food', 'Food'], ['toxins', 'Surroundings'], ['household', 'Household'], ['resources', 'Time & money'], ['priorities', 'Priorities']];
+    var steps = [['place', 'Place'], ['water', 'Water'], ['food', 'Food'], ['toxins', 'Surroundings'], ['cleaning', 'Cleaning'], ['household', 'Household'], ['resources', 'Time & money'], ['priorities', 'Priorities']];
     return '<nav class="steps glass" aria-label="Profile sections">' + steps.map(function (s, i) {
       return '<button type="button" data-jump="' + s[0] + '" class="' + (stepDone(s[0]) ? 'done' : '') + '"><span class="n" aria-hidden="true">' + (i + 1) + '</span>' + esc(s[1]) + '</button>';
     }).join('') + '</nav>';
@@ -469,7 +474,12 @@
       '<fieldset id="s-toxins" class="glass"><legend>Surroundings</legend>' +
       '<div class="row">' + selectField('built', 'When was the building built?', OPT.built, p.built) + '</div>' +
       pickField('near', 'Close by, within about half a mile', OPT.near, '(pick any)') +
-      '<p class="hint">Lead paint was banned for homes in 1978. With what’s nearby, the Toxins course opens the parts that fit: soil testing, filters, spray alerts.</p>' +
+      '<p class="hint">Lead paint was banned for homes in 1978. With what’s nearby, the Poisons course opens the parts that fit: soil testing, filters, spray alerts.</p>' +
+      '</fieldset>' +
+
+      '<fieldset id="s-cleaning" class="glass"><legend>Cleaning</legend>' +
+      '<div class="row">' + selectField('counter', 'Your kitchen counters', OPT.counter, p.counter) + selectField('laundry', 'Where you do laundry', OPT.laundry, p.laundry) + '</div>' +
+      '<p class="hint">The Cleaning course reads both: marble, limestone and concrete skip vinegar, and shared machines or washing by hand open their own tips.</p>' +
       '</fieldset>' +
 
       '<fieldset id="s-household" class="glass"><legend>Household</legend>' +
@@ -517,7 +527,7 @@
   var sky = '<div class="sky" aria-hidden="true"><span class="a"></span><span class="b"></span><span class="c"></span><span class="d"></span></div>';
 
   /* Course files load only when someone opens that lens, so the home page stays light. */
-  var LAZY = { relationships: { css: 'rel.css', js: ['rel-data.js', 'rel.js'] }, water: { css: 'water.css', js: ['water.js'] }, food: { css: 'food.css', js: ['food.js'] }, toxins: { css: 'tox.css', js: ['tox.js'] }, air: { css: 'air.css', js: ['air.js'] }, 'emergency-prep': { css: 'em.css', js: ['em.js'] }, governance: { css: 'gov.css', js: ['gov.js'] } };
+  var LAZY = { relationships: { css: 'rel.css', js: ['rel-data.js', 'rel.js'] }, water: { css: 'water.css', js: ['water.js'] }, food: { css: 'food.css', js: ['food.js'] }, toxins: { css: 'tox.css', js: ['tox.js'] }, air: { css: 'air.css', js: ['air.js'] }, cleaning: { css: 'clean.css', js: ['clean.js'] }, 'emergency-prep': { css: 'em.css', js: ['em.js'] }, governance: { css: 'gov.css', js: ['gov.js'] } };
   var lazyState = {};
   function needsLazy(r) {
     var lid = r.indexOf('lens-') === 0 ? r.slice(5).split(/[\/?]/)[0] : '';

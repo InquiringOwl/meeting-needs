@@ -152,8 +152,8 @@
       ['Food', 'every recipe in the course comes from plants: the cheapest, longest-keeping and most shareable way to meet the need for food.', '#lens-food', 'Food'],
       ['Food', 'what each companion species eats in nature, kibble and raw food told plainly, and complete plant-based food as one option.', '#lens-food/companions', 'Food → Companions'],
       ['Water', 'where California’s farm water goes, including the feed grown for farmed animals.', '#lens-water/sources/take', 'Water → Sources'],
-      ['Toxins', 'wool, leather, down and silk kept in use secondhand, instead of new.', '#lens-toxins/exposures/healthy', 'Toxins → What healthy looks like'],
-      ['Toxins', 'poison-free ways to share a home with ants, mice and other wild neighbors.', '#lens-toxins/pesticides/yard', 'Toxins → Yard, home and companions']
+      ['Poisons', 'wool, leather, down and silk kept in use secondhand, instead of new.', '#lens-toxins/exposures/healthy', 'Poisons → What healthy looks like'],
+      ['Poisons', 'poison-free ways to share a home with ants, mice and other wild neighbors.', '#lens-toxins/pesticides/yard', 'Poisons → Yard, home and companions']
     ];
     return '<section class="rel-sec" id="sec-animals-3"><div class="rel-sec-head"><span class="rel-sec-n">A.3</span><div><h2>Across Kinship</h2><p>Where peace with animals shows up in the other lenses.</p></div></div>' +
       '<ul class="rel-keys">' + items.map(function (x) { return '<li><strong>' + x[0] + ':</strong> ' + esc(x[1]) + ' <a href="' + x[2] + '">' + esc(x[3]) + '</a></li>'; }).join('') + '</ul></section>' +
@@ -207,7 +207,7 @@
             '**Grief is real.** Losing an animal family member is a loss like any other. Children need room to grieve them too, with honest, simple words.',
             'People facing eviction or homelessness often keep their animals close at great cost. Pet-friendly shelters and pet food banks keep families together, animals included.'
           ], src('Sources: Albuquerque et al., “Dogs recognize dog and human emotions,” <i>Biology Letters</i> (2016); Saito &amp; Shinozuka, “Vocal recognition of owners by domestic cats,” <i>Animal Cognition</i> (2013).') +
-            '<p class="rel-q">Food lens: <a href="#lens-food/companions">what each animal eats</a> · <a href="#lens-food/gentle/animals">tender times</a> · Toxins: <a href="#lens-toxins/exposures/companions">what their bodies can’t process</a></p>' +
+            '<p class="rel-q">Food lens: <a href="#lens-food/companions">what each animal eats</a> · <a href="#lens-food/gentle/animals">tender times</a> · Poisons: <a href="#lens-toxins/exposures/companions">what their bodies can’t process</a></p>' +
             tryIt('Watch one animal at home for five minutes. What need is each thing they do trying to meet?')]
         ],
         note: 'The full Family animals unit (species by species, introductions, and end-of-life care) is in progress.',
@@ -237,7 +237,7 @@
           ], tryIt('Next time you see a wild animal near home, ask: what is this place offering them?')]
         ],
         note: 'The full Wild animals unit (urban wildlife by species and coexisting on land) is in progress.',
-        related: ['#lens-toxins/pesticides/yard', 'Toxins: yard, home and companions']
+        related: ['#lens-toxins/pesticides/yard', 'Poisons: yard, home and companions']
       },
       children: {
         id: 'children', letter: 'K', name: 'Children', sub: 'Togetherness instead of split labor, and families staying close',
@@ -265,8 +265,8 @@
           ['Kids across Kinship', 'Where children already show up.', [
             '**Food:** cooking together, with real tools and real jobs.',
             '**Water:** turning over creek stones to count the little creatures, a real field test.',
-            '**Toxins:** small bodies take in more per pound, so dust, hands and bottles come first.'
-          ], '<p class="rel-q"><a href="#lens-food/cook/together">Food: cooking together</a> · <a href="#lens-water/testing">Water: testing</a> · <a href="#lens-toxins/exposures/dose">Toxins: dose and timing</a></p>' +
+            '**Poisons:** small bodies take in more per pound, so dust, hands and bottles come first.'
+          ], '<p class="rel-q"><a href="#lens-food/cook/together">Food: cooking together</a> · <a href="#lens-water/testing">Water: testing</a> · <a href="#lens-toxins/exposures/dose">Poisons: dose and timing</a></p>' +
             tryIt('Next chore, invite a child in at whatever level they can manage, and let them do it their way.')]
         ],
         note: 'The full Children unit (ages and stages, chores as play, conflict between siblings, keeping families together) is in progress.'
@@ -337,7 +337,6 @@
             '<p class="rel-q">Next: <a href="' + spHref('power') + '">Power &amp; peace</a> · <a href="' + spHref('coops') + '">Cooperatives</a> (housing co-ops and land trusts) · <a href="#lens-governance">Governance</a></p>' +
             tryIt('Look up what your city offers for showers and safe parking. Who runs it, and what do they need?')]
         ],
-        after: (mn().opinion ? mn().opinion('<p>Renting has stopped meeting the need for shelter for a lot of people, so rather than wait on it I’d meet needs where people actually live now, in cars and vans, with more showers, parking and water, the way good neighbors would.</p><p class="opinion-src">In the UCSF study, the median household income in the six months before losing housing was $960 a month (CASPEH, 2023).</p>') : ''),
         note: 'The full People in distress unit (scripts for hard moments, care bags, and local programs by county) is in progress.',
         related: [spHref('neighbors'), 'Neighbors']
       },

@@ -43,7 +43,7 @@ The same four steps (notice, feel, find the need, ask) work everywhere, so every
 - **Animals:** animals are someone, not something. Use **they/them** for an animal whose sex you don't know, and **he** or **she** when you do, just as with people; never "it". Call animals by who they are (a cow, a pig, a chicken, a fish), never by the names of what they become as meat ("beef", "pork", "poultry", "seafood"), not even in numbers, tables or labels ("cows 1,850 gal", not "beef"), and say "farmed animals" rather than "livestock". Kinship is a practice of peace with animals; we show it (plant foods, respectful words, honest numbers) rather than say it, and never preach or shame anyone's choices. Companion animals tell us their needs through their bodies. Wild animals in the house or garden ("pests") are neighbours whose needs (food, water, shelter) our home is accidentally meeting. Change what we offer and they move on.
 - **Never suggest hurting anyone, animals or people.** No traps of any kind (snap, glue or live), poisons, baits, larvicides, or anything else that kills, captures or harms. The strategies are prevention and closing the offer: seal, store, dry, close gaps once visitors have moved on. Just leave harm out; don't announce the omission or make a point of it. Not suggesting harm is simply normal.
 - **Plants and land:** a yellow leaf or a bare patch of soil is a message about a need: water, light, nutrients, shelter.
-- **The house itself:** damp, dust and fumes are signals too. The Cleaning, Airflow, Toxins and Water lenses are about meeting the household's needs.
+- **The house itself:** damp, dust and fumes are signals too. The Cleaning, Airflow, Poisons and Water lenses are about meeting the household's needs.
 
 ## 5. Unplug from the profit loop
 
@@ -58,5 +58,5 @@ The same four steps (notice, feel, find the need, ask) work everywhere, so every
 - Lenses are courses. A course opens on a **skill tree**: units left to right, nodes connected by prerequisites, planned nodes shown dashed.
 - Every node says what it teaches, gives a real example from home life, and ends with something to *do* (a tool, a practice or a question), not a quiz to pass.
 - Tools are plug-and-play: start from where the person actually is ("I feel sad", "I need my husband to…", "there are mice in the pantry") and walk them to the need.
-- Link lenses wherever one need crosses into another: Relationships → Cleaning (shared chores), Gardening (plants), Food, Toxins.
+- Link lenses wherever one need crosses into another: Relationships → Cleaning (shared chores), Gardening (plants), Food, Poisons.
 - Copy follows section 3. If a sentence blames, shames or demands, rewrite it.

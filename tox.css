@@ -1,4 +1,4 @@
-/* Toxins lens (light theme only). Units are reds, darkest (1) to lightest (7). Per unit:
+/* Poisons lens (light theme only). Units are reds, darkest (1) to lightest (7). Per unit:
    --r-bg page wash · --r-mid filled · --r-edge soft border · --r-dot the unit's red · --r-on text on the dot.
    Mirrors food.css with the tx- prefix, so courses can load on one visit. */
 :root {
@@ -178,7 +178,7 @@
   .tx-nav-wrap > summary { cursor: pointer; }
 }
 
-/* ---------- Toxins additions ---------- */
+/* ---------- Poisons additions ---------- */
 .tx-nav-over .tx-cnt { margin-left: auto; font-family: var(--f-mono); font-size: 12px; font-weight: 400; padding: 1px 8px; border-radius: 999px; background: var(--r3-dot); color: #fff; }
 .tx-kin { background: #EEF4EA; border-left: 4px solid #8DB07F; }
 .tx-kin::before { content: 'Animals, plants & soil · '; }

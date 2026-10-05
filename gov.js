@@ -1,5 +1,6 @@
-/* Governance lens (tier 5, in progress): gathers what other lenses teach about who decides over shared needs,
-   and the stairs from noticing to changing it. Starts with California water. Registers window.MN_LENS_VIEWS.governance. */
+/* Governance lens (tier 5, in progress): a lens on what stops people, legally, from meeting basic needs, who decides over shared needs,
+   and how to advocate in the systems we have (and outside them) for better ones. Starts with California water and criminalization;
+   housing (who owns homes, including private equity) is next. Registers window.MN_LENS_VIEWS.governance. */
 (function () {
   function mn() { return window.MN; }
   function ul(items) { return '<ul>' + items.map(function (i) { return '<li>' + i + '</li>'; }).join('') + '</ul>'; }
@@ -30,7 +31,7 @@
   function view() {
     var html =
       '<section class="gv-hero"><span class="gv-pill">Tier 5 · Craft · In progress</span><h1 tabindex="-1">Governance</h1>' +
-      '<p class="gv-lede">Every shared need (water, air, land) is governed by someone, often far from the tap. This lens gathers what we learn along the way: who holds each decision, where the resources go, and the stairs from noticing to changing it. It starts with California water; more will gather here as other lenses open.</p></section>' +
+      '<p class="gv-lede">Governance is one more lens on meeting needs: what stops people, legally, from meeting their basic needs, and how to advocate for yourself in the systems we have while building better ones. Every shared need (water, air, land, a place to sleep) is governed by someone, often far from the people it touches. Some paths run through law; plenty don’t, like asking your church, a co-op or your block to meet a need directly. It starts with California water and criminalization; more will gather here as other lenses open.</p></section>' +
 
       sec(1, 'Two views, the same needs', 'Strategies differ by place; the needs underneath are shared.',
         '<div class="gv-views">' +
@@ -49,14 +50,35 @@
         '<p>Of farm water, about 27% grows feed for animals: alfalfa, irrigated pasture and silage corn. Wet years and dry years shift these numbers a lot; in droughts, rivers lose the most.</p>' +
         '<p class="gv-src">Source: Public Policy Institute of California. Water per pound of each food is in <a href="#lens-water/sources/take">the end of Water: Sources</a>.</p>') +
 
-      sec(4, 'Stairs for change', 'Start on the first step. Each one makes the next easier.',
+      sec(4, 'Criminalization and incarceration', 'When meeting a need becomes a crime.',
+        '<p>Sleeping, sitting, camping, parking overnight, washing up: these are ways people meet the needs for rest, shelter and cleanliness. In many cities they’re against the law in public, which falls hardest on people who have nowhere private to do them.</p>' +
+        ul(['<b>Since <i>City of Grants Pass v. Johnson</i></b> (US Supreme Court, 2024), cities can enforce bans on sleeping and camping outside even when there are no shelter beds. That July, California’s Governor ordered state agencies to clear encampments and urged cities to do the same.',
+          '<b>Fines grow.</b> A ticket someone can’t pay can become a warrant, a suspended license or jail time, and a record makes housing and work harder to find, which makes the next ticket more likely.',
+          '<b>Incarceration at scale.</b> The US holds about 1.9 million people in prisons, jails and detention, one of the highest rates in the world. California’s state prisons hold about 90,000.',
+          '<b>Voters have moved both ways.</b> Prop 47 (2014) reduced some drug and theft felonies to misdemeanors; Prop 36 (2024) raised penalties for some of them again. Prop 6 (2024), which would have ended forced labor as a punishment in the state constitution, did not pass.',
+          '<b>Other strategies being tried:</b> diversion to treatment instead of jail, restorative justice circles, and crisis teams of medics and counselors instead of police for mental health calls (CAHOOTS in Eugene, Oregon, since 1989; San Francisco’s Street Crisis Response Team).']) +
+        '<p class="gv-note"><b>Two questions for any rule like this:</b> What need was the person meeting? Does the rule offer another way to meet it?</p>' +
+        '<p>More in <a href="#lens-relationships/special/distress">Emotions &amp; love: People in distress</a> and <a href="#lens-relationships/special/power">Power &amp; peace</a>.</p>' +
+        '<p class="gv-src">Sources: <i>City of Grants Pass v. Johnson</i>, 603 U.S. (2024); California Executive Order N-1-24 (2024); Prison Policy Initiative, <i>Mass Incarceration: The Whole Pie</i> (2024); California Department of Corrections and Rehabilitation population reports; California Secretary of State, statements of vote (2014, 2024).</p>') +
+
+      sec(5, 'Stairs for change', 'Start on the first step. Each one makes the next easier.',
         '<ol class="gv-stairs">' + STAIRS.map(function (s, i) {
           return '<li style="--i:' + i + '"><b>' + s[0] + '</b><p>' + s[1] + '</p>' + (s[2] ? '<a href="' + s[2] + '">' + s[3] + ' →</a>' : '') + '</li>';
         }).join('') + '</ol>' +
         '<p class="gv-src">Find your state representatives at findyourrep.legislature.ca.gov.</p>') +
 
-      sec(5, 'A transparency checklist', 'Questions to ask about any decision over a shared need.',
+      sec(6, 'Paths outside law', 'Not every change waits on a vote.',
+        '<p>Advocating for yourself can mean asking the people and places already around you to meet a need directly, and leaving law out of it.</p>' +
+        ul(['<b>Your church, temple, mosque or synagogue:</b> a parking lot opened for safe overnight parking, showers or a kitchen shared, land offered for homes. Since 2024, California lets faith groups build affordable housing on land they own without a rezoning fight (SB 4).',
+          '<b>Your building or block:</b> a tenants’ association, a shared tool shelf, a meal train.',
+          '<b>Co-ops and land trusts:</b> homes and workplaces owned by the people who use them (<a href="#lens-relationships/special/coops">Cooperatives</a>).',
+          '<b>Mutual aid:</b> neighbors meeting neighbors’ needs directly, no application required.']) +
+        '<p class="gv-src">Sources: California SB 4, Affordable Housing on Faith and Higher Education Lands Act of 2023.</p>') +
+
+      sec(7, 'A transparency checklist', 'Questions to ask about any decision over a shared need.',
         ul(['Who made this decision, and who could have?', 'Who benefits, and who pays?', 'Who was at the table, and who wasn’t?', 'Where is the data, and can anyone read it?', 'When is the next chance to weigh in?'])) +
+
+      '<p class="gv-note"><b>Coming next · Housing:</b> who owns homes, including private equity firms that buy houses to rent out, and what that means for people looking for one.</p>' +
 
       '<aside class="gv-fun"><span class="eyebrow">Fun fact</span><p>California law (2012) recognizes a human right to safe, clean, affordable water. Rights on paper become rights in practice when people keep asking.</p></aside>';
     return { title: 'Governance · Kinship', html: mn().header('home') + '<div><a class="back" href="#">← Education</a></div><main class="gv">' + html + '</main>' + mn().footer() };

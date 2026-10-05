@@ -1,4 +1,4 @@
-/* Toxins lens: course content, profile tailoring, My list and tools. Registers window.MN_LENS_VIEWS.toxins.
+/* Poisons lens: course content, profile tailoring, My list and tools. Registers window.MN_LENS_VIEWS.toxins.
    Routes: #lens-toxins (overview) · #lens-toxins/list (My list) · #lens-toxins/<unit>[/<sub>]. Units are reds, darkest (1) to lightest (7).
    Order runs from the body outward: Exposures → Plastics → In the home → Pesticides → Soil → Living toxins → Neighbors.
    Every sub-unit ends in a "How to fix" card: a mode (One by one, Test once, Habit, Together), a cost, and steps from free to bigger.
@@ -813,7 +813,7 @@
   }
   function sidebar(U, cur) {
     var wide = window.matchMedia && window.matchMedia('(min-width: 900px)').matches;
-    return '<nav class="tx-nav" aria-label="Toxins course"><details class="tx-nav-wrap"' + (wide ? ' open' : '') + '><summary class="tx-nav-head"><span class="eyebrow">Course map</span><b>Toxins</b></summary>' +
+    return '<nav class="tx-nav" aria-label="Poisons course"><details class="tx-nav-wrap"' + (wide ? ' open' : '') + '><summary class="tx-nav-head"><span class="eyebrow">Course map</span><b>Poisons</b></summary>' +
       '<a class="tx-nav-over" href="' + BASE + '"' + (!cur ? ' aria-current="page"' : '') + '>Overview</a>' +
       '<a class="tx-nav-over" href="' + BASE + '/list"' + (cur === 'list' ? ' aria-current="page"' : '') + '>My list <span class="tx-cnt" id="tx-cnt">' + openCount() + '</span></a><ol class="tx-vt">' +
       U.map(function (u) {
@@ -827,7 +827,7 @@
   }
   function way(k, title, text) { return '<div class="tx-way">' + mode(k) + '<b>' + title + '</b><p>' + text + '</p></div>'; }
   function viewOverview(U) {
-    return '<section class="tx-hero"><span class="tx-lens-pill">Tier 2 · Roots · Course</span><h1 tabindex="-1">Toxins</h1>' +
+    return '<section class="tx-hero"><span class="tx-lens-pill">Tier 2 · Roots · Course</span><h1 tabindex="-1">Poisons</h1>' +
       '<p class="tx-lede">Bodies (ours, our companions’, our plants’ and the soil’s) need to not be quietly worn down by what’s in the pan, the can, the couch, the ground and the air next door. Seven units that start with how exposure works and what healthy looks like, then move outward from the kitchen to the neighborhood. Every section ends with a <b>How to fix</b>, free steps first.</p></section>' +
       '<div class="tx-ways">' +
         way('swap', 'Most fixes are swaps', 'Plastics, cleaners, pans, cushions, fragrance: knock them out one at a time, at your pace and budget. Each one you add goes on <a href="' + BASE + '/list">My list</a>, in the order you choose.') +
@@ -878,8 +878,8 @@
     T = tags();
     var U = units(); index(U);
     var seg = (sub || '').split('/'), u = UIDX[seg[0]];
-    if (seg[0] === 'list') { setTimeout(syncUi, 0); return { title: 'My list · Toxins · Kinship', html: layout(U, 'list', viewList()) }; }
-    if (u) return { title: u.word + ' · Toxins · Kinship', html: layout(U, u.id, viewUnit(U, u, seg[1])) };
-    return { title: 'Toxins · Kinship', html: layout(U, null, viewOverview(U)) };
+    if (seg[0] === 'list') { setTimeout(syncUi, 0); return { title: 'My list · Poisons · Kinship', html: layout(U, 'list', viewList()) }; }
+    if (u) return { title: u.word + ' · Poisons · Kinship', html: layout(U, u.id, viewUnit(U, u, seg[1])) };
+    return { title: 'Poisons · Kinship', html: layout(U, null, viewOverview(U)) };
   };
 })();

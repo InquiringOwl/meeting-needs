@@ -178,7 +178,7 @@
   .ai-nav-wrap > summary { cursor: pointer; }
 }
 
-/* ---------- Toxins additions ---------- */
+/* ---------- Poisons additions ---------- */
 .ai-nav-over .ai-cnt { margin-left: auto; font-family: var(--f-mono); font-size: 12px; font-weight: 400; padding: 1px 8px; border-radius: 999px; background: var(--y3-dot); color: #fff; }
 .ai-kin { background: #EEF4EA; border-left: 4px solid #8DB07F; }
 .ai-kin::before { content: 'Animals, plants & soil · '; }

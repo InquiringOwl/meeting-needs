@@ -2,7 +2,7 @@
    Routes: #lens-air (overview) · #lens-air/notice (tool: What do you notice?) · #lens-air/list (My list) · #lens-air/<unit>[/<sub>].
    Units are yellows, darkest (1) to lightest (5): What’s in the air → Ventilation → Dust → Heat & smoke → Sun & temperature.
    Every unit is open to read in order; the tools are shortcuts into it, never a gate in front of it.
-   Mold and poisons live in Toxins (Living toxins; Exposures → Companion animals); Air covers how they travel and links there.
+   Mold and poisons live in Poisons (Living toxins; Exposures → Companion animals); Air covers how they travel and links there.
    Natural disasters link to Emergency prep (tier 4). Laws mentioned are California’s; the physics is general. */
 (function () {
   var BASE = '#lens-air', LKEY = 'meeting-needs.air.v1';
@@ -82,16 +82,16 @@
   function r(u, s, text) { return '<a href="' + BASE + '/' + u + (s ? '/' + s : '') + '">' + (text || NUM[u + '/' + s] || NUM[u] || '') + '</a>'; }
   function to(hash, text) { return '<a href="' + hash + '">' + text + '</a>'; }
   var TOX = {
-    mold: to('#lens-toxins/living/mold', 'Toxins: Mold in the house'),
-    foodmold: to('#lens-toxins/living/food', 'Toxins: Mold on food'),
-    pets: to('#lens-toxins/exposures/companions', 'Toxins: Companion animals'),
-    pans: to('#lens-toxins/plastics/pans', 'Toxins: Pots and pans'),
-    dust: to('#lens-toxins/home/dust', 'Toxins: Dust and flame retardants'),
-    furn: to('#lens-toxins/home/furniture', 'Toxins: Furniture'),
-    scent: to('#lens-toxins/home/fragrance', 'Toxins: Fragrance'),
-    roads: to('#lens-toxins/neighbors/roads', 'Toxins: Roads, freeways and airports'),
-    fire: to('#lens-toxins/neighbors/fire', 'Toxins: After a fire'),
-    plants: to('#lens-toxins/living/plants', 'Toxins: Plants and companions')
+    mold: to('#lens-toxins/living/mold', 'Poisons: Mold in the house'),
+    foodmold: to('#lens-toxins/living/food', 'Poisons: Mold on food'),
+    pets: to('#lens-toxins/exposures/companions', 'Poisons: Companion animals'),
+    pans: to('#lens-toxins/plastics/pans', 'Poisons: Pots and pans'),
+    dust: to('#lens-toxins/home/dust', 'Poisons: Dust and flame retardants'),
+    furn: to('#lens-toxins/home/furniture', 'Poisons: Furniture'),
+    scent: to('#lens-toxins/home/fragrance', 'Poisons: Fragrance'),
+    roads: to('#lens-toxins/neighbors/roads', 'Poisons: Roads, freeways and airports'),
+    fire: to('#lens-toxins/neighbors/fire', 'Poisons: After a fire'),
+    plants: to('#lens-toxins/living/plants', 'Poisons: Plants and companions')
   };
   function prep(id, text) { return to('#lens-emergency-prep/prepare' + (id ? '/' + id : ''), text || 'Emergency prep'); }
   var BODY = to('#lens-body-care', 'Body care');
@@ -560,7 +560,7 @@
     ['stuffy', 'Stuffy, sleepy or heavy air', 0, 'Open two windows on different sides for 5–10 minutes.', 'CO₂ and everything else people release has built up. A purge swaps most of it.', 'ventilation', 'windows', F.purge, 0, 'now:Right now'],
     ['scent', 'Strong scent, candles or incense', 0, 'Snuff or unplug it and crack a window.', 'Flames make particles; fragrance reacts with ozone to make more.', 'smoke', 'burning', F.burn, 0, 'habit:Habit'],
     ['newsmell', 'New furniture, paint or carpet smell', 0, 'Window open and a fan out. Sleep elsewhere for a few nights if it’s a bedroom.', 'New materials breathe out most in their first weeks, and faster when warm.', 'dust', 'new', F.newair, 0, 'habit:Habit'],
-    ['musty', 'Musty or earthy smell', 0, 'Follow your nose to the dampest spot, open it up to dry, and find the water.', 'That smell is usually mold growing somewhere damp; Toxins covers mold itself.', 'ventilation', 'damp', F.damp, 1, 'habit:Habit'],
+    ['musty', 'Musty or earthy smell', 0, 'Follow your nose to the dampest spot, open it up to dry, and find the water.', 'That smell is usually mold growing somewhere damp; Poisons covers mold itself.', 'ventilation', 'damp', F.damp, 1, 'habit:Habit'],
     ['fog', 'Windows fogged or dripping', 0, 'Wipe them, then a 5-minute purge to carry the water out.', 'Damp air is landing on the coldest surface it can reach.', 'ventilation', 'damp', F.damp, 1, 'habit:Habit'],
     ['dusty', 'Dust in the sunbeams, sneezing', 0, 'Damp-wipe surfaces, then a slow vacuum with a window open.', 'Fine dust carries most of the long-lasting chemicals; damp cloths carry it out.', 'dust', 'vacuum', F.vac, 1, 'habit:Habit'],
     ['hot', 'Hot, close rooms', 0, 'Shades closed on the sunny side; open up wide once it’s cooler outside than in.', 'Sun through glass turns to heat inside. Shade and a night flush move it out.', 'sun', 'shade', F.shade, 1, 'once:Set up once'],

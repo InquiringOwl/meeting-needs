@@ -40,7 +40,7 @@ window.MN_TIERS = [
         looks: ['Particles, gases, living things, and what disasters add to the air', 'Moving air to cleanse it: windows, fans, filters and damp', 'Vacuuming and damp cleaning, new things, asbestos and lead', 'Cooking, gas, nonstick, smoke and solvents, and companions’ lungs', 'Heat waves, shade, cold, and sun on skin']
       },
       {
-        id: 'toxins', name: 'Toxins', status: 'ready',
+        id: 'toxins', name: 'Poisons', status: 'ready',
         blurb: 'See what is in the pan, the can, the couch and the ground, and swap what matters most first, one at a time.',
         topics: ['Exposures', 'Plastics', 'In the home', 'Pesticides', 'Soil', 'Living toxins', 'Neighbors'],
         looks: ['How exposures work, and what a healthy home is made of', 'Plastics, when a tarp is the safer bet, can linings, PFAS and pans', 'Cleaners, fragrance, furniture, dust and washing produce', 'Glyphosate, treated wood, potting mix and drift', 'Lead and legacy metals, tested once in one batch', 'Molds, algal blooms and plants that harm companions', 'Freeways, factories, wells, fire and changing it together']
@@ -53,10 +53,10 @@ window.MN_TIERS = [
     status: 'Next',
     lenses: [
       {
-        id: 'cleaning', name: 'Cleaning', status: 'building',
-        blurb: 'Stains, laundry, surfaces and mold with a few simple ingredients.',
-        topics: ['Stains', 'Laundry', 'Surfaces'],
-        looks: ['Which stain is which, and what lifts it', 'Washing that is gentler on fabric and skin', 'Mold: what you can clean and when to call it in']
+        id: 'cleaning', name: 'Cleaning', status: 'ready',
+        blurb: 'Water first, then a short ladder of gentle helpers (soap, baking soda, vinegar, peroxide) for counters, stains and laundry, safe around kids and companion animals.',
+        topics: ['Water', 'Gentle shelf', 'Surfaces', 'Stains', 'Laundry'],
+        looks: ['Why water and a good cloth do most of the work', 'Soap, baking soda, vinegar and peroxide: what each is for, and what never mixes', 'Counters by material, boards, oven, bathroom, floors and ants', 'Which stain is which, and what lifts it', 'Laundry that is gentler on fabric, skin and water']
       },
       {
         id: 'body-care', name: 'Body care', status: 'next',
@@ -75,13 +75,8 @@ window.MN_TIERS = [
         blurb: 'Keep yourself, the people you love and your home safe: noticing early, calming things with words, getting away, and a home that’s ready.',
         topics: ['Noticing', 'De-escalation', 'Getting away', 'Home'],
         looks: ['Trusting the early feeling that something is off, and leaving early', 'De-escalation: distance, calm and words before anything else', 'Simple protective moves for breaking free and getting away', 'Home preparation: locks, lights, a safe room, a plan and neighbors who check in (with Emergency prep)']
-      },
-      {
-        id: 'household-tools', name: 'Household tools', status: 'next',
-        blurb: 'The toolbox, the cleaning shelf and the medicine cabinet: what tools do, and how to use them safely.',
-        topics: ['Tools', 'Chemistry', 'Safety'],
-        looks: ['The few tools that handle most jobs', 'Reading a label for what is actually in it', 'Pairs that must never meet, like bleach and ammonia']
       }
+
     ]
   },
   {
@@ -124,6 +119,12 @@ window.MN_TIERS = [
         blurb: 'Name the plants and animals around you, and learn the few real local dangers.',
         topics: ['Plants', 'Fungi', 'Animals'],
         looks: ['The features that actually separate species', 'Edible plants and their dangerous twins', 'Tracks, calls and signs of who lives nearby']
+      },
+      {
+        id: 'household-tools', name: 'Household tools', status: 'next',
+        blurb: 'The toolbox, the cleaning shelf and the medicine cabinet: what tools do, and how to use them safely.',
+        topics: ['Tools', 'Chemistry', 'Safety'],
+        looks: ['The few tools that handle most jobs', 'Reading a label for what is actually in it', 'Pairs that must never meet, like bleach and ammonia']
       }
     ]
   },
@@ -182,9 +183,9 @@ window.MN_TIERS = [
       },
       {
         id: 'governance', name: 'Governance', status: 'building',
-        blurb: 'Who decides where shared water, air and land go, and the stairs from noticing to changing it.',
-        topics: ['Decision-makers', 'Transparency', 'Stairs for change'],
-        looks: ['Who controls California’s water, and how they’re chosen', 'Where the water goes', 'Stairs for change: art, talk, public comment, representatives, organizing, voting, peaceful protest']
+        blurb: 'What stops people, legally, from meeting basic needs, and how to advocate for yourself in the systems we have while building better ones, in law or outside it.',
+        topics: ['Decision-makers', 'Criminalization', 'Stairs for change'],
+        looks: ['Who controls California’s water, and how they’re chosen', 'Where the water goes', 'Criminalization and incarceration: when meeting a need becomes a crime', 'Stairs for change: art, talk, public comment, representatives, organizing, voting, peaceful protest, and paths outside law']
       },
       {
         id: 'death-seasons', name: 'Death & cycles', status: 'later',

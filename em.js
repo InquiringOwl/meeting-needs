@@ -70,7 +70,7 @@
     cold: to('#lens-air/sun/cold', 'Air: Cold air'),
     gas: to('#lens-air/smoke/gas', 'Air: carbon monoxide')
   };
-  var WATER = to('#lens-water/storage', 'Water: Storage'), FOOD = to('#lens-food/store', 'Food: Store'), MOLD = to('#lens-toxins/living/mold', 'Toxins: Mold in the house'), ASH = to('#lens-toxins/neighbors/fire', 'Toxins: After a fire');
+  var WATER = to('#lens-water/storage', 'Water: Storage'), FOOD = to('#lens-food/store', 'Food: Store'), MOLD = to('#lens-toxins/living/mold', 'Poisons: Mold in the house'), ASH = to('#lens-toxins/neighbors/fire', 'Poisons: After a fire');
   var ANIMALS = to('#lens-relationships/special/animals', 'Emotions &amp; love: Animals'), NEIGH = to('#lens-relationships/special/neighbors', 'Emotions &amp; love: Neighbors');
 
   /* ---------- course content ---------- */
@@ -106,7 +106,7 @@
           { id: 'water', short: 'Floods &amp; storms', title: 'Floods, storms and landslides', html: function () { return '<p>In California, most floods come with atmospheric rivers: long, warm winter storms that drop weeks of rain in days. Hillsides below recent burn scars can send mud and debris flows with little warning, and creeks rise fast.</p>' +
             care('Turn around at flooded roads. Six inches of moving water can knock a person down, and about a foot can carry a car.') +
             ul(['<b>Before:</b> clean gutters and drains, move valuables and chemicals up off the floor, know whether your area floods (standard home and renter insurance doesn’t cover flooding).', '<b>During:</b> leave early if told; move to higher floors, not the attic; stay off flooded roads and away from downed lines.', '<b>After:</b> floodwater carries sewage and chemicals: boots and gloves. Anything porous that stayed wet more than a day or two grows mold; dry it out fast or let it go.']) +
-            ready({ cost: 'Free → $', c: 0, steps: [['Before', 'Gutters clear, things up off the floor, a route to higher ground.'], ['During', 'Leave at the warning; never drive through water.'], ['After', 'Dry within 48 hours; mold and cleanup in Toxins.']], add: ['Storm season: gutters clear, valuables up, route to high ground'] }) +
+            ready({ cost: 'Free → $', c: 0, steps: [['Before', 'Gutters clear, things up off the floor, a route to higher ground.'], ['During', 'Leave at the warning; never drive through water.'], ['After', 'Dry within 48 hours; mold and cleanup in Poisons.']], add: ['Storm season: gutters clear, valuables up, route to high ground'] }) +
             links(MOLD + ' · ' + to('#lens-water/purify', 'Water: Purify (if the tap is unsafe)')) +
             src('National Weather Service, <i>Turn Around Don’t Drown</i>; USGS, post-fire debris flows; FEMA, National Flood Insurance Program; CDC, flood cleanup.'); } },
           { id: 'power', short: 'Power outages', title: 'Power outages', html: function () { return '<p>Outages come with storms, heat, earthquakes and, in California, planned Public Safety Power Shutoffs (PSPS) on windy fire days. Most last hours; some last days. The plan is about light, cold food, water, medical devices and safe warmth or cooling.</p>' +
