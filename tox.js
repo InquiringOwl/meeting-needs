@@ -354,7 +354,7 @@
             fix({ modes: [['swap']], cost: 'Free', steps: [
               ['Free · today', 'Gather any pesticides in the house, garage and shed. Read each active ingredient.'],
               ['Free', 'Take the ones you don’t use to household hazardous waste. Never pour them down a drain.'],
-              ['Free', 'For each one kept, write the need it meets and one non-poison strategy to try first (' + r('pesticides', 'yard') + ').']],
+              ['Free', 'For each one, write the need it meets and a strategy without poison (' + r('pesticides', 'yard') + '), then let the poison go.']],
               add: ['Inventory pesticides; drop off unused ones'] }) +
             src('Rauh et al., <i>Environmental Health Perspectives</i> 2011 (chlorpyrifos); Tanner et al., <i>EHP</i> 2011 (paraquat); California Department of Pesticide Regulation; US EPA pesticide registration.'); } },
           { id: 'glyphosate', short: 'Glyphosate', title: 'Glyphosate', html: function () { return '<p>Glyphosate (Roundup and many store brands) is the most-used herbicide in the world. It blocks an enzyme plants, fungi and many bacteria need to build certain amino acids (the shikimate pathway). Animals don’t have that pathway, which is why it was long called safe for us, but many of our gut bacteria do.</p>' +
@@ -381,10 +381,10 @@
           { id: 'yard', short: 'Yard &amp; home', title: 'Yard, home and companions', html: function () { return '<p>Most home pesticide use meets a need the house is accidentally meeting for someone else: crumbs for ants, damp for roaches, a gap for mice, still water for mosquitoes. Meet that need differently and the visitors move on.</p>' +
             table(['Visitor', 'What they need here', 'Strategy without poison'], [
               ['Ants', 'Food, water', 'Wipe the trail with soapy water, seal food in jars, caulk the entry crack'],
-              ['Mice and rats', 'Shelter, food, warmth', 'Steel wool and hardware cloth in gaps, food in jars; live traps or exclusion'],
+              ['Mice and rats', 'Shelter, food, warmth', 'Food in jars, crumbs swept; once they’ve moved on, steel wool and hardware cloth in the gaps'],
               ['Aphids', 'Soft new growth', 'Hose them off; invite ladybugs and lacewings with flowers'],
-              ['Mosquitoes', 'Still water', 'Tip out saucers weekly; Bti dunks in rain barrels'],
-              ['Fleas', 'A warm host', 'Combing, washing bedding, vacuuming; a vet-chosen product labeled for that species']]) +
+              ['Mosquitoes', 'Still water', 'Tip out saucers weekly; fine screen over rain barrels'],
+              ['Fleas', 'A warm host', 'Combing, washing bedding, vacuuming; ask a vet what’s safe for that species']]) +
             care('Dog flea products with permethrin can poison cats who share a home with that dog. Use only products labeled for each animal, and keep cats away until it dries.') +
             fix({ modes: [['swap']], cost: 'Free → $', steps: [
               ['Free', 'Pick the one visitor you’re using poison for most. Find what they’re getting from the house.'],
@@ -807,7 +807,7 @@
         return '<li><a class="tx-ucard tk' + u.num + '" href="' + BASE + '/' + u.id + '"><i class="tx-band"></i><span class="tx-n">0' + u.num + '</span><b>' + u.word + '</b><span>' + u.sub + '</span><ol>' + u.subs.filter(function (s) { return !s.tool; }).map(function (s) { return '<li>' + s.title + '</li>'; }).join('') + '</ol>' +
           '<span class="tx-modes">' + u.modes.map(function (m) { return mode(m); }).join('') + '</span></a></li>';
       }).join('') + '</ol>' +
-      '<aside class="tx-funfact"><span class="eyebrow">A grateful fun fact</span><p>When families in one study swapped to fresh food with no cans or plastic packaging for just three days, the BPA in their urine dropped by about two-thirds. Some exposures leave the body that fast, which is part of why one-by-one swaps feel good: the body answers quickly.</p>' +
+      '<aside class="tx-funfact"><span class="eyebrow">Fun fact</span><p>When families in one study swapped to fresh food with no cans or plastic packaging for just three days, the BPA in their urine dropped by about two-thirds. Some exposures leave the body that fast, which is part of why one-by-one swaps feel good: the body answers quickly.</p>' +
       '<p>Numbers come from public health research and agencies (EPA, CDC, ATSDR, FDA, California’s OEHHA and DPR), cited in each section. Laws mentioned are California’s; the chemistry is the same everywhere. Thank you to everyone who keeps this knowledge free.</p>' + src('Rudel et al., <i>Environmental Health Perspectives</i> 2011.') + '</aside>';
   }
   function viewList() {

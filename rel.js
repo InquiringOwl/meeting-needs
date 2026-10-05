@@ -185,7 +185,7 @@
           src('Sources: McLennan, <i>Social bonds in dairy cattle</i> (University of Northampton, 2013); Hagen &amp; Broom, “Emotional reactions to learning in cattle,” <i>Applied Animal Behaviour Science</i> (2004); <i>Cambridge Declaration on Consciousness</i> (2012); <i>New York Declaration on Animal Consciousness</i> (2024).')],
         ['Wild neighbors', '“Pests” are neighbors with needs.', [
           'Mice, ants, raccoons and pigeons come because a home is meeting their needs: food, water, warmth, shelter. Change what the home offers and they move on.',
-          'Seal food, fix drips, close gaps, and use live traps and exclusion before anything that kills.',
+          'Seal food, fix drips and close gaps: when a home stops offering food, water and shelter, its visitors move on.',
           'Poisons travel: rat poison kills owls, hawks, foxes and cats who eat a poisoned animal. California has restricted the strongest rodenticides since 2021 for this reason.'
         ], src('Source: California AB 1788 (2020), restrictions on second-generation anticoagulant rodenticides.') +
           tryIt('Next time you talk about an animal, notice your pronoun. Try “they”, “he” or “she”.')]

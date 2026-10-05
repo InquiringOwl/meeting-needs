@@ -10,7 +10,6 @@
   function prof() { return (mn().profile && mn().profile()) || {}; }
 
   /* ---------- profile → tags ---------- */
-  var outage = false;
   function tags() {
     var p = prof(), t = {}, space = p.space || [];
     if (p.home === 'Shelter or no fixed place' || p.stay === 'No fixed place right now') t.nohome = 1;
@@ -26,7 +25,6 @@
     if (p.cold === 'A small or shared fridge') t.smallcold = 1;
     if (p.cold === 'A cooler, or no fridge') t.nocold = 1;
     if (Number(p.kids) > 0 || (p.consider || []).some(function (c) { return /Pregnancy|Babies/.test(c); })) t.kids = 1;
-    if (outage) t.crisis = 1;
     return t;
   }
   var T = {};
@@ -179,7 +177,6 @@
               acc('smallkit', 'One appliance', 'Hot plate, rice cooker or microwave', ul(['A rice cooker steams vegetables in a basket above the rice, and makes oats and lentil stew.', 'A single electric pressure cooker does beans, grains, soups and steaming.', 'Microwave: red lentils in a big bowl with water (they foam), potatoes, frozen vegetables, oats.'])),
               acc('shared', 'Shared kitchen', 'Cooking in a shared kitchen', '<p>Batch-cook in quiet hours, label your shelf, and keep one crate of your own tools. A shared pot of soup is a lovely way to meet housemates.</p>' + links('<a href="#lens-relationships">Emotions &amp; love</a> (housemates) · Cleaning (shared chores)')),
               acc('nocook nohome', 'No cooking', 'Cold soaking and no-cook meals', ul(['Cold soak in a jar with a tight lid: rolled oats (overnight), couscous (1–2 hours), instant noodles (about an hour), instant mashed potatoes (minutes).', 'Canned beans, chickpeas and lentils are already cooked: rinse and eat.', 'Nut butter, bread, fruit and canned beans meet protein, energy and fiber with no heat.'])),
-              acc('crisis', 'Outage', 'Cooking without power', ul(['Camp stoves and grills are outdoor tools only: their fumes can kill indoors, even with a window open.', 'Eat from the fridge first, then the freezer, then the pantry (' + a('store/cold', '5.1') + ').', 'A pot brought to a boil on a camp stove and wrapped in blankets saves fuel.']) + links('Air (carbon monoxide) · Emergency preparedness')),
               acc('land outdoor', 'Outdoors', 'Sun and fire', '<p>A solar oven (a box, a black pot, foil and glass) slow-cooks beans and rice on sunny days. Rocket stoves burn small sticks hot and clean.</p>')) +
             care('Food left wrapped for many hours can cool into the danger zone. If a retained-heat pot has sat more than about 4 hours, bring it back to a boil before eating.'); } },
           { id: 'together', short: 'Together', title: 'Cooking together', html: function () { return '<p>Children belong in the kitchen, at whatever level they can manage. Real tools, real jobs, next to the adults.</p>' +
@@ -215,9 +212,8 @@
               'Apples, bananas, avocados and tomatoes give off ethylene, a ripening gas: keep them away from greens and carrots.',
               'Tomatoes, potatoes, onions, garlic, winter squash and bananas keep better out of the fridge.']) +
             accs(
-              acc('nocold nohome', 'No fridge', 'Living without cold', ul(['Buy fresh food for a day or two at a time; lean on the pantry (' + a('store/pantry', '5.2') + ') for the rest.', 'Whole fruit and hard vegetables keep for days in shade: apples, citrus, carrots, cabbage, potatoes, onions, squash.', 'A clay pot-in-pot cooler (a pot inside a bigger pot, wet sand between) cools by evaporation in dry heat.', 'Cook only what gets eaten in one go.'])),
-              acc('smallcold', 'Small fridge', 'Making a small fridge go further', '<p>Save cold space for what needs it: cooked food, cut fruit, tofu, opened plant milk, greens. Everything above that keeps better outside can live on the counter.</p>'),
-              acc('crisis', 'Outage', 'When the power goes out', ul(['Keep the doors shut. A closed fridge stays cold about 4 hours; a full freezer about 48 hours, a half-full one about 24.', 'Use the outage tool at the end of this unit to sort what’s safe.', 'Frozen jugs of water (<a href="#lens-water/storage">Water: Storage</a>) keep a freezer cold longer, and become drinking water.']))); } },
+              acc('nocold nohome portable', 'No fridge', 'Living without cold', ul(['Buy fresh food for a day or two at a time; lean on the pantry (' + a('store/pantry', '5.2') + ') for the rest.', 'Whole fruit and hard vegetables keep for days in shade: apples, citrus, carrots, cabbage, potatoes, onions, squash.', 'A clay pot-in-pot cooler (a pot inside a bigger pot, wet sand between) cools by evaporation in dry heat.', 'Cook only what gets eaten in one go.'])),
+              acc('smallcold', 'Small fridge', 'Making a small fridge go further', '<p>Save cold space for what needs it: cooked food, cut fruit, tofu, opened plant milk, greens. Everything above that keeps better outside can live on the counter.</p>')); } },
           { id: 'pantry', short: 'Pantry', title: 'The pantry', html: function () { return '<p>Cool, dark, dry and sealed. Glass jars with good lids keep out air, damp and visitors (' + a('store/visitors', '5.5') + ').</p>' +
             ul(['<b>Keep for years:</b> white rice, dried beans, salt, sugar, dried pasta. Old beans are still safe; they just cook slower.', '<b>Keep for months:</b> brown rice, whole-wheat flour, nuts and seeds. Their oils go rancid (a smell like crayons or old paint); the fridge or freezer doubles their life.', '<b>First in, first out:</b> new jars behind old ones, and a date on the lid.']) +
             ca('Since July 2026, “BEST if Used by” means quality and “USE by” means safety on food labels (AB 660). Food past a “best by” date is usually fine: look, smell, taste a little.') +
@@ -233,15 +229,10 @@
             care('Bulging, leaking or spurting cans and jars, or an off smell: throw out without tasting, in a sealed bag. Garlic or herbs in oil: keep in the fridge and use within 4 days, or freeze.') +
             old('Every culture has its keeping foods: kimchi, sauerkraut, miso, pickled plums, dried tomatoes, fruit leather. Each one turns a glut into a year of meals.'); } },
           { id: 'visitors', short: 'Visitors', title: 'Animals in the pantry', html: function () { return '<p>Moths in the flour, ants on the counter, a mouse behind the rice: they’re neighbors whose need for food our pantry is meeting by accident. Change what we offer and they move on, no poison needed.</p>' +
-            ul(['<b>Pantry moths and weevils:</b> freeze new flour and grain for about four days, then store in glass or metal. Compost what they’ve moved into, wipe the shelf.', '<b>Ants:</b> follow the trail to the door, wipe it with soapy water or vinegar (it erases their scent path), and seal the crack.', '<b>Mice:</b> food in jars and tins, crumbs swept, and gaps around pipes stuffed with steel wool. Live traps if someone’s already moved in.']) +
+            ul(['<b>Pantry moths and weevils:</b> flour and grain in glass or metal jars with good lids, so there’s nothing to move into. Carry anything they’ve already moved into out to the compost or a far corner of the yard, and wipe the shelf.', '<b>Ants:</b> follow the trail to the door, wipe it with soapy water or vinegar (it erases their scent path), and seal the crack.', '<b>Mice:</b> food in jars and tins, crumbs swept, nothing left out overnight. With no food on offer, mice move on; once they have, stuff the gaps around pipes with steel wool so the next ones find nothing to come in for.']) +
             old('Bay leaves in the flour bin are a common old remedy for weevils. Studies are thin, but they smell nice and do no harm.') +
             links('<a href="#lens-relationships/special/animals">Emotions &amp; love: Animals</a> · Cleaning'); } },
-          { id: 'keeps', tool: true, short: 'How long it keeps', title: 'How long does it keep?', html: function () { return '<div class="fo-row"><label class="fo-f">Food<select data-fo id="fo-kp-food">' + opts(KP) + '</select></label></div><div class="fo-out" id="fo-kp-out"></div>'; } },
-          { id: 'outage', tool: true, short: 'Power’s out', title: 'Power’s out: what’s still good?', html: function () { return '<div class="fo-row">' +
-              '<label class="fo-f">Hours without power<input type="number" data-fo id="fo-po-hrs" min="0" step="1" value="3"></label>' +
-              '<label class="fo-f">Freezer<select data-fo id="fo-po-frz"><option value="48">Full</option><option value="24">About half full</option><option value="0">No freezer</option></select></label>' +
-              '<label class="fo-chk"><input type="checkbox" data-fo id="fo-po-shut" checked> Doors kept shut</label></div>' +
-              '<div class="fo-out" id="fo-po-out"></div>'; } }
+          { id: 'keeps', tool: true, short: 'How long it keeps', title: 'How long does it keep?', html: function () { return '<div class="fo-row"><label class="fo-f">Food<select data-fo id="fo-kp-food">' + opts(KP) + '</select></label></div><div class="fo-out" id="fo-kp-out"></div>'; } }
         ] }
     ];
   }
@@ -277,7 +268,7 @@
     greens: ['Leafy greens', '3–7 days, dry, in a lined box', 'Cooked only, for soups', '—', ''],
     oil: ['Garlic or herbs in oil', '4 days', 'Months', 'Never at room temperature', 'Botulism risk: no smell or taste.'],
     brownr: ['Brown rice, dry', 'About 1 year', '1–2 years', 'About 6 months', 'Rancid smells like crayons.'],
-    flour: ['Whole-wheat flour', 'Up to 6 months', '6–12 months', '1–3 months', 'Freeze new bags 4 days for moths.'],
+    flour: ['Whole-wheat flour', 'Up to 6 months', '6–12 months', '1–3 months', 'Glass or metal jars keep moths out.'],
     nuts: ['Nuts and seeds', 'About 6 months', 'About 1 year', '1–3 months', ''],
     drybean: ['Dried beans', '—', '—', 'Years (best within 1–2)', 'Older beans cook slower, still safe.']
   };
@@ -296,26 +287,9 @@
       $('fo-kp-out').innerHTML = '<div class="fo-keeps"><div><span class="eyebrow">Fridge</span><b>' + k[1] + '</b></div><div><span class="eyebrow">Freezer</span><b>' + k[2] + '</b></div><div><span class="eyebrow">Pantry</span><b>' + k[3] + '</b></div></div>' +
         '<small>' + (k[4] ? k[4] + ' ' : '') + 'Rough guides for a fridge at 40°F / 4°C or colder. For most foods, looks, smell and a small taste tell you the rest.</small>';
     }
-    if ($('fo-po-out')) {
-      var h = Math.max(0, parseFloat($('fo-po-hrs').value) || 0), frz = +$('fo-po-frz').value, shut = $('fo-po-shut').checked;
-      var fridgeOk = shut ? h <= 4 : h <= 2, frzOk = frz && (shut ? h <= frz : h <= frz / 2), frzMaybe = !frzOk && h <= frz * 1.5;
-      function tag(ok, maybe) { return ok ? '<span class="fo-st ok">Still cold</span>' : maybe ? '<span class="fo-st warn">Check each item</span>' : '<span class="fo-st no">Compost or toss</span>'; }
-      $('fo-po-out').innerHTML =
-        '<p><b>Fridge</b> ' + tag(fridgeOk) + '</p><p>' + (fridgeOk ? 'Keep the door shut and eat from it first.' : 'Cooked food, leftovers, cut fruit, tofu, opened plant milk and dips that sat above 40°F for over 2 hours can’t be trusted. Whole fruit and vegetables, bread, nut butter, mustard and pickles are fine.') + '</p>' +
-        (frz ? '<p><b>Freezer</b> ' + tag(frzOk, frzMaybe) + '</p><p>' + (frzOk ? 'Food with ice crystals, or at 40°F or colder, can be refrozen.' : 'Anything still with ice crystals or at 40°F or colder can be refrozen or cooked now; the rest that’s fully thawed and warm goes.') + '</p>' : '') +
-        '<small>Based on USDA guidance. A fridge thermometer turns guesses into answers.</small>';
-    }
   }
   document.addEventListener('input', function (e) { if (e.target.closest && e.target.closest('[data-fo]')) runTools(); });
   document.addEventListener('change', function (e) {
-    if (e.target.id === 'fo-outage') {
-      outage = e.target.checked; T = tags();
-      document.querySelectorAll('.fo-acc').forEach(function (d) {
-        var hit = (d.getAttribute('data-for') || '').split(' ').some(function (k) { return T[k]; });
-        d.classList.toggle('match', hit); d.open = hit;
-      });
-      return;
-    }
     if (e.target.closest && e.target.closest('[data-fo]')) runTools();
   });
 
@@ -329,18 +303,15 @@
     if ((p.space || []).length) rows.push(['Growing space', p.space.join(', ')]);
     return rows;
   }
-  function outageSwitch() {
-    return '<label class="fo-outage"><input type="checkbox" id="fo-outage"' + (outage ? ' checked' : '') + '> Power’s out or the fridge is down</label>';
-  }
   function panel() {
     var rows = onFile();
     if (!rows.length) {
-      return '<div class="fo-sit"><span class="eyebrow">Tailor this course</span><p>Two questions in your Profile’s Food section (how you cook, how you keep food cold) open the parts that fit your life. Everything here stays open to everyone.</p><a class="btn personal sm" href="#profile/food">Answer in Profile</a></div>' + outageSwitch();
+      return '<div class="fo-sit"><span class="eyebrow">Tailor this course</span><p>Two questions in your Profile’s Food section (how you cook, how you keep food cold) open the parts that fit your life. Everything here stays open to everyone.</p><a class="btn personal sm" href="#profile/food">Answer in Profile</a></div>';
     }
     return '<div class="fo-sit"><span class="eyebrow">Tailored to your profile</span><p>Sections for you are open and marked <span class="fo-foryou is-on">For you</span>.</p>' +
       '<span class="fo-review"><a href="#profile/food" aria-describedby="fo-onfile">Review your profile’s food subsection</a>' +
       '<span class="fo-pop" id="fo-onfile" role="tooltip"><span class="eyebrow">On file</span>' + rows.map(function (r) { return '<span class="fo-pop-row"><b>' + esc(r[0]) + '</b>' + esc(r[1]) + '</span>'; }).join('') +
-      '<span class="fo-pop-foot">Moved, or got a fridge? Update it in your Profile.</span></span></span></div>' + outageSwitch();
+      '<span class="fo-pop-foot">Moved, or got a fridge? Update it in your Profile.</span></span></span></div>';
   }
 
   /* ---------- layout ---------- */
@@ -363,7 +334,7 @@
       '<ol class="fo-ucards">' + U.map(function (u) {
         return '<li><a class="fo-ucard fk' + u.num + '" href="' + BASE + '/' + u.id + '"><i class="fo-band"></i><span class="fo-n">0' + u.num + '</span><b>' + u.word + '</b><span>' + u.sub + '</span><ol>' + u.subs.filter(function (s) { return !s.tool; }).map(function (s) { return '<li>' + s.title + '</li>'; }).join('') + '</ol></a></li>';
       }).join('') + '</ol>' +
-      '<aside class="fo-funfact"><span class="eyebrow">A grateful fun fact</span><p>Every food in this course comes from plants, the cheapest, longest-keeping and most shareable way to meet the need for food. Beans and rice alone have fed much of the world for thousands of years. More on the <a href="#lens-relationships/special/animals">Animals</a> page.</p>' +
+      '<aside class="fo-funfact"><span class="eyebrow">Fun fact</span><p>Every food in this course comes from plants, the cheapest, longest-keeping and most shareable way to meet the need for food. Beans and rice alone have fed much of the world for thousands of years. More on the <a href="#lens-relationships/special/animals">Animals</a> page.</p>' +
       '<p>Safety numbers come from public food-safety guidance (USDA, FDA, the UK’s NHS and the National Center for Home Food Preservation). Laws mentioned are California’s; food itself is the same everywhere. Thank you to everyone who keeps this knowledge free.</p></aside>';
   }
   function viewUnit(U, u, subId) {

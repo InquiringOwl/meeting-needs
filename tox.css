@@ -163,8 +163,6 @@
 .tx-plate div { padding: 12px 14px; border-radius: 16px; background: var(--r-bg); border: 1px solid var(--r-edge); }
 .tx-plate b { display: block; font-family: var(--f-head); font-size: 16px; }
 .tx-plate p { font-size: 14px; color: var(--ink-2); }
-.tx-outage { align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; font-size: 14.5px; padding: 6px 14px; border-radius: 999px; border: 1px dashed var(--line); background: var(--glass-faint); cursor: pointer; }
-.tx-outage:has(input:checked) { background: #FFF1E6; border-style: solid; border-color: #E9C29F; }
 .tx-vt-subs a.is-tool { font-weight: 600; }
 .tx-tool { scroll-margin-top: 96px; }
 .tx-out p + p { margin-top: 4px; }

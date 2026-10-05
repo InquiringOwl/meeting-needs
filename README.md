@@ -19,7 +19,7 @@ Plain HTML, CSS and JavaScript. No build step, no server, no accounts.
 | `rel.css` | Relationships course styles |
 | `water.js` | Water course: six units (Uses, Sources, Storage, Purify, Testing, Costs), one page each, tailored from the profile, with tools (`#lens-water`, `#lens-water/<unit>[/<sub-unit>]`) |
 | `water.css` | Water course styles (units in blues, darkest to lightest) |
-| `food.js` | Food course: five units (Gather, Cleanse, Rehydrate, Cook, Store), one page each, tailored from the profile, with tools: Soak & cook, How long it keeps, Power's out (`#lens-food`, `#lens-food/<unit>[/<sub-unit>]`) |
+| `food.js` | Food course: five units (Gather, Cleanse, Rehydrate, Cook, Store), one page each, tailored from the profile, with tools: Soak & cook, How long it keeps (no-fridge living opens from the profile's `cold` answer or a portable-only place) (`#lens-food`, `#lens-food/<unit>[/<sub-unit>]`) |
 | `food.css` | Food course styles (units in dark greens, darkest to lightest; `fo-` prefix) |
 | `tox.js` | Toxins course: seven units (Exposures, Plastics, In the home, Pesticides, Soil, Living toxins, Neighbors), each sub-unit ending in a “How to fix” card (mode: One by one, Test once, Habit, Together; cost; steps free first) that can be added to **My list**, a reorderable one-by-one tracker (`localStorage` `meeting-needs.tox.v1`). Tools: Where to start, Soil batch planner (`#lens-toxins`, `#lens-toxins/list`, `#lens-toxins/<unit>[/<sub-unit>]`) |
 | `tox.css` | Toxins course styles (units in reds, darkest to lightest; `tx-` prefix) |
@@ -48,6 +48,9 @@ Most copy aims to be plain and checkable. The creator's own views are set apart 
 - **At the bottom.** Considerations sit at the end of a unit or page, after the regular content.
 - **Sourced.** Any fact in or behind the sentence gets a short source line. Keep opinions out of the regular copy.
 - **Animals link home.** Any consideration or copy touching peace with animals (plant foods, farm water, secondhand animal materials) links to the Animals accordion (`#lens-relationships/special/animals`), which lists them under “Across Kinship” and holds the creator’s consideration on commodification.
+
+## Labels
+Section labels are plain: “Fun fact”, never “A grateful fun fact” (gratitude can live in the copy itself).
 
 ## Language for animals
 Animals are someone, not something: they/them when sex is unknown, he/she when known, never "it". Never call animals by meat names ("beef", "pork", "poultry", "seafood") or "livestock", including in numbers, tables and labels. Don't soften animal agriculture either: name feedlots and slaughterhouses plainly, and say what a count leaves out. See FOUNDATION.md section 4.

@@ -201,7 +201,8 @@ p { margin: 0; }
 .is-solid .dot { background: var(--lc-ui); }
 .badge { font-size: 13px; font-weight: 600; padding: 3px 11px; border-radius: 999px; color: var(--muted); }
 .badge.ready { background: var(--lc-ui); color: var(--on-lens); }
-.badge.building { color: var(--progress); border: 1.5px solid var(--progress); background: var(--progress-bg); }
+.badge.building { color: var(--lc-ui); border: 1.5px solid var(--lc-ui); background: rgba(255, 255, 255, 0.7); }
+.lens-top .badge.ready, .lens-top .badge.building { margin-left: auto; }
 .badge.next, .badge.later { padding-inline: 0; }
 .lens h3 { font-weight: 800; font-size: 24px; overflow-wrap: anywhere; line-height: 1.1; letter-spacing: -0.02em; }
 .lens p { font-size: 15px; line-height: 1.45; color: var(--ink-2); flex-grow: 1; }

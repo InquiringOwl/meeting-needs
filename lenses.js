@@ -96,16 +96,22 @@ window.MN_TIERS = [
     status: 'Later',
     lenses: [
       {
+        id: 'energy', name: 'Energy', status: 'later',
+        blurb: 'Heat, cook and stay warm with less: fireplaces, gas, insulation and more.',
+        topics: ['Fireplaces', 'Cooking', 'Gas', 'Insulation'],
+        looks: ['Fireplaces and wood stoves that burn clean and safe', 'Gas appliances, leaks and carbon monoxide', 'Insulation and draught-proofing that cut the bill']
+      },
+      {
         id: 'first-aid', name: 'First aid', status: 'later',
         blurb: 'Cuts, burns, sprains, choking and bites: what to do in the first minutes.',
         topics: ['Wounds', 'Burns', 'Sprains', 'Emergencies'],
         looks: ['Stopping bleeding and cleaning a wound', 'Burns, breaks and sprains: what helps and what makes it worse', 'When to call emergency services, and what to do until they arrive']
       },
       {
-        id: 'energy', name: 'Energy', status: 'later',
-        blurb: 'Heat, cook and stay warm with less: fireplaces, gas, insulation and more.',
-        topics: ['Fireplaces', 'Cooking', 'Gas', 'Insulation'],
-        looks: ['Fireplaces and wood stoves that burn clean and safe', 'Gas appliances, leaks and carbon monoxide', 'Insulation and draught-proofing that cut the bill']
+        id: 'emergency-prep', name: 'Emergency prep', status: 'later',
+        blurb: 'Natural disasters, personal self-defense and securing your home: plan ahead so you can stay calm when it counts.',
+        topics: ['Disasters', 'Self-defense', 'Home security'],
+        looks: ['Go-bags, water and supplies for earthquakes, fires and floods', 'Personal safety and self-defense basics', 'Simple ways to secure doors, windows and your home']
       },
       {
         id: 'weather', name: 'Weather', status: 'later',
@@ -114,7 +120,7 @@ window.MN_TIERS = [
         looks: ['Cloud types and which ones turn to rain', 'Wind, pressure and the signs before a storm', 'Your local seasons, frost and rainfall patterns']
       },
       {
-        id: 'death-seasons', name: 'Death & seasons', status: 'later',
+        id: 'death-seasons', name: 'Death & cycles', status: 'later',
         blurb: 'How nature runs itself: seasons, death feeding new life, and the natural consensus and peaceful self-governance that keep ecosystems in balance.',
         topics: ['Cycles', 'Renewal', 'Consensus'],
         looks: ['Seasons and the cycles of growth, decay and return', 'How death and decomposition feed new life', 'Consensus and peaceful self-governance in nature']
@@ -167,12 +173,6 @@ window.MN_TIERS = [
         blurb: 'Diagnose, open up and mend what usually gets thrown out.',
         topics: ['Tools', 'Electronics', 'Mending'],
         looks: ['Finding the actual fault before buying anything', 'Opening things that were built to stay shut', 'Fixes that keep things out of the landfill']
-      },
-      {
-        id: 'emergency-prep', name: 'Emergency preparedness', status: 'later',
-        blurb: 'Natural disasters, personal self-defense and securing your home: plan ahead so you can stay calm when it counts.',
-        topics: ['Disasters', 'Self-defense', 'Home security'],
-        looks: ['Go-bags, water and supplies for earthquakes, fires and floods', 'Personal safety and self-defense basics', 'Simple ways to secure doors, windows and your home']
       },
       {
         id: 'governance', name: 'Governance', status: 'building',

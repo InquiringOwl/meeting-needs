@@ -86,7 +86,7 @@
             accs(
               acc('portable nohome', 'Portable', 'Gray water without changing any pipes', '<p>A bucket in the shower while it warms up, then into the toilet tank or onto outdoor plants. A basin in the sink for hand-washing water. Nothing to install, nothing to ask permission for.</p>'),
               acc('invest', 'Long-term place', 'Laundry-to-landscape and branched drains', '<p>The washing machine’s drain hose feeds a pipe to mulch basins around trees. A branched drain does the same for showers. A 3-way valve lets you switch back to the sewer in rainy months.</p>' + links('Gardening · Composting &amp; waste')),
-              acc('crisis', 'Outage', 'Flushing when the water is off', '<p>Pour a bucket of gray water (about 1–2 gallons) quickly into the bowl to flush. If sewer lines may be broken after an earthquake, don’t flush: use a lined bucket toilet instead.</p>' + links('Composting &amp; waste · Emergency preparedness'))
+              acc('crisis', 'Outage', 'Flushing when the water is off', '<p>Pour a bucket of gray water (about 1–2 gallons) quickly into the bowl to flush. If sewer lines may be broken after an earthquake, don’t flush: use a lined bucket toilet instead.</p>' + links('Composting &amp; waste · Emergency prep'))
             ); } },
           { id: 'less', short: 'Use less', title: 'Small ways to use less', html: function () { return ul(['<b>Toilet leak test:</b> a few drops of food coloring in the tank. Color in the bowl after 10 minutes without flushing means a leak.', 'A faucet dripping once a second adds up to thousands of gallons a year.', 'Wash dishes in a basin, run full laundry loads, catch the cold water while the shower warms.', 'Water gardens early or late, at the roots, with mulch on top.']) +
             tryit('Do the toilet dye test with a child: they’re great at watching for color.'); } },
@@ -170,7 +170,7 @@
             '<label class="wa-f">Days<select data-wa="store" id="wa-days"><option value="3">3 days</option><option value="7">1 week</option><option value="14" selected>2 weeks</option></select></label>' +
             '<label class="wa-f">Level<select data-wa="store" id="wa-lvl"><option value="1">Bare minimum (1 gal)</option><option value="4">Comfortable (4 gal)</option></select></label>' +
             '<label class="wa-chk"><input type="checkbox" data-wa="store" id="wa-hot"> Hot weather, nursing or sick</label></div>' +
-            '<div class="wa-out" id="wa-store-out" aria-live="polite"></div></div>' + links('Emergency preparedness'); } }
+            '<div class="wa-out" id="wa-store-out" aria-live="polite"></div></div>' + links('Emergency prep'); } }
         ] },
 
       { id: 'purify', num: 4, word: 'Purify', sub: 'From a pitcher to an aquifer',
@@ -224,7 +224,7 @@
                 '<div class="wa-out" id="wa-bleach-out" aria-live="polite"></div></div>'),
               acc('nohome', 'Free', 'Sunlight as a tool (SODIS)', '<p>Clear water in a clear plastic bottle (2 L or smaller), lying in full sun for about 6 hours (2 days if cloudy), is disinfected by UV. The flip side of ' + a('storage/algae', '3.3') + ': a short trip in the sun cleans; a long stay grows algae.</p>'),
               acc('crisis', 'Notices', 'During a boil-water notice', '<p>Use boiled or bottled water for drinking, brushing teeth, ice, baby bottles and washing produce. Showering is fine; keep it out of your mouth. When it lifts, run taps for a few minutes, empty the ice maker and change fridge and pitcher filters.</p>')
-            ) + links('Emergency preparedness · First aid · Cleaning'); } },
+            ) + links('Emergency prep · First aid · Cleaning'); } },
           { id: 'nohome', short: 'No fixed home', title: 'With no fixed home', html: function () { return kind('Being unhoused makes all of this much harder: more carrying, more asking, fewer places to wash and store. These are real options, cheapest first.') +
             ul(['<b>Free:</b> refill points (' + a('sources/taps', '2.2') + '), SODIS with clear bottles, rinsing bottles with hot water and soap at a library or day center.', '<b>A few dollars:</b> a small dropper bottle of plain bleach (date it).', '<b>Around $10–40:</b> a squeeze hollow-fiber filter for bacteria and parasites. Buy this one new (a used one can’t be checked for cracks, and boiling or freezing damages it); keep it from freezing.', '<b>Tablets:</b> chlorine dioxide tablets are light and handle Cryptosporidium too, with a longer wait (check the label, up to 4 hours).', '<b>Heat:</b> drink before you’re thirsty; shade and a slow pace stretch water further.']) +
             links('First aid · Body care'); } }
@@ -415,7 +415,7 @@
       '<ol class="wa-ucards">' + U.map(function (u) {
         return '<li><a class="wa-ucard wk' + u.num + '" href="' + BASE + '/' + u.id + '"><i class="wa-band"></i><span class="wa-n">0' + u.num + '</span><b>' + u.word + '</b><span>' + u.sub + '</span><ol>' + u.subs.map(function (s) { return '<li>' + s.title + '</li>'; }).join('') + '</ol></a></li>';
       }).join('') + '</ol>' +
-      '<aside class="wa-funfact"><span class="eyebrow">A grateful fun fact</span><p>This course leans on three kinds of knowing, checked against each other: old practice that kept people alive for thousands of years, international guidance (the World Health Organization’s drinking-water guidelines and the Sphere humanitarian handbook), and what you can see, smell and test yourself. Legal limits come from politics as well as science, and they change, so we use them as one input, not the last word. Laws mentioned are California’s; water itself is the same everywhere. Thank you to everyone who keeps this knowledge free.</p></aside>';
+      '<aside class="wa-funfact"><span class="eyebrow">Fun fact</span><p>This course leans on three kinds of knowing, checked against each other: old practice that kept people alive for thousands of years, international guidance (the World Health Organization’s drinking-water guidelines and the Sphere humanitarian handbook), and what you can see, smell and test yourself. Legal limits come from politics as well as science, and they change, so we use them as one input, not the last word. Laws mentioned are California’s; water itself is the same everywhere. Thank you to everyone who keeps this knowledge free.</p></aside>';
   }
   function viewUnit(U, u, subId) {
     var i = U.indexOf(u), prev = U[i - 1], next = U[i + 1];
