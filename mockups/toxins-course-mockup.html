@@ -1,0 +1,1493 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kinship · Toxins (course mock-up)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500..800&family=Instrument+Sans:wght@400..700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Mock-up only. Mirrors Kinship's style.css + the Food/Water mock-ups so it can move into tox.css later (prefix tx-). */
+:root {
+  --bg:#F4ECEA; --ink:#241717; --ink-2:#3D2C2C; --muted:#5A4343; --accent:#8E1F1F;
+  --glass:rgba(255,255,255,.42); --glass-strong:rgba(255,255,255,.64); --glass-faint:rgba(255,255,255,.24);
+  --glass-edge:rgba(255,255,255,.78); --chip:rgba(255,255,255,.62); --line:rgba(36,23,23,.16);
+  --soft-line:rgba(36,23,23,.08); --focus:#2F6E9E; --lens:#B85A14;
+  --f-head:'Manrope','Instrument Sans',system-ui,sans-serif;
+  --f-body:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  /* Toxins lens theme: reds, darkest (1) to lightest (7).
+     bg: page wash · mid: filled · edge: soft border · dot: the unit's red · on: text on dot */
+  --c1-bg:#F3E2E0; --c1-mid:#E6C6C2; --c1-edge:#D9AEA9; --c1-dot:#5E1212; --c1-on:#fff;
+  --c2-bg:#F5E4E2; --c2-mid:#EACAC6; --c2-edge:#DEB4AE; --c2-dot:#7E1A1A; --c2-on:#fff;
+  --c3-bg:#F6E6E3; --c3-mid:#ECCEC9; --c3-edge:#E1B9B2; --c3-dot:#9C2622; --c3-on:#fff;
+  --c4-bg:#F8E9E5; --c4-mid:#EFD3CD; --c4-edge:#E5BFB7; --c4-dot:#B8372E; --c4-on:#fff;
+  --c5-bg:#F9ECE8; --c5-mid:#F2D8D2; --c5-edge:#E9C6BE; --c5-dot:#CF5547; --c5-on:#fff;
+  --c6-bg:#FBF0EC; --c6-mid:#F5DFD9; --c6-edge:#EDCFC7; --c6-dot:#E08473; --c6-on:#241717;
+  --c7-bg:#FCF4F1; --c7-mid:#F8E7E2; --c7-edge:#F1DAD3; --c7-dot:#EDB3A7; --c7-on:#241717;
+  --k-bg:var(--glass-faint); --k-mid:var(--chip); --k-edge:var(--line); --k-dot:var(--muted); --k-on:#fff;
+}
+.k1{--k-bg:var(--c1-bg);--k-mid:var(--c1-mid);--k-edge:var(--c1-edge);--k-dot:var(--c1-dot);--k-on:var(--c1-on)}
+.k2{--k-bg:var(--c2-bg);--k-mid:var(--c2-mid);--k-edge:var(--c2-edge);--k-dot:var(--c2-dot);--k-on:var(--c2-on)}
+.k3{--k-bg:var(--c3-bg);--k-mid:var(--c3-mid);--k-edge:var(--c3-edge);--k-dot:var(--c3-dot);--k-on:var(--c3-on)}
+.k4{--k-bg:var(--c4-bg);--k-mid:var(--c4-mid);--k-edge:var(--c4-edge);--k-dot:var(--c4-dot);--k-on:var(--c4-on)}
+.k5{--k-bg:var(--c5-bg);--k-mid:var(--c5-mid);--k-edge:var(--c5-edge);--k-dot:var(--c5-dot);--k-on:var(--c5-on)}
+.k6{--k-bg:var(--c6-bg);--k-mid:var(--c6-mid);--k-edge:var(--c6-edge);--k-dot:var(--c6-dot);--k-on:var(--c6-on)}
+.k7{--k-bg:var(--c7-bg);--k-mid:var(--c7-mid);--k-edge:var(--c7-edge);--k-dot:var(--c7-dot);--k-on:var(--c7-on)}
+
+*{box-sizing:border-box}
+html{overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;overflow-x:clip}
+h1,h2,h3{font-family:var(--f-head);margin:0;text-wrap:balance}
+p{margin:0}
+a{color:var(--accent)}
+code{font-family:var(--f-mono);font-size:.9em}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:8px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+.sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.sky span{position:absolute;border-radius:50%;filter:blur(12px)}
+.sky .a{left:-12vw;top:-18vh;width:60vw;height:60vw;max-width:780px;max-height:780px;background:radial-gradient(circle,rgba(214,120,104,.38),transparent 68%)}
+.sky .b{right:-14vw;top:8vh;width:58vw;height:58vw;max-width:780px;max-height:780px;background:radial-gradient(circle,rgba(236,196,110,.28),transparent 68%)}
+.sky .c{left:25vw;bottom:-30vh;width:64vw;height:64vw;max-width:860px;max-height:860px;background:radial-gradient(circle,rgba(228,160,150,.32),transparent 68%)}
+
+.wrap{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:20px clamp(16px,3vw,40px) 72px;display:flex;flex-direction:column;gap:24px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px;border-radius:999px;background:var(--glass);border:1px solid var(--glass-edge)}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink)}
+.brand b{font-family:var(--f-head);font-weight:800;font-size:20px;letter-spacing:-.02em}
+.mock{font-family:var(--f-mono);font-size:12px;padding:4px 10px;border-radius:999px;border:1.5px dashed var(--line);color:var(--muted)}
+
+.layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:28px;align-items:start}
+.main{min-width:0;display:flex;flex-direction:column;gap:20px}
+
+/* Sidebar tree */
+.nav{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;scrollbar-width:thin;padding:14px;border-radius:26px;background:rgba(255,255,255,.72);border:1px solid var(--glass-edge)}
+.nav-head{display:flex;flex-direction:column;padding:2px 6px 8px}
+.nav-head b{font-family:var(--f-head);font-size:21px;font-weight:800;letter-spacing:-.02em}
+.nav-over{display:flex;align-items:center;justify-content:space-between;min-height:36px;padding:0 8px;margin-bottom:6px;border-radius:12px;color:var(--ink);text-decoration:none;font-weight:600;font-size:15px}
+.nav-over:hover,.nav-over.cur{background:var(--chip)}
+.nav-over .cnt{font-family:var(--f-mono);font-size:12px;font-weight:400;padding:1px 8px;border-radius:999px;background:var(--c3-dot);color:#fff}
+.vt{list-style:none;margin:0;padding:0;position:relative}
+.vt::before{content:'';position:absolute;left:21px;top:22px;bottom:22px;width:2px;border-radius:2px;background:linear-gradient(var(--c1-dot),var(--c4-dot),var(--c7-dot))}
+.vt-unit{position:relative;padding:3px 0}
+.vt-head{display:flex;align-items:center;gap:12px;min-height:46px;padding:4px 8px;border-radius:16px;color:var(--ink);text-decoration:none}
+.vt-head:hover{background:var(--k-bg)}
+.vt-unit.cur>.vt-head{background:var(--k-mid)}
+.vt-dot{position:relative;z-index:1;width:28px;height:28px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--k-dot);color:var(--k-on);box-shadow:0 0 0 4px var(--bg);font-family:var(--f-mono);font-size:13px}
+.vt-head b{display:block;font-family:var(--f-head);font-size:17px;font-weight:800;line-height:1.1}
+.vt-head small{display:block;font-size:13px;color:var(--muted)}
+.vt-subs{list-style:none;margin:2px 0 4px;padding:0 0 0 36px;display:none;flex-direction:column}
+.vt-unit.cur .vt-subs{display:flex}
+.vt-subs a{position:relative;display:flex;align-items:center;min-height:30px;padding:3px 8px;border-radius:10px;color:var(--ink-2);text-decoration:none;font-size:14px;line-height:1.25}
+.vt-subs a::before{content:'';position:absolute;left:-19px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:var(--k-dot)}
+.vt-subs a:hover{background:var(--k-bg);color:var(--ink)}
+.vt-subs a.tool-link{font-weight:600}
+
+/* Situation panel (reads and writes the Kinship profile) */
+.sit{border-radius:22px;background:var(--glass-strong);border:1px solid var(--soft-line)}
+.sit>summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:14px 18px}
+.sit>summary::-webkit-details-marker{display:none}
+.sit-sum{font-size:14.5px;color:var(--ink-2)}
+.sit-chips{display:flex;flex-wrap:wrap;gap:6px}
+.sit-chips span{font-size:13px;padding:3px 10px;border-radius:999px;background:#fff;border:1px solid var(--soft-line)}
+.sit-edit{margin-left:auto;font-size:14px;font-weight:600;color:var(--accent)}
+.sit-body{padding:0 18px 16px;display:flex;flex-direction:column;gap:12px}
+.qgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.qgrid label.f select{width:100%}
+.sit-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:13.5px;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--soft-line);background:#fff;color:var(--ink);font:inherit;font-size:14.5px;font-weight:600;cursor:pointer;text-decoration:none}
+.btn.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.new-q{font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+
+/* Overview */
+.hero{display:flex;flex-direction:column;gap:12px}
+.lens-pill{align-self:flex-start;padding:6px 12px;border-radius:999px;background:var(--lens);color:#fff;font-family:var(--f-mono);font-size:12px;line-height:1}
+.hero h1{font-weight:800;font-size:clamp(46px,6.4vw,84px);line-height:.95;letter-spacing:-.04em}
+.lede{font-size:clamp(17px,1.6vw,20px);color:var(--ink-2);max-width:66ch}
+.ucards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.ucard{display:flex;flex-direction:column;gap:8px;height:100%;padding:0 0 16px;border-radius:24px;background:var(--k-bg);border:1px solid var(--k-edge);text-decoration:none;color:var(--ink);overflow:hidden}
+.ucard>*{margin-inline:18px}
+.ucard .band{margin:0;height:10px;background:var(--k-dot)}
+.ucard:hover{background:var(--k-mid)}
+.ucard .n{font-family:var(--f-mono);font-size:13px;color:var(--muted);margin-top:6px}
+.ucard b{font-family:var(--f-head);font-weight:800;font-size:clamp(23px,2.3vw,28px);line-height:1;letter-spacing:-.03em}
+.ucard span{font-size:15px;color:var(--ink-2)}
+.ucard ol{margin:2px 18px 0;padding-left:18px;font-size:13.5px;color:var(--muted);display:flex;flex-direction:column;gap:1px}
+.ucard .modes{display:flex;flex-wrap:wrap;gap:4px;margin-top:auto;padding-top:6px}
+
+.funfact,.review{display:flex;flex-direction:column;gap:8px;padding:16px 20px;border-radius:20px;font-size:14.5px;color:var(--ink-2)}
+.funfact{background:var(--glass-strong);border:1px solid var(--soft-line)}
+.review{border:1.5px dashed var(--line)}
+.review ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+
+/* Two ways to fix: the course's main idea */
+.ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.way{display:flex;flex-direction:column;gap:8px;padding:16px 18px;border-radius:22px;background:rgba(255,255,255,.74);border:1px solid var(--soft-line)}
+.way b.h{font-family:var(--f-head);font-size:20px;font-weight:800;letter-spacing:-.02em}
+.way p{font-size:14.5px;color:var(--ink-2)}
+
+/* Unit page */
+.page[hidden]{display:none}
+.unit-hero{display:flex;flex-direction:column;gap:6px;padding:clamp(22px,3vw,32px);border-radius:28px;background:var(--k-bg);border:1px solid var(--k-edge);border-top:10px solid var(--k-dot)}
+.unit-hero h1{font-weight:800;font-size:clamp(42px,5.4vw,70px);line-height:.95;letter-spacing:-.04em}
+.unit-sub{font-family:var(--f-head);font-size:19px;font-weight:600;color:var(--ink-2)}
+.unit-hero .lede{font-size:16.5px;margin-top:4px}
+.unit-mode{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:8px;font-size:14.5px;color:var(--ink-2)}
+.jumps{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.jumps a{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 14px;border-radius:999px;background:var(--glass-strong);color:var(--ink);text-decoration:none;font-size:14px;font-weight:600}
+.jumps a span{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-weight:400}
+.jumps a:hover{background:var(--k-mid)}
+
+.sub{display:flex;flex-direction:column;gap:12px;padding:22px 24px;border-radius:24px;background:rgba(255,255,255,.74);border:1px solid var(--k-edge);scroll-margin-top:16px}
+.sub-top{display:flex;align-items:baseline;gap:10px}
+.sub-n{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);flex:none}
+.sub h2{font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+.sub>p{font-size:15.5px;max-width:78ch}
+.sub ul,.sub ol{margin:0;padding-left:20px;font-size:15px;color:var(--ink-2);display:flex;flex-direction:column;gap:4px;max-width:80ch}
+.home,.ca,.danger,.together,.kin{font-size:14.5px;padding:10px 12px;border-radius:14px}
+.home{background:var(--k-bg);color:var(--ink-2)}
+.home::before{content:'At home · '}
+.ca{background:#FFF7E8;color:var(--ink-2);border-left:4px solid #E3B25B}
+.ca::before{content:'In California · '}
+.danger{background:#FBEDEA;color:var(--ink-2);border-left:4px solid #C9806F}
+.danger::before{content:'Take care · '}
+.together{background:#F3EEF8;color:var(--ink-2);border-left:4px solid #B69AD3}
+.together::before{content:'Together · '}
+.kin{background:#EEF4EA;color:var(--ink-2);border-left:4px solid #8DB07F}
+.kin::before{content:'Animals, plants & soil · '}
+.home::before,.ca::before,.danger::before,.together::before,.kin::before{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.links{font-size:13px;color:var(--muted)}
+.links::before{content:'Links to → ';font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.src{font-size:12.5px;color:var(--muted)}
+.src::before{content:'Sources · ';font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}
+.kind{padding:12px 16px;border-radius:16px;background:#F3EEF8;border:1px solid #E1D6EE;font-size:14.5px;color:var(--ink-2)}
+
+/* What it does: people / animals / plants & soil */
+.does{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.does div{padding:12px 14px;border-radius:16px;background:var(--k-bg);border:1px solid var(--k-edge)}
+.does b{display:flex;align-items:center;gap:6px;font-family:var(--f-head);font-size:15.5px;margin-bottom:2px}
+.does p{font-size:14px;color:var(--ink-2)}
+.does i{font-style:normal;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:1px 7px;border-radius:999px;background:#fff;color:var(--muted)}
+
+/* Mode badges */
+.mode{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;padding:3px 10px;border-radius:999px;line-height:1.3;white-space:nowrap}
+.mode::before{content:'';width:8px;height:8px;border-radius:2px;background:currentColor;flex:none}
+.m-swap{background:#F7E3DF;color:#8A3E31}
+.m-swap::before{border-radius:50%}
+.m-batch{background:#E3ECF6;color:#2E557A}
+.m-habit{background:#E6F1E3;color:#2E6B35}
+.m-habit::before{border-radius:50% 0}
+.m-together{background:#EFE7F6;color:#5B3D86}
+.m-together::before{transform:rotate(45deg)}
+.cost{font-family:var(--f-mono);font-size:11px;padding:3px 9px;border-radius:999px;background:#fff;border:1px solid var(--soft-line);color:var(--ink-2)}
+
+/* How to fix: closes every sub-unit */
+.fix{display:flex;flex-direction:column;gap:10px;padding:16px 18px 18px;border-radius:20px;background:#fff;border:2px solid var(--k-dot);position:relative}
+.fix-top{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.fix-top b.t{font-family:var(--f-head);font-size:19px;font-weight:800;letter-spacing:-.01em;margin-right:4px}
+.fix-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.fix-steps li{display:flex;flex-direction:column;gap:4px;padding:10px 12px;border-radius:14px;background:var(--k-bg);font-size:14px;color:var(--ink-2)}
+.fix-steps li small{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.fix-steps li:nth-child(1){background:var(--k-mid)}
+.fix-foot{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:13.5px;color:var(--muted)}
+.add{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 14px;border-radius:999px;border:1.5px solid var(--k-dot);background:#fff;color:var(--ink);font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.add::before{content:'+';font-family:var(--f-mono);font-size:16px;line-height:1}
+.add.on{background:var(--k-dot);color:var(--k-on)}
+.add.on::before{content:'✓'}
+
+/* Accordions */
+.accs{display:flex;flex-direction:column;gap:8px}
+.acc{border-radius:16px;background:var(--k-bg);border:1px solid var(--k-edge)}
+.acc>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;min-height:48px;padding:8px 14px;font-weight:600;font-size:15.5px}
+.acc>summary::-webkit-details-marker{display:none}
+.acc>summary::after{content:'+';margin-left:auto;font-family:var(--f-mono);font-size:18px;color:var(--muted);flex:none}
+.acc[open]>summary::after{content:'–'}
+.acc>summary:hover{background:var(--k-mid);border-radius:16px}
+.acc .who{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:#fff;color:var(--ink-2);font-weight:400;flex:none}
+.acc .for-you{display:none;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:var(--k-dot);color:var(--k-on);font-weight:400;flex:none}
+.acc.match{box-shadow:0 0 0 2px var(--k-dot)}
+.acc.match .for-you{display:inline-block}
+.acc .in{padding:2px 16px 14px;display:flex;flex-direction:column;gap:8px;font-size:15px;color:var(--ink-2)}
+
+/* Tables, tools */
+.tbl-wrap{overflow-x:auto;border-radius:18px;border:1px solid var(--k-edge);background:#fff}
+table{border-collapse:collapse;width:100%;min-width:600px;font-size:14px}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--soft-line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--k-bg)}
+td:first-child{font-weight:600}
+td.y{color:#2E6B35}td.p{color:#8A6418}td.n{color:#9A4A3A}
+.legend{font-size:12.5px;color:var(--muted)}
+.tool{display:flex;flex-direction:column;gap:12px;padding:18px 20px;border-radius:22px;background:var(--k-mid);border:1px solid var(--k-edge)}
+.tool b.t{font-family:var(--f-head);font-size:21px;font-weight:800}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);font-family:var(--f-mono);min-width:0;max-width:100%}
+select{font:inherit;font-family:var(--f-body);font-size:15.5px;min-height:40px;padding:0 12px;border-radius:12px;border:1px solid var(--soft-line);background:#fff;color:var(--ink);max-width:100%}
+.chks{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:6px 14px}
+.chk{display:flex;align-items:flex-start;gap:8px;font-size:14.5px;color:var(--ink-2);padding:6px 0}
+.chk input{margin-top:4px;accent-color:var(--k-dot)}
+.out{padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.88);font-size:15px;display:flex;flex-direction:column;gap:8px}
+.out strong{font-family:var(--f-head);font-size:24px;font-weight:800;letter-spacing:-.02em;display:block;line-height:1.1}
+.out small{display:block;color:var(--muted);font-size:13px}
+.out ol,.out ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+
+/* Zones diagram (soil batch) */
+.zones{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.zone{padding:10px 12px;border-radius:14px;background:#fff;border:1.5px dashed var(--k-edge);font-size:13.5px;color:var(--ink-2)}
+.zone b{display:block;font-family:var(--f-head);font-size:15px;color:var(--ink)}
+.zone.on{border-style:solid;border-color:var(--k-dot);background:var(--k-bg)}
+
+/* My list (the one-by-one tracker) */
+.lst{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.lst li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 14px;border-radius:18px;background:rgba(255,255,255,.8);border:1px solid var(--soft-line);border-left:8px solid var(--k-dot)}
+.lst li.done{opacity:.62}
+.lst li.done .lt b{text-decoration:line-through;text-decoration-thickness:1.5px}
+.lst .num{font-family:var(--f-mono);font-size:13px;color:var(--muted);width:26px;text-align:center}
+.lt b{display:block;font-family:var(--f-head);font-size:16.5px}
+.lt span{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.lt small{font-size:13px;color:var(--muted)}
+.st{font:inherit;font-family:var(--f-mono);font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid var(--soft-line);background:#fff;cursor:pointer;min-width:84px}
+.st[data-s=doing]{background:#FBF0D9;color:#7A5714}
+.st[data-s=done]{background:#E3F1E1;color:#2E6B35}
+.lst-ctl{display:flex;flex-direction:column;gap:4px}
+.lst-ctl button{font:inherit;font-size:12px;line-height:1;padding:3px 7px;border-radius:8px;border:1px solid var(--soft-line);background:#fff;cursor:pointer;color:var(--muted)}
+.empty{padding:22px;border-radius:20px;border:1.5px dashed var(--line);text-align:center;color:var(--muted);font-size:15px}
+.progress{height:12px;border-radius:999px;background:rgba(255,255,255,.7);border:1px solid var(--soft-line);overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--c1-dot),var(--c5-dot));transition:width .3s}
+
+.pager{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.pager a{display:inline-flex;flex-direction:column;gap:2px;padding:12px 18px;border-radius:18px;background:var(--glass-strong);border:1px solid var(--soft-line);color:var(--ink);text-decoration:none;min-width:200px}
+.pager a small{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.pager a b{font-family:var(--f-head);font-size:18px}
+.pager a.next{margin-left:auto;text-align:right}
+.pager a:hover{background:#fff}
+
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);opacity:0;transition:.25s;z-index:5;padding:10px 18px;border-radius:999px;background:var(--ink);color:#fff;font-size:14.5px;pointer-events:none}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr}
+  .nav{position:static;max-height:none}
+  .pager a{min-width:0;flex:1}
+  .sub{padding:18px 16px}
+}
+</style>
+</head>
+<body>
+<div class="sky" aria-hidden="true"><span class="a"></span><span class="b"></span><span class="c"></span></div>
+<div class="wrap">
+
+<header class="top">
+  <a class="brand" href="#"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="#C2477F" d="M12 21s-7.5-4.6-9.3-9.6C1.5 8 3.6 4.5 7 4.5c2 0 3.4 1.1 5 3 1.6-1.9 3-3 5-3 3.4 0 5.5 3.5 4.3 6.9C19.5 16.4 12 21 12 21z"/></svg><b>Kinship</b></a>
+  <span class="mock">Mock-up v1 · Toxins lens</span>
+</header>
+
+<div class="layout">
+<nav class="nav" aria-label="Toxins course">
+  <div class="nav-head"><span class="eyebrow">Tier 2 · Roots</span><b>Toxins</b></div>
+  <a class="nav-over" href="#" data-nav="">Overview</a>
+  <a class="nav-over" href="#list" data-nav="list">My list <span class="cnt" id="navCount">0</span></a>
+  <ol class="vt">
+    <li class="vt-unit k1" data-unit="u1"><a class="vt-head" href="#u1"><span class="vt-dot">1</span><span><b>See</b><small>How exposures work</small></span></a>
+      <ul class="vt-subs"><li><a href="#u1/s1">Dose, route and timing</a></li><li><a href="#u1/s2">Source, path, body</a></li><li><a href="#u1/s3">Gone in days, here for years</a></li><li><a href="#u1/s4">Every body, not just ours</a></li><li><a class="tool-link" href="#u1/tool">Tool: Where to start</a></li></ul></li>
+    <li class="vt-unit k2" data-unit="u2"><a class="vt-head" href="#u2"><span class="vt-dot">2</span><span><b>Plastics</b><small>Including PFAS</small></span></a>
+      <ul class="vt-subs"><li><a href="#u2/s1">What’s in plastic</a></li><li><a href="#u2/s2">Heat, fat and acid</a></li><li><a href="#u2/s3">Cans and jar lids</a></li><li><a href="#u2/s4">PFAS, the forever chemicals</a></li><li><a href="#u2/s5">Plastic in soil and plants</a></li></ul></li>
+    <li class="vt-unit k3" data-unit="u3"><a class="vt-head" href="#u3"><span class="vt-dot">3</span><span><b>In the house</b><small>Cleaners, dust, pans</small></span></a>
+      <ul class="vt-subs"><li><a href="#u3/s1">Cleaning products</a></li><li><a href="#u3/s2">Fragrance</a></li><li><a href="#u3/s3">Dust and flame retardants</a></li><li><a href="#u3/s4">Pots and pans</a></li><li><a href="#u3/s5">Body care</a></li></ul></li>
+    <li class="vt-unit k4" data-unit="u4"><a class="vt-head" href="#u4"><span class="vt-dot">4</span><span><b>Pesticides</b><small>Glyphosate and kin</small></span></a>
+      <ul class="vt-subs"><li><a href="#u4/s1">How pesticides work</a></li><li><a href="#u4/s2">Glyphosate</a></li><li><a href="#u4/s3">On our food</a></li><li><a href="#u4/s4">Yard, home and companions</a></li><li><a href="#u4/s5">Drift from next door</a></li></ul></li>
+    <li class="vt-unit k5" data-unit="u5"><a class="vt-head" href="#u5"><span class="vt-dot">5</span><span><b>Soil</b><small>Ground, beds and bags</small></span></a>
+      <ul class="vt-subs"><li><a href="#u5/s1">What soil remembers</a></li><li><a href="#u5/s2">Test once, in one batch</a></li><li><a href="#u5/s3">Potting mix and bagged soil</a></li><li><a href="#u5/s4">Beds, wood and tires</a></li><li><a href="#u5/s5">Living with what you find</a></li><li><a class="tool-link" href="#u5/tool">Tool: Batch planner</a></li></ul></li>
+    <li class="vt-unit k6" data-unit="u6"><a class="vt-head" href="#u6"><span class="vt-dot">6</span><span><b>Living toxins</b><small>Molds, blooms, plants</small></span></a>
+      <ul class="vt-subs"><li><a href="#u6/s1">Mold in the house</a></li><li><a href="#u6/s2">Mold on food</a></li><li><a href="#u6/s3">Water that blooms</a></li><li><a href="#u6/s4">Plants and companions</a></li><li><a href="#u6/s5">Most microbes are kin</a></li></ul></li>
+    <li class="vt-unit k7" data-unit="u7"><a class="vt-head" href="#u7"><span class="vt-dot">7</span><span><b>Neighbors</b><small>Living near polluters</small></span></a>
+      <ul class="vt-subs"><li><a href="#u7/s1">Reading your map</a></li><li><a href="#u7/s2">Roads, freeways, airports</a></li><li><a href="#u7/s3">Factories, refineries, wells</a></li><li><a href="#u7/s4">After a fire</a></li><li><a href="#u7/s5">Changing it together</a></li></ul></li>
+  </ol>
+</nav>
+
+<main class="main">
+
+<!-- Situation: filled from the Profile when answered; asked here only when it isn't. Every section stays available either way. -->
+<details class="sit" id="sit">
+  <summary><span class="eyebrow">Your situation</span><span class="sit-sum" id="sitSum"></span><span class="sit-chips" id="sitChips"></span><span class="sit-edit">Change</span></summary>
+  <div class="sit-body">
+    <div class="qgrid">
+      <label class="f">Kind of place<select data-q="home"></select></label>
+      <label class="f">How much can you change the place?<select data-q="shape"></select></label>
+      <label class="f">Outdoor or growing space<select data-q="space1"></select></label>
+      <label class="f"><span>When was the building built? <span class="new-q">new</span></span><select data-q="built"></select></label>
+      <label class="f"><span>Who lives with you? <span class="new-q">new</span></span><select data-q="with"></select></label>
+      <label class="f"><span>Close by (within ~½ mile) <span class="new-q">new</span></span><select data-q="near"></select></label>
+    </div>
+    <div class="sit-foot"><span>Saved to your Profile in this browser, so every lens can use it. Sections for you open and get a “For you” tag; everything else stays one tap away.</span><a class="btn" href="../index.html#profile">Open Profile</a></div>
+  </div>
+</details>
+
+<!-- ============ OVERVIEW ============ -->
+<section class="page" data-page="">
+  <div class="main">
+  <div class="hero">
+    <span class="lens-pill">TIER 2 · ROOTS</span>
+    <h1>Toxins</h1>
+    <p class="lede">Bodies (ours, our companions’, our plants’ and the soil’s) need to not be quietly worn down by what’s in the pan, the can, the dust, the ground and the air next door. Seven units that start with how exposure works, then move outward from the kitchen to the neighborhood. Every section ends with a <b>How to fix</b>, free steps first.</p>
+  </div>
+
+  <div class="ways">
+    <div class="way"><span class="mode m-swap">One by one</span><b class="h">Most fixes are swaps</b><p>Plastics, cleaners, pans, fragrance: knock them out one at a time, at your pace and budget. Each swap you add goes on <a href="#list">My list</a> in the order you choose.</p></div>
+    <div class="way"><span class="mode m-batch">Test once</span><b class="h">Some things are a single batch</b><p>Yard soil and well water are cheapest and clearest tested once, all at the same time, with a plan. Unit 5 has a planner that builds one lab order.</p></div>
+    <div class="way"><span class="mode m-habit">Habit</span><b class="h">Some are small daily moves</b><p>Shoes off, wet dusting, a fan when cooking. Free, and they stack.</p></div>
+    <div class="way"><span class="mode m-together">Together</span><b class="h">Some are bigger than a household</b><p>A freeway, a refinery, a spray field. These move with neighbors, maps and a voice in the room.</p></div>
+  </div>
+
+  <ol class="ucards">
+    <li><a class="ucard k1" href="#u1"><i class="band"></i><span class="n">01</span><b>See</b><span>How to think about exposures, and where to start.</span><ol><li>Dose, route and timing</li><li>Source, path, body</li><li>Gone in days, here for years</li><li>Every body, not just ours</li></ol><span class="modes"><span class="mode m-habit">Habit</span></span></a></li>
+    <li><a class="ucard k2" href="#u2"><i class="band"></i><span class="n">02</span><b>Plastics</b><span>Bisphenols, phthalates, microplastics, can linings and PFAS.</span><ol><li>What’s in plastic</li><li>Heat, fat and acid</li><li>Cans and jar lids</li><li>PFAS, the forever chemicals</li><li>Plastic in soil and plants</li></ol><span class="modes"><span class="mode m-swap">One by one</span></span></a></li>
+    <li><a class="ucard k3" href="#u3"><i class="band"></i><span class="n">03</span><b>In the house</b><span>Cleaners, fragrance, dust, pans and body care.</span><ol><li>Cleaning products</li><li>Fragrance</li><li>Dust and flame retardants</li><li>Pots and pans</li><li>Body care</li></ol><span class="modes"><span class="mode m-swap">One by one</span><span class="mode m-habit">Habit</span></span></a></li>
+    <li><a class="ucard k4" href="#u4"><i class="band"></i><span class="n">04</span><b>Pesticides</b><span>Glyphosate, food residues, yard poisons and drift.</span><ol><li>How pesticides work</li><li>Glyphosate</li><li>On our food</li><li>Yard, home and companions</li><li>Drift from next door</li></ol><span class="modes"><span class="mode m-swap">One by one</span><span class="mode m-together">Together</span></span></a></li>
+    <li><a class="ucard k5" href="#u5"><i class="band"></i><span class="n">05</span><b>Soil</b><span>Lead and legacy metals, potting mix, beds and wood.</span><ol><li>What soil remembers</li><li>Test once, in one batch</li><li>Potting mix and bagged soil</li><li>Beds, wood and tires</li><li>Living with what you find</li></ol><span class="modes"><span class="mode m-batch">Test once</span></span></a></li>
+    <li><a class="ucard k6" href="#u6"><i class="band"></i><span class="n">06</span><b>Living toxins</b><span>Molds, food molds, algal blooms and plants that harm companions.</span><ol><li>Mold in the house</li><li>Mold on food</li><li>Water that blooms</li><li>Plants and companions</li><li>Most microbes are kin</li></ol><span class="modes"><span class="mode m-habit">Habit</span></span></a></li>
+    <li><a class="ucard k7" href="#u7"><i class="band"></i><span class="n">07</span><b>Neighbors</b><span>Freeways, factories, wells, airports and fire.</span><ol><li>Reading your map</li><li>Roads, freeways, airports</li><li>Factories, refineries, wells</li><li>After a fire</li><li>Changing it together</li></ol><span class="modes"><span class="mode m-habit">Habit</span><span class="mode m-together">Together</span></span></a></li>
+  </ol>
+
+  <div class="funfact"><span class="eyebrow">Fun fact</span>
+    <p>When families in one study swapped to fresh food with no cans or plastic packaging for just three days, the BPA in their urine dropped by about two-thirds. Some exposures leave the body that fast, which is part of why one-by-one swaps feel good: the body answers quickly.</p>
+    <p class="src">Rudel et al., <i>Environmental Health Perspectives</i> 2011. Laws mentioned are California’s; the chemistry is the same everywhere.</p>
+  </div>
+  <div class="review"><span class="eyebrow">For review · mock-up notes</span>
+    <ul>
+      <li><b>Unit order goes from the body outward:</b> how exposure works → what touches food → the house → the yard → the ground → living things → the neighborhood. The most control is at the start; the “Together” fixes gather at the end.</li>
+      <li><b>Every sub-unit ends in a “How to fix” card</b> with a mode (One by one, Test once, Habit, Together), a cost, and steps from free to bigger. “Add to my list” saves it to <b>My list</b>, a reorderable one-by-one tracker (Next → Doing → Done). Soil is the one place designed as a single batch, with its own planner (5.2 + tool).</li>
+      <li><b>Three new profile questions:</b> <code>built</code> (before 1978 matters for lead paint), <code>with</code> (kids, pregnancy, companion animals, birds) and <code>near</code> (freeway, industry, farm fields, airport). Also reads <code>home</code>, <code>shape</code>, <code>space</code>, and Water’s <code>sources</code> for wells.</li>
+      <li><b>Overlaps to settle:</b> 3.1 Cleaning products leans on the Cleaning lens, 6.1 Mold on the Air lens, and water testing stays in Water (linked, not repeated).</li>
+      <li>A Creator’s consideration could sit at the end of 4.2 (glyphosate) or 7.5 (changing it together), if you’d like one.</li>
+    </ul>
+  </div>
+  </div>
+</section>
+
+<!-- ============ MY LIST ============ -->
+<section class="page k3" data-page="list" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Your one-by-one list</span><h1>My list</h1><p class="unit-sub">One swap at a time, in the order you choose</p>
+    <p class="lede">Every “How to fix” you add lands here. Move the ones that matter most, or cost least, to the top. Tap the status to move it along. There’s no deadline and no score; a list that sits for a month is still a list.</p>
+    <div class="progress" aria-hidden="true"><i id="lstBar"></i></div>
+    <p class="legend" id="lstSum"></p>
+  </div>
+  <ol class="lst" id="lst"></ol>
+  <div class="empty" id="lstEmpty">Nothing here yet. Try <a href="#u1/tool">Where to start</a> for a first few, or add any “How to fix” as you read.</div>
+  <div class="row"><button class="btn" id="lstSort">Free ones first</button><button class="btn" id="lstClear">Clear done</button><a class="btn" href="#u1/tool">Where to start</a></div>
+  <p class="legend">Saved only in this browser (<code>meeting-needs.tox.v1</code>). Plans → Improvements &amp; budget could read it later.</p>
+  </div>
+</section>
+
+<!-- ============ UNIT 1: SEE ============ -->
+<section class="page k1" data-page="u1" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 1</span><h1>See</h1><p class="unit-sub">How exposures work</p>
+    <p class="lede">A few ideas make every later unit easier: how much, by which door, at what age, and for how long it stays. With these, a scary headline turns into a question you can answer: does this reach me, and what’s the easiest link to break?</p>
+    <ul class="jumps"><li><a href="#u1/s1"><span>1.1</span>Dose &amp; route</a></li><li><a href="#u1/s2"><span>1.2</span>Source, path, body</a></li><li><a href="#u1/s3"><span>1.3</span>Days or years</a></li><li><a href="#u1/s4"><span>1.4</span>Every body</a></li><li><a href="#u1/tool"><span>Tool</span>Where to start</a></li></ul>
+  </div>
+
+  <article class="sub" id="u1-s1">
+    <div class="sub-top"><span class="sub-n">1.1</span><h2>Dose, route and timing</h2></div>
+    <p>Three questions sit under every exposure. <b>How much</b> (the dose) and <b>how often</b>. <b>Which door</b> it uses: breathing it, eating or drinking it, or through skin. And <b>when in life</b>: pregnancy, babies and young children take in more per pound of body, put hands and toys in their mouths, and are still building organs, so the same dose lands harder.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Door</th><th>Common examples</th><th>Easiest link to break</th></tr></thead>
+      <tbody>
+        <tr><td>Breathing</td><td>Cooking smoke, gas stove fumes, sprays, dust, wildfire smoke, freeway air</td><td>Ventilation, filters, fewer sprays</td></tr>
+        <tr><td>Eating &amp; drinking</td><td>Plastic touching hot or fatty food, can linings, residues, tap water, house dust on hands</td><td>Swap the container, wash produce, filter water, wash hands</td></tr>
+        <tr><td>Skin</td><td>Lotions, fragrance, cleaners, treated fabrics, soil</td><td>Gloves, simpler products, rinse off</td></tr>
+      </tbody>
+    </table></div>
+    <p>One wrinkle: some chemicals that mimic hormones (endocrine disruptors) don’t follow “a little is always fine.” Small amounts at sensitive times can matter, which is part of why this course leans on reducing many small exposures rather than chasing one big one.</p>
+    <div class="fix" data-fix="u1s1" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Pick one room and name the doors: what’s breathed, eaten and touched there.</li>
+        <li><small>Free</small>If someone is pregnant or there’s a baby or toddler, start with what they touch and mouth: floors, dust, cups, bottles.</li>
+        <li><small>Free</small>Wash hands before eating, especially kids after floor and yard play. It cuts dust-borne lead, flame retardants and pesticides at once.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Handwashing before meals (dust, lead, residues)">Add to my list</button></div>
+    </div>
+    <p class="src">US EPA, <i>Child-Specific Exposure Factors Handbook</i>; Endocrine Society scientific statement on endocrine-disrupting chemicals (EDC-2, 2015).</p>
+  </article>
+
+  <article class="sub" id="u1-s2">
+    <div class="sub-top"><span class="sub-n">1.2</span><h2>Source, path, body</h2></div>
+    <p>Every exposure is a chain: a <b>source</b> (a pan, a can, a factory), a <b>path</b> (heat, dust, air, water, hands) and a <b>body</b> it reaches. Breaking any one link works. Safety engineers rank the ways to break it, and the order is useful at home too:</p>
+    <div class="does">
+      <div><b>1 · Remove it</b><p>Don’t bring it in, or let it go. Most powerful, often free.</p></div>
+      <div><b>2 · Swap it</b><p>Glass for plastic, cast iron for a scratched nonstick pan.</p></div>
+      <div><b>3 · Block the path</b><p>A range hood, a filter, a doormat, a raised bed with clean soil.</p></div>
+      <div><b>4 · Change the habit</b><p>Shoes off, food cooled before it goes in plastic.</p></div>
+      <div><b>5 · Protect the body</b><p>Gloves, a mask. Useful, but the last line, not the first.</p></div>
+    </div>
+    <p class="home">Microwaving leftovers in a plastic tub: the source is the tub, the path is heat, the body is whoever eats. Moving the food to a plate before heating removes the path for free.</p>
+    <div class="fix" data-fix="u1s2" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>For one worry, write the chain: source → path → body.</li>
+        <li><small>Free</small>Circle the link that’s cheapest to break. Often it’s the path (heat, dust, air), not the thing itself.</li>
+        <li><small>Free</small>Only buy something when removing, moving or changing a habit won’t do it.</li>
+      </ol>
+      <div class="fix-foot"><span>Uses the same idea as the Water lens’s source-to-tap chain.</span></div>
+    </div>
+    <p class="src">NIOSH, <i>Hierarchy of Controls</i>.</p>
+  </article>
+
+  <article class="sub" id="u1-s3">
+    <div class="sub-top"><span class="sub-n">1.3</span><h2>Gone in days, here for years</h2></div>
+    <p>Some chemicals pass through the body in hours or days. Others stay for years. This changes what a fix can do, and how soon.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Chemical</th><th>Roughly how long half of it stays</th><th>What that means</th></tr></thead>
+      <tbody>
+        <tr><td>BPA, many phthalates</td><td class="y">Hours to a day</td><td>Swaps show up in the body within days.</td></tr>
+        <tr><td>Glyphosate</td><td class="y">Hours to days</td><td>Diet changes show up within a week.</td></tr>
+        <tr><td>Lead</td><td class="p">About a month in blood; decades in bone</td><td>Stopping new exposure matters most, early.</td></tr>
+        <tr><td>PFOA, PFOS (PFAS)</td><td class="n">About 2 to 5 years</td><td>Fixes are slow to show; preventing new exposure, especially in water, is the lever.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="legend">Green: leaves quickly · Amber: mixed · Red: stays for years.</p>
+    <div class="fix" data-fix="u1s3" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free</small>For quick-leaving chemicals, small daily swaps pay off fast. Start there for momentum.</li>
+        <li><small>Free</small>For long-staying ones (PFAS, lead), look for the biggest single source, usually water or soil, and deal with it once.</li>
+        <li><small>Ask</small>With likely high PFAS exposure, a clinician can order a PFAS blood test (US National Academies guidance, 2022).</li>
+      </ol>
+      <div class="fix-foot"><span>Links to Water → Testing.</span></div>
+    </div>
+    <p class="src">ATSDR toxicological profiles (lead, PFAS); Li et al. 2018 on PFAS half-lives; National Academies, <i>Guidance on PFAS Exposure, Testing, and Clinical Follow-Up</i> (2022).</p>
+  </article>
+
+  <article class="sub" id="u1-s4">
+    <div class="sub-top"><span class="sub-n">1.4</span><h2>Every body, not just ours</h2></div>
+    <p>The house holds more than people. Some kin are far more sensitive than we are, and their reactions can be early signals for everyone.</p>
+    <div class="does">
+      <div><b>Birds <i>Air</i></b><p>Overheated nonstick pans give off fumes that can kill a bird in minutes. Birds breathe so efficiently that fumes hit them first.</p></div>
+      <div><b>Cats <i>Skin</i></b><p>Permethrin, common in dog flea treatments, can poison a cat, sometimes fatally. Cats also can’t break down many essential oils well.</p></div>
+      <div><b>Dogs <i>Water</i></b><p>Toxic algae in still water can kill a dog within hours of a swim or a drink.</p></div>
+      <div><b>Plants <i>Roots</i></b><p>Microplastics and PFAS reach roots and, for some crops, leaves and fruit. Herbicide drift scorches non-target plants.</p></div>
+      <div><b>Soil life <i>Ground</i></b><p>Worms, fungi and microbes take the brunt of what lands on the ground, and they’re the ones who rebuild it.</p></div>
+    </div>
+    <p class="kin">When someone small is sneezing, itching, listless or drooping, it’s a message about a need. Ask what changed in the air, water, food or soil before anything else.</p>
+    <div class="fix" data-fix="u1s4" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Save the ASPCA Animal Poison Control number (888-426-4435, a fee may apply) in your phone.</li>
+        <li><small>Free</small>Keep birds out of the kitchen while cooking, and check any flea treatment is labeled for that species.</li>
+        <li><small>Free</small>Read later units with the most sensitive one in the house in mind.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Save Animal Poison Control number; check flea products by species">Add to my list</button></div>
+    </div>
+    <p class="src">ASPCA Animal Poison Control; Merck Veterinary Manual (PTFE toxicosis in birds; permethrin toxicosis in cats); CDC, Harmful Algal Blooms and animals.</p>
+  </article>
+
+  <article class="sub" id="u1-tool">
+    <div class="sub-top"><span class="sub-n">Tool</span><h2>Where to start</h2></div>
+    <div class="tool">
+      <b class="t">Tick what’s true now</b>
+      <p class="legend">No judgement in any box. It just finds the swaps with the biggest return for the least effort.</p>
+      <div class="chks" id="wsChecks"></div>
+      <div class="out" id="wsOut"></div>
+    </div>
+  </article>
+
+  <nav class="pager"><a href="#"><small>← Back</small><b>Overview</b></a><a class="next" href="#u2"><small>Next unit →</small><b>2 · Plastics</b></a></nav>
+  </div>
+</section>
+
+<!-- ============ UNIT 2: PLASTICS ============ -->
+<section class="page k2" data-page="u2" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 2</span><h1>Plastics</h1><p class="unit-sub">Including PFAS</p>
+    <p class="lede">Plastic is useful and everywhere, and it isn’t one thing: it’s a polymer plus additives that soften it, harden it, color it or make it slick. Some of those additives move into food and dust, and the plastic itself sheds tiny pieces. The good news: food contact is the main door, and it’s one we control a lot of.</p>
+    <div class="unit-mode"><span class="mode m-swap">One by one</span> Swap one food-contact item at a time, starting with whatever meets heat.</div>
+    <ul class="jumps"><li><a href="#u2/s1"><span>2.1</span>What’s in it</a></li><li><a href="#u2/s2"><span>2.2</span>Heat, fat, acid</a></li><li><a href="#u2/s3"><span>2.3</span>Cans &amp; lids</a></li><li><a href="#u2/s4"><span>2.4</span>PFAS</a></li><li><a href="#u2/s5"><span>2.5</span>Soil &amp; plants</a></li></ul>
+  </div>
+
+  <article class="sub" id="u2-s1">
+    <div class="sub-top"><span class="sub-n">2.1</span><h2>What’s in plastic</h2></div>
+    <ul>
+      <li><b>Bisphenols</b> (BPA, and replacements BPS and BPF) harden polycarbonate and epoxy can linings, and coat many paper receipts. They act like estrogen in the body.</li>
+      <li><b>Phthalates</b> soften vinyl (PVC) and carry fragrance. Linked to changes in male reproductive development and to asthma.</li>
+      <li><b>Micro- and nanoplastics</b>: pieces from shedding and wear. Found in human blood, placentas and brain tissue; in one 2024 study, people with plastic in their artery plaque had higher rates of heart attack, stroke and death. Cause and effect is still being studied.</li>
+    </ul>
+    <div class="does">
+      <div><b>People</b><p>Hormone signaling, reproduction, metabolism; plastics research is fast-moving and mostly associations so far.</p></div>
+      <div><b>Animals</b><p>Wild animals eat plastic outright; companion animals share our dust and bowls.</p></div>
+      <div><b>Plants &amp; soil</b><p>See 2.5: plastic changes how soil holds water and air, and tiny pieces enter some roots.</p></div>
+    </div>
+    <p class="legend">Recycling codes, roughly: <b>3</b> (PVC) and <b>6</b> (polystyrene) and <b>7</b> (“other,” often polycarbonate) are the ones to retire first from food use; <b>2, 4, 5</b> shed fewer known additives, but still shed particles with heat and wear.</p>
+    <div class="fix" data-fix="u2s1" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-swap">One by one</span><span class="cost">Free → $</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Say no thanks to paper receipts, or hold them briefly and wash hands after.</li>
+        <li><small>Free</small>Retire scratched, cloudy or #3/#6/#7 food containers to garage storage (screws, crayons).</li>
+        <li><small>Free → $</small>Collect glass jars from food you already buy; they replace most tubs at no cost.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Move #3/#6/#7 and scratched plastics out of food use">Add to my list</button></div>
+    </div>
+    <p class="src">Endocrine Society EDC-2 (2015); Leslie et al., <i>Environment International</i> 2022 (blood); Marfella et al., <i>NEJM</i> 2024 (carotid plaque); Nihart et al., <i>Nature Medicine</i> 2025 (brain tissue).</p>
+  </article>
+
+  <article class="sub" id="u2-s2">
+    <div class="sub-top"><span class="sub-n">2.2</span><h2>Heat, fat and acid</h2></div>
+    <p>Plastic gives up more into food when it’s <b>hot</b>, when the food is <b>fatty</b> (oil, nut butters, coconut milk) or <b>acidic</b> (tomato, citrus, vinegar), when it’s <b>old and scratched</b>, and the longer they touch. In one lab study, microwaving plastic containers released millions of microplastic and billions of nanoplastic pieces per square centimeter in three minutes.</p>
+    <ul>
+      <li>Hot drinks through plastic lids or plastic tea bags.</li>
+      <li>Hot food poured into plastic tubs, or warmed in them.</li>
+      <li>Dishwashers: heat plus detergent wears plastic fast.</li>
+      <li>Plastic cutting boards shed into food as they’re scored.</li>
+    </ul>
+    <div class="fix" data-fix="u2s2" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-swap">One by one</span><span class="cost">Free first</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Reheat on a plate or in a pot, never in plastic. Cool food before it goes into any plastic.</li>
+        <li><small>Free</small>Hand-wash any plastic you keep; skip the dishwasher for it.</li>
+        <li><small>Low cost</small>Loose-leaf tea with a metal strainer; a wooden cutting board; glass or steel for leftovers.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Stop heating food in plastic (plate, pot, glass)">Add to my list</button></div>
+    </div>
+    <div class="accs">
+      <details class="acc" data-for="kids"><summary><span class="who">Babies</span>Bottles, formula and teethers<span class="for-you">For you</span></summary><div class="in"><ul><li>BPA has been out of US baby bottles since 2012, but plastic bottles still shed microplastics, more with hot water. Make formula in a glass or steel container and pour it in once it’s cooled to drinking warmth.</li><li>Glass bottles with silicone sleeves don’t shed plastic and survive a lot.</li><li>Soft vinyl toys and teethers were where phthalates were restricted first (US 2008); older hand-me-downs may predate that.</li></ul></div></details>
+      <details class="acc" data-for="nohome"><summary><span class="who">Little control</span>When the food comes in plastic anyway<span class="for-you">For you</span></summary><div class="in"><p>Shelter meals, pantry boxes and takeout often come in plastic, and that’s fine to accept. What still helps: let hot food cool a little before eating from the container, and move it to a mug or bowl when one is around.</p></div></details>
+    </div>
+    <p class="src">Hussain et al., <i>Environmental Science &amp; Technology</i> 2023; Hernandez et al., <i>ES&amp;T</i> 2019 (plastic tea bags); Li et al., <i>Nature Food</i> 2020 (infant bottles); FDA, BPA in baby bottles (2012); CPSIA 2008.</p>
+  </article>
+
+  <article class="sub" id="u2-s3">
+    <div class="sub-top"><span class="sub-n">2.3</span><h2>Cans and jar lids</h2></div>
+    <p>Metal cans are lined with a thin plastic coat so food doesn’t touch metal. For decades that lining was BPA-based epoxy. In one study, eating one serving of canned soup a day for five days raised people’s urine BPA more than ten-fold compared to fresh soup. Most US cans now use “BPA-NI” (non-intent) linings: acrylic, polyester, or sometimes vinyl or BPS-based coatings, which aren’t always better studied. Jar lids carry a plastic seal too.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Canned food</th><th>Picks up more?</th><th>Swap</th></tr></thead>
+      <tbody>
+        <tr><td>Tomatoes, tomato paste</td><td class="n">Yes: acidic, often heat-filled</td><td>Jarred or boxed (aseptic carton) tomatoes, or fresh in season</td></tr>
+        <tr><td>Coconut milk</td><td class="n">Yes: fatty</td><td>Carton or creamed coconut block</td></tr>
+        <tr><td>Soups</td><td class="p">Often</td><td>Homemade from dried beans and grains (Food → Rehydrate)</td></tr>
+        <tr><td>Beans, chickpeas</td><td class="p">Some</td><td>Dried beans: cheaper too. Or jarred.</td></tr>
+        <tr><td>Fruit in syrup</td><td class="p">Some</td><td>Frozen fruit, jars</td></tr>
+      </tbody>
+    </table></div>
+    <p class="ca">BPA is on California’s Proposition 65 list for reproductive harm (since 2015), so some cans carry a warning. The EU banned BPA in food-contact materials in late 2024, with a phase-in through 2026.</p>
+    <div class="fix" data-fix="u2s3" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-swap">One by one</span><span class="cost">Saves money</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · this week</small>Swap canned beans for a weekly pot of dried beans. It costs less, too.</li>
+        <li><small>Same cost</small>Switch canned tomatoes and coconut milk to glass or carton next time they run out.</li>
+        <li><small>Free</small>When you do use cans, move leftovers out of the can the same day.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Swap canned tomatoes & coconut milk to glass or carton">Add to my list</button><button class="add" data-title="Cook dried beans instead of canned">Add beans too</button></div>
+    </div>
+    <p class="links">Food → Rehydrate (soaking beans) · Food → Store (glass jars)</p>
+    <p class="src">Carwile et al., <i>JAMA</i> 2011; OEHHA Prop 65 listing (BPA, 2015); Commission Regulation (EU) 2024/3190; Breast Cancer Prevention Partners, <i>Kicking the Can?</i> (can lining survey).</p>
+  </article>
+
+  <article class="sub" id="u2-s4">
+    <div class="sub-top"><span class="sub-n">2.4</span><h2>PFAS, the forever chemicals</h2></div>
+    <p>PFAS are thousands of related chemicals that make things slick, stain-proof and water-proof. Their carbon–fluorine bond is one of the strongest in chemistry, so they barely break down: in water, soil, or bodies. Almost everyone in the US has some in their blood.</p>
+    <ul>
+      <li><b>Where they show up:</b> drinking water near airports, military bases and factories; nonstick coatings; grease-proof food wrappers and bowls; stain- and water-resistant carpet, couches, rain gear; some dental floss and cosmetics; firefighting foam.</li>
+      <li><b>What they’re linked to:</b> higher cholesterol, weaker vaccine response in children, lower birth weight, thyroid disease, and kidney and testicular cancer. The WHO’s cancer agency classed PFOA as carcinogenic to humans in 2023.</li>
+    </ul>
+    <p class="ca">Plant-fiber food packaging (molded bowls, wrappers) can’t have added PFAS since 2023 (AB 1200), cookware has to disclose PFAS, and new textiles have been PFAS-restricted since 2025 (AB 1817). A wider cookware ban (SB 682) was vetoed in 2025. Federally, EPA set 4-part-per-trillion limits for PFOA and PFOS in tap water in 2024; in 2026 it proposed dropping the other PFAS limits and pushing compliance to 2031.</p>
+    <div class="fix" data-fix="u2s4" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-batch">Test once</span><span class="mode m-swap">then one by one</span><span class="cost">Free → $$</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · first</small>Water first: it’s usually the largest source. Look up your water system’s PFAS results (Water → Testing), or test a well once.</li>
+        <li><small>$ → $$</small>If PFAS are present: a reverse osmosis or certified activated-carbon filter (NSF/ANSI 53 or 58 for PFOA/PFOS).</li>
+        <li><small>One by one</small>Then: nonstick pans (3.4), grease-proof takeout, stain-guard sprays, “water-resistant” anything, when each wears out.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Check tap or well water for PFAS">Add to my list</button><span>Water lens holds the filter details.</span></div>
+    </div>
+    <div class="accs">
+      <details class="acc" data-for="well"><summary><span class="who">Well water</span>Testing a private well for PFAS<span class="for-you">For you</span></summary><div class="in"><p>PFAS tests are pricier than a basic panel (often a few hundred dollars), so bundle it with the rest of your well test in one sample run. California’s State Water Board keeps a map of known PFAS sites; nearby airports, bases and landfills raise the odds.</p><p class="links">Water → Testing</p></div></details>
+    </div>
+    <p class="src">ATSDR, PFAS health effects; IARC Monographs vol. 135 (2023); US EPA PFAS NPDWR (2024) and 2026 proposed revisions; California AB 1200 (2021), AB 1817 (2022).</p>
+  </article>
+
+  <article class="sub" id="u2-s5">
+    <div class="sub-top"><span class="sub-n">2.5</span><h2>Plastic in soil and plants</h2></div>
+    <p>Soil is now one of the largest reservoirs of microplastic, more than oceans by some estimates. It arrives on plastic mulch, synthetic fibers in compost and sewage sludge (biosolids), tire dust from roads, and old weed fabric breaking down.</p>
+    <div class="does">
+      <div><b>Soil</b><p>Changes how soil holds water and air; can slow worms and shift microbe communities.</p></div>
+      <div><b>Plants</b><p>In lab studies, crops like lettuce and wheat took nanoplastic in through roots and moved some to leaves. PFAS travel the same road, short-chain ones most into leaves and fruit.</p></div>
+      <div><b>People</b><p>What the plant takes up, we eat, though rinsing and peeling don’t remove what’s inside.</p></div>
+    </div>
+    <p class="kin">Worms and soil fungi are the ones rebuilding soil. Keeping plastic out of the beds is a gift to them first.</p>
+    <div class="fix" data-fix="u2s5" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-swap">One by one</span><span class="cost">Free → $</span></div>
+      <ol class="fix-steps">
+        <li><small>Free</small>Pull old landscape fabric and plastic mulch as you go; use straw, leaves or cardboard (tape off) instead.</li>
+        <li><small>Free</small>Peel fruit stickers before composting; keep “compostable” plastics out unless you know your pile gets hot.</li>
+        <li><small>Free → $</small>Skip compost or fertilizer made from biosolids (“sewage sludge”) for food beds; see 5.3.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Replace plastic mulch/weed fabric with leaves, straw, cardboard">Add to my list</button></div>
+    </div>
+    <p class="links">Soil → Potting mix · Gardening lens</p>
+    <p class="src">Li et al., <i>Nature Sustainability</i> 2020 (crop uptake); de Souza Machado et al., <i>Global Change Biology</i> 2018; Lesmeister et al. 2021 on PFAS in plants.</p>
+  </article>
+
+  <nav class="pager"><a href="#u1"><small>← Back</small><b>1 · See</b></a><a class="next" href="#u3"><small>Next unit →</small><b>3 · In the house</b></a></nav>
+  </div>
+</section>
+
+<!-- ============ UNIT 3: IN THE HOUSE ============ -->
+<section class="page k3" data-page="u3" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 3</span><h1>In the house</h1><p class="unit-sub">Cleaners, fragrance, dust, pans and body care</p>
+    <p class="lede">Indoor air is often more polluted than the air outside, mostly from what we bring in and use. This is the unit built for knocking things out one at a time: each bottle, pan or couch gets swapped when it runs out or wears out, so it costs little and nothing goes to waste.</p>
+    <div class="unit-mode"><span class="mode m-swap">One by one</span> Replace each thing when it runs out. <span class="mode m-habit">Habit</span> Dust and air habits are free from day one.</div>
+    <ul class="jumps"><li><a href="#u3/s1"><span>3.1</span>Cleaners</a></li><li><a href="#u3/s2"><span>3.2</span>Fragrance</a></li><li><a href="#u3/s3"><span>3.3</span>Dust</a></li><li><a href="#u3/s4"><span>3.4</span>Pots &amp; pans</a></li><li><a href="#u3/s5"><span>3.5</span>Body care</a></li></ul>
+  </div>
+
+  <article class="sub" id="u3-s1">
+    <div class="sub-top"><span class="sub-n">3.1</span><h2>Cleaning products</h2></div>
+    <p>Most cleaning can be done with water, soap, baking soda, vinegar and a scrub brush. Stronger products earn their place for specific jobs (disinfecting after raw-food prep or illness, mold), not for everyday wiping. Sprays put more into the air we breathe than pour-and-wipe.</p>
+    <ul>
+      <li><b>Quats</b> (“benzalkonium chloride,” many disinfecting wipes) are linked to asthma in cleaning workers.</li>
+      <li><b>Bleach</b> works well, but never with ammonia (toxic chloramine gas) or acids like vinegar (chlorine gas).</li>
+      <li><b>Oven and drain cleaners</b> are the most caustic in most homes.</li>
+    </ul>
+    <p class="danger">Never mix cleaners. Bleach + ammonia, or bleach + vinegar or acid toilet cleaners, makes gases that injure lungs.</p>
+    <div class="fix" data-fix="u3s1" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-swap">One by one</span><span class="cost">Saves money</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Gather every cleaner in one place. Note which jobs each is for; retire duplicates to hazardous-waste drop-off.</li>
+        <li><small>As each runs out</small>Replace it with a basic: castile or dish soap, baking soda, vinegar, washing soda. Pour onto a cloth instead of spraying.</li>
+        <li><small>Keep one</small>One real disinfectant for when it’s needed, used with a window open.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Swap cleaners to simple basics as each runs out">Add to my list</button></div>
+    </div>
+    <p class="links">Cleaning lens (recipes for each job) · Air lens (ventilation)</p>
+    <p class="src">US EPA, Indoor Air Quality: household products; Dumas et al., <i>JAMA Network Open</i> 2019 (disinfectants and COPD in nurses); Washington State Dept. of Health, chemical mixing hazards.</p>
+  </article>
+
+  <article class="sub" id="u3-s2">
+    <div class="sub-top"><span class="sub-n">3.2</span><h2>Fragrance</h2></div>
+    <p>“Fragrance” on a label can mean dozens of undisclosed ingredients, sometimes including phthalates that make scent last. Air fresheners, plug-ins, scented candles, dryer sheets and laundry “boosters” are among the biggest indoor sources of volatile chemicals, and some react with ozone to make formaldehyde.</p>
+    <p class="kin">Cats lack some liver enzymes needed to clear many essential oils; diffusers can make them and birds sick. Unscented is kindest for everyone with a nose.</p>
+    <p class="ca">Since 2021–2022, California requires cleaning products and cosmetics to list fragrance allergens on the label (SB 312 and the Cleaning Product Right to Know Act).</p>
+    <div class="fix" data-fix="u3s2" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-swap">One by one</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Unplug plug-in fresheners. Open a window or run a fan for 10 minutes instead.</li>
+        <li><small>Free</small>Find the smell’s source (trash, damp, drain) and meet that need; a smell is a signal.</li>
+        <li><small>As it runs out</small>Laundry soap: fragrance-free. Dryer sheets: wool balls or nothing.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Unplug air fresheners; go fragrance-free as things run out">Add to my list</button></div>
+    </div>
+    <p class="src">Steinemann, <i>Air Quality, Atmosphere &amp; Health</i> 2018; California Cleaning Product Right to Know Act (SB 258, 2017); Cosmetic Fragrance and Flavor Ingredient Right to Know Act (SB 312, 2020).</p>
+  </article>
+
+  <article class="sub" id="u3-s3">
+    <div class="sub-top"><span class="sub-n">3.3</span><h2>Dust and flame retardants</h2></div>
+    <p>House dust is where many indoor chemicals end up: flame retardants from couches and electronics, PFAS from carpet treatments, phthalates, lead tracked in from soil, and pesticide residues. Toddlers swallow the most, from crawling and hands-in-mouth.</p>
+    <p class="ca">California’s old furniture rule (TB 117) pushed flame retardants into US couches for decades. Since 2014 the rule can be met without them, and furniture labels say whether flame retardants were added. Look for “contains NO added flame retardant chemicals.”</p>
+    <div class="fix" data-fix="u3s3" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="cost">Free → $$</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Shoes off at the door, and a doormat outside. A large share of house dust is tracked in on shoes.</li>
+        <li><small>Free</small>Wet-dust and damp-mop weekly instead of dry sweeping, which lifts dust back into the air.</li>
+        <li><small>$$ · later</small>A HEPA vacuum; and when an old foam couch tears, replace or recover it with a no-flame-retardant label.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Shoes off at the door + weekly wet dusting">Add to my list</button></div>
+    </div>
+    <div class="accs">
+      <details class="acc" data-for="old"><summary><span class="who">Built before 1978</span>Lead paint in dust<span class="for-you">For you</span></summary><div class="in"><p>Lead paint was banned for homes in 1978. When older paint chips or rubs (window sills and friction surfaces most), it becomes dust. Free lead dust wipe kits are offered by some county health departments; a home lead inspection is the bigger step. Sanding or scraping old paint needs lead-safe methods.</p><p class="ca">Renters: landlords in California can’t create lead hazards, and you can report deteriorating paint to local code enforcement.</p></div></details>
+    </div>
+    <p class="src">Mitro et al., <i>Environmental Science &amp; Technology</i> 2016 (dust meta-analysis); California TB 117-2013 and SB 1019 (labels); US EPA, Lead in homes.</p>
+  </article>
+
+  <article class="sub" id="u3-s4">
+    <div class="sub-top"><span class="sub-n">3.4</span><h2>Pots and pans</h2></div>
+    <p>Nonstick (PTFE, often sold as Teflon) is stable at normal heat, but starts breaking down around 500°F (260°C), a temperature an empty pan on high heat can reach in a few minutes. The fumes can cause flu-like “polymer fume fever” in people and can kill birds. Scratched coatings flake into food.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Material</th><th>Notes</th><th>Cost</th></tr></thead>
+      <tbody>
+        <tr><td>Cast iron</td><td>Lasts generations; naturally slick when seasoned. Long-simmered tomato adds a little iron.</td><td class="y">Often free or cheap used</td></tr>
+        <tr><td>Carbon steel</td><td>Lighter cast iron; great for tofu scrambles, stir-fries, crepes.</td><td class="p">$</td></tr>
+        <tr><td>Stainless steel</td><td>Inert, dishwasher-safe. Food sticks less once the pan is preheated.</td><td class="p">$ used, $$ new</td></tr>
+        <tr><td>Glass, enameled iron</td><td>Inert. Check old enamel and imported ceramics for lead glaze.</td><td class="p">$–$$</td></tr>
+        <tr><td>“Ceramic” nonstick</td><td>PFAS-free sol-gel coating; nonstick wears off in a year or two.</td><td class="p">$</td></tr>
+      </tbody>
+    </table></div>
+    <div class="fix" data-fix="u3s4" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-swap">One by one</span><span class="cost">Free → $</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Until it’s replaced: never preheat nonstick empty, keep it on medium, run the hood, birds out of the kitchen.</li>
+        <li><small>Free → $</small>Retire scratched nonstick first. Thrift stores and Buy Nothing groups are full of cast iron.</li>
+        <li><small>Free</small>Wooden or steel utensils, which also keep any pan’s surface longer.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Replace scratched nonstick with cast iron or steel">Add to my list</button></div>
+    </div>
+    <p class="links">Food → Cook (pots, pans and stoves) · Air lens (gas stoves)</p>
+    <p class="src">ATSDR PFAS; Merck Veterinary Manual (PTFE toxicosis); FDA, lead in imported ceramicware.</p>
+  </article>
+
+  <article class="sub" id="u3-s5">
+    <div class="sub-top"><span class="sub-n">3.5</span><h2>Body care</h2></div>
+    <p>Lotions, shampoos and makeup stay on skin for hours. The ingredients most often flagged: fragrance (3.2), some preservatives like formaldehyde releasers, PFAS in some long-wear makeup and floss, and phthalates. Fewer products, with shorter ingredient lists, is the simplest path.</p>
+    <p class="ca">California’s Toxic-Free Cosmetics Act bans 24 ingredients (including formaldehyde, mercury and certain phthalates) from cosmetics sold in the state since 2025, and a separate law (AB 2771) bars added PFAS from cosmetics the same year.</p>
+    <div class="fix" data-fix="u3s5" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-swap">One by one</span><span class="cost">Saves money</span></div>
+      <ol class="fix-steps">
+        <li><small>Free</small>Notice which products you’d honestly miss. Let the rest run out and not return.</li>
+        <li><small>As each runs out</small>Choose fragrance-free; short ingredient lists; plain oils (olive, coconut, jojoba) for skin.</li>
+        <li><small>Free</small>Kids need very little: water, a gentle soap, sunscreen.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Pare down body care; fragrance-free as each runs out">Add to my list</button></div>
+    </div>
+    <p class="src">California Toxic-Free Cosmetics Act (AB 2762, 2020); Whitehead et al., <i>ES&amp;T Letters</i> 2021 (PFAS in cosmetics).</p>
+  </article>
+
+  <nav class="pager"><a href="#u2"><small>← Back</small><b>2 · Plastics</b></a><a class="next" href="#u4"><small>Next unit →</small><b>4 · Pesticides</b></a></nav>
+  </div>
+</section>
+
+<!-- ============ UNIT 4: PESTICIDES ============ -->
+<section class="page k4" data-page="u4" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 4</span><h1>Pesticides</h1><p class="unit-sub">Glyphosate and kin</p>
+    <p class="lede">“Pesticide” covers herbicides (for plants), insecticides (insects), fungicides (fungi) and rodenticides (rodents). Each is designed to harm a living thing, and few stop exactly at the one intended. In Kinship terms, the “pest” is a neighbor whose needs our home or garden is meeting by accident; change what’s offered and most move on.</p>
+    <div class="unit-mode"><span class="mode m-swap">One by one</span> food and yard. <span class="mode m-together">Together</span> for drift from fields and parks.</div>
+    <ul class="jumps"><li><a href="#u4/s1"><span>4.1</span>How they work</a></li><li><a href="#u4/s2"><span>4.2</span>Glyphosate</a></li><li><a href="#u4/s3"><span>4.3</span>On food</a></li><li><a href="#u4/s4"><span>4.4</span>Yard &amp; home</a></li><li><a href="#u4/s5"><span>4.5</span>Drift</a></li></ul>
+  </div>
+
+  <article class="sub" id="u4-s1">
+    <div class="sub-top"><span class="sub-n">4.1</span><h2>How pesticides work</h2></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Family</th><th>Examples</th><th>Who else it reaches</th></tr></thead>
+      <tbody>
+        <tr><td>Organophosphates</td><td>Chlorpyrifos, malathion</td><td>Nerve signaling in people and animals; linked to lower IQ after prenatal exposure</td></tr>
+        <tr><td>Neonicotinoids</td><td>Imidacloprid (also in some flea drops)</td><td>Bees and other pollinators, aquatic insects; moves through the whole plant into pollen</td></tr>
+        <tr><td>Pyrethroids</td><td>Permethrin, bifenthrin</td><td>Cats, fish, aquatic insects</td></tr>
+        <tr><td>Herbicides</td><td>Glyphosate, 2,4-D, paraquat</td><td>Non-target plants, soil life; paraquat linked to Parkinson’s</td></tr>
+        <tr><td>Rodenticides</td><td>Anticoagulant baits</td><td>Owls, hawks, foxes, cats and dogs who eat poisoned mice</td></tr>
+      </tbody>
+    </table></div>
+    <p class="ca">California banned chlorpyrifos in 2020 and tightly restricts second-generation rodenticides (AB 1788, 2020; AB 1322, 2023) because of harm to mountain lions, bobcats and raptors.</p>
+    <div class="fix" data-fix="u4s1" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-swap">One by one</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Gather any pesticides in the house, garage and shed. Read each active ingredient.</li>
+        <li><small>Free</small>Take the ones you don’t use to household hazardous waste. Never pour them down a drain.</li>
+        <li><small>Free</small>For each one kept, write the need it meets and one non-poison strategy to try first (4.4).</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Inventory pesticides; drop off unused ones">Add to my list</button></div>
+    </div>
+    <p class="src">Rauh et al., <i>Environmental Health Perspectives</i> 2011 (chlorpyrifos); Tanner et al., <i>EHP</i> 2011 (paraquat); California DPR; US EPA pesticide registration pages.</p>
+  </article>
+
+  <article class="sub" id="u4-s2">
+    <div class="sub-top"><span class="sub-n">4.2</span><h2>Glyphosate</h2></div>
+    <p>Glyphosate (Roundup and many store brands) is the most-used herbicide in the world. It blocks an enzyme plants, fungi and many bacteria need to build certain amino acids (the shikimate pathway). Animals don’t have that pathway, which is why it was long called safe for us, but many of our gut bacteria do.</p>
+    <div class="does">
+      <div><b>People</b><p>The WHO’s cancer agency classed it “probably carcinogenic” (2015), mainly over non-Hodgkin lymphoma; US EPA says it isn’t likely carcinogenic at expected exposures. The disagreement is real and ongoing.</p></div>
+      <div><b>Bees</b><p>Lab studies found it disrupts honey bee gut bacteria, leaving bees more vulnerable to infection.</p></div>
+      <div><b>Plants</b><p>Kills almost any green plant it touches, including milkweed, monarch butterflies’ only host. Drift damages gardens nearby.</p></div>
+      <div><b>Soil</b><p>Binds to soil and can shift microbe communities; breakdown time varies widely with soil and climate.</p></div>
+    </div>
+    <p><b>On food:</b> besides weed-killing, glyphosate is sprayed on some crops right before harvest to dry them down evenly, which leaves higher residues on oats, wheat, chickpeas, lentils and other dry beans. Certified organic rules don’t allow it.</p>
+    <div class="fix" data-fix="u4s2" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-swap">One by one</span><span class="cost">$ for a few staples</span></div>
+      <ol class="fix-steps">
+        <li><small>Highest return</small>If you buy organic for only a few things, make them oats, wheat flour, chickpeas and lentils: daily staples with the most pre-harvest spray.</li>
+        <li><small>Free</small>No glyphosate in your own yard: pull, mulch, smother with cardboard, or boiling water on cracks in paving.</li>
+        <li><small>Bulk</small>Organic staples in bulk with neighbors (Food → Gather) costs far less than small packages.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Organic oats, flour, chickpeas & lentils (bulk)">Add to my list</button><button class="add" data-title="Glyphosate-free yard: mulch, pull, smother">Add yard too</button></div>
+    </div>
+    <p class="home">In one study, families who switched to an all-organic diet saw urine glyphosate drop about 70% in under a week.</p>
+    <p class="src">IARC Monographs vol. 112 (2015); US EPA glyphosate interim decision; Motta et al., <i>PNAS</i> 2018 (bee microbiota); Fagan et al., <i>Environmental Research</i> 2020; USDA National Organic Program.</p>
+  </article>
+
+  <article class="sub" id="u4-s3">
+    <div class="sub-top"><span class="sub-n">4.3</span><h2>On our food</h2></div>
+    <p>Eating more fruit and vegetables is good for nearly everyone, residues and all. The aim isn’t eating fewer plants; it’s choosing where organic matters most and washing well.</p>
+    <ul>
+      <li><b>Rinse under running water</b> and rub, which removes more than soaking in still water. Produce washes don’t beat water.</li>
+      <li><b>A baking-soda soak</b> (about 1 tsp per 2 cups water, 12–15 minutes, then rinse) removed more surface residue from apples than water alone in one study.</li>
+      <li><b>Peel</b> where it makes sense; some pesticides are systemic, inside the plant, and no wash removes them.</li>
+      <li>EWG’s yearly “Dirty Dozen” and “Clean Fifteen” lists rank produce by residue: a handy shortcut for which to buy organic.</li>
+    </ul>
+    <div class="fix" data-fix="u4s3" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="cost">Free → $</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Rinse and rub everything under running water, even “pre-washed” bags and peeled things (the knife carries residue in).</li>
+        <li><small>Free</small>Baking-soda soak for apples, grapes and berries.</li>
+        <li><small>$</small>Buy organic for the top few of the Dirty Dozen your household eats most; conventional is fine for the Clean Fifteen.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Rinse-and-rub + baking soda soak for produce">Add to my list</button></div>
+    </div>
+    <p class="links">Food → Cleanse (washing produce)</p>
+    <p class="src">Yang et al., <i>Journal of Agricultural and Food Chemistry</i> 2017; Krol et al. 2000 (rinsing); EWG Shopper’s Guide to Pesticides in Produce.</p>
+  </article>
+
+  <article class="sub" id="u4-s4">
+    <div class="sub-top"><span class="sub-n">4.4</span><h2>Yard, home and companions</h2></div>
+    <p>Most home pesticide use meets a need the house is accidentally meeting for someone else: crumbs for ants, damp for roaches, a gap for mice, standing water for mosquitoes. Meet that need differently and the visitors move on.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Visitor</th><th>What they need here</th><th>Strategy without poison</th></tr></thead>
+      <tbody>
+        <tr><td>Ants</td><td>Food, water</td><td>Wipe the trail with soapy water, seal food in jars, caulk the entry crack</td></tr>
+        <tr><td>Mice and rats</td><td>Shelter, food, warmth</td><td>Steel wool and hardware cloth in gaps, food in jars; snap or live traps over poison baits</td></tr>
+        <tr><td>Aphids</td><td>Soft new growth</td><td>Hose off; invite ladybugs and lacewings with flowers</td></tr>
+        <tr><td>Mosquitoes</td><td>Still water</td><td>Tip saucers weekly; Bti dunks in rain barrels</td></tr>
+        <tr><td>Fleas</td><td>A warm host</td><td>Combing, washing bedding, vacuuming; a vet-chosen product labeled for that species</td></tr>
+      </tbody>
+    </table></div>
+    <p class="danger">Dog flea products with permethrin can poison cats who share a home with that dog. Use only products labeled for each animal, and keep cats away until it dries.</p>
+    <div class="fix" data-fix="u4s4" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-swap">One by one</span><span class="cost">Free → $</span></div>
+      <ol class="fix-steps">
+        <li><small>Free</small>Pick the one visitor you’re using poison for most. Find what they’re getting from the house.</li>
+        <li><small>Free → $</small>Close that offer: seal, store, dry, tip out. Then retire the poison.</li>
+        <li><small>Free</small>Leave a messy corner of the yard: leaves and stems shelter the insects who keep others in balance.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Replace one poison with a needs-based fix (seal, store, dry)">Add to my list</button></div>
+    </div>
+    <p class="links">Relationships → Animals · Food → Store (animals in the pantry) · Gardening lens</p>
+    <p class="src">UC Statewide IPM Program (ipm.ucanr.edu) pest notes; ASPCA, permethrin and cats.</p>
+  </article>
+
+  <article class="sub" id="u4-s5">
+    <div class="sub-top"><span class="sub-n">4.5</span><h2>Drift from next door</h2></div>
+    <p>Spray doesn’t stay where it lands. Fine droplets and vapors drift with wind and heat, sometimes for miles, into gardens, schools and homes. People living near farm fields have measurably more pesticide in house dust.</p>
+    <p class="ca">California’s statewide <b>SprayDays</b> system (from 2025) posts notices of restricted farm pesticide applications in advance; county agricultural commissioners take drift complaints, and schools have a quarter-mile buffer for many applications.</p>
+    <div class="fix" data-fix="u4s5" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-together">Together</span><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · now</small>Sign up for SprayDays alerts for your address; close windows and bring in laundry and companion animals on spray days.</li>
+        <li><small>Free</small>A hedgerow of native shrubs on the field side catches some drift and feeds pollinators.</li>
+        <li><small>Together</small>Report drift to the county ag commissioner (photo, time, wind). Neighbors reporting together get buffers changed.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Sign up for SprayDays alerts">Add to my list</button></div>
+    </div>
+    <div class="accs">
+      <details class="acc" data-for="farm"><summary><span class="who">Near fields</span>Living beside farm fields<span class="for-you">For you</span></summary><div class="in"><ul><li>Shoes off and wet dusting (3.3) matter even more here: dust is where drift settles.</li><li>Grow food on the far side of the house from the fields, with a hedge between.</li><li>Farmworker families carry the highest exposure; groups like Californians for Pesticide Reform work alongside them.</li></ul></div></details>
+    </div>
+    <p class="links">Neighbors → Changing it together · Governance lens</p>
+    <p class="src">California DPR, SprayDays and drift; Ward et al., <i>EHP</i> 2006 (house dust near fields).</p>
+  </article>
+
+  <nav class="pager"><a href="#u3"><small>← Back</small><b>3 · In the house</b></a><a class="next" href="#u5"><small>Next unit →</small><b>5 · Soil</b></a></nav>
+  </div>
+</section>
+
+<!-- ============ UNIT 5: SOIL ============ -->
+<section class="page k5" data-page="u5" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 5</span><h1>Soil</h1><p class="unit-sub">Ground, beds and bags</p>
+    <p class="lede">Soil keeps a record: old paint, leaded gasoline, orchard sprays, burned buildings. Unlike most of this course, yard soil isn’t a one-by-one job. It’s cheapest and clearest to <b>test once, all zones in one batch</b>, then decide each bed and play area from the results.</p>
+    <div class="unit-mode"><span class="mode m-batch">Test once</span> Map the zones, sample them all the same day, send one lab order. <span class="mode m-swap">One by one</span> for bagged soil and beds.</div>
+    <ul class="jumps"><li><a href="#u5/s1"><span>5.1</span>What soil remembers</a></li><li><a href="#u5/s2"><span>5.2</span>One batch</a></li><li><a href="#u5/s3"><span>5.3</span>Potting mix</a></li><li><a href="#u5/s4"><span>5.4</span>Beds &amp; wood</a></li><li><a href="#u5/s5"><span>5.5</span>Living with it</a></li><li><a href="#u5/tool"><span>Tool</span>Batch planner</a></li></ul>
+  </div>
+
+  <article class="sub" id="u5-s1">
+    <div class="sub-top"><span class="sub-n">5.1</span><h2>What soil remembers</h2></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>History</th><th>What it can leave</th><th>Where to look</th></tr></thead>
+      <tbody>
+        <tr><td>House built before 1978</td><td>Lead from exterior paint</td><td>The drip line, 0–3 ft from walls</td></tr>
+        <tr><td>Near a busy road (pre-1996 traffic)</td><td>Lead from leaded gasoline</td><td>Edges near the street</td></tr>
+        <tr><td>Old orchard land (common in CA)</td><td>Lead and arsenic from lead arsenate sprays</td><td>The whole lot</td></tr>
+        <tr><td>Near industry, smelters, rail yards</td><td>Lead, arsenic, cadmium, others</td><td>The whole lot</td></tr>
+        <tr><td>After a wildfire or house fire</td><td>Metals, PAHs and more in ash</td><td>Burned areas, downwind (7.4)</td></tr>
+        <tr><td>Biosolids or unknown fill</td><td>PFAS, metals</td><td>Where it was spread</td></tr>
+      </tbody>
+    </table></div>
+    <div class="does">
+      <div><b>People</b><p>Lead has no known safe level, and harms children’s developing brains most. Kids take it in from hands, toys and dust.</p></div>
+      <div><b>Plants</b><p>Most crops take up little lead into fruit; leafy greens and root vegetables take up more, and soil stuck to them carries the most.</p></div>
+      <div><b>Animals</b><p>Dogs who dig and chickens who forage take in soil directly; so do wild birds feeding on the ground.</p></div>
+    </div>
+    <p class="src">US EPA, Lead in soil; CDC, no safe blood lead level in children; ATSDR, lead and arsenic profiles; UC Agriculture and Natural Resources, lead arsenate in former orchards.</p>
+  </article>
+
+  <article class="sub" id="u5-s2">
+    <div class="sub-top"><span class="sub-n">5.2</span><h2>Test once, in one batch</h2></div>
+    <p>One lab order covering every zone, sampled the same day, gives you a map you can garden by for years. The steps:</p>
+    <ol>
+      <li><b>Sketch the yard</b> and draw zones by use and history: each food bed, the play area, the drip line, the street edge, where chickens or dogs dig.</li>
+      <li><b>For each zone, take a composite sample:</b> 5 to 10 small scoops from across the zone, 0–6 inches deep (0–2 inches for play areas), mixed in a clean bucket. About a cup goes in a labeled bag.</li>
+      <li><b>Order one panel for all of them:</b> total lead at minimum; add arsenic for old orchard land; a full metals panel near industry or after fire. Ask for pH and organic matter in the same run: both change how much lead plants take up.</li>
+      <li><b>Send them together.</b> Keep the map with the results.</li>
+    </ol>
+    <div class="zones" id="zoneDemo">
+      <div class="zone on"><b>A · Veggie bed</b>0–6 in · 8 scoops</div>
+      <div class="zone on"><b>B · Drip line</b>0–3 ft from house</div>
+      <div class="zone on"><b>C · Play area</b>0–2 in · top layer</div>
+      <div class="zone"><b>D · Street edge</b>if busy road</div>
+      <div class="zone"><b>E · Dog dig spot</b>if any</div>
+    </div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Lead result</th><th>Meaning (California)</th><th>Next step</th></tr></thead>
+      <tbody>
+        <tr><td>Under 80 ppm</td><td class="y">Below California’s screening level</td><td>Garden as usual; wash produce and hands</td></tr>
+        <tr><td>80–200 ppm</td><td class="p">Above CA screening; under EPA’s 200 ppm level</td><td>Raised beds or fruiting crops; cover bare soil; extra care with kids</td></tr>
+        <tr><td>200–1,200 ppm</td><td class="n">Above EPA’s residential screening level</td><td>Grow food only in raised beds with new soil; mulch or plant over everything else</td></tr>
+        <tr><td>Over 1,200 ppm</td><td class="n">High</td><td>Ask the county health department; keep kids and animals off bare soil</td></tr>
+      </tbody>
+    </table></div>
+    <div class="fix" data-fix="u5s2" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-batch">Test once, in one batch</span><span class="cost">$ per zone</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · first</small>Draw the zone map with the planner below, and list what you know about the land’s past.</li>
+        <li><small>$ · one day</small>Sample all zones that day; send one order. University and commercial labs often run a basic lead screen for roughly $15–$50 a sample.</li>
+        <li><small>Free · after</small>Decide each zone from the table above, then add only the follow-up fixes that zone needs.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Soil: one-batch test of all yard zones">Add to my list</button><span>One item on My list, not five: the zones ride together.</span></div>
+    </div>
+    <p class="ca">In some disaster areas (for example LA County after the 2025 Eaton fire) the county has offered free soil screening. Your county health department may also lend a lead XRF meter or know a lab.</p>
+    <p class="src">OEHHA, California Human Health Screening Level for lead (80 mg/kg); US EPA updated residential soil lead guidance (2024); UMass Soil and Plant Nutrient Testing Lab sampling guide; Cornell Waste Management Institute, <i>Healthy Soils, Healthy Communities</i>.</p>
+  </article>
+
+  <article class="sub" id="u5-s3">
+    <div class="sub-top"><span class="sub-n">5.3</span><h2>Potting mix and bagged soil</h2></div>
+    <p>A bag of potting mix feels clean, but it’s a living, dusty product with its own care points.</p>
+    <ul>
+      <li><b>Living germs:</b> <i>Legionella longbeachae</i>, which can cause Legionnaires’ disease, lives in some potting mixes and compost; cases are tracked in Australia and New Zealand, where bags carry warnings, and occur in the US too. Dust from a dry bag is how it’s breathed in.</li>
+      <li><b>Biosolids:</b> some bagged composts and fertilizers are made from treated sewage sludge, which can carry PFAS and microplastics. It isn’t always obvious on the label.</li>
+      <li><b>Dust:</b> perlite and vermiculite dust irritate lungs. Vermiculite from Libby, Montana was contaminated with asbestos (mine closed in 1990); modern horticultural vermiculite is lower risk but still dusty.</li>
+      <li><b>Wetting agents and synthetic fertilizer</b> are added to many mixes; fine for plants, but worth knowing for food pots.</li>
+      <li><b>Peat</b> comes from bogs that store huge amounts of carbon and take centuries to regrow.</li>
+    </ul>
+    <div class="fix" data-fix="u5s3" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="mode m-swap">One by one</span><span class="cost">Free → $</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · every time</small>Open bags outside, pointed away from your face. Wet the mix before handling; wash hands after.</li>
+        <li><small>$</small>For food pots, choose mixes that are certified organic or OMRI-listed: organic rules don’t allow sewage sludge.</li>
+        <li><small>Free · over time</small>Make your own: home compost + coir or leaf mold + a little sand. Grows with the household.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Potting mix: open outside & wet it; organic/OMRI for food">Add to my list</button></div>
+    </div>
+    <div class="accs">
+      <details class="acc" data-for="portable"><summary><span class="who">Pots only</span>Container gardens<span class="for-you">For you</span></summary><div class="in"><p>Bagged soil is the whole garden here, which makes it the only soil “test” you need: what’s in the bag. A dust mask (N95) for bagging-up days is a kind gift to your lungs, especially for anyone with asthma or a weaker immune system.</p></div></details>
+    </div>
+    <p class="src">CDC, Legionella (potting soil and <i>L. longbeachae</i>); Whiley &amp; Bentham, <i>Emerging Infectious Diseases</i> 2011; USDA National Organic Program (sewage sludge prohibited); US EPA, vermiculite.</p>
+  </article>
+
+  <article class="sub" id="u5-s4">
+    <div class="sub-top"><span class="sub-n">5.4</span><h2>Beds, wood and tires</h2></div>
+    <ul>
+      <li><b>Old pressure-treated wood</b> (greenish, from before 2004) usually used CCA, which contains arsenic. It leaches into soil nearby. Newer treated wood uses copper compounds instead.</li>
+      <li><b>Railroad ties</b> carry creosote; skip them for food beds.</li>
+      <li><b>Tires</b> as planters leach zinc and other compounds as they weather. 6PPD-quinone from tire dust kills coho salmon in streams.</li>
+      <li><b>Painted salvage</b> may have lead paint.</li>
+    </ul>
+    <div class="fix" data-fix="u5s4" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-swap">One by one</span><span class="cost">Free → $$</span></div>
+      <ol class="fix-steps">
+        <li><small>Free</small>Grow food away from old treated-wood edges (a foot in), and include that bed in your soil batch.</li>
+        <li><small>Free → $</small>New beds: untreated cedar, redwood offcuts, stone, brick, or galvanized steel.</li>
+        <li><small>Free</small>Retire tire planters to non-food flowers or recycling.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Replace treated-wood / tire beds for food crops">Add to my list</button></div>
+    </div>
+    <p class="src">US EPA, CCA treated wood phase-out (2003); Tian et al., <i>Science</i> 2021 (6PPD-quinone).</p>
+  </article>
+
+  <article class="sub" id="u5-s5">
+    <div class="sub-top"><span class="sub-n">5.5</span><h2>Living with what you find</h2></div>
+    <p>Most results fall in a range where gardening stays a joy with a few changes. Soil heals slowly, and the main move is covering it so it doesn’t become dust.</p>
+    <ul>
+      <li><b>Cover bare soil</b> with mulch, groundcover or grass: bare soil becomes house dust.</li>
+      <li><b>Keep pH near neutral</b> (6.5–7) and organic matter high: compost binds lead and makes it less available to plants.</li>
+      <li><b>Fruiting crops</b> (tomatoes, squash, beans) take up the least; leafy greens and roots the most.</li>
+      <li><b>Raised beds</b> with a barrier (landscape cloth or cardboard) and new soil, for higher results.</li>
+    </ul>
+    <p class="legend">About sunflowers: they’re lovely, but they pull up very little lead. Plants that clean soil of lead in a garden’s lifetime haven’t panned out.</p>
+    <div class="fix" data-fix="u5s5" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="cost">Free → $$</span></div>
+      <ol class="fix-steps">
+        <li><small>Free</small>Mulch every bare patch, most of all where kids play and dogs dig.</li>
+        <li><small>Free</small>Add compost every season; wash and peel root crops; rinse greens well.</li>
+        <li><small>$$</small>For high zones, a raised bed with new soil. Many cities share soil from municipal compost.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Mulch all bare soil; compost every season">Add to my list</button></div>
+    </div>
+    <p class="src">US EPA, <i>Reusing Potentially Contaminated Landscapes: Growing Gardens in Urban Soils</i>; McBride et al. 2014 on lead uptake by vegetables.</p>
+  </article>
+
+  <article class="sub" id="u5-tool">
+    <div class="sub-top"><span class="sub-n">Tool</span><h2>Batch planner</h2></div>
+    <div class="tool">
+      <b class="t">Build one lab order for the whole yard</b>
+      <div class="chks" id="bpHist"></div>
+      <div class="chks" id="bpZones"></div>
+      <div class="out" id="bpOut"></div>
+    </div>
+  </article>
+
+  <nav class="pager"><a href="#u4"><small>← Back</small><b>4 · Pesticides</b></a><a class="next" href="#u6"><small>Next unit →</small><b>6 · Living toxins</b></a></nav>
+  </div>
+</section>
+
+<!-- ============ UNIT 6: LIVING TOXINS ============ -->
+<section class="page k6" data-page="u6" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 6</span><h1>Living toxins</h1><p class="unit-sub">Molds, blooms and plants</p>
+    <p class="lede">Some toxins are made by living things: molds growing on damp walls or old nuts, bacteria blooming in warm still water, plants protecting themselves from being eaten. They’re signals more than enemies. Each one is answering a need (water, warmth, food), and changing that is usually the fix.</p>
+    <div class="unit-mode"><span class="mode m-habit">Habit</span> Moisture and storage habits do most of the work. Testing for mold is rarely needed: if you see or smell it, fix it.</div>
+    <ul class="jumps"><li><a href="#u6/s1"><span>6.1</span>House mold</a></li><li><a href="#u6/s2"><span>6.2</span>Food mold</a></li><li><a href="#u6/s3"><span>6.3</span>Blooms</a></li><li><a href="#u6/s4"><span>6.4</span>Plants</a></li><li><a href="#u6/s5"><span>6.5</span>Kin microbes</a></li></ul>
+  </div>
+
+  <article class="sub" id="u6-s1">
+    <div class="sub-top"><span class="sub-n">6.1</span><h2>Mold in the house</h2></div>
+    <p>Mold needs water. Damp homes are linked with more coughing, wheezing and asthma, in children most. Mold spores are everywhere outdoors; indoors, the question is only whether something’s wet enough for them to grow.</p>
+    <ul>
+      <li>Common spots: bathroom ceilings, window sills with condensation, behind furniture on outside walls, under sinks, closets, carpets that got wet.</li>
+      <li>A musty smell is mold you can’t see yet.</li>
+      <li>Indoor humidity between 30 and 50% keeps most mold from growing.</li>
+    </ul>
+    <div class="fix" data-fix="u6s1" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="cost">Free → $</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · first</small>Find the water: leak, condensation, a shower without a fan. Mold comes back until the water stops.</li>
+        <li><small>Free</small>Small areas (under about 10 sq ft): scrub with soap and water, dry fully. Porous things that stayed wet (ceiling tiles, carpet) usually need to go.</li>
+        <li><small>$</small>A $10 humidity meter; bathroom fan for 20 minutes after showers; furniture a few inches off outside walls.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Find & stop the water behind any mold; humidity meter">Add to my list</button></div>
+    </div>
+    <div class="accs">
+      <details class="acc" data-for="rent"><summary><span class="who">Renting</span>When the leak isn’t yours to fix<span class="for-you">For you</span></summary><div class="in"><p class="ca">Since 2016, visible mold that affects health counts as a substandard-housing condition in California (SB 655). Write to the landlord with photos and dates, and keep a copy. Local code enforcement can inspect if it isn’t fixed.</p><p class="links">Relationships → Requests (asking clearly)</p></div></details>
+    </div>
+    <p class="links">Air lens (damp and condensation) · Cleaning lens (mold)</p>
+    <p class="src">WHO, <i>Guidelines for Indoor Air Quality: Dampness and Mould</i> (2009); US EPA, <i>A Brief Guide to Mold, Moisture and Your Home</i>; CDC, mold basics.</p>
+  </article>
+
+  <article class="sub" id="u6-s2">
+    <div class="sub-top"><span class="sub-n">6.2</span><h2>Mold on food</h2></div>
+    <p>Some molds make mycotoxins that heat doesn’t destroy. <b>Aflatoxin</b> (on peanuts, corn and tree nuts) harms the liver and is a known human carcinogen; <b>ochratoxin</b> grows on grains, coffee and dried fruit; <b>patulin</b> comes from rotten apples in juice.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Moldy food</th><th>Keep or compost?</th></tr></thead>
+      <tbody>
+        <tr><td>Firm fruit and vegetables (carrots, cabbage, peppers)</td><td class="p">Cut 1 inch around the spot; keep the rest</td></tr>
+        <tr><td>Soft fruit, bread, cooked grains, beans, nut butters, jam</td><td class="n">Compost the whole thing: roots spread unseen</td></tr>
+        <tr><td>Nuts, seeds, dried corn that look shriveled, discolored or taste bitter</td><td class="n">Discard</td></tr>
+        <tr><td>Tempeh’s white mycelium; miso’s surface bloom</td><td class="y">Expected: that’s the food. Black, pink or fuzzy colored mold is not.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="fix" data-fix="u6s2" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free</small>Store nuts, grains and flours cool and dry in sealed jars; nuts and whole-grain flour in the fridge or freezer.</li>
+        <li><small>Free</small>Buy nuts and nut butters in amounts you’ll finish in a couple of months.</li>
+        <li><small>Free</small>When sorting beans and grains, pull out discolored or shriveled ones.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Nuts & grains: sealed jars, cool/frozen, small batches">Add to my list</button></div>
+    </div>
+    <p class="links">Food → Store (pantry) · Food → Cleanse (sorting beans)</p>
+    <p class="src">USDA FSIS, Molds on food; IARC (aflatoxins, Group 1); FDA, patulin in apple juice.</p>
+  </article>
+
+  <article class="sub" id="u6-s3">
+    <div class="sub-top"><span class="sub-n">6.3</span><h2>Water that blooms</h2></div>
+    <p>Cyanobacteria (blue-green algae) bloom in warm, still, nutrient-rich water: ponds, lakes, slow rivers, even birdbaths and stock tanks. Some make toxins that harm the liver and nerves. Dogs are most at risk: they swim, drink and lick their fur, and can die within hours.</p>
+    <ul><li>Look for pea-soup green, blue-green paint, scum, mats, or a foul smell.</li><li>Lawn and farm fertilizer runoff feeds blooms.</li></ul>
+    <div class="fix" data-fix="u6s3" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="mode m-together">Together</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free</small>“When in doubt, stay out”: keep everyone, dogs first, out of scummy water; rinse a dog right away if they go in.</li>
+        <li><small>Free</small>Change birdbath and animal water bowls outdoors every few days.</li>
+        <li><small>Together</small>Report blooms (with a photo) so others are warned; use less fertilizer near water.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Dogs out of scummy water; fresh outdoor bowls & birdbaths">Add to my list</button></div>
+    </div>
+    <p class="ca">The State Water Board’s Harmful Algal Bloom portal (mywaterquality.ca.gov) maps reported blooms and takes reports.</p>
+    <p class="src">CDC, Harmful Algal Bloom-Associated Illness; California Water Boards, HAB portal.</p>
+  </article>
+
+  <article class="sub" id="u6-s4">
+    <div class="sub-top"><span class="sub-n">6.4</span><h2>Plants and companions</h2></div>
+    <p>Many plants make toxins so they aren’t eaten. Most people never nibble a houseplant; toddlers and companion animals might.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Plant</th><th>Who it harms</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>True lilies, daylilies</td><td class="n">Cats</td><td>Even pollen or vase water can cause kidney failure</td></tr>
+        <tr><td>Sago palm</td><td class="n">Dogs, cats, people</td><td>Seeds most toxic; often fatal to dogs</td></tr>
+        <tr><td>Oleander</td><td class="n">Everyone, horses too</td><td>Common CA hedge; heart toxin</td></tr>
+        <tr><td>Foxglove, lily of the valley</td><td class="n">Everyone</td><td>Heart toxins</td></tr>
+        <tr><td>Pothos, philodendron, dieffenbachia</td><td class="p">Kids, cats, dogs</td><td>Mouth irritation; rarely serious</td></tr>
+        <tr><td>Spider plant, Boston fern, calathea</td><td class="y">Generally safe</td><td>Good picks for homes with cats</td></tr>
+      </tbody>
+    </table></div>
+    <div class="fix" data-fix="u6s4" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-swap">One by one</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free</small>Walk the house and yard; check each plant against the ASPCA toxic and non-toxic plant list.</li>
+        <li><small>Free</small>Rehome toxic ones to a friend without cats or kids, or move them out of reach.</li>
+        <li><small>Free</small>No lilies in bouquets for homes with cats.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Check houseplants & yard against the ASPCA plant list">Add to my list</button></div>
+    </div>
+    <p class="src">ASPCA Toxic and Non-Toxic Plants; California Poison Control System.</p>
+  </article>
+
+  <article class="sub" id="u6-s5">
+    <div class="sub-top"><span class="sub-n">6.5</span><h2>Most microbes are kin</h2></div>
+    <p>The vast majority of molds, yeasts and bacteria are helpers: they make soil, compost, sourdough, miso and tempeh, and they train our immune systems. Children who grow up around soil, plants and animals tend to have fewer allergies. The aim of this unit is to dry out the few that harm, not to sterilize the house.</p>
+    <div class="fix" data-fix="u6s5" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free</small>Skip antibacterial soaps and sprays for everyday use; plain soap works and spares the rest.</li>
+        <li><small>Free</small>Garden, compost and ferment together. Hands in soil (washed after) are part of the fun.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Plain soap over antibacterial for everyday">Add to my list</button></div>
+    </div>
+    <p class="src">FDA, 2016 ban on triclosan and 18 other ingredients in antibacterial hand soaps; von Hertzen &amp; Haahtela on the “biodiversity hypothesis.”</p>
+  </article>
+
+  <nav class="pager"><a href="#u5"><small>← Back</small><b>5 · Soil</b></a><a class="next" href="#u7"><small>Next unit →</small><b>7 · Neighbors</b></a></nav>
+  </div>
+</section>
+
+<!-- ============ UNIT 7: NEIGHBORS ============ -->
+<section class="page k7" data-page="u7" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 7</span><h1>Neighbors</h1><p class="unit-sub">Living near polluters</p>
+    <p class="lede">Some exposures start beyond the property line: a freeway, a refinery, an airport, a field, a fire. Where pollution lands follows old decisions about who lived where, and the same neighborhoods carry most of it. A household can protect itself a lot; the source moves when neighbors move it together.</p>
+    <div class="unit-mode"><span class="mode m-habit">Habit</span> Filter and time your air at home. <span class="mode m-together">Together</span> for the source itself.</div>
+    <ul class="jumps"><li><a href="#u7/s1"><span>7.1</span>Your map</a></li><li><a href="#u7/s2"><span>7.2</span>Roads &amp; airports</a></li><li><a href="#u7/s3"><span>7.3</span>Industry &amp; wells</a></li><li><a href="#u7/s4"><span>7.4</span>After a fire</a></li><li><a href="#u7/s5"><span>7.5</span>Together</a></li></ul>
+  </div>
+
+  <article class="sub" id="u7-s1">
+    <div class="sub-top"><span class="sub-n">7.1</span><h2>Reading your map</h2></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Map</th><th>What it shows</th></tr></thead>
+      <tbody>
+        <tr><td>CalEnviroScreen (OEHHA)</td><td>Pollution burden and population sensitivity for every census tract in California, ranked</td></tr>
+        <tr><td>EPA Toxics Release Inventory</td><td>What nearby facilities report releasing to air, water and land each year</td></tr>
+        <tr><td>EnviroStor (DTSC) and GeoTracker (Water Boards)</td><td>Cleanup sites, leaking fuel tanks, contaminated groundwater</td></tr>
+        <tr><td>AirNow and PurpleAir</td><td>Live air quality from official monitors and community sensors</td></tr>
+        <tr><td>CalGEM well finder</td><td>Oil and gas wells, active and idle</td></tr>
+      </tbody>
+    </table></div>
+    <div class="fix" data-fix="u7s1" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · 20 minutes</small>Look up your address on CalEnviroScreen and the TRI. Note anything within half a mile.</li>
+        <li><small>Free</small>Use what you find to choose: which fixes in Units 5 and 7 matter for you, and what to add to your soil batch.</li>
+        <li><small>Free</small>Bookmark AirNow or a nearby PurpleAir sensor for daily checks.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Look up my address on CalEnviroScreen + TRI">Add to my list</button></div>
+    </div>
+    <p class="src">OEHHA, CalEnviroScreen 4.0; US EPA TRI; California DTSC EnviroStor; State Water Board GeoTracker; CalGEM.</p>
+  </article>
+
+  <article class="sub" id="u7-s2">
+    <div class="sub-top"><span class="sub-n">7.2</span><h2>Roads, freeways and airports</h2></div>
+    <p>Traffic pollution (fine particles, ultrafine particles, nitrogen dioxide, tire and brake dust) is highest within about 500 feet of a freeway and falls off with distance. It’s linked to asthma, reduced lung growth in children, and heart disease. Small airports add lead: piston-engine planes still burn leaded fuel.</p>
+    <p class="ca">The state air board has long advised not placing homes, schools and daycares within 500 feet of freeways. After a study found higher blood lead in children near Reid-Hillview airport, Santa Clara County stopped selling leaded aviation fuel at its airports in 2022. EPA found leaded avgas endangers health in 2023.</p>
+    <div class="fix" data-fix="u7s2" data-cost="2">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="mode m-swap">One purchase</span><span class="cost">Free → $$</span></div>
+      <ol class="fix-steps">
+        <li><small>Free</small>Windows open on the side away from the road, and outside rush hour; walk and play on side streets.</li>
+        <li><small>$</small>A box fan with a MERV 13 filter taped on (a “Corsi-Rosenthal box”) cleans a room for about $60.</li>
+        <li><small>$$</small>A HEPA purifier for the bedroom, sized so its CADR is at least ⅔ of the room’s square feet; MERV 13 in central air if you have it.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Bedroom air filter (DIY box fan or HEPA)">Add to my list</button></div>
+    </div>
+    <div class="accs">
+      <details class="acc" data-for="road"><summary><span class="who">Near a freeway</span>Gardens by the road<span class="for-you">For you</span></summary><div class="in"><ul><li>Grow food on the far side of the house, with a dense hedge between (it catches some particles).</li><li>Add the street edge to your soil batch (5.2).</li><li>Rinse leafy greens well: road dust settles on leaves.</li></ul></div></details>
+    </div>
+    <p class="links">Air lens (filters and ventilation)</p>
+    <p class="src">CARB, <i>Air Quality and Land Use Handbook</i> (2005); HEI Special Report 23 (2022); Zahran et al., <i>PNAS Nexus</i> 2022 (Reid-Hillview); US EPA endangerment finding on leaded avgas (2023); US EPA guide to air cleaners.</p>
+  </article>
+
+  <article class="sub" id="u7-s3">
+    <div class="sub-top"><span class="sub-n">7.3</span><h2>Factories, refineries and wells</h2></div>
+    <p>Refineries, chemical plants, metal shops, chrome platers, oil and gas wells and warehouses with heavy truck traffic release particles, benzene, metals and other compounds. Flaring and leaks spike exposure for hours; routine releases add up over years.</p>
+    <p class="ca">California now bars new oil and gas wells within 3,200 feet of homes, schools and hospitals, and requires leak monitoring for existing ones nearby (SB 1137, in effect since 2024). Refineries must run fenceline monitors with public data.</p>
+    <div class="fix" data-fix="u7s3" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="mode m-together">Together</span><span class="cost">Free → $$</span></div>
+      <ol class="fix-steps">
+        <li><small>Free</small>Sign up for the refinery or facility’s flaring alerts and your air district’s notices; close up and run filters during events.</li>
+        <li><small>Free</small>Shoes off and wet dusting (3.3): industrial metals settle as dust.</li>
+        <li><small>Together</small>Report odors and smoke to your local air district; repeated reports are what trigger inspections.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Sign up for flaring / air district alerts">Add to my list</button></div>
+    </div>
+    <p class="src">California SB 1137 (2022); AB 1647 (2017, refinery fenceline monitoring); CARB.</p>
+  </article>
+
+  <article class="sub" id="u7-s4">
+    <div class="sub-top"><span class="sub-n">7.4</span><h2>After a fire</h2></div>
+    <p>When homes, cars and buildings burn, the ash holds metals (lead, arsenic), plastics’ breakdown products and more, unlike ash from a campfire. Smoke from a distant wildfire is mostly fine particles; ash at home is a soil and dust problem too. After some fires, melted plastic pipes have released benzene into water systems.</p>
+    <div class="fix" data-fix="u7s4" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="mode m-batch">Test once</span><span class="cost">Free → $</span></div>
+      <ol class="fix-steps">
+        <li><small>Free</small>Don’t dry-sweep or leaf-blow ash: mist it, then scoop or HEPA-vacuum. N95 and gloves while cleaning.</li>
+        <li><small>Free</small>Follow your water system’s notices; flush or don’t drink until cleared.</li>
+        <li><small>$ · once</small>Add fire-affected areas to your soil batch (5.2), with a full metals panel. Ask the county about free screening.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Fire ash: wet clean + metals in soil batch">Add to my list</button></div>
+    </div>
+    <p class="src">CDC and California Department of Public Health, ash cleanup guidance; Proctor et al., <i>AWWA Water Science</i> 2020 (benzene after wildfires); LA County Public Health, Eaton fire soil testing (2025).</p>
+  </article>
+
+  <article class="sub" id="u7-s5">
+    <div class="sub-top"><span class="sub-n">7.5</span><h2>Changing it together</h2></div>
+    <p>Pollution sources are permitted, which means there are hearings, comment periods and boards. Communities have closed plants, won buffers and got monitors installed by showing up with data and stories.</p>
+    <ul>
+      <li><b>AB 617</b> (California, 2017) funds community air monitoring and emission-reduction plans in the most burdened neighborhoods, chosen with residents.</li>
+      <li>Community sensors (PurpleAir, borrowed from libraries in some areas) build a shared record.</li>
+      <li>Environmental justice groups already working nearby are often the fastest way in.</li>
+    </ul>
+    <p class="kind">Living near pollution is rarely a free choice; housing, history and money set where most of us live. Protecting your household and pushing on the source together are both care.</p>
+    <div class="fix" data-fix="u7s5" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-together">Together</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free</small>Find out who permits the nearest source (air district, county, state) and sign up for its notices.</li>
+        <li><small>Free</small>Talk with two neighbors about what they notice. Shared observations are the start of a case.</li>
+        <li><small>Free</small>Comment at one hearing, even in writing: needs, observations, a clear request.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Find who permits the nearest polluter; sign up for notices">Add to my list</button></div>
+    </div>
+    <p class="links">Governance lens (stairs for change) · Relationships → Neighbors · Relationships → Power &amp; peace</p>
+    <p class="src">CARB, Community Air Protection Program (AB 617).</p>
+  </article>
+
+  <nav class="pager"><a href="#u6"><small>← Back</small><b>6 · Living toxins</b></a><a class="next" href="#list"><small>Your list →</small><b>My list</b></a></nav>
+  </div>
+</section>
+
+</main>
+</div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  function toast(msg) { var t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(function () { t.classList.remove('show'); }, 1800); }
+
+  /* ---------- Profile: same key as app.js; built, with, near are new for Toxins ---------- */
+  var KEY = 'meeting-needs.profile.v1';
+  var OPT = {
+    home: ['Apartment or room', 'House', 'Vehicle or boat', 'Shelter or no fixed place', 'Other'],
+    shape: ['Nothing: it all has to be portable', 'Small, removable things', 'Bigger changes, with an owner who’s on board', 'It’s ours to shape'],
+    space1: ['Windowsill', 'Balcony', 'Shared yard', 'Private yard', 'Community plot', 'Acreage or farmland', 'None yet'],
+    built: ['Before 1978', '1978 or later', 'Not sure'],
+    with: ['Just adults', 'Kids or a pregnancy', 'Companion animals', 'Kids and animals', 'Birds among them'],
+    near: ['None of these', 'A freeway or busy road', 'Factory, refinery or wells', 'Farm fields', 'An airport', 'More than one']
+  };
+  var profile = {};
+  try { profile = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { profile = {}; }
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(profile)); } catch (e) {} }
+  function val(k) { return k === 'space1' ? (Array.isArray(profile.space) ? profile.space[0] || '' : '') : (profile[k] || ''); }
+
+  function tags() {
+    var p = profile, t = {}, space = Array.isArray(p.space) ? p.space : [];
+    if (p.home === 'Shelter or no fixed place') t.nohome = 1;
+    if (p.shape === 'Nothing: it all has to be portable' || p.shape === 'Small, removable things') { t.portable = 1; t.rent = 1; }
+    if (p.shape === 'Bigger changes, with an owner who’s on board') t.rent = 1;
+    if (space.some(function (s) { return /Windowsill|Balcony/.test(s); })) t.portable = 1;
+    if (p.built === 'Before 1978') t.old = 1;
+    if (/Kids/.test(p.with || '') || Number(p.kids) > 0 || (Array.isArray(p.consider) && p.consider.some(function (c) { return /Pregnancy|Babies/.test(c); }))) t.kids = 1;
+    if (/animals|Birds/.test(p.with || '') || Number(p.pets) > 0) t.animals = 1;
+    if (/Birds/.test(p.with || '')) t.birds = 1;
+    if (/freeway|More/.test(p.near || '')) t.road = 1;
+    if (/Farm|More/.test(p.near || '') || space.indexOf('Acreage or farmland') > -1) t.farm = 1;
+    if (/Factory|airport|More/i.test(p.near || '')) t.industry = 1;
+    if (p.sources && Object.keys(p.sources).some(function (k) { return /well/i.test(k); })) t.well = 1;
+    return t;
+  }
+  function apply() {
+    var t = tags();
+    document.querySelectorAll('.acc').forEach(function (a) {
+      var hit = (a.dataset.for || '').split(' ').some(function (s) { return t[s]; });
+      a.classList.toggle('match', hit); a.open = hit;
+    });
+    var answered = ['home', 'shape', 'space1', 'built', 'with', 'near'].map(val).filter(Boolean);
+    $('sitChips').innerHTML = answered.map(function (v) { return '<span>' + esc(v.replace(/:.*/, '')) + '</span>'; }).join('');
+    $('sitSum').textContent = answered.length ? 'From your profile:' : 'Six quick questions tailor this course. Everything stays available either way.';
+    if (window.wsRender) wsRender();
+  }
+  document.querySelectorAll('[data-q]').forEach(function (sel) {
+    var k = sel.dataset.q;
+    sel.innerHTML = '<option value="">Choose…</option>' + OPT[k].map(function (o) { return '<option' + (o === val(k) ? ' selected' : '') + '>' + esc(o) + '</option>'; }).join('');
+    sel.addEventListener('change', function () {
+      if (k === 'space1') { profile.space = sel.value ? [sel.value] : []; } else profile[k] = sel.value;
+      persist(); apply();
+    });
+  });
+  if (!['built', 'with', 'near'].some(function (k) { return profile[k]; })) $('sit').open = true;
+
+  /* ---------- My list: every "How to fix" can be added; one-by-one, reorderable ---------- */
+  var LKEY = 'meeting-needs.tox.v1';
+  var list = [];
+  try { list = JSON.parse(localStorage.getItem(LKEY) || '[]') || []; } catch (e) { list = []; }
+  function save() { try { localStorage.setItem(LKEY, JSON.stringify(list)); } catch (e) {} renderList(); syncButtons(); }
+  function has(title) { return list.some(function (x) { return x.title === title; }); }
+  function fixMeta(btn) {
+    var fix = btn.closest('.fix'), sec = btn.closest('.page');
+    var modes = fix ? Array.prototype.map.call(fix.querySelectorAll('.fix-top .mode'), function (m) { return m.className.replace('mode ', '') + '|' + m.textContent; }) : [];
+    return { title: btn.dataset.title, unit: sec ? sec.dataset.page : '', where: fix ? fix.dataset.fix : '', cost: fix ? Number(fix.dataset.cost || 0) : 0, modes: modes, s: 'next' };
+  }
+  function addItem(item) { if (!has(item.title)) { list.push(item); return true; } return false; }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('.add'); if (!b || !b.dataset.title) return;
+    if (has(b.dataset.title)) { list = list.filter(function (x) { return x.title !== b.dataset.title; }); toast('Taken off My list'); }
+    else { addItem(fixMeta(b)); toast('Added to My list · ' + list.length); }
+    save();
+  });
+  function syncButtons() {
+    document.querySelectorAll('.add[data-title]').forEach(function (b) {
+      var on = has(b.dataset.title); b.classList.toggle('on', on);
+      if (!b.dataset.label) b.dataset.label = b.textContent;
+      b.textContent = on ? 'On my list' : b.dataset.label;
+    });
+    $('navCount').textContent = list.filter(function (x) { return x.s !== 'done'; }).length;
+  }
+  var COST = ['Free', '$', '$$'], NEXT = { next: 'doing', doing: 'done', done: 'next' }, LABEL = { next: 'Next', doing: 'Doing', done: 'Done' };
+  function renderList() {
+    var el = $('lst');
+    $('lstEmpty').hidden = list.length > 0;
+    el.innerHTML = list.map(function (x, i) {
+      var k = (x.unit || 'u1').replace('u', 'k');
+      var modes = (x.modes || []).map(function (m) { var p = m.split('|'); return '<span class="mode ' + p[0] + '">' + esc(p[1]) + '</span>'; }).join('');
+      var unitName = (document.querySelector('.vt-unit[data-unit="' + x.unit + '"] b') || {}).textContent || '';
+      return '<li class="' + k + (x.s === 'done' ? ' done' : '') + '"><span class="num">' + (i + 1) + '</span>' +
+        '<span class="lt"><b>' + esc(x.title) + '</b><span>' + modes + '<span class="cost">' + COST[x.cost || 0] + '</span>' +
+        (x.where ? '<small><a href="#' + x.unit + '/' + x.where.replace(/^u\d+/, '') + '">' + esc(unitName) + ' ' + x.where.replace(/^u(\d+)s(\d+)$/, '$1.$2') + '</a></small>' : '') + '</span></span>' +
+        '<span class="row" style="gap:8px;flex-wrap:nowrap"><button class="st" data-i="' + i + '" data-s="' + x.s + '">' + LABEL[x.s] + '</button>' +
+        '<span class="lst-ctl"><button data-up="' + i + '" aria-label="Move up">▲</button><button data-down="' + i + '" aria-label="Move down">▼</button></span></span></li>';
+    }).join('');
+    var done = list.filter(function (x) { return x.s === 'done'; }).length;
+    $('lstBar').style.width = list.length ? (done / list.length * 100) + '%' : '0';
+    $('lstSum').textContent = list.length ? done + ' of ' + list.length + ' done · ' + list.filter(function (x) { return x.s === 'doing'; }).length + ' in progress' : '';
+  }
+  $('lst').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.i) { var x = list[+b.dataset.i]; x.s = NEXT[x.s]; if (x.s === 'done') toast('Done. That’s one less thing in the house.'); }
+    if (b.dataset.up && +b.dataset.up > 0) { var u = +b.dataset.up; list.splice(u - 1, 0, list.splice(u, 1)[0]); }
+    if (b.dataset.down && +b.dataset.down < list.length - 1) { var d = +b.dataset.down; list.splice(d + 1, 0, list.splice(d, 1)[0]); }
+    save();
+  });
+  $('lstSort').addEventListener('click', function () { list.sort(function (a, b) { return (a.s === 'done') - (b.s === 'done') || (a.cost || 0) - (b.cost || 0); }); save(); });
+  $('lstClear').addEventListener('click', function () { list = list.filter(function (x) { return x.s !== 'done'; }); save(); });
+
+  /* ---------- Tool 1: Where to start. Each box maps to a short ranked set of fixes. ---------- */
+  var WS = [
+    ['heat', 'We reheat or store hot food in plastic', ['u2s2', 'Stop heating food in plastic (plate, pot, glass)', 0, 3]],
+    ['cans', 'We eat canned tomatoes, coconut milk or soup most weeks', ['u2s3', 'Swap canned tomatoes & coconut milk to glass or carton', 0, 2]],
+    ['nonstick', 'We cook with nonstick pans, some scratched', ['u3s4', 'Replace scratched nonstick with cast iron or steel', 1, 2]],
+    ['spray', 'We use spray cleaners or disinfecting wipes most days', ['u3s1', 'Swap cleaners to simple basics as each runs out', 0, 2]],
+    ['scent', 'Plug-in fresheners, scented candles or dryer sheets', ['u3s2', 'Unplug air fresheners; go fragrance-free as things run out', 0, 2]],
+    ['shoes', 'Shoes are worn indoors', ['u3s3', 'Shoes off at the door + weekly wet dusting', 0, 3]],
+    ['oats', 'Oats, wheat, chickpeas or lentils are daily staples', ['u4s2', 'Organic oats, flour, chickpeas & lentils (bulk)', 1, 2]],
+    ['poison', 'There are ant baits, rodent poison or weed killer around', ['u4s4', 'Replace one poison with a needs-based fix (seal, store, dry)', 0, 2]],
+    ['garden', 'We grow food in the ground (or want to)', ['u5s2', 'Soil: one-batch test of all yard zones', 1, 3]],
+    ['damp', 'There’s a musty smell or visible mold', ['u6s1', 'Find & stop the water behind any mold; humidity meter', 0, 3]],
+    ['water', 'We don’t know what’s in our tap or well water', ['u2s4', 'Check tap or well water for PFAS', 1, 3]],
+    ['near', 'We live near a freeway, factory, field or airport', ['u7s2', 'Bedroom air filter (DIY box fan or HEPA)', 2, 2]]
+  ];
+  var wsOn = {};
+  function wsPre() {
+    var t = tags();
+    if (t.kids) { wsOn.shoes = 1; }
+    if (t.road || t.industry || t.farm) wsOn.near = 1;
+    if (t.well) wsOn.water = 1;
+  }
+  wsPre();
+  $('wsChecks').innerHTML = WS.map(function (w) { return '<label class="chk"><input type="checkbox" data-ws="' + w[0] + '"' + (wsOn[w[0]] ? ' checked' : '') + '> ' + esc(w[1]) + '</label>'; }).join('');
+  $('wsChecks').addEventListener('change', function (e) { var k = e.target.dataset.ws; if (k) { wsOn[k] = e.target.checked ? 1 : 0; wsRender(); } });
+  window.wsRender = function () {
+    var t = tags();
+    var picks = WS.filter(function (w) { return wsOn[w[0]]; }).map(function (w) {
+      var f = w[2], score = f[3] * 2 - f[2] + (t.kids && /shoes|heat|garden/.test(w[0]) ? 2 : 0) + (t.birds && w[0] === 'nonstick' ? 3 : 0);
+      return { id: f[0], title: f[1], cost: f[2], score: score };
+    }).sort(function (a, b) { return b.score - a.score; });
+    if (!picks.length) { $('wsOut').innerHTML = '<small>Tick a few boxes to see a suggested order.</small>'; return; }
+    var top = picks.slice(0, 3);
+    $('wsOut').innerHTML = '<strong>Start with ' + (top.length === 1 ? 'this' : 'these ' + top.length) + '</strong>' +
+      '<ol>' + top.map(function (p) { return '<li><a href="#' + p.id.replace(/s(\d)/, '/s$1') + '">' + esc(p.title) + '</a> · <span class="cost">' + COST[p.cost] + '</span></li>'; }).join('') + '</ol>' +
+      (picks.length > 3 ? '<small>Then: ' + picks.slice(3).map(function (p) { return esc(p.title); }).join(' · ') + '</small>' : '') +
+      '<small>Ranked by how much it reduces for how little it costs, plus who’s in the house.</small>' +
+      '<div class="row"><button class="btn dark" id="wsAdd">Add these ' + picks.length + ' to My list</button></div>';
+    $('wsAdd').onclick = function () {
+      var n = 0;
+      picks.forEach(function (p) {
+        var btn = document.querySelector('.fix[data-fix="' + p.id + '"] .add[data-title="' + p.title.replace(/"/g, '\\"') + '"]');
+        if (btn && addItem(fixMeta(btn))) n++;
+      });
+      save(); toast(n ? 'Added ' + n + ' to My list' : 'Already on your list');
+    };
+  };
+
+  /* ---------- Tool 2: Soil batch planner. One lab order for the whole yard. ---------- */
+  var HIST = [
+    ['h78', 'House built before 1978', 'Lead'],
+    ['road', 'Busy road or freeway nearby', 'Lead'],
+    ['orch', 'Was once orchard or farmland', 'Arsenic'],
+    ['ind', 'Near industry, smelter, rail yard', 'Full metals panel (lead, arsenic, cadmium, chromium, others)'],
+    ['fire', 'Fire-affected (ash on the property)', 'Full metals panel'],
+    ['sludge', 'Biosolids, sewage sludge or unknown fill used', 'PFAS (separate, costlier test)'],
+    ['tw', 'Old treated-wood beds (pre-2004)', 'Arsenic, chromium, copper']
+  ];
+  var ZONES = [
+    ['bed', 'Each food bed', '0–6 in'], ['drip', 'Drip line by the house', '0–3 ft from walls, 0–2 in'], ['play', 'Play area', '0–2 in'],
+    ['street', 'Street edge', '0–2 in'], ['dig', 'Where animals dig or forage', '0–2 in'], ['plant', 'Where you’d like to plant next', '0–6 in']
+  ];
+  var bp = { h78: 0, bed: 1, drip: 1, play: 0 }, beds = 1;
+  function bpDraw() {
+    var t = tags();
+    if (bp._init !== 1) { bp._init = 1; if (t.old) bp.h78 = 1; if (t.road) { bp.road = 1; bp.street = 1; } if (t.industry) bp.ind = 1; if (t.kids) bp.play = 1; if (t.animals) bp.dig = 1; }
+    $('bpHist').innerHTML = '<p class="eyebrow" style="grid-column:1/-1">The land’s past</p>' + HIST.map(function (h) { return '<label class="chk"><input type="checkbox" data-bp="' + h[0] + '"' + (bp[h[0]] ? ' checked' : '') + '> ' + esc(h[1]) + '</label>'; }).join('');
+    $('bpZones').innerHTML = '<p class="eyebrow" style="grid-column:1/-1">Zones to sample</p>' + ZONES.map(function (z) {
+      return '<label class="chk"><input type="checkbox" data-bp="' + z[0] + '"' + (bp[z[0]] ? ' checked' : '') + '> ' + esc(z[1]) + (z[0] === 'bed' ? ' <select id="bpBeds" style="min-height:30px;font-size:14px">' + [1, 2, 3, 4, 5, 6].map(function (n) { return '<option' + (n === beds ? ' selected' : '') + '>' + n + '</option>'; }).join('') + '</select>' : '') + '</label>';
+    }).join('');
+    $('bpBeds').onchange = function () { beds = +this.value; bpOut(); };
+    bpOut();
+  }
+  function bpOut() {
+    var zones = ZONES.filter(function (z) { return bp[z[0]]; });
+    var n = zones.reduce(function (s, z) { return s + (z[0] === 'bed' ? beds : 1); }, 0);
+    var tests = { 'Lead': 1 };
+    HIST.forEach(function (h) { if (bp[h[0]]) h[2].split(/, (?![^(]*\))/).forEach(function (x) { tests[x] = 1; }); });
+    if (tests['Full metals panel'] || tests['Full metals panel (lead, arsenic, cadmium, chromium, others)']) { delete tests['Lead']; delete tests['Arsenic']; delete tests['Full metals panel']; tests['Full metals panel (lead, arsenic, cadmium, chromium, others)'] = 1; }
+    tests['pH and organic matter (same sample)'] = 1;
+    var lo = n * 15, hi = n * 50, pfas = !!tests['PFAS (separate, costlier test)'];
+    $('bpOut').innerHTML = n ? '<strong>' + n + ' sample' + (n > 1 ? 's' : '') + ', one lab order</strong>' +
+      '<ul>' + zones.map(function (z) { return '<li><b>' + esc(z[1]) + (z[0] === 'bed' && beds > 1 ? ' × ' + beds : '') + '</b>: 5–10 scoops, ' + z[2] + ', mixed; one labeled bag' + (z[0] === 'bed' && beds > 1 ? ' each' : '') + '</li>'; }).join('') + '</ul>' +
+      '<div><span class="eyebrow">Ask the lab for</span><ul>' + Object.keys(tests).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>' +
+      '<small>Rough cost for a basic screen: $' + lo + '–$' + hi + (pfas ? ', plus a few hundred dollars per PFAS sample' : '') + '. Prices vary by lab; university extension labs are often lowest. Sample everything the same day and send it together.</small>' +
+      '<div class="row"><button class="btn dark" id="bpAdd">Add this batch to My list</button></div>' : '<small>Choose at least one zone.</small>';
+    var b = $('bpAdd'); if (b) b.onclick = function () {
+      var title = 'Soil: one-batch test of all yard zones';
+      var existing = list.filter(function (x) { return x.title === title; })[0];
+      if (existing) existing.note = n + ' samples'; else addItem({ title: title, unit: 'u5', where: 'u5s2', cost: 1, modes: ['m-batch|Test once'], s: 'next' });
+      save(); toast('Batch on My list · ' + n + ' samples');
+    };
+  }
+  document.querySelector('#u5-tool .tool').addEventListener('change', function (e) { var k = e.target.dataset.bp; if (k) { bp[k] = e.target.checked ? 1 : 0; bpOut(); } });
+  bpDraw();
+
+  /* ---------- Routing: #u3 opens unit 3; #u3/s2 scrolls to 3.2; #list opens My list ---------- */
+  function route() {
+    var parts = location.hash.replace('#', '').split('/'), page = parts[0] || '';
+    if (page && !document.querySelector('.page[data-page="' + page + '"]')) page = '';
+    document.querySelectorAll('.page').forEach(function (p) { p.hidden = p.dataset.page !== page; });
+    document.querySelectorAll('.vt-unit').forEach(function (u) { u.classList.toggle('cur', u.dataset.unit === page); });
+    document.querySelectorAll('.nav-over').forEach(function (a) { a.classList.toggle('cur', a.dataset.nav === page); });
+    var target = parts[1] && $(page + '-' + parts[1]);
+    if (target) target.scrollIntoView({ block: 'start' }); else window.scrollTo(0, 0);
+  }
+  window.addEventListener('hashchange', route);
+
+  apply(); renderList(); syncButtons(); route();
+})();
+</script>
+</body>
+</html>

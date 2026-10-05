@@ -70,7 +70,7 @@
       '<details class="rel-nav-wrap"' + (wide ? ' open' : '') + '><summary class="rel-nav-head"><span class="eyebrow">Course map</span><b>Emotions &amp; love</b></summary>' +
       '<a class="rel-nav-over" href="' + BASE + '"' + (!cur ? ' aria-current="page"' : '') + '>Overview</a>' +
       '<ol class="rel-vt">' + units + '</ol>' +
-      '<div class="rel-vt-apps"><span class="eyebrow">Then, special situations</span><p>' + D.APPS.map(function (a) { return a.preview ? '<a href="' + href(a.id) + '">' + esc(a.name) + '</a>' : esc(a.name); }).join(' · ') + '</p><span class="rel-later">Previews open · more later</span></div>' +
+      '<div class="rel-vt-apps' + (cur === 'special' ? ' cur' : '') + '"><a class="eyebrow" href="' + BASE + '/special">Then, special situations</a><p>' + D.APPS.map(function (a) { return '<a href="' + spHref(a.id) + '">' + esc(a.name) + '</a>'; }).join(' · ') + '</p><span class="rel-later">In progress</span></div>' +
       '</details></nav>';
   }
   function layout(cur, main) {
@@ -92,8 +92,7 @@
       return '<a class="rel-tt k-' + u + '" href="' + href(u, sub) + '"><span class="eyebrow">' + eyebrow + '</span><b>' + name + '</b><span>' + text + '</span><i>Open →</i></a>';
     }
     var apps = D.APPS.map(function (a) {
-      var inner = '<b>' + esc(a.name) + '</b><span>' + esc(a.short) + '</span><small>' + esc(a.status) + (a.preview ? ' · preview open →' : '') + '</small>';
-      return a.preview ? '<li class="is-open"><a href="' + href(a.id) + '">' + inner + '</a></li>' : '<li>' + inner + '</li>';
+      return '<li class="is-open"><a href="' + spHref(a.id) + '"><b>' + esc(a.name) + '</b><span>' + esc(a.short) + '</span><small>In progress · open →</small></a></li>';
     }).join('');
     return {
       title: 'Emotions & love · Kinship',
@@ -109,7 +108,7 @@
             tool('dialogue', 'communicate', 'Between people', 'Communicate', 'Hear each other’s needs and find a strategy that meets you both.') +
             '<p class="rel-zone"><b>Visible plant · above ground</b><span>Where your needs meet people, animals and the physical world.</span></p></div>' +
         '</section>' +
-        '<section class="rel-apps" aria-labelledby="rel-apps-h"><div class="rel-apps-head"><span class="rel-tu-n">5</span><div><h2 id="rel-apps-h">Special situations</h2><p>The same plant roots and visible plant, applied to the particular people and places in your life.</p></div></div>' +
+        '<section class="rel-apps" aria-labelledby="rel-apps-h"><div class="rel-apps-head"><span class="rel-tu-n">5</span><div><h2 id="rel-apps-h"><a href="' + BASE + '/special">Special situations</a></h2><p>The same plant roots and visible plant, applied to the particular people and places in your life.</p></div></div>' +
         '<ul>' + apps + '</ul></section>' +
         '<aside class="rel-funfact"><span class="eyebrow">Nonviolence theory origins</span><p>The idea that feelings point to universal needs, and that conflicts live between strategies, grows out of Marshall B. Rosenberg’s Nonviolent Communication. The feelings and needs words here are adapted from the Center for Nonviolent Communication’s inventories (<a href="https://www.cnvc.org" target="_blank" rel="noopener">cnvc.org</a>). Thank you!</p></aside>')
     };
@@ -135,146 +134,33 @@
       '</article>' +
       '<nav class="rel-pager" aria-label="Units">' +
       (prev ? '<a class="rel-pg prev k-' + prev.id + '" href="' + href(prev.id) + '"><small>← Previous</small><b>' + prev.num + ' · ' + esc(prev.word) + '</b></a>' : '<a class="rel-pg prev" href="' + BASE + '"><small>← Back to</small><b>Overview</b></a>') +
-      (next ? '<a class="rel-pg next k-' + next.id + '" href="' + href(next.id) + '"><small>Next →</small><b>' + next.num + ' · ' + esc(next.word) + '</b></a>' : '<a class="rel-pg next" href="' + BASE + '"><small>Next →</small><b>Special applications</b></a>') +
+      (next ? '<a class="rel-pg next k-' + next.id + '" href="' + href(next.id) + '"><small>Next →</small><b>' + next.num + ' · ' + esc(next.word) + '</b></a>' : '<a class="rel-pg next" href="' + BASE + '/special"><small>Next →</small><b>Special situations</b></a>') +
       '</nav>';
     if (subId) setTimeout(function () { var el = document.getElementById('sec-' + u.id + '-' + subId); if (el) el.scrollIntoView({ block: 'start' }); }, 0);
     setTimeout(spy, 0);
     return { title: u.word + ' · Emotions & love · Kinship', html: layout(u.id, html) };
   }
 
-  /* ---------- special application: Neighbors (preview) ---------- */
-  function viewNeighbors() {
-    function sec(n, title, short, keys, extra) {
-      return '<section class="rel-sec" id="sec-neighbors-' + n + '"><div class="rel-sec-head"><span class="rel-sec-n">N.' + n + '</span><div><h2>' + esc(title) + '</h2><p>' + esc(short) + '</p></div></div>' +
-        '<ul class="rel-keys">' + keys.map(function (k) { return '<li>' + md(k) + '</li>'; }).join('') + '</ul>' + (extra || '') + '</section>';
-    }
-    var html = '<article class="rel-unitpage k-apps">' +
-      '<header class="rel-unit-hero"><span class="eyebrow">Special situation · Preview</span><h1 tabindex="-1">Neighbors</h1>' +
-      '<p class="rel-unit-sub">The people, plants and animals you share a place with</p>' +
-      '<p class="lede">Neighbors are the ones we mostly don’t choose and can’t avoid sharing with: the same water main, the same air, the same street trees and raccoons. The same four steps (notice, feel, find the need, ask) work here, and sharing a place well is one of the oldest ways people have met their needs.</p></header>' +
-      sec(1, 'What you share', 'Some needs are met together or not at all.', [
-        '**Water.** The same main, pipes and watershed. In some places neighbors literally share water rights: a well, a spring, a creek. What one home pours down a drain or onto a lawn reaches everyone downstream.',
-        '**Air.** Wildfire smoke, a grill, a gas leaf blower or a busy road reach every window on the block at once. You experience air quality together.',
-        '**Walls, sound, light and shade.** Footsteps, music, a porch light, a tall tree: each meets one household’s needs and touches another’s.',
-        '**Urban wildlife.** Raccoons, crows, pigeons, coyotes and bees move between yards. What one home offers (scraps, water, shelter) changes the whole block.'
-      ], '<p class="rel-q">Water lens: <a href="#lens-water/purify/everyday">sharing clean water with neighbors</a> · <a href="#lens-water/testing/kits">splitting a water test</a></p>') +
-      sec(2, 'Needs you have in common', 'Conflicts live between strategies, never between needs.', [
-        'Every neighbor needs rest, safety, clean water and air, belonging, and choice in their own home.',
-        'A leaf blower at 8am is one household’s strategy for order; the person next door needs rest. Both needs are real. The search is for a strategy that meets both: a later hour, a rake, a shared schedule.',
-        'Start from what you noticed, not what it means: “I heard the blower at 8 this morning,” not “you’re inconsiderate.”'
-      ]) +
-      sec(3, 'Living harmoniously', 'Old ideas for sharing a place.', [
-        '**Commons.** Shared things (a yard, a laundry room, a creek) stay healthy when the people using them make agreements together.',
-        '**Agreements, not rules.** Decided together, revisited when they stop working.',
-        '**Mutual aid.** Help flows both ways without a ledger: a lent ladder, a shared filter, a meal when someone’s sick.',
-        '**Share what you learn.** A water test, an air-quality alert, where the raccoons are getting in. Information is the easiest thing to share.',
-        '**Start small.** A wave, a name, a tool lent. Trust builds the way soil does.'
-      ], '<p class="rel-remember"><span class="eyebrow">Try it</span>Ask one neighbor: “Do you know if your water’s safe to drink?” Offer to split a test.</p>') +
-      '<div class="note">This is a preview. The full Neighbors unit (housemates, buildings, blocks, land and wildlife) comes with the special situations tree.</div>' +
-      '</article>' +
-      '<nav class="rel-pager" aria-label="Units"><a class="rel-pg prev" href="' + BASE + '"><small>← Back to</small><b>Overview</b></a><a class="rel-pg next" href="#lens-water"><small>Related →</small><b>Water</b></a></nav>';
-    return { title: 'Neighbors · Emotions & love · Kinship', html: layout('neighbors', html) };
-  }
-
-  /* ---------- special applications: generic preview page ----------
-     o = { id, letter, name, sub, lede, secs: [[title, short, keys, extra]], note, related: [href, label] } */
-  function viewPreview(o) {
-    var secs = o.secs.map(function (x, j) {
-      var n = j + 1;
-      return '<section class="rel-sec" id="sec-' + o.id + '-' + n + '"><div class="rel-sec-head"><span class="rel-sec-n">' + o.letter + '.' + n + '</span><div><h2>' + esc(x[0]) + '</h2><p>' + esc(x[1]) + '</p></div></div>' +
-        '<ul class="rel-keys">' + x[2].map(function (k) { return '<li>' + md(k) + '</li>'; }).join('') + '</ul>' + (x[3] || '') + '</section>';
-    }).join('');
-    var html = '<article class="rel-unitpage k-apps">' +
-      '<header class="rel-unit-hero"><span class="eyebrow">Special situation · Preview</span><h1 tabindex="-1">' + esc(o.name) + '</h1>' +
-      '<p class="rel-unit-sub">' + esc(o.sub) + '</p><p class="lede">' + esc(o.lede) + '</p></header>' +
-      secs + (o.after || '') +
-      '<div class="note">' + esc(o.note) + '</div></article>' +
-      '<nav class="rel-pager" aria-label="Units"><a class="rel-pg prev" href="' + BASE + '"><small>← Back to</small><b>Overview</b></a>' +
-      (o.related ? '<a class="rel-pg next" href="' + o.related[0] + '"><small>Related →</small><b>' + esc(o.related[1]) + '</b></a>' : '') + '</nav>';
-    return { title: o.name + ' · Emotions & love · Kinship', html: layout(o.id, html) };
-  }
+  /* ---------- special situations: one page, one accordion each (Animals first) ----------
+     Routes: #lens-relationships/special[/<id>]. The older preview routes (#…/animals, /neighbors, /power, /coops, /pets, /wild)
+     open the same page with that accordion open. Each o = { id, letter, name, sub, lede, intro?, secs: [[title, short, keys, extra]], after?, note, related? } */
+  function spHref(id) { return BASE + '/special/' + id; }
   function tryIt(t) { return '<p class="rel-remember"><span class="eyebrow">Try it</span>' + md(t) + '</p>'; }
   function src(t) { return '<p class="rel-q"><small>' + t + '</small></p>'; }
-
-  /* Power & peace: nonviolence, abolition and power structures. */
-  function viewPower() {
-    return viewPreview({
-      id: 'power', letter: 'P', name: 'Power & peace', sub: 'Nonviolence, abolition, and power shared instead of held over',
-      lede: 'The same four steps that work between two people work in families, workplaces, towns and whole systems. Underneath every system of punishment is an idea about who is good, who is bad, and who deserves to suffer. Nonviolence asks a different question: what does everyone here need, and how do we meet it together?',
-      secs: [
-        ['Power over, power with', 'Two ways to get things done together.', [
-          '**Power over:** one side decides for the other and backs it up with fear, punishment, shame or reward.',
-          '**Power with:** decisions made together, where everyone’s needs count, including the people with the least say right now.',
-          'Power over can get compliance fast. It costs trust, and people tend to comply only while someone is watching. Power with is slower to start and lasts longer.',
-          '**Protective force isn’t punishment.** Grabbing a child before they run into the street protects a life. Making someone suffer so they “learn their lesson” is punitive. Nonviolence keeps the first and lets go of the second.'
-        ], src('Sources: Mary Parker Follett, “power-over” and “power-with” (1920s); Marshall B. Rosenberg, <i>Nonviolent Communication</i>, on protective vs. punitive use of force.')],
-        ['Beyond good and bad', 'Moral labels make harm feel fair.', [
-          '“Good”, “bad”, “evil”, “criminal” and “deserves” are judgments, not observations. They tell us about the speaker’s values, not about the person.',
-          'Once someone is sorted into “bad”, hurting them can start to feel like justice. Ranking people by worth is how a lot of violence gets permission.',
-          '**Every action is an attempt to meet a need**, even a harmful one; often a tragic, costly attempt. Seeing the need isn’t excusing the harm. It’s where real repair starts.',
-          '**Nobody deserves to suffer.** Instead of “what do they deserve?”, ask: what happened, who was hurt, what do they need, and what would make this less likely to happen again?'
-        ], src('Sources: Marshall B. Rosenberg on moralistic judgments and “deserve” thinking; Walter Wink, <i>The Powers That Be</i> (1998), on the “domination system”.')],
-        ['Abolition', 'Building a world where cages and punishment aren’t needed.', [
-          '**Abolition** (of prisons and policing as we know them) asks: what would make them unnecessary? Most of the answers are needs: housing, health and mental-health care, income, education, belonging, safety.',
-          'It’s as much about building as taking apart: community crisis teams, violence interrupters, restorative and transformative justice circles, mutual aid.',
-          '**Accountability without punishment:** name the harm, hear the needs on every side, repair what can be repaired, and change the conditions that made the harm likely.',
-          'The United States locks up more of its people than almost any other country. Abolitionists point out that this hasn’t made people feel safe, and that harm from punishment falls hardest on people who are already poor, disabled, Black, brown or Indigenous.'
-        ], src('Sources: Angela Y. Davis, <i>Are Prisons Obsolete?</i> (2003); Mariame Kaba, <i>We Do This ’Til We Free Us</i> (2021); Ruth Wilson Gilmore, <i>Golden Gulag</i> (2007); World Prison Brief (prisonstudies.org) for incarceration rates.')],
-        ['Power at home and all around', 'Hierarchies are everywhere, and each one can soften.', [
-          'Adult over child, boss over worker, landlord over tenant, human over animal. Each is a place where power over can become power with.',
-          '**At home:** ask instead of order, decide in a circle, turn rules into agreements and revisit them when they stop working.',
-          '**At work and where you live:** owning and deciding together is an option. See Cooperatives.',
-          '**With animals:** the same respect, all the way down. See Animals.'
-        ], '<p class="rel-q">Next: <a href="' + href('coops') + '">Cooperatives</a> · <a href="' + href('animals') + '">Animals</a> · <a href="#lens-governance">Governance</a></p>' +
-          tryIt('Catch one “should” or “deserves” in your own thinking today. Translate it: which need is underneath it?')]
-      ],
-      note: 'This is a preview. The full Power & peace unit (circles, agreements, restorative practice, and community safety) comes with the special situations tree.',
-      related: ['#lens-governance', 'Governance']
-    });
+  function animalsAfter() {
+    var items = [
+      ['Food', 'every food in the course comes from plants: the cheapest, longest-keeping and most shareable way to meet the need for food.', '#lens-food', 'Food'],
+      ['Water', 'where California’s farm water goes, including the feed grown for farmed animals.', '#lens-water/sources/take', 'Water → Sources'],
+      ['Toxins', 'wool, leather, down and silk kept in use secondhand, instead of new.', '#lens-toxins/exposures/healthy', 'Toxins → What healthy looks like'],
+      ['Toxins', 'poison-free ways to share a home with ants, mice and other wild neighbors.', '#lens-toxins/pesticides/yard', 'Toxins → Yard, home and companions']
+    ];
+    return '<section class="rel-sec" id="sec-animals-5"><div class="rel-sec-head"><span class="rel-sec-n">A.5</span><div><h2>Across Kinship</h2><p>Where peace with animals shows up in the other lenses.</p></div></div>' +
+      '<ul class="rel-keys">' + items.map(function (x) { return '<li><strong>' + x[0] + ':</strong> ' + esc(x[1]) + ' <a href="' + x[2] + '">' + esc(x[3]) + '</a></li>'; }).join('') + '</ul></section>' +
+      (mn().opinion ? mn().opinion('<p>Modern commodification of animal bodies as products is something I never trust enough to recommend, especially new.</p>') : '');
   }
-
-  /* Cooperatives: democratic workplaces and housing. */
-  function viewCoops() {
-    return viewPreview({
-      id: 'coops', letter: 'C', name: 'Cooperatives', sub: 'Workplaces and homes owned and run together',
-      lede: 'Most workplaces and most housing are set up so that someone outside the work, or outside the home, owns it and collects the profit. Cooperatives flip that: the people doing the work, or living in the homes, own them together and decide together. It’s one of the oldest ways to share power, and it’s growing.',
-      secs: [
-        ['Why ownership matters', 'Who owns it decides who it serves.', [
-          '**Extracting profit:** in a typical company, value made by workers flows up and out to owners and shareholders. In typical renting, rent flows to a landlord whether or not the home is cared for.',
-          '**In a co-op, the people who use it own it.** Members still earn wages or pay housing costs; what’s left over goes back to members or the community instead of outside owners.',
-          '**One member, one vote,** not one share, one vote. A dishwasher’s voice counts the same as a founder’s.',
-          'The seven cooperative principles: open membership, democratic member control, members share the money, independence, education for members, co-ops helping co-ops, and care for the wider community.'
-        ], src('Source: International Cooperative Alliance, <i>Statement on the Cooperative Identity</i> (1995), ica.coop.')],
-        ['Worker cooperatives', 'A workplace without a boss above it.', [
-          'Workers own the business together, elect or are the board, and decide on pay, hours and direction. Many keep pay ratios small between the highest and lowest paid.',
-          'Close to home: the **Arizmendi** bakeries in the Bay Area are worker-owned. **Cooperative Home Care Associates** in the Bronx (since 1985) is one of the largest worker co-ops in the US. **Mondragon** in the Basque Country employs tens of thousands of worker-owners.',
-          '**Conversions:** when owners retire, a business can be sold to the people who already run it, keeping jobs local.',
-          'California has a **Worker Cooperative Act** (2015) that makes this legal structure easier to set up.'
-        ], src('Sources: US Federation of Worker Cooperatives (usworker.coop); Democracy at Work Institute; California AB 816 (2015).')],
-        ['Living together: housing and land', 'Homes that can’t be flipped for profit.', [
-          '**Housing cooperative:** residents own the building together through a co-op. Each household holds a share and the right to live in their home, and members decide on rules, repairs and costs.',
-          '**Limited-equity co-op:** the share price is capped, so the home stays affordable for the next household instead of rising with the market.',
-          '**Community land trust (CLT):** a nonprofit holds the land forever, for the community. Households own or rent the home on top under a long lease, and agree to a fair resale price. The first one in the US, New Communities in Georgia (1969), was started by Black farmers in the civil rights movement.',
-          '**Cohousing:** private homes clustered around a shared common house, kitchen and garden, with decisions made together. It began in Denmark.',
-          '**Student and group houses:** the Berkeley Student Cooperative has housed students together since 1933. Many land co-ops and farm co-ops work the same way: people hold land together instead of one owner holding it over others.'
-        ], src('Sources: National Association of Housing Cooperatives; Grounded Solutions Network (groundedsolutions.org) on CLTs; Cohousing Association of the US; Berkeley Student Cooperative.')],
-        ['Starting small', 'Practice sharing before owning.', [
-          'A buying club, a tool library, a shared garden or a babysitting swap: each is a tiny co-op with agreements and shared decisions.',
-          'Tenants who talk to each other can start as a tenant association, and some buildings later buy together.',
-          'Deciding together: **consensus** (everyone agrees), **consent** (no one has a strong objection, as in sociocracy), or **majority vote**. Each fits different groups and decisions.',
-          'California help: the **Sustainable Economies Law Center** in Oakland offers free legal resources for co-ops and shared housing.'
-        ], tryIt('Name one thing you already share with others: a laundry room, a car, a garden. What agreement would make it work better for everyone?')]
-      ],
-      note: 'This is a preview. The full Cooperatives unit (meetings, money, conversions, and how to start a housing co-op or CLT) comes with the special situations tree.',
-      related: [href('power'), 'Power & peace']
-    });
-  }
-
-  /* Animals: respect in language, reading signals, cows in their own right, wild neighbors. */
-  function viewAnimals() {
-    var take = mn().opinion ? mn().opinion(
-      '<p>Peace includes animals.</p>') : '';
-    return viewPreview({
+  function specials() {
+    return {
+      animals: {
       id: 'animals', letter: 'A', name: 'Animals', sub: 'Someone, not something',
       lede: 'Animals share our homes, our neighborhoods, our water and our food systems. They have feelings and needs, and they tell us about them with their bodies. The same four steps (notice, feel, find the need, ask) work here, starting with how we talk about them.',
       secs: [
@@ -304,10 +190,168 @@
         ], src('Source: California AB 1788 (2020), restrictions on second-generation anticoagulant rodenticides.') +
           tryIt('Next time you talk about an animal, notice your pronoun. Try “they”, “he” or “she”.')]
       ],
-      after: take,
-      note: 'This is a preview. The full Animals unit (companion animals by species, sanctuaries, and wildlife at home) comes with the special situations tree.',
+      intro: '<p class="rel-sp-lead">When Kinship says meeting everyone’s needs, everyone includes animals. They’re sentient, they feel, and they share the same universal needs we do: food, water, safety, rest, play, company and choice. So every strategy gets the same question: does it meet the animals’ needs too?</p>',
+      after: animalsAfter(),
+      note: 'The full Animals unit (companion animals by species, sanctuaries, and wildlife at home) is in progress.',
       related: ['#lens-water/sources/take', 'Water: farm water']
-    });
+    },
+      children: {
+        id: 'children', letter: 'K', name: 'Children', sub: 'Togetherness instead of split labor; kids pitching in beside you',
+        lede: 'Children share every universal need adults have, and one they show early and often: to contribute. This unit grows from the ideas the whole of Kinship sits on.',
+        secs: [
+          ['Togetherness, not split labor', 'Kids belong beside the adults.', [
+            'We don’t picture one adult doing dishes while the children play somewhere else. Children belong right next to the adults: rinsing, carrying, sorting, sweeping and playing with the real tools that keep a house running.',
+            'Work and play happen in the same place, at the same time. Keeping a home and a body alive isn’t a chore split off from life: it is life, and it can be the good part.',
+            '**Children want to help.** Taking that away (“go play, I’ll do it”) teaches them their help isn’t wanted. Inviting them in, at whatever level they can manage, builds helpfulness that grows on its own.'
+          ]],
+          ['No pay, no score, no shame', 'People pitch in because they belong.', [
+            'Nobody is paid, bribed, scored or shamed into helping. Kids pitch in because they’re part of the household and it feels good to contribute.',
+            '**TEAM:** Togetherness, Encouragement, Autonomy, Minimal interference.',
+            '**Requests, not demands,** with kids too: a “not now” is a real answer, and the search goes back to the needs on both sides.',
+            '**Protective force isn’t punishment.** Grabbing a hand before the street keeps a child safe; making a child suffer to “learn a lesson” is something else.'
+          ], src('Sources: Michaeleen Doucleff, <i>Hunt, Gather, Parent</i> (2021), including her TEAM summary; Barbara Rogoff’s research on children learning by observing and pitching in; Marshall B. Rosenberg, <i>Nonviolent Communication</i>.')],
+          ['Kids across Kinship', 'Where children already show up.', [
+            '**Food:** cooking together, with real tools and real jobs.',
+            '**Water:** turning over creek stones to count the little creatures, a real field test.',
+            '**Toxins:** small bodies take in more per pound, so dust, hands and bottles come first.'
+          ], '<p class="rel-q"><a href="#lens-food/cook/together">Food: cooking together</a> · <a href="#lens-water/testing">Water: testing</a> · <a href="#lens-toxins/exposures/dose">Toxins: dose and timing</a></p>' +
+            tryIt('Next chore, invite a child in at whatever level they can manage, and let them do it their way.')]
+        ],
+        note: 'The full Children unit (ages and stages, chores as play, conflict between siblings) is in progress.'
+      },
+      neighbors: {
+      id: 'neighbors', letter: 'N', name: 'Neighbors', sub: 'The people, plants and animals you share a place with',
+      lede: 'Neighbors are the ones we mostly don’t choose and can’t avoid sharing with: the same water main, the same air, the same street trees and raccoons. The same four steps (notice, feel, find the need, ask) work here, and sharing a place well is one of the oldest ways people have met their needs.',
+      secs: [
+        ['What you share', 'Some needs are met together or not at all.', [
+        '**Water.** The same main, pipes and watershed. In some places neighbors literally share water rights: a well, a spring, a creek. What one home pours down a drain or onto a lawn reaches everyone downstream.',
+        '**Air.** Wildfire smoke, a grill, a gas leaf blower or a busy road reach every window on the block at once. You experience air quality together.',
+        '**Walls, sound, light and shade.** Footsteps, music, a porch light, a tall tree: each meets one household’s needs and touches another’s.',
+        '**Urban wildlife.** Raccoons, crows, pigeons, coyotes and bees move between yards. What one home offers (scraps, water, shelter) changes the whole block.'
+      ], '<p class="rel-q">Water lens: <a href="#lens-water/purify/everyday">sharing clean water with neighbors</a> · <a href="#lens-water/testing/kits">splitting a water test</a></p>'],
+        ['Needs you have in common', 'Conflicts live between strategies, never between needs.', [
+        'Every neighbor needs rest, safety, clean water and air, belonging, and choice in their own home.',
+        'A leaf blower at 8am is one household’s strategy for order; the person next door needs rest. Both needs are real. The search is for a strategy that meets both: a later hour, a rake, a shared schedule.',
+        'Start from what you noticed, not what it means: “I heard the blower at 8 this morning,” not “you’re inconsiderate.”'
+      ]],
+        ['Living harmoniously', 'Old ideas for sharing a place.', [
+        '**Commons.** Shared things (a yard, a laundry room, a creek) stay healthy when the people using them make agreements together.',
+        '**Agreements, not rules.** Decided together, revisited when they stop working.',
+        '**Mutual aid.** Help flows both ways without a ledger: a lent ladder, a shared filter, a meal when someone’s sick.',
+        '**Share what you learn.** A water test, an air-quality alert, where the raccoons are getting in. Information is the easiest thing to share.',
+        '**Start small.** A wave, a name, a tool lent. Trust builds the way soil does.'
+      ], '<p class="rel-remember"><span class="eyebrow">Try it</span>Ask one neighbor: “Do you know if your water’s safe to drink?” Offer to split a test.</p>']
+      ],
+      note: 'The full Neighbors unit (housemates, buildings, blocks, land and wildlife) is in progress.',
+      related: ['#lens-water', 'Water']
+    },
+      coops: {
+      id: 'coops', letter: 'C', name: 'Cooperatives', sub: 'Workplaces and homes owned and run together',
+      lede: 'Most workplaces and most housing are set up so that someone outside the work, or outside the home, owns it and collects the profit. Cooperatives flip that: the people doing the work, or living in the homes, own them together and decide together. It’s one of the oldest ways to share power, and it’s growing.',
+      secs: [
+        ['Why ownership matters', 'Who owns it decides who it serves.', [
+          '**Extracting profit:** in a typical company, value made by workers flows up and out to owners and shareholders. In typical renting, rent flows to a landlord whether or not the home is cared for.',
+          '**In a co-op, the people who use it own it.** Members still earn wages or pay housing costs; what’s left over goes back to members or the community instead of outside owners.',
+          '**One member, one vote,** not one share, one vote. A dishwasher’s voice counts the same as a founder’s.',
+          'The seven cooperative principles: open membership, democratic member control, members share the money, independence, education for members, co-ops helping co-ops, and care for the wider community.'
+        ], src('Source: International Cooperative Alliance, <i>Statement on the Cooperative Identity</i> (1995), ica.coop.')],
+        ['Worker cooperatives', 'A workplace without a boss above it.', [
+          'Workers own the business together, elect or are the board, and decide on pay, hours and direction. Many keep pay ratios small between the highest and lowest paid.',
+          'Close to home: the **Arizmendi** bakeries in the Bay Area are worker-owned. **Cooperative Home Care Associates** in the Bronx (since 1985) is one of the largest worker co-ops in the US. **Mondragon** in the Basque Country employs tens of thousands of worker-owners.',
+          '**Conversions:** when owners retire, a business can be sold to the people who already run it, keeping jobs local.',
+          'California has a **Worker Cooperative Act** (2015) that makes this legal structure easier to set up.'
+        ], src('Sources: US Federation of Worker Cooperatives (usworker.coop); Democracy at Work Institute; California AB 816 (2015).')],
+        ['Living together: housing and land', 'Homes that can’t be flipped for profit.', [
+          '**Housing cooperative:** residents own the building together through a co-op. Each household holds a share and the right to live in their home, and members decide on rules, repairs and costs.',
+          '**Limited-equity co-op:** the share price is capped, so the home stays affordable for the next household instead of rising with the market.',
+          '**Community land trust (CLT):** a nonprofit holds the land forever, for the community. Households own or rent the home on top under a long lease, and agree to a fair resale price. The first one in the US, New Communities in Georgia (1969), was started by Black farmers in the civil rights movement.',
+          '**Cohousing:** private homes clustered around a shared common house, kitchen and garden, with decisions made together. It began in Denmark.',
+          '**Student and group houses:** the Berkeley Student Cooperative has housed students together since 1933. Many land co-ops and farm co-ops work the same way: people hold land together instead of one owner holding it over others.'
+        ], src('Sources: National Association of Housing Cooperatives; Grounded Solutions Network (groundedsolutions.org) on CLTs; Cohousing Association of the US; Berkeley Student Cooperative.')],
+        ['Starting small', 'Practice sharing before owning.', [
+          'A buying club, a tool library, a shared garden or a babysitting swap: each is a tiny co-op with agreements and shared decisions.',
+          'Tenants who talk to each other can start as a tenant association, and some buildings later buy together.',
+          'Deciding together: **consensus** (everyone agrees), **consent** (no one has a strong objection, as in sociocracy), or **majority vote**. Each fits different groups and decisions.',
+          'California help: the **Sustainable Economies Law Center** in Oakland offers free legal resources for co-ops and shared housing.'
+        ], tryIt('Name one thing you already share with others: a laundry room, a car, a garden. What agreement would make it work better for everyone?')]
+      ],
+      note: 'The full Cooperatives unit (meetings, money, conversions, and how to start a housing co-op or CLT) is in progress.',
+      related: [spHref('power'), 'Power & peace']
+    },
+      plants: {
+        id: 'plants', letter: 'L', name: 'Plants', sub: 'A plant’s signals as needs',
+        lede: 'A yellow leaf or a bare patch of soil is a message about a need: water, light, nutrients, shelter. The same four steps work with plants: notice, wonder what they’re feeling, find the need, and change what you offer.',
+        secs: [], note: 'The full Plants unit is in progress, and continues in Gardening.', related: ['#lens-gardening', 'Gardening']
+      },
+      groups: {
+        id: 'groups', letter: 'G', name: 'Gatherings & events', sub: 'Hosting, rounds and agreements, conflict in a circle',
+        lede: 'Hosting a gathering, a meeting or an event: rounds where everyone speaks, agreements made together, and what to do when conflict shows up in a circle.',
+        secs: [], note: 'The full Gatherings & events unit is in progress.'
+      },
+      projects: {
+        id: 'projects', letter: 'J', name: 'Projects', sub: 'A shared goal, roles by willingness, check-ins',
+        lede: 'Working toward a shared goal: roles chosen by willingness rather than assigned, regular check-ins, and needs named early, before they turn into resentment.',
+        secs: [], note: 'The full Projects unit is in progress.'
+      },
+      power: {
+      id: 'power', letter: 'P', name: 'Power & peace', sub: 'Nonviolence, abolition, and power shared instead of held over',
+      lede: 'The same four steps that work between two people work in families, workplaces, towns and whole systems. Underneath every system of punishment is an idea about who is good, who is bad, and who deserves to suffer. Nonviolence asks a different question: what does everyone here need, and how do we meet it together?',
+      secs: [
+        ['Power over, power with', 'Two ways to get things done together.', [
+          '**Power over:** one side decides for the other and backs it up with fear, punishment, shame or reward.',
+          '**Power with:** decisions made together, where everyone’s needs count, including the people with the least say right now.',
+          'Power over can get compliance fast. It costs trust, and people tend to comply only while someone is watching. Power with is slower to start and lasts longer.',
+          '**Protective force isn’t punishment.** Grabbing a child before they run into the street protects a life. Making someone suffer so they “learn their lesson” is punitive. Nonviolence keeps the first and lets go of the second.'
+        ], src('Sources: Mary Parker Follett, “power-over” and “power-with” (1920s); Marshall B. Rosenberg, <i>Nonviolent Communication</i>, on protective vs. punitive use of force.')],
+        ['Beyond good and bad', 'Moral labels make harm feel fair.', [
+          '“Good”, “bad”, “evil”, “criminal” and “deserves” are judgments, not observations. They tell us about the speaker’s values, not about the person.',
+          'Once someone is sorted into “bad”, hurting them can start to feel like justice. Ranking people by worth is how a lot of violence gets permission.',
+          '**Every action is an attempt to meet a need**, even a harmful one; often a tragic, costly attempt. Seeing the need isn’t excusing the harm. It’s where real repair starts.',
+          '**Nobody deserves to suffer.** Instead of “what do they deserve?”, ask: what happened, who was hurt, what do they need, and what would make this less likely to happen again?'
+        ], src('Sources: Marshall B. Rosenberg on moralistic judgments and “deserve” thinking; Walter Wink, <i>The Powers That Be</i> (1998), on the “domination system”.')],
+        ['Abolition', 'Building a world where cages and punishment aren’t needed.', [
+          '**Abolition** (of prisons and policing as we know them) asks: what would make them unnecessary? Most of the answers are needs: housing, health and mental-health care, income, education, belonging, safety.',
+          'It’s as much about building as taking apart: community crisis teams, violence interrupters, restorative and transformative justice circles, mutual aid.',
+          '**Accountability without punishment:** name the harm, hear the needs on every side, repair what can be repaired, and change the conditions that made the harm likely.',
+          'The United States locks up more of its people than almost any other country. Abolitionists point out that this hasn’t made people feel safe, and that harm from punishment falls hardest on people who are already poor, disabled, Black, brown or Indigenous.'
+        ], src('Sources: Angela Y. Davis, <i>Are Prisons Obsolete?</i> (2003); Mariame Kaba, <i>We Do This ’Til We Free Us</i> (2021); Ruth Wilson Gilmore, <i>Golden Gulag</i> (2007); World Prison Brief (prisonstudies.org) for incarceration rates.')],
+        ['Power at home and all around', 'Hierarchies are everywhere, and each one can soften.', [
+          'Adult over child, boss over worker, landlord over tenant, human over animal. Each is a place where power over can become power with.',
+          '**At home:** ask instead of order, decide in a circle, turn rules into agreements and revisit them when they stop working.',
+          '**At work and where you live:** owning and deciding together is an option. See Cooperatives.',
+          '**With animals:** the same respect, all the way down. See Animals.'
+        ], '<p class="rel-q">Next: <a href="' + spHref('coops') + '">Cooperatives</a> · <a href="' + spHref('animals') + '">Animals</a> · <a href="#lens-governance">Governance</a></p>' +
+          tryIt('Catch one “should” or “deserves” in your own thinking today. Translate it: which need is underneath it?')]
+      ],
+      note: 'The full Power & peace unit (circles, agreements, restorative practice, and community safety) is in progress.',
+      related: ['#lens-governance', 'Governance']
+    }
+    };
+  }
+  function spBlock(o, open) {
+    var secs = (o.secs || []).map(function (x, j) {
+      var n = j + 1;
+      return '<section class="rel-sec" id="sec-' + o.id + '-' + n + '"><div class="rel-sec-head"><span class="rel-sec-n">' + o.letter + '.' + n + '</span><div><h2>' + esc(x[0]) + '</h2><p>' + esc(x[1]) + '</p></div></div>' +
+        '<ul class="rel-keys">' + x[2].map(function (k) { return '<li>' + md(k) + '</li>'; }).join('') + '</ul>' + (x[3] || '') + '</section>';
+    }).join('');
+    return '<details class="rel-sp" id="sp-' + o.id + '"' + (open ? ' open' : '') + '><summary><span class="rel-sp-l" aria-hidden="true">' + o.letter + '</span>' +
+      '<span class="rel-sp-t"><b>' + esc(o.name) + '</b><small>' + esc(o.sub) + '</small></span><span class="rel-later">In progress</span></summary>' +
+      '<div class="rel-sp-in">' + (o.intro || '') + '<p class="lede">' + esc(o.lede) + '</p>' + secs + (o.after || '') +
+      '<div class="note">' + esc(o.note) + (o.related ? ' Related: <a href="' + o.related[0] + '">' + esc(o.related[1]) + '</a>.' : '') + '</div></div></details>';
+  }
+  function viewSpecial(openId) {
+    var S = specials(), first = D.APPS[0].id;
+    if (!S[openId]) openId = '';
+    var html = '<article class="rel-unitpage k-apps">' +
+      '<header class="rel-unit-hero"><span class="eyebrow">Special situations · In progress</span><h1 tabindex="-1">Special situations</h1>' +
+      '<p class="rel-unit-sub">The same roots and plant, applied to the particular people and beings in your life</p>' +
+      '<p class="lede">Each of these is in progress. They all start from the same place: meeting everyone’s needs, and everyone means everyone, animals included. Animals are sentient, they feel, and they share the same universal needs. Open one to see where it’s headed.</p></header>' +
+      '<div class="rel-sps">' + D.APPS.map(function (a) { return S[a.id] ? spBlock(S[a.id], openId ? a.id === openId : a.id === first) : ''; }).join('') + '</div>' +
+      '</article>' +
+      '<nav class="rel-pager" aria-label="Units"><a class="rel-pg prev" href="' + BASE + '"><small>← Back to</small><b>Overview</b></a><a class="rel-pg next" href="' + href('dialogue') + '"><small>Back to →</small><b>4 · Dialogue</b></a></nav>';
+    if (openId) setTimeout(function () { var el = document.getElementById('sp-' + openId); if (el) el.scrollIntoView({ block: 'start' }); }, 0);
+    var o = openId && S[openId];
+    return { title: (o ? o.name + ' · ' : '') + 'Special situations · Emotions & love · Kinship', html: layout('special', html) };
   }
 
   /* Highlight the sub-unit you're reading in the sidebar. */
@@ -553,10 +597,9 @@
       var fs = D.WHEEL[fam.mode].families, st = 360 / fs.length; fw.rot = -(fs.indexOf(fam) * st + st / 2);
     }
     if (UNIT[seg[0]]) return viewUnit(UNIT[seg[0]], seg[1]);
-    if (seg[0] === 'neighbors') return viewNeighbors();
-    if (seg[0] === 'power') return viewPower();
-    if (seg[0] === 'coops') return viewCoops();
-    if (seg[0] === 'animals' || seg[0] === 'pets' || seg[0] === 'wild') return viewAnimals();
+    if (seg[0] === 'special') return viewSpecial(seg[1]);
+    if (seg[0] === 'pets' || seg[0] === 'wild') return viewSpecial('animals');
+    if (D.APPS.some(function (a) { return a.id === seg[0]; })) return viewSpecial(seg[0]);
     return viewOverview();
   };
 

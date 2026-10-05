@@ -42,6 +42,9 @@
     /* Food: how you can cook and keep food cold right now. */
     kitchen: ['A full kitchen', 'A hot plate, rice cooker or microwave', 'A shared kitchen', 'No way to cook right now'],
     cold: ['Fridge and freezer', 'A small or shared fridge', 'A cooler, or no fridge'],
+    /* Surroundings: what the building and the neighborhood bring (Toxins course). */
+    built: ['Before 1978', '1978 or later', 'Not sure'],
+    near: ['A freeway or busy road', 'Factory, refinery or oil and gas wells', 'Farm fields', 'An airport', 'None of these'],
     space: ['Windowsill', 'Balcony', 'Shared yard', 'Private yard', 'Community plot', 'Acreage or farmland', 'None yet'],
     consider: ['Asthma', 'Allergies', 'Pregnancy', 'Babies or toddlers', 'Chronic illness', 'Limited mobility'],
     hours: ['Under 1', '1 to 3', '3 to 6', 'More than 6'],
@@ -83,7 +86,7 @@
   }
 
   function blank() {
-    return { address: '', zone: '', home: '', stay: '', shape: '', space: [], sources: {}, filters: [], pipes: '', rain: '', kitchen: '', cold: '', adults: '', kids: '', pets: '', consider: [], hours: '', budget: '', priorities: [] };
+    return { address: '', zone: '', home: '', stay: '', shape: '', space: [], sources: {}, filters: [], pipes: '', rain: '', kitchen: '', cold: '', built: '', near: [], adults: '', kids: '', pets: '', consider: [], hours: '', budget: '', priorities: [] };
   }
   function load() {
     try {
@@ -125,7 +128,7 @@
   }
   function saveSoon() { clearTimeout(saveTimer); saveTimer = setTimeout(function () { save(); }, 500); }
   function isEmpty(p) {
-    return !p.home && !p.stay && !p.shape && !p.rain && !p.pipes && !p.kitchen && !p.cold && !Object.keys(p.sources).length && !p.filters.length && !p.zone && !p.address && !p.adults && !p.kids && !p.pets && !p.hours && !p.budget &&
+    return !p.home && !p.stay && !p.shape && !p.rain && !p.pipes && !p.kitchen && !p.cold && !p.built && !p.near.length && !Object.keys(p.sources).length && !p.filters.length && !p.zone && !p.address && !p.adults && !p.kids && !p.pets && !p.hours && !p.budget &&
       !p.space.length && !p.consider.length && !p.priorities.length;
   }
 
@@ -402,13 +405,14 @@
     if (step === 'place') return !!(p.home || p.stay || p.shape || p.zone || p.address || p.space.length);
     if (step === 'water') return !!(Object.keys(p.sources).length || p.filters.length || p.pipes || p.rain);
     if (step === 'food') return !!(p.kitchen || p.cold);
+    if (step === 'toxins') return !!(p.built || p.near.length);
     if (step === 'household') return !!(p.adults || p.kids || p.pets || p.consider.length);
     if (step === 'resources') return !!(p.hours || p.budget);
     if (step === 'priorities') return p.priorities.length > 0;
     return false;
   }
   function stepsNav() {
-    var steps = [['place', 'Place'], ['water', 'Water'], ['food', 'Food'], ['household', 'Household'], ['resources', 'Time & money'], ['priorities', 'Priorities']];
+    var steps = [['place', 'Place'], ['water', 'Water'], ['food', 'Food'], ['toxins', 'Surroundings'], ['household', 'Household'], ['resources', 'Time & money'], ['priorities', 'Priorities']];
     return '<nav class="steps glass" aria-label="Profile sections">' + steps.map(function (s, i) {
       return '<button type="button" data-jump="' + s[0] + '" class="' + (stepDone(s[0]) ? 'done' : '') + '"><span class="n" aria-hidden="true">' + (i + 1) + '</span>' + esc(s[1]) + '</button>';
     }).join('') + '</nav>';
@@ -446,6 +450,12 @@
       '<fieldset id="s-food" class="glass"><legend>Food</legend>' +
       '<div class="row">' + selectField('kitchen', 'How can you cook right now?', OPT.kitchen, p.kitchen) + selectField('cold', 'How do you keep food cold?', OPT.cold, p.cold) + '</div>' +
       '<p class="hint">The Food course opens the parts that fit: one-pot cooking, cold soaking, a small fridge or none.</p>' +
+      '</fieldset>' +
+
+      '<fieldset id="s-toxins" class="glass"><legend>Surroundings</legend>' +
+      '<div class="row">' + selectField('built', 'When was the building built?', OPT.built, p.built) + '</div>' +
+      pickField('near', 'Close by, within about half a mile', OPT.near, '(pick any)') +
+      '<p class="hint">Lead paint was banned for homes in 1978. With what’s nearby, the Toxins course opens the parts that fit: soil testing, filters, spray alerts.</p>' +
       '</fieldset>' +
 
       '<fieldset id="s-household" class="glass"><legend>Household</legend>' +
@@ -493,7 +503,7 @@
   var sky = '<div class="sky" aria-hidden="true"><span class="a"></span><span class="b"></span><span class="c"></span><span class="d"></span></div>';
 
   /* Course files load only when someone opens that lens, so the home page stays light. */
-  var LAZY = { relationships: { css: 'rel.css', js: ['rel-data.js', 'rel.js'] }, water: { css: 'water.css', js: ['water.js'] }, food: { css: 'food.css', js: ['food.js'] }, governance: { css: 'gov.css', js: ['gov.js'] } };
+  var LAZY = { relationships: { css: 'rel.css', js: ['rel-data.js', 'rel.js'] }, water: { css: 'water.css', js: ['water.js'] }, food: { css: 'food.css', js: ['food.js'] }, toxins: { css: 'tox.css', js: ['tox.js'] }, governance: { css: 'gov.css', js: ['gov.js'] } };
   var lazyState = {};
   function needsLazy(r) {
     var lid = r.indexOf('lens-') === 0 ? r.slice(5).split(/[\/?]/)[0] : '';
@@ -607,12 +617,13 @@
     if (pick) {
       var val = b.getAttribute('data-val');
       var list = profile[pick];
-      if (pick === 'filters' && list.indexOf(val) === -1) {
-        /* 'None yet' and owning a filter can't both be true. */
-        var clear = val === 'None yet' ? list.slice() : list.filter(function (x) { return x === 'None yet'; });
+      var NONE = { filters: 'None yet', near: 'None of these' }[pick];
+      if (NONE && list.indexOf(val) === -1) {
+        /* 'None yet' and owning a filter (or 'None of these' and a neighbor) can't both be true. */
+        var clear = val === NONE ? list.slice() : list.filter(function (x) { return x === NONE; });
         clear.forEach(function (x) {
           list.splice(list.indexOf(x), 1);
-          app.querySelectorAll('[data-pick="filters"]').forEach(function (ob) { if (ob.getAttribute('data-val') === x) ob.setAttribute('aria-pressed', 'false'); });
+          app.querySelectorAll('[data-pick="' + pick + '"]').forEach(function (ob) { if (ob.getAttribute('data-val') === x) ob.setAttribute('aria-pressed', 'false'); });
         });
       }
       var i = list.indexOf(val);

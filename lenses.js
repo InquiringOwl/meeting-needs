@@ -46,10 +46,10 @@ window.MN_TIERS = [
         looks: ['Which stain is which, and what lifts it', 'Washing that is gentler on fabric and skin', 'Mold: what you can clean and when to call it in']
       },
       {
-        id: 'toxins', name: 'Toxins', status: 'building',
-        blurb: 'See what is in the pan, the bottle and the couch, and swap what matters most first.',
-        topics: ['Cookware', 'Plastics', 'Swaps'],
-        looks: ['Nonstick coatings (PFAS) and scratched pans', 'Plastics that meet heat, fat or food', 'Fragrance and flame retardants that settle in dust']
+        id: 'toxins', name: 'Toxins', status: 'ready',
+        blurb: 'See what is in the pan, the can, the couch and the ground, and swap what matters most first, one at a time.',
+        topics: ['Exposures', 'Plastics', 'In the home', 'Pesticides', 'Soil', 'Living toxins', 'Neighbors'],
+        looks: ['How exposures work, and what a healthy home is made of', 'Plastics, can linings, PFAS and pans', 'Cleaners, fragrance, furniture, dust and washing produce', 'Glyphosate, treated wood, potting mix and drift', 'Lead and legacy metals, tested once in one batch', 'Molds, algal blooms and plants that harm companions', 'Freeways, factories, wells, fire and changing it together']
       }
     ]
   },

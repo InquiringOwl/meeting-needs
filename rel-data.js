@@ -183,11 +183,12 @@ window.MN_REL = (function () {
   ];
 
   /* ---------- Special applications (later: a second vertical tree beneath the first) ---------- */
+  /* Special situations, in page order (Animals first). Each opens as an accordion on #lens-relationships/special. */
   var APPS = [
+    { id: 'animals', name: 'Animals', short: 'Someone, not something: companion, farmed and wild animals, and their needs.', status: 'Soon', preview: true },
     { id: 'children', name: 'Children', short: 'Togetherness instead of split labor; kids pitching in beside you.', status: 'Soon' },
     { id: 'neighbors', name: 'Neighbors', short: 'The people, plants and animals you share water, air, walls and streets with.', status: 'Soon', preview: true },
     { id: 'coops', name: 'Cooperatives', short: 'Workplaces and homes owned and run together, without extracting profit.', status: 'Soon', preview: true },
-    { id: 'animals', name: 'Animals', short: 'Someone, not something: companion, farmed and wild animals, and their needs.', status: 'Soon', preview: true },
     { id: 'plants', name: 'Plants', short: 'A plant’s signals as needs; continues in Gardening.', status: 'Soon' },
     { id: 'groups', name: 'Gatherings & events', short: 'Hosting, rounds and agreements, conflict in a circle.', status: 'Soon' },
     { id: 'projects', name: 'Projects', short: 'A shared goal, roles by willingness, check-ins.', status: 'Later' },

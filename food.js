@@ -203,7 +203,7 @@
             '<div><b>Nuts and seeds</b><p>Fats; ground flax, chia and walnuts for omega-3.</p></div></div>' +
             note('A few to plan for', ul(['<b>B12:</b> made by bacteria, not plants. A supplement or fortified foods (plant milks, nutritional yeast) are the reliable source. Many older adults need one whatever they eat.', '<b>Calcium:</b> fortified plant milk, calcium-set tofu, kale, bok choy.', '<b>Vitamin D:</b> sun and fortified foods. <b>Iodine:</b> iodized salt, or seaweed in small amounts.']) +
               '<p>A doctor or dietitian can check levels and doses, especially in pregnancy and for young children.</p>') +
-            tryit('Look at one day’s plates. Which of the four groups showed up? Which one would be easy to add tomorrow?'); } }
+            tryit('Look at one day’s plates. Which of the four groups showed up? Which one would be easy to add tomorrow?') + links('Why every plate here is plants: <a href="#lens-relationships/special/animals">Emotions &amp; love: Animals</a>'); } }
         ] },
 
       { id: 'store', num: 5, word: 'Store', sub: 'Keeping food good',
@@ -235,7 +235,7 @@
           { id: 'visitors', short: 'Visitors', title: 'Animals in the pantry', html: function () { return '<p>Moths in the flour, ants on the counter, a mouse behind the rice: they’re neighbors whose need for food our pantry is meeting by accident. Change what we offer and they move on, no poison needed.</p>' +
             ul(['<b>Pantry moths and weevils:</b> freeze new flour and grain for about four days, then store in glass or metal. Compost what they’ve moved into, wipe the shelf.', '<b>Ants:</b> follow the trail to the door, wipe it with soapy water or vinegar (it erases their scent path), and seal the crack.', '<b>Mice:</b> food in jars and tins, crumbs swept, and gaps around pipes stuffed with steel wool. Live traps if someone’s already moved in.']) +
             old('Bay leaves in the flour bin are a common old remedy for weevils. Studies are thin, but they smell nice and do no harm.') +
-            links('<a href="#lens-relationships/animals">Emotions &amp; love: Animals</a> · Cleaning'); } },
+            links('<a href="#lens-relationships/special/animals">Emotions &amp; love: Animals</a> · Cleaning'); } },
           { id: 'keeps', tool: true, short: 'How long it keeps', title: 'How long does it keep?', html: function () { return '<div class="fo-row"><label class="fo-f">Food<select data-fo id="fo-kp-food">' + opts(KP) + '</select></label></div><div class="fo-out" id="fo-kp-out"></div>'; } },
           { id: 'outage', tool: true, short: 'Power’s out', title: 'Power’s out: what’s still good?', html: function () { return '<div class="fo-row">' +
               '<label class="fo-f">Hours without power<input type="number" data-fo id="fo-po-hrs" min="0" step="1" value="3"></label>' +
@@ -363,7 +363,7 @@
       '<ol class="fo-ucards">' + U.map(function (u) {
         return '<li><a class="fo-ucard fk' + u.num + '" href="' + BASE + '/' + u.id + '"><i class="fo-band"></i><span class="fo-n">0' + u.num + '</span><b>' + u.word + '</b><span>' + u.sub + '</span><ol>' + u.subs.filter(function (s) { return !s.tool; }).map(function (s) { return '<li>' + s.title + '</li>'; }).join('') + '</ol></a></li>';
       }).join('') + '</ol>' +
-      '<aside class="fo-funfact"><span class="eyebrow">A grateful fun fact</span><p>Every food in this course comes from plants, the cheapest, longest-keeping and most shareable way to meet the need for food. Beans and rice alone have fed much of the world for thousands of years. More on the <a href="#lens-relationships/animals">Animals</a> page.</p>' +
+      '<aside class="fo-funfact"><span class="eyebrow">A grateful fun fact</span><p>Every food in this course comes from plants, the cheapest, longest-keeping and most shareable way to meet the need for food. Beans and rice alone have fed much of the world for thousands of years. More on the <a href="#lens-relationships/special/animals">Animals</a> page.</p>' +
       '<p>Safety numbers come from public food-safety guidance (USDA, FDA, the UK’s NHS and the National Center for Home Food Preservation). Laws mentioned are California’s; food itself is the same everywhere. Thank you to everyone who keeps this knowledge free.</p></aside>';
   }
   function viewUnit(U, u, subId) {
