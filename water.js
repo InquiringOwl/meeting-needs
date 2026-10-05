@@ -1,5 +1,5 @@
 /* Water lens: course content, profile tailoring and tools. Registers window.MN_LENS_VIEWS.water.
-   Routes: #lens-water (overview) · #lens-water/cows (old link, opens 2.1 farm water) · #lens-water/<unit>[/<sub>]. Units are shades of blue, darkest (1) to lightest (6).
+   Routes: #lens-water (overview) · #lens-water/cows (old link, opens the farm water note at the end of Sources) · #lens-water/<unit>[/<sub>]. Units are shades of blue, darkest (1) to lightest (6).
    Tailoring: answers from the Profile (Place + Water) become tags; accordions tagged data-for open with a "For you" badge.
    Every section stays available to everyone. Laws mentioned are California's; the practices are general. */
 (function () {
@@ -102,6 +102,14 @@
         ] },
 
       { id: 'sources', num: 2, word: 'Sources', sub: 'Where water comes from',
+        take: function () { return mn().opinion ? mn().opinion('<details class="opinion-more"><summary>Where California’s farm water goes</summary><div class="opinion-facts">' + ul([
+          'Farms use about <b>40%</b> of California’s water.',
+          'That grows nearly half of US vegetables and over three-quarters of US fruits and nuts.',
+          'Water per pound for the top plant crops: carrots 23 gal · tomatoes 26 · lettuce 28 · strawberries 42 · grapes 73 · pistachios 1,360 · almonds 1,930.',
+          'About <b>27%</b> of farm water grows feed for farmed animals: alfalfa, pasture and corn silage, mostly for cows raised for milk and meat. Much of the corn and soy fed to chickens and pigs is grown out of state, so that water never shows up in California’s count.',
+          'Of the water behind animal foods, about <b>98%</b> grows their feed. What the animals drink is about 1.1%; hosing down feedlots, barns and the animals themselves about 0.8%. Slaughterhouse water isn’t counted at all, so the real total runs higher.',
+          'In all, per pound of animal foods: cow milk 120 gal · eggs 400 · chickens 520 · pigs 720 · cows 1,850.']) +
+          '<p class="opinion-src">Sources: Public Policy Institute of California; California Department of Food and Agriculture (top crops by value, 2024); Water Footprint Network and Mekonnen &amp; Hoekstra (2012) (world averages, rain included).</p></div></details>') : ''; },
         lede: 'Water reaches us from the sky, the ground or a pipe. Each source carries its own likely problems, which tells you what storage, purifying and testing it needs.',
         subs: [
           { id: 'know', short: 'Sources', title: 'Know your sources', html: function () { return '<p>Two truths come before every source:</p>' +
@@ -110,14 +118,6 @@
             table(['Source', 'Usually watch for', 'Ready to drink?'], [
               ['Public tap', 'Lead from old pipes, chlorine taste, sometimes PFAS', '[y]Usually'], ['Rain', 'Roof dirt, bird droppings, roof materials', '[n]Treat first'], ['Well', 'Bacteria, nitrate, arsenic, minerals', '[p]After testing'],
               ['Spring', 'Surface water sneaking in after rain', '[p]After testing'], ['River, lake', 'Germs, farm and road runoff, algae toxins', '[n]Treat first'], ['Dehumidifier / AC', 'Metals and germs from the coils', '[n]Plants only']]) +
-            '<div class="wa-box wa-ca wa-ca-list"><b>Farms and water</b>' + ul([
-              'Farms use about <b>40%</b> of California’s water.',
-              'That grows nearly half of US vegetables and over three-quarters of US fruits and nuts.',
-              'Water per pound for the top plant crops: almonds (in shell) 960 gal · pistachios 1,360 · grapes 73 · strawberries 42 · lettuce 28 · tomatoes 26 · carrots 23.',
-              'About <b>27%</b> of farm water grows feed for farmed animals: alfalfa, pasture and corn silage, mostly for cows. Much of the corn and soy fed to chickens and pigs is grown out of state, so their water is counted elsewhere.',
-              'Of all the water behind animal foods, about <b>98%</b> grows their feed. What animals drink is about 1.1%, and cleaning barns and animals about 0.8%.',
-              'In all, per pound: beef 1,850 gal · pork 720 · chicken 520 · eggs 400 · milk 120.']) +
-              '<small>Sources: Public Policy Institute of California; California Department of Food and Agriculture (top crops by value, 2024); Water Footprint Network (world averages, rain included).</small></div>' +
             old('Villages grew up beside springs and rivers. People drew drinking water upstream and washed downstream, and that order still matters.') +
             tryit('Find your watershed’s name and trace a raindrop from your roof to your tap, then to the sea.'); } },
           { id: 'taps', short: 'Taps &amp; refills', title: 'Taps and free refills', html: function () { return '<p>Public water is already treated and tested, which makes it the cheapest reliable water there is. Refill maps and apps show fountains and businesses happy to fill a bottle.</p>' +
@@ -423,7 +423,7 @@
       '<header class="wa-unit-hero"><span class="eyebrow">Unit ' + u.num + ' of ' + U.length + '</span><h1 tabindex="-1">' + u.word + '</h1><p class="wa-unit-sub">' + u.sub + '</p><p class="wa-lede">' + u.lede + '</p>' +
       '<ul class="wa-jumps">' + u.subs.map(function (s, j) { return '<li><a href="' + BASE + '/' + u.id + '/' + s.id + '"><span>' + u.num + '.' + (j + 1) + '</span>' + s.short + '</a></li>'; }).join('') + '</ul></header>' +
       u.subs.map(function (s, j) { return '<section class="wa-sub" id="wa-' + u.id + '-' + s.id + '"><div class="wa-sub-top"><span class="wa-sub-n">' + u.num + '.' + (j + 1) + '</span><h2>' + s.title + '</h2></div>' + s.html() + '</section>'; }).join('') +
-      (u.take ? '<section class="wa-sub wa-take">' + u.take() + '</section>' : '') +
+      (u.take ? '<section class="wa-sub wa-take" id="wa-' + u.id + '-take">' + u.take() + '</section>' : '') +
       '</article><nav class="wa-pager" aria-label="Units">' +
       (prev ? '<a href="' + BASE + '/' + prev.id + '"><small>← Previous</small><b>' + prev.num + ' · ' + prev.word + '</b></a>' : '<a href="' + BASE + '"><small>← Back to</small><b>Overview</b></a>') +
       (next ? '<a class="next" href="' + BASE + '/' + next.id + '"><small>Next unit →</small><b>' + next.num + ' · ' + next.word + '</b></a>' : '<a class="next" href="#plans/budget"><small>Next →</small><b>Improvements &amp; budget plan</b></a>') +
@@ -431,7 +431,7 @@
     setTimeout(function () {
       runTools();
       var el = subId && document.getElementById('wa-' + u.id + '-' + subId);
-      if (el) el.scrollIntoView({ block: 'start' });
+      if (el) { if (subId === 'take') el.querySelectorAll('details').forEach(function (d) { d.open = true; }); el.scrollIntoView({ block: 'start' }); }
     }, 0);
     return html;
   }
@@ -440,7 +440,7 @@
   window.MN_LENS_VIEWS.water = function (sub) {
     T = tags();
     var U = units(), seg = (sub || '').split('/');
-    if (seg[0] === 'cows') seg = ['sources', 'know']; /* old link: farm water now lives in 2.1 */
+    if (seg[0] === 'cows') seg = ['sources', 'take']; /* old link: farm water now sits at the end of Sources */
     var u = U.filter(function (x) { return x.id === seg[0]; })[0];
     if (u) return { title: u.word + ' · Water · Kinship', html: layout(U, u.id, viewUnit(U, u, seg[1])) };
     return { title: 'Water · Kinship', html: layout(U, null, viewOverview(U)) };

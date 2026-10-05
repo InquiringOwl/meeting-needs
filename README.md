@@ -47,7 +47,7 @@ Most copy aims to be plain and checkable. The creator's own views are set apart 
 - **Sourced.** Any fact in or behind the sentence gets a short source line. Keep opinions out of the regular copy.
 
 ## Language for animals
-Animals are someone, not something: they/them when sex is unknown, he/she when known, never "it". Never call animals by meat names ("beef", "pork", "poultry", "seafood") or "livestock". See FOUNDATION.md section 4.
+Animals are someone, not something: they/them when sex is unknown, he/she when known, never "it". Never call animals by meat names ("beef", "pork", "poultry", "seafood") or "livestock", including in numbers, tables and labels. Don't soften animal agriculture either: name feedlots and slaughterhouses plainly, and say what a count leaves out. See FOUNDATION.md section 4.
 
 ## Logo
 A cut-paper chain of three hearts with dotted folds at the joins (the `LOGO` constant in `app.js`; a single paper heart is the favicon in `index.html`).

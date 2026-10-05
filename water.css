@@ -171,9 +171,5 @@
   .wa-bar { grid-template-columns: 110px 1fr 80px; }
 }
 
-/* California farms list box (Sources 2.1) */
-.wa-ca-list { display: flex; flex-direction: column; gap: 6px; }
-.wa-ca-list ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; }
-.wa-ca-list small { font-size: 12px; color: var(--muted); }
 /* Unit-end creator opinion */
 .wa-take { padding-top: 8px; }

@@ -47,7 +47,7 @@
       sec(3, 'Where the water goes', 'In an average year, across the whole state.',
         '<div class="gv-split"><div style="--w:50%"><b>About 50%</b><span>Environment: rivers, wetlands, the Delta</span></div><div style="--w:40%"><b>About 40%</b><span>Farms</span></div><div style="--w:10%"><b>About 10%</b><span>Cities and homes</span></div></div>' +
         '<p>Of farm water, about 27% grows feed for animals: alfalfa, irrigated pasture and silage corn. Wet years and dry years shift these numbers a lot; in droughts, rivers lose the most.</p>' +
-        '<p class="gv-src">Source: Public Policy Institute of California. Water per pound of each food is in <a href="#lens-water/sources/know">Water 2.1</a>.</p>') +
+        '<p class="gv-src">Source: Public Policy Institute of California. Water per pound of each food is in <a href="#lens-water/sources/take">the end of Water: Sources</a>.</p>') +
 
       sec(4, 'Stairs for change', 'Start on the first step. Each one makes the next easier.',
         '<ol class="gv-stairs">' + STAIRS.map(function (s, i) {
