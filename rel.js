@@ -70,7 +70,7 @@
       '<details class="rel-nav-wrap"' + (wide ? ' open' : '') + '><summary class="rel-nav-head"><span class="eyebrow">Course map</span><b>Emotions &amp; love</b></summary>' +
       '<a class="rel-nav-over" href="' + BASE + '"' + (!cur ? ' aria-current="page"' : '') + '>Overview</a>' +
       '<ol class="rel-vt">' + units + '</ol>' +
-      '<div class="rel-vt-apps"><span class="eyebrow">Then, special applications</span><p>' + D.APPS.map(function (a) { return esc(a.name); }).join(' · ') + '</p><span class="rel-later">Coming later</span></div>' +
+      '<div class="rel-vt-apps"><span class="eyebrow">Then, special applications</span><p>' + D.APPS.map(function (a) { return a.preview ? '<a href="' + href(a.id) + '">' + esc(a.name) + '</a>' : esc(a.name); }).join(' · ') + '</p><span class="rel-later">Neighbors preview open · more later</span></div>' +
       '</details></nav>';
   }
   function layout(cur, main) {
@@ -96,7 +96,11 @@
         '</section>' +
         '<section class="rel-apps" aria-labelledby="rel-apps-h"><div class="rel-apps-head"><div><span class="eyebrow">After the core relational skills</span><h2 id="rel-apps-h">Special applications</h2></div><span class="rel-later">Coming later</span></div>' +
         '<p class="rel-q">The same four steps, applied to the relationships all around a home.</p><ul>' +
-        D.APPS.map(function (a) { return '<li><b>' + esc(a.name) + '</b><span>' + esc(a.short) + '</span>' + (a.thanks ? '<small>' + md(a.thanks) + '</small>' : '') + '</li>'; }).join('') + '</ul></section>' +
+        D.APPS.map(function (a) {
+          return a.preview
+            ? '<li class="is-open"><a href="' + href(a.id) + '"><b>' + esc(a.name) + '</b><span>' + esc(a.short) + '</span><small>Preview →</small></a></li>'
+            : '<li><b>' + esc(a.name) + '</b><span>' + esc(a.short) + '</span></li>';
+        }).join('') + '</ul></section>' +
         '<aside class="rel-funfact"><span class="eyebrow">A grateful fun fact</span><p>The idea that feelings point to universal needs, and that conflicts live between strategies, grows out of Marshall B. Rosenberg’s Nonviolent Communication. The feelings and needs words here are adapted from the Center for Nonviolent Communication’s inventories (<a href="https://www.cnvc.org" target="_blank" rel="noopener">cnvc.org</a>). Thank you!</p></aside>')
     };
   }
@@ -126,6 +130,40 @@
     if (subId) setTimeout(function () { var el = document.getElementById('sec-' + u.id + '-' + subId); if (el) el.scrollIntoView({ block: 'start' }); }, 0);
     setTimeout(spy, 0);
     return { title: u.word + ' · Emotions & love · Kinship', html: layout(u.id, html) };
+  }
+
+  /* ---------- special application: Neighbors (preview) ---------- */
+  function viewNeighbors() {
+    function sec(n, title, short, keys, extra) {
+      return '<section class="rel-sec" id="sec-neighbors-' + n + '"><div class="rel-sec-head"><span class="rel-sec-n">N.' + n + '</span><div><h2>' + esc(title) + '</h2><p>' + esc(short) + '</p></div></div>' +
+        '<ul class="rel-keys">' + keys.map(function (k) { return '<li>' + md(k) + '</li>'; }).join('') + '</ul>' + (extra || '') + '</section>';
+    }
+    var html = '<article class="rel-unitpage k-apps">' +
+      '<header class="rel-unit-hero"><span class="eyebrow">Special application · Preview</span><h1 tabindex="-1">Neighbors</h1>' +
+      '<p class="rel-unit-sub">The people, plants and animals you share a place with</p>' +
+      '<p class="lede">Neighbors are the ones we mostly don’t choose and can’t avoid sharing with: the same water main, the same air, the same street trees and raccoons. The same four steps (notice, feel, find the need, ask) work here, and sharing a place well is one of the oldest ways people have met their needs.</p></header>' +
+      sec(1, 'What you share', 'Some needs are met together or not at all.', [
+        '**Water.** The same main, pipes and watershed. In some places neighbors literally share water rights: a well, a spring, a creek. What one home pours down a drain or onto a lawn reaches everyone downstream.',
+        '**Air.** Wildfire smoke, a grill, a gas leaf blower or a busy road reach every window on the block at once. You experience air quality together.',
+        '**Walls, sound, light and shade.** Footsteps, music, a porch light, a tall tree: each meets one household’s needs and touches another’s.',
+        '**Urban wildlife.** Raccoons, crows, pigeons, coyotes and bees move between yards. What one home offers (scraps, water, shelter) changes the whole block.'
+      ], '<p class="rel-q">Water lens: <a href="#lens-water/purify/everyday">sharing clean water with neighbors</a> · <a href="#lens-water/testing/kits">splitting a water test</a></p>') +
+      sec(2, 'Needs you have in common', 'Conflicts live between strategies, never between needs.', [
+        'Every neighbor needs rest, safety, clean water and air, belonging, and choice in their own home.',
+        'A leaf blower at 8am is one household’s strategy for order; the person next door needs rest. Both needs are real. The search is for a strategy that meets both: a later hour, a rake, a shared schedule.',
+        'Start from what you noticed, not what it means: “I heard the blower at 8 this morning,” not “you’re inconsiderate.”'
+      ]) +
+      sec(3, 'Living harmoniously', 'Old ideas for sharing a place.', [
+        '**Commons.** Shared things (a yard, a laundry room, a creek) stay healthy when the people using them make agreements together.',
+        '**Agreements, not rules.** Decided together, revisited when they stop working.',
+        '**Mutual aid.** Help flows both ways without a ledger: a lent ladder, a shared filter, a meal when someone’s sick.',
+        '**Share what you learn.** A water test, an air-quality alert, where the raccoons are getting in. Information is the easiest thing to share.',
+        '**Start small.** A wave, a name, a tool lent. Trust builds the way soil does.'
+      ], '<p class="rel-remember"><span class="eyebrow">Try it</span>Ask one neighbor: “Do you know if your water’s safe to drink?” Offer to split a test.</p>') +
+      '<div class="note">This is a preview. The full Neighbors unit (housemates, buildings, blocks, land and wildlife) comes with the special applications tree.</div>' +
+      '</article>' +
+      '<nav class="rel-pager" aria-label="Units"><a class="rel-pg prev" href="' + BASE + '"><small>← Back to</small><b>Overview</b></a><a class="rel-pg next" href="#lens-water"><small>Related →</small><b>Water</b></a></nav>';
+    return { title: 'Neighbors · Emotions & love · Kinship', html: layout('neighbors', html) };
   }
 
   /* Highlight the sub-unit you're reading in the sidebar. */
@@ -371,6 +409,7 @@
       var fs = D.WHEEL[fam.mode].families, st = 360 / fs.length; fw.rot = -(fs.indexOf(fam) * st + st / 2);
     }
     if (UNIT[seg[0]]) return viewUnit(UNIT[seg[0]], seg[1]);
+    if (seg[0] === 'neighbors') return viewNeighbors();
     return viewOverview();
   };
 

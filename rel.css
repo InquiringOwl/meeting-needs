@@ -273,3 +273,10 @@
   .rel-wheel-ctrl .rel-chip { min-height: 36px; font-size: 13px; padding: 0 10px; }
   .rel-arrow { width: 38px; height: 38px; font-size: 18px; }
 }
+
+/* Open special applications (previews) link like cards */
+.rel-apps li.is-open { padding: 0; background: var(--c-app-mid); border-color: var(--c-app-edge); }
+.rel-apps li.is-open a { display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; border-radius: 16px; color: var(--ink); text-decoration: none; }
+.rel-apps li.is-open a:hover { background: var(--c-app-edge); }
+.rel-apps li.is-open small { font-weight: 700; color: var(--ink); }
+.rel-vt-apps a { color: var(--ink); font-weight: 600; }

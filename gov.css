@@ -1,0 +1,39 @@
+/* Governance lens: tier 5 purple, light theme, no backdrop blur. */
+.gv { --gv: #7A4FB0; --gv-bg: #F4EFFA; --gv-mid: #E7DDF4; --gv-edge: #DACDEE; display: flex; flex-direction: column; gap: 20px; max-width: 1100px; }
+.gv-hero { display: flex; flex-direction: column; gap: 12px; }
+.gv-pill { align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: var(--gv); color: #fff; font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1; }
+.gv-hero h1 { font-weight: 800; font-size: clamp(46px, 6.4vw, 84px); line-height: 0.95; letter-spacing: -0.04em; }
+.gv-lede { font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-2); max-width: 66ch; }
+.gv-sec { display: flex; flex-direction: column; gap: 12px; padding: clamp(18px, 2.4vw, 28px); border-radius: 26px; background: rgba(255, 255, 255, 0.74); border: 1px solid var(--gv-edge); }
+.gv-sec-head { display: flex; gap: 14px; align-items: flex-start; }
+.gv-n { flex: none; width: 42px; height: 42px; border-radius: 14px; display: grid; place-items: center; background: var(--gv-mid); font-family: var(--f-mono); font-size: 14px; }
+.gv-sec-head h2 { font-size: clamp(22px, 2.4vw, 28px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+.gv-sec-head p { color: var(--ink-2); font-size: 16px; margin-top: 2px; }
+.gv-sec > p { font-size: 15.5px; max-width: 78ch; }
+.gv-sec ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; font-size: 15.5px; color: var(--ink-2); }
+.gv-views { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; }
+.gv-view { display: flex; flex-direction: column; gap: 6px; padding: 16px 18px; border-radius: 18px; background: var(--gv-bg); border: 1px solid var(--gv-edge); }
+.gv-view p { font-size: 15.5px; font-style: italic; }
+.gv-view small { font-size: 13px; color: var(--muted); }
+.gv-tbl { overflow-x: auto; border-radius: 18px; border: 1px solid var(--gv-edge); background: #fff; }
+.gv-tbl table { border-collapse: collapse; width: 100%; min-width: 720px; font-size: 14px; }
+.gv-tbl th, .gv-tbl td { padding: 9px 12px; text-align: left; border-bottom: 1px solid rgba(23, 36, 28, 0.08); vertical-align: top; }
+.gv-tbl th { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 500; background: var(--gv-bg); }
+.gv-tbl td:first-child { font-weight: 600; }
+.gv-note { padding: 12px 16px; border-radius: 14px; background: #FFF8EC; border: 1px solid #EFDDB8; font-size: 15px; }
+.gv-src { font-size: 13px; color: var(--muted); }
+.gv-split { display: flex; gap: 4px; min-height: 92px; }
+.gv-split > div { flex: 0 0 calc(var(--w) - 3px); min-width: 0; display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; padding: 10px 12px; border-radius: 14px; background: var(--gv-mid); }
+.gv-split > div:first-child { background: #DCEDE0; }
+.gv-split > div:last-child { background: #DCEBF8; }
+.gv-split b { font-family: var(--f-head); font-size: 18px; }
+.gv-split span { font-size: 13px; color: var(--ink-2); }
+.gv-stairs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; counter-reset: st; }
+.gv-stairs li { counter-increment: st; position: relative; margin-left: calc(var(--i) * clamp(8px, 2.6vw, 34px)); padding: 12px 16px 12px 56px; border-radius: 16px; background: color-mix(in oklab, var(--gv), white calc(90% - var(--i) * 4%)); border: 1px solid var(--gv-edge); display: flex; flex-direction: column; gap: 2px; }
+.gv-stairs li::before { content: counter(st); position: absolute; left: 14px; top: 12px; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--gv); color: #fff; font-family: var(--f-mono); font-size: 13px; }
+.gv-stairs b { font-family: var(--f-head); font-size: 17px; }
+.gv-stairs p { font-size: 14.5px; color: var(--ink-2); max-width: 70ch; }
+.gv-stairs a { font-size: 14px; font-weight: 600; }
+.gv-fun { display: flex; flex-direction: column; gap: 4px; padding: 16px 20px; border-radius: 20px; background: var(--glass-faint); border: 1px solid rgba(23, 36, 28, 0.08); }
+.gv-fun p { font-size: 15px; color: var(--ink-2); }
+@media (max-width: 600px) { .gv-split { flex-direction: column; min-height: 0; } .gv-split > div { flex-basis: auto; } }

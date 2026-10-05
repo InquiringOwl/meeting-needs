@@ -1,7 +1,7 @@
 /* Kinship: the lens catalogue.
    A lens is a way of looking at your home and life: what to notice, what it costs you,
    and what you can fix yourself. Status: ready | building | next | later.
-   Each tier has one colour; every lens in it shares that colour. Tier 2 cards are shown but not clickable yet. */
+   Each tier has one colour; every lens in it shares that colour. In a locked tier, only ready lenses are clickable. */
 window.MN_TIERS = [
   {
     id: 'signals', num: 1, name: 'Signals', color: '#C2477F',
@@ -22,10 +22,10 @@ window.MN_TIERS = [
     status: 'In progress', locked: true,
     lenses: [
       {
-        id: 'water', name: 'Water', status: 'building',
-        blurb: 'Follow natural cycles from rain to rivers. Then the practical side: container design, filtration, and the real dangers.',
-        topics: ['Quality', 'Testing', 'Catchment'],
-        looks: ['How water moves from rain to rivers to your tap', 'Containers and catchment that keep stored water safe', 'Lead, nitrates, PFAS and microbes, and which filter stops which']
+        id: 'water', name: 'Water', status: 'ready',
+        blurb: 'How we use, find, store, clean, test and pay for water, at every scale from a studio to a farm to a sidewalk.',
+        topics: ['Uses', 'Sources', 'Storage', 'Purify', 'Testing', 'Costs'],
+        looks: ['Which water each job needs, and gray water', 'Taps, refills, rain, wells, springs and wild water', 'Containers that keep water safe', 'Filters and permanent systems, plus crisis methods', 'Knowing it’s safe, at the tap and in a lake', 'What water costs, and the household math']
       },
       {
         id: 'food', name: 'Food', status: 'building',
@@ -173,6 +173,12 @@ window.MN_TIERS = [
         blurb: 'Natural disasters, personal self-defense and securing your home: plan ahead so you can stay calm when it counts.',
         topics: ['Disasters', 'Self-defense', 'Home security'],
         looks: ['Go-bags, water and supplies for earthquakes, fires and floods', 'Personal safety and self-defense basics', 'Simple ways to secure doors, windows and your home']
+      },
+      {
+        id: 'governance', name: 'Governance', status: 'building',
+        blurb: 'Who decides where shared water, air and land go, and the stairs from noticing to changing it.',
+        topics: ['Decision-makers', 'Transparency', 'Stairs for change'],
+        looks: ['Who controls California’s water, and how they’re chosen', 'Where the water goes', 'Stairs for change: art, talk, public comment, representatives, organizing, voting, peaceful protest']
       }
     ]
   }

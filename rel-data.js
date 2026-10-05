@@ -194,12 +194,12 @@ window.MN_REL = (function () {
 
   /* ---------- Special applications (later: a second vertical tree beneath the first) ---------- */
   var APPS = [
-    { id: 'children', name: 'Children', short: 'Togetherness instead of split labour; kids pitching in beside you.', thanks: 'With thanks to Michaeleen Doucleff’s *Hunt, Gather, Parent*.' },
-    { id: 'home', name: 'Neighbours & housemates', short: 'Shared spaces, chores together, land and shared tools.' },
+    { id: 'children', name: 'Children', short: 'Togetherness instead of split labor; kids pitching in beside you.' },
+    { id: 'neighbors', name: 'Neighbors', short: 'The people, plants and animals you share water, air, walls and streets with.', preview: true },
     { id: 'groups', name: 'Gatherings & groups', short: 'Hosting, rounds and agreements, conflict in a circle.' },
     { id: 'projects', name: 'Projects', short: 'A shared goal, roles by willingness, check-ins.' },
     { id: 'pets', name: 'Companion animals', short: 'Reading their signals and meeting a species’ needs.' },
-    { id: 'wild', name: 'Wildlife', short: '“Pests” as neighbours with needs: change what your home offers.' },
+    { id: 'wild', name: 'Wildlife', short: '“Pests” as neighbors with needs: change what your home offers.' },
     { id: 'plants', name: 'Plants', short: 'A plant’s signals as needs; continues in Gardening.' }
   ];
 

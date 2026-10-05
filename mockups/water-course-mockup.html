@@ -1,0 +1,792 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kinship · Water (course mock-up)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500..800&family=Instrument+Sans:wght@400..700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Mock-up only. Mirrors Kinship's style.css + rel.css tokens so it can move into water.css later.
+   Water lens theme: units are shades of blue, darkest (1) to lightest (5). */
+:root {
+  --bg:#EEF2E8; --ink:#17241C; --ink-2:#2C3D32; --muted:#3F5546; --accent:#2F5E2C;
+  --glass:rgba(255,255,255,.42); --glass-strong:rgba(255,255,255,.64); --glass-faint:rgba(255,255,255,.24);
+  --glass-edge:rgba(255,255,255,.78); --chip:rgba(255,255,255,.62); --line:rgba(23,36,28,.16);
+  --soft-line:rgba(23,36,28,.08); --focus:#2F6E9E; --lens:#B85A14;
+  --f-head:'Manrope','Instrument Sans',system-ui,sans-serif;
+  --f-body:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  /* bg: page wash · mid: filled · edge: soft border · dot: the unit's blue (dark → light) · on: text on dot */
+  --c1-bg:#E1ECF7; --c1-mid:#C6DAEF; --c1-edge:#AFCAE8; --c1-dot:#1C4677; --c1-on:#fff;
+  --c2-bg:#E6F0F9; --c2-mid:#CFE2F3; --c2-edge:#BAD5EE; --c2-dot:#2C64A0; --c2-on:#fff;
+  --c3-bg:#EBF4FB; --c3-mid:#D7E9F7; --c3-edge:#C5DFF3; --c3-dot:#4B88C2; --c3-on:#fff;
+  --c4-bg:#F0F7FD; --c4-mid:#DFEFFA; --c4-edge:#D0E7F7; --c4-dot:#7FB3DE; --c4-on:#17241C;
+  --c5-bg:#F5FAFE; --c5-mid:#E8F4FC; --c5-edge:#DCEEFA; --c5-dot:#B3D8F2; --c5-on:#17241C;
+  --k-bg:var(--glass-faint); --k-mid:var(--chip); --k-edge:var(--line); --k-dot:var(--muted); --k-on:#fff;
+}
+.k1{--k-bg:var(--c1-bg);--k-mid:var(--c1-mid);--k-edge:var(--c1-edge);--k-dot:var(--c1-dot);--k-on:var(--c1-on)}
+.k2{--k-bg:var(--c2-bg);--k-mid:var(--c2-mid);--k-edge:var(--c2-edge);--k-dot:var(--c2-dot);--k-on:var(--c2-on)}
+.k3{--k-bg:var(--c3-bg);--k-mid:var(--c3-mid);--k-edge:var(--c3-edge);--k-dot:var(--c3-dot);--k-on:var(--c3-on)}
+.k4{--k-bg:var(--c4-bg);--k-mid:var(--c4-mid);--k-edge:var(--c4-edge);--k-dot:var(--c4-dot);--k-on:var(--c4-on)}
+.k5{--k-bg:var(--c5-bg);--k-mid:var(--c5-mid);--k-edge:var(--c5-edge);--k-dot:var(--c5-dot);--k-on:var(--c5-on)}
+
+*{box-sizing:border-box}
+html{overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;overflow-x:clip}
+h1,h2,h3{font-family:var(--f-head);margin:0;text-wrap:balance}
+p{margin:0}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:8px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+.sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.sky span{position:absolute;border-radius:50%;filter:blur(12px)}
+.sky .a{left:-12vw;top:-18vh;width:60vw;height:60vw;max-width:780px;max-height:780px;background:radial-gradient(circle,rgba(110,170,210,.5),transparent 68%)}
+.sky .b{right:-14vw;top:8vh;width:58vw;height:58vw;max-width:780px;max-height:780px;background:radial-gradient(circle,rgba(124,176,104,.38),transparent 68%)}
+.sky .c{left:25vw;bottom:-30vh;width:64vw;height:64vw;max-width:860px;max-height:860px;background:radial-gradient(circle,rgba(150,195,230,.35),transparent 68%)}
+
+.wrap{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:20px clamp(16px,3vw,40px) 72px;display:flex;flex-direction:column;gap:24px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px;border-radius:999px;background:var(--glass);border:1px solid var(--glass-edge)}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink)}
+.brand b{font-family:var(--f-head);font-weight:800;font-size:20px;letter-spacing:-.02em}
+.mock{font-family:var(--f-mono);font-size:12px;padding:4px 10px;border-radius:999px;border:1.5px dashed var(--line);color:var(--muted)}
+
+.layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:28px;align-items:start}
+.main{min-width:0;display:flex;flex-direction:column;gap:20px}
+
+/* Sidebar tree */
+.nav{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;scrollbar-width:thin;padding:14px;border-radius:26px;background:rgba(255,255,255,.72);border:1px solid var(--glass-edge)}
+.nav-head{display:flex;flex-direction:column;padding:2px 6px 8px}
+.nav-head b{font-family:var(--f-head);font-size:21px;font-weight:800;letter-spacing:-.02em}
+.nav-over{display:flex;align-items:center;min-height:36px;padding:0 8px;margin-bottom:6px;border-radius:12px;color:var(--ink);text-decoration:none;font-weight:600;font-size:15px}
+.nav-over:hover,.nav-over.cur{background:var(--chip)}
+.vt{list-style:none;margin:0;padding:0;position:relative}
+.vt::before{content:'';position:absolute;left:21px;top:22px;bottom:22px;width:2px;border-radius:2px;background:linear-gradient(var(--c1-dot),var(--c3-dot),var(--c5-dot))}
+.vt-unit{position:relative;padding:3px 0}
+.vt-head{display:flex;align-items:center;gap:12px;min-height:46px;padding:4px 8px;border-radius:16px;color:var(--ink);text-decoration:none}
+.vt-head:hover{background:var(--k-bg)}
+.vt-unit.cur>.vt-head{background:var(--k-mid)}
+.vt-dot{position:relative;z-index:1;width:28px;height:28px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--k-dot);color:var(--k-on);box-shadow:0 0 0 4px var(--bg);font-family:var(--f-mono);font-size:13px}
+.vt-head b{display:block;font-family:var(--f-head);font-size:17px;font-weight:800;line-height:1.1}
+.vt-head small{display:block;font-size:13px;color:var(--muted)}
+.vt-subs{list-style:none;margin:2px 0 4px;padding:0 0 0 36px;display:none;flex-direction:column}
+.vt-unit.cur .vt-subs{display:flex}
+.vt-subs a{position:relative;display:flex;align-items:center;min-height:30px;padding:3px 8px;border-radius:10px;color:var(--ink-2);text-decoration:none;font-size:14px;line-height:1.25}
+.vt-subs a::before{content:'';position:absolute;left:-19px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:var(--k-dot)}
+.vt-subs a:hover{background:var(--k-bg);color:var(--ink)}
+
+/* Situation panel (reads and writes the Kinship profile) */
+.sit{border-radius:22px;background:var(--glass-strong);border:1px solid var(--soft-line)}
+.sit>summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:14px 18px}
+.sit>summary::-webkit-details-marker{display:none}
+.sit-sum{font-size:14.5px;color:var(--ink-2)}
+.sit-chips{display:flex;flex-wrap:wrap;gap:6px}
+.sit-chips span{font-size:13px;padding:3px 10px;border-radius:999px;background:#fff;border:1px solid var(--soft-line)}
+.sit-edit{margin-left:auto;font-size:14px;font-weight:600;color:var(--accent)}
+.sit-body{padding:0 18px 16px;display:flex;flex-direction:column;gap:12px}
+.qgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.qgrid label.f select{width:100%}
+.sit-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:13.5px;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;min-height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--soft-line);background:#fff;color:var(--ink);font:inherit;font-size:14.5px;font-weight:600;cursor:pointer;text-decoration:none}
+.btn.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.outage{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;padding:6px 14px;border-radius:999px;border:1px dashed var(--line);background:var(--glass-faint);cursor:pointer}
+.outage:has(input:checked){background:#FFF1E6;border-style:solid;border-color:#E9C29F}
+
+/* Overview */
+.hero{display:flex;flex-direction:column;gap:12px}
+.lens-pill{align-self:flex-start;padding:6px 12px;border-radius:999px;background:var(--lens);color:#fff;font-family:var(--f-mono);font-size:12px;line-height:1}
+.hero h1{font-weight:800;font-size:clamp(46px,6.4vw,84px);line-height:.95;letter-spacing:-.04em}
+.lede{font-size:clamp(17px,1.6vw,20px);color:var(--ink-2);max-width:66ch}
+.ucards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.ucard{display:flex;flex-direction:column;gap:8px;height:100%;padding:0 0 16px;border-radius:24px;background:var(--k-bg);border:1px solid var(--k-edge);text-decoration:none;color:var(--ink);overflow:hidden}
+.ucard>*{margin-inline:18px}
+.ucard .band{margin:0;height:10px;background:var(--k-dot)}
+.ucard:hover{background:var(--k-mid)}
+.ucard .n{font-family:var(--f-mono);font-size:13px;color:var(--muted);margin-top:6px}
+.ucard b{font-family:var(--f-head);font-weight:800;font-size:clamp(24px,2.4vw,30px);line-height:1;letter-spacing:-.03em}
+.ucard span{font-size:15px;color:var(--ink-2)}
+.ucard ol{margin-top:4px;padding:8px 0 0 18px;border-top:1px solid var(--k-edge);font-size:13.5px;color:var(--ink-2)}
+.funfact,.review{display:flex;flex-direction:column;gap:6px;padding:16px 20px;border-radius:20px;font-size:15px;color:var(--ink-2)}
+.funfact{background:var(--glass-faint);border:1px solid var(--soft-line)}
+.review{border:1.5px dashed var(--line)}
+.review ul{margin:0;padding-left:18px}
+.truths{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.truth{padding:14px 16px;border-radius:18px;background:rgba(255,255,255,.7);border:1px solid var(--soft-line)}
+.truth b{display:block;font-family:var(--f-head);font-size:16.5px;margin-bottom:2px}
+.truth p{font-size:14.5px;color:var(--ink-2)}
+
+/* Unit page */
+.page[hidden]{display:none}
+.unit-hero{display:flex;flex-direction:column;gap:6px;padding:clamp(22px,3vw,32px);border-radius:28px;background:var(--k-bg);border:1px solid var(--k-edge);border-top:10px solid var(--k-dot)}
+.unit-hero h1{font-weight:800;font-size:clamp(44px,5.6vw,72px);line-height:.95;letter-spacing:-.04em}
+.unit-sub{font-family:var(--f-head);font-size:19px;font-weight:600;color:var(--ink-2)}
+.unit-hero .lede{font-size:16.5px;margin-top:4px}
+.jumps{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.jumps a{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 14px;border-radius:999px;background:var(--glass-strong);color:var(--ink);text-decoration:none;font-size:14px;font-weight:600}
+.jumps a span{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-weight:400}
+.jumps a:hover{background:var(--k-mid)}
+
+.sub{display:flex;flex-direction:column;gap:12px;padding:22px 24px;border-radius:24px;background:rgba(255,255,255,.74);border:1px solid var(--k-edge);scroll-margin-top:16px}
+.sub-top{display:flex;align-items:baseline;gap:10px}
+.sub-n{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);flex:none}
+.sub h2{font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+.sub>p{font-size:15.5px;max-width:78ch}
+.sub ul,.sub ol{margin:0;padding-left:20px;font-size:15px;color:var(--ink-2);display:flex;flex-direction:column;gap:4px;max-width:80ch}
+.do,.home,.old,.ca{font-size:14.5px;padding:10px 12px;border-radius:14px}
+.home{background:var(--k-bg);color:var(--ink-2)}
+.home::before{content:'At home · '}
+.do{background:var(--k-mid)}
+.do::before{content:'Try it · '}
+.old{background:#F6F1E7;color:var(--ink-2);border-left:4px solid #C9AE7C}
+.old::before{content:'Old ways · '}
+.ca{background:#FFF7E8;color:var(--ink-2);border-left:4px solid #E3B25B}
+.ca::before{content:'In California · '}
+.home::before,.do::before,.old::before,.ca::before{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.links{font-size:13px;color:var(--muted)}
+.links::before{content:'Links to → ';font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.kind{padding:12px 16px;border-radius:16px;background:#F3EEF8;border:1px solid #E1D6EE;font-size:14.5px;color:var(--ink-2)}
+
+/* Grade ladder (unit 1): the grades step lighter like the units */
+.ladder{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.rung{display:flex;flex-direction:column;gap:6px;padding:14px 16px;border-radius:18px;border:1px solid var(--soft-line)}
+.rung b{font-family:var(--f-head);font-size:18px}
+.rung small{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.rung p{font-size:14px;color:var(--ink-2)}
+.r1{background:#D4E6F7}.r2{background:#E7F2EA}.r3{background:#F3EAD8}.r4{background:#EFE3E3}
+
+/* Accordions */
+.accs{display:flex;flex-direction:column;gap:8px}
+.acc{border-radius:16px;background:var(--k-bg);border:1px solid var(--k-edge)}
+.acc>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;min-height:48px;padding:8px 14px;font-weight:600;font-size:15.5px}
+.acc>summary::-webkit-details-marker{display:none}
+.acc>summary::after{content:'+';margin-left:auto;font-family:var(--f-mono);font-size:18px;color:var(--muted);flex:none}
+.acc[open]>summary::after{content:'–'}
+.acc>summary:hover{background:var(--k-mid);border-radius:16px}
+.acc .who{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:#fff;color:var(--ink-2);font-weight:400;flex:none}
+.acc .for-you{display:none;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:var(--k-dot);color:var(--k-on);font-weight:400;flex:none}
+.acc.match{box-shadow:0 0 0 2px var(--k-dot)}
+.acc.match .for-you{display:inline-block}
+.acc .in{padding:2px 16px 14px;display:flex;flex-direction:column;gap:8px;font-size:15px;color:var(--ink-2)}
+
+/* Notes, tables, tools */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.note{display:flex;flex-direction:column;gap:6px;padding:14px 18px;border-radius:18px;background:#FFF8EC;border:1px solid #EFDDB8;font-size:14.5px;color:var(--ink-2)}
+.note b.h{font-family:var(--f-head);font-size:16.5px;color:var(--ink)}
+.tbl-wrap{overflow-x:auto;border-radius:18px;border:1px solid var(--k-edge);background:#fff}
+table{border-collapse:collapse;width:100%;min-width:600px;font-size:14px}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--soft-line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--k-bg)}
+td:first-child{font-weight:600}
+td.y{color:#2E6B35}td.p{color:#8A6418}td.n{color:#9A4A3A}
+.legend{font-size:12.5px;color:var(--muted)}
+.tool{display:flex;flex-direction:column;gap:10px;padding:16px 18px;border-radius:20px;background:var(--k-mid);border:1px solid var(--k-edge)}
+.tool b.t{font-family:var(--f-head);font-size:19px;font-weight:800}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);font-family:var(--f-mono);min-width:0;max-width:100%}
+input[type=number],select{font:inherit;font-family:var(--f-body);font-size:15.5px;min-height:40px;padding:0 12px;border-radius:12px;border:1px solid var(--soft-line);background:#fff;color:var(--ink);max-width:100%}
+input[type=number]{width:100px}
+.chk{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--ink-2);min-height:40px}
+.out{padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.85);font-size:15px}
+.out strong{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.02em;display:block;line-height:1.1}
+.out small{display:block;color:var(--muted);font-size:13px;margin-top:4px}
+
+.pager{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.pager a{display:inline-flex;flex-direction:column;gap:2px;padding:12px 18px;border-radius:18px;background:var(--glass-strong);border:1px solid var(--soft-line);color:var(--ink);text-decoration:none;min-width:200px}
+.pager a small{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.pager a b{font-family:var(--f-head);font-size:18px}
+.pager a.next{margin-left:auto;text-align:right}
+.pager a:hover{background:#fff}
+
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr}
+  .nav{position:static;max-height:none}
+  .pager a{min-width:0;flex:1}
+}
+</style>
+</head>
+<body>
+<div class="sky" aria-hidden="true"><span class="a"></span><span class="b"></span><span class="c"></span></div>
+<div class="wrap">
+
+<header class="top">
+  <a class="brand" href="#"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="#C2477F" d="M12 21s-7.5-4.6-9.3-9.6C1.5 8 3.6 4.5 7 4.5c2 0 3.4 1.1 5 3 1.6-1.9 3-3 5-3 3.4 0 5.5 3.5 4.3 6.9C19.5 16.4 12 21 12 21z"/></svg><b>Kinship</b></a>
+  <span class="mock">Mock-up v3 · Water lens</span>
+</header>
+
+<div class="layout">
+<nav class="nav" aria-label="Water course">
+  <div class="nav-head"><span class="eyebrow">Tier 2 · Roots</span><b>Water</b></div>
+  <a class="nav-over" href="#">Overview</a>
+  <ol class="vt">
+    <li class="vt-unit k1" data-unit="u1"><a class="vt-head" href="#u1"><span class="vt-dot">1</span><span><b>Uses</b><small>Using water wisely</small></span></a>
+      <ul class="vt-subs"><li><a href="#u1/s1">What we need it for</a></li><li><a href="#u1/s2">Four grades of water</a></li><li><a href="#u1/s3">Gray water</a></li><li><a href="#u1/s4">Small ways to use less</a></li><li><a href="#u1/s5">Designing your water system</a></li></ul></li>
+    <li class="vt-unit k2" data-unit="u2"><a class="vt-head" href="#u2"><span class="vt-dot">2</span><span><b>Sources</b><small>Where water comes from</small></span></a>
+      <ul class="vt-subs"><li><a href="#u2/s1">Know your sources</a></li><li><a href="#u2/s2">Taps and free refills</a></li><li><a href="#u2/s3">Catching rain</a></li><li><a href="#u2/s4">Wells and springs</a></li><li><a href="#u2/s5">Rivers, lakes and the wild</a></li></ul></li>
+    <li class="vt-unit k3" data-unit="u3"><a class="vt-head" href="#u3"><span class="vt-dot">3</span><span><b>Storage</b><small>Keeping water safe</small></span></a>
+      <ul class="vt-subs"><li><a href="#u3/s1">Containers</a></li><li><a href="#u3/s2">Where to keep it</a></li><li><a href="#u3/s3">Beware green in the sun</a></li><li><a href="#u3/s4">Keeping it fresh</a></li><li><a href="#u3/s5">How much to keep</a></li></ul></li>
+    <li class="vt-unit k4" data-unit="u4"><a class="vt-head" href="#u4"><span class="vt-dot">4</span><span><b>Purify</b><small>From pitcher to aquifer</small></span></a>
+      <ul class="vt-subs"><li><a href="#u4/s1">Match the method to the problem</a></li><li><a href="#u4/s2">Everyday filtering</a></li><li><a href="#u4/s3">Permanent systems</a></li><li><a href="#u4/s4">Crisis: boil, bleach, sun</a></li><li><a href="#u4/s5">With no fixed home</a></li></ul></li>
+    <li class="vt-unit k5" data-unit="u5"><a class="vt-head" href="#u5"><span class="vt-dot">5</span><span><b>Testing</b><small>Knowing it’s safe</small></span></a>
+      <ul class="vt-subs"><li><a href="#u5/s1">What “safe” means</a></li><li><a href="#u5/s2">Reading the signs around you</a></li><li><a href="#u5/s3">Your water report</a></li><li><a href="#u5/s4">Kits and labs</a></li><li><a href="#u5/s5">Swimming and bathing outdoors</a></li></ul></li>
+  </ol>
+</nav>
+
+<main class="main">
+
+<!-- Situation: filled from the Profile when answered; asked here only when it isn't. Every section stays available either way. -->
+<details class="sit" id="sit">
+  <summary><span class="eyebrow">Your situation</span><span class="sit-sum" id="sitSum"></span><span class="sit-chips" id="sitChips"></span><span class="sit-edit" id="sitEdit">Change</span></summary>
+  <div class="sit-body">
+    <div class="qgrid">
+      <label class="f">Kind of place<select data-q="home"></select></label>
+      <label class="f">How long do you expect to stay?<select data-q="stay"></select></label>
+      <label class="f">How much can you change the place?<select data-q="shape"></select></label>
+      <label class="f">Water source<select data-q="water"></select></label>
+      <label class="f">How often does rain or snow fall?<select data-q="rain"></select></label>
+    </div>
+    <div class="sit-foot"><span>Saved to your Profile in this browser, so every lens can use it. Sections for you open and get a “For you” tag; everything else stays one tap away.</span><a class="btn" href="../index.html#profile">Open Profile</a></div>
+  </div>
+</details>
+<label class="outage" style="align-self:flex-start"><input type="checkbox" id="outage"> Water’s off or unsafe right now</label>
+
+<!-- ============ OVERVIEW ============ -->
+<section class="page" data-page="">
+  <div class="main">
+  <div class="hero">
+    <span class="lens-pill">TIER 2 · ROOTS</span>
+    <h1>Water</h1>
+    <p class="lede">Every body needs water, and people have met that need for as long as there have been people. Five short units on how we use it, where it comes from, how to keep it, clean it and know it’s safe, at every scale: a studio, a farm, a car, a sidewalk.</p>
+  </div>
+  <ol class="ucards">
+    <li><a class="ucard k1" href="#u1"><i class="band"></i><span class="n">01</span><b>Uses</b><span>What we need water for, and which water each job needs.</span><ol><li>What we need it for</li><li>Four grades of water</li><li>Gray water</li><li>Small ways to use less</li><li>Designing your system</li></ol></a></li>
+    <li><a class="ucard k2" href="#u2"><i class="band"></i><span class="n">02</span><b>Sources</b><span>Taps, refills, rain, wells, springs and wild water.</span><ol><li>Know your sources</li><li>Taps and free refills</li><li>Catching rain</li><li>Wells and springs</li><li>Rivers, lakes and the wild</li></ol></a></li>
+    <li><a class="ucard k3" href="#u3"><i class="band"></i><span class="n">03</span><b>Storage</b><span>Containers, places and habits that keep water good.</span><ol><li>Containers</li><li>Where to keep it</li><li>Beware green in the sun</li><li>Keeping it fresh</li><li>How much to keep</li></ol></a></li>
+    <li><a class="ucard k4" href="#u4"><i class="band"></i><span class="n">04</span><b>Purify</b><span>From a pitcher to a whole-land system, plus crisis methods.</span><ol><li>Match method to problem</li><li>Everyday filtering</li><li>Permanent systems</li><li>Crisis: boil, bleach, sun</li><li>With no fixed home</li></ol></a></li>
+    <li><a class="ucard k5" href="#u5"><i class="band"></i><span class="n">05</span><b>Testing</b><span>How to be sure, at the tap and in a lake.</span><ol><li>What “safe” means</li><li>Reading the signs</li><li>Your water report</li><li>Kits and labs</li><li>Swimming and bathing outdoors</li></ol></a></li>
+  </ol>
+  <div class="funfact"><span class="eyebrow">Fun fact</span>
+    <p>This course leans on three kinds of knowing, checked against each other: old practice that kept people alive for thousands of years, international guidance (the WHO’s drinking-water guidelines and the Sphere humanitarian handbook), and what you can see, smell and test yourself. Legal limits come from politics as well as science, and they change, so we use them as one input, not the last word.</p>
+    <p>Laws mentioned are California’s. Water itself is the same everywhere.</p>
+  </div>
+  </div>
+</section>
+
+<!-- ============ UNIT 1: USES ============ -->
+<section class="page k1" data-page="u1" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 1</span><h1>Uses</h1><p class="unit-sub">Using water wisely</p>
+    <p class="lede">Not every job needs drinking water. Knowing what each use really needs is the base of every system later in this course, and the easiest way to need less.</p>
+    <ul class="jumps"><li><a href="#u1/s1"><span>1.1</span>Needs</a></li><li><a href="#u1/s2"><span>1.2</span>Grades</a></li><li><a href="#u1/s3"><span>1.3</span>Gray water</a></li><li><a href="#u1/s4"><span>1.4</span>Use less</a></li><li><a href="#u1/s5"><span>1.5</span>Your system</a></li></ul>
+  </div>
+
+  <article class="sub" id="u1-s1">
+    <div class="sub-top"><span class="sub-n">1.1</span><h2>What we need it for</h2></div>
+    <p>A day of water: drinking, cooking, brushing teeth, washing hands and bodies, dishes, laundry, flushing, cleaning, plants and animals. A body needs only about 2–3 liters a day to drink, more in heat. Humanitarian groups plan around 15 liters (about 4 gallons) per person a day for drinking, cooking and basic washing. A typical US home with taps uses many times that.</p>
+    <p class="old">When every drop was carried, every drop had a job: washing water went to the garden, dishwater to the animals’ trough or the fruit trees.</p>
+    <p class="do">Keep a one-day water diary: every time water runs, jot what it was for. Circle the jobs that didn’t need drinking-quality water.</p>
+  </article>
+
+  <article class="sub" id="u1-s2">
+    <div class="sub-top"><span class="sub-n">1.2</span><h2>Four grades of water</h2></div>
+    <p>Match the water to the job, from cleanest to least clean.</p>
+    <div class="ladder">
+      <div class="rung r1"><small>Grade 1</small><b>Drinking (potable)</b><p>Drinking, cooking, brushing teeth, baby formula, ice, washing produce eaten raw.</p></div>
+      <div class="rung r2"><small>Grade 2</small><b>Clean, boil if unsure</b><p>Washing hands and bodies, dishes, laundry. Rain or stored water fits here, boiled if anyone might swallow it.</p></div>
+      <div class="rung r3"><small>Grade 3</small><b>Gray water</b><p>Used once: shower, bath, bathroom sink, laundry. Good for flushing and watering non-edible plants.</p></div>
+      <div class="rung r4"><small>Grade 4</small><b>Black water</b><p>Toilet waste (and in many places, the kitchen sink). Goes to sewer, septic or a proper compost toilet.</p></div>
+    </div>
+    <p class="home">A bowl in the sink while washing veggies catches grade 2 water for the houseplants.</p>
+  </article>
+
+  <article class="sub" id="u1-s3">
+    <div class="sub-top"><span class="sub-n">1.3</span><h2>Gray water</h2></div>
+    <ul>
+      <li>Use it within a day. Stored gray water starts to smell and grow germs.</li>
+      <li>Send it into soil or mulch, not onto leaves you eat or root crops.</li>
+      <li>Plant-friendly soaps (low salt, no boron or bleach) keep the soil happy.</li>
+    </ul>
+    <p class="ca">A simple laundry-to-landscape system needs no permit if it follows the state plumbing code’s rules (no storage, no spraying, water stays on your land).</p>
+    <div class="accs">
+      <details class="acc" data-for="portable nohome"><summary><span class="who">Portable</span>Gray water without changing any pipes<span class="for-you">For you</span></summary><div class="in"><p>A bucket in the shower while it warms up, then into the toilet tank or onto outdoor plants. A basin in the sink for hand-washing water. Nothing to install, nothing to ask permission for.</p></div></details>
+      <details class="acc" data-for="invest"><summary><span class="who">Long-term place</span>Laundry-to-landscape and branched drains<span class="for-you">For you</span></summary><div class="in"><p>The washing machine’s drain hose feeds a pipe to mulch basins around trees. A branched drain does the same for showers. A 3-way valve lets you switch back to the sewer in rainy months.</p><p class="links">Gardening · Composting &amp; waste</p></div></details>
+      <details class="acc" data-for="crisis"><summary><span class="who">Outage</span>Flushing when the water is off<span class="for-you">For you</span></summary><div class="in"><p>Pour a bucket of gray water (about 1–2 gallons) quickly into the bowl to flush. If sewer lines may be broken after an earthquake, don’t flush: use a lined bucket toilet instead.</p><p class="links">Composting &amp; waste (Sewage) · Emergency preparedness</p></div></details>
+    </div>
+  </article>
+
+  <article class="sub" id="u1-s4">
+    <div class="sub-top"><span class="sub-n">1.4</span><h2>Small ways to use less</h2></div>
+    <ul>
+      <li><b>Toilet leak test:</b> a few drops of food coloring in the tank. Color in the bowl after 10 minutes without flushing means a leak.</li>
+      <li>A faucet dripping once a second adds up to thousands of gallons a year.</li>
+      <li>Wash dishes in a basin, run full laundry loads, catch the cold water while the shower warms.</li>
+      <li>Water gardens early or late, at the roots, with mulch on top.</li>
+    </ul>
+    <p class="do">Do the toilet dye test with a child: they’re great at watching for color.</p>
+  </article>
+
+  <article class="sub" id="u1-s5">
+    <div class="sub-top"><span class="sub-n">1.5</span><h2>Designing your water system</h2></div>
+    <p>Every life has a water loop: <b>source → storage → purify → use → reuse → back to soil</b>. A few truths of design hold everywhere, whatever you can change right now:</p>
+    <div class="truths">
+      <div class="truth"><b>Where water falls is easiest</b><p>Places with steady rain or snow, springs and rivers need the least infrastructure. Dry places can thrive too, with storage sized for the whole dry season.</p></div>
+      <div class="truth"><b>Water flows downhill</b><p>Gravity is free energy. Store high, use low; put the barrel above the garden, not below it.</p></div>
+      <div class="truth"><b>Closer is easier</b><p>The shorter the trip from source to use, the less carrying, pumping and leaking.</p></div>
+      <div class="truth"><b>Slow it, spread it, sink it</b><p>Rain that soaks into the ground refills wells and springs for everyone downhill.</p></div>
+      <div class="truth"><b>Time decides the build</b><p>How long you’ll be somewhere, and whether you can shape it, decides whether a pitcher or a cistern makes sense.</p></div>
+    </div>
+    <div class="accs">
+      <details class="acc" data-for="portable"><summary><span class="who">Portable</span>A carry-it-with-you loop<span class="for-you">For you</span></summary><div class="in"><p>Tap → filter pitcher or countertop unit → a few stored jugs → shower bucket to toilet → houseplants. Everything moves with you.</p></div></details>
+      <details class="acc" data-for="invest outdoor"><summary><span class="who">Rooted, with outdoor space</span>A house-and-yard loop<span class="for-you">For you</span></summary><div class="in"><p>Tap and rain barrels → under-sink filter → stored drums → laundry-to-landscape → fruit trees and mulch. Rain gardens let what’s left soak in.</p></div></details>
+      <details class="acc" data-for="land"><summary><span class="who">Land</span>An off-grid loop<span class="for-you">For you</span></summary><div class="in"><p>Well or roof catchment → cistern → sediment, carbon and UV (or slow sand) → house → gray water to orchard → swales that recharge the aquifer.</p></div></details>
+      <details class="acc" data-for="nohome"><summary><span class="who">No fixed home</span>A map-it loop<span class="for-you">For you</span></summary><div class="in"><p>Free refill points → two or three clean bottles → a small backup filter → rinse water reused for washing up. Here the system is the map of where water is, and the people who share it.</p></div></details>
+      <details class="acc" data-for="dry"><summary><span class="who">Dry climate</span>Designing for the dry season<span class="for-you">For you</span></summary><div class="in"><p>Most of California gets its rain in a few winter months. Count how many dry months you need to bridge, and let the garden plan follow the water rather than the other way round: native, dry-adapted plants, deep mulch, and winter rain stored in the soil.</p><p class="links">Gardening · Weather</p></div></details>
+    </div>
+    <p class="do">Draw your loop on paper with arrows. Mark one step you’d like to add.</p>
+  </article>
+
+  <nav class="pager"><a href="#"><small>← Back</small><b>Overview</b></a><a class="next" href="#u2"><small>Next unit →</small><b>2 · Sources</b></a></nav>
+  </div>
+</section>
+
+<!-- ============ UNIT 2: SOURCES ============ -->
+<section class="page k2" data-page="u2" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 2</span><h1>Sources</h1><p class="unit-sub">Where water comes from</p>
+    <p class="lede">Water reaches us from the sky, the ground or a pipe. Each source carries its own likely problems, which tells you what storage, purifying and testing it needs.</p>
+    <ul class="jumps"><li><a href="#u2/s1"><span>2.1</span>Sources</a></li><li><a href="#u2/s2"><span>2.2</span>Taps &amp; refills</a></li><li><a href="#u2/s3"><span>2.3</span>Rain</a></li><li><a href="#u2/s4"><span>2.4</span>Wells &amp; springs</a></li><li><a href="#u2/s5"><span>2.5</span>Wild water</a></li></ul>
+  </div>
+
+  <article class="sub" id="u2-s1">
+    <div class="sub-top"><span class="sub-n">2.1</span><h2>Know your sources</h2></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Source</th><th>Usually watch for</th><th>Ready to drink?</th></tr></thead>
+      <tbody>
+        <tr><td>Public tap</td><td>Lead from old pipes, chlorine taste, sometimes PFAS</td><td class="y">Usually</td></tr>
+        <tr><td>Rain</td><td>Roof dirt, bird droppings, roof materials</td><td class="n">Treat first</td></tr>
+        <tr><td>Well</td><td>Bacteria, nitrate, arsenic, minerals</td><td class="p">After testing</td></tr>
+        <tr><td>Spring</td><td>Surface water sneaking in after rain</td><td class="p">After testing</td></tr>
+        <tr><td>River, lake</td><td>Germs, farm and road runoff, algae toxins</td><td class="n">Treat first</td></tr>
+        <tr><td>Dehumidifier / AC</td><td>Metals and germs from the coils</td><td class="n">Plants only</td></tr>
+      </tbody>
+    </table></div>
+    <p class="old">Villages grew up beside springs and rivers. People drew drinking water upstream and washed downstream, and that order still matters.</p>
+    <p class="do">Find your watershed’s name and trace a raindrop from your roof to your tap, then to the sea.</p>
+  </article>
+
+  <article class="sub" id="u2-s2">
+    <div class="sub-top"><span class="sub-n">2.2</span><h2>Taps and free refills</h2></div>
+    <p>Public water is already treated and tested, which makes it the cheapest reliable water there is. Refill maps and apps show fountains and businesses happy to fill a bottle.</p>
+    <p class="ca">State law (2012) recognizes that every person has a right to safe, clean, affordable water for drinking, cooking and washing.</p>
+    <div class="accs">
+      <details class="acc" data-for="nohome"><summary><span class="who">No fixed home</span>Where water is free<span class="for-you">For you</span></summary><div class="in">
+        <p class="kind">Without a home, water takes far more time, walking and planning, because most systems assume a tap of your own. That’s a gap in how things are built, not a personal failing.</p>
+        <ul><li>Public libraries, parks, community and rec centers, transit stations.</li><li>Cafés and fast-food counters will often fill a bottle with tap water when asked.</li><li>Day centers and shelters often have water, showers and laundry.</li><li>Calling or texting <b>211</b> finds local water, showers and food.</li></ul></div></details>
+      <details class="acc" data-for="crisis"><summary><span class="who">Outage</span>Water already in your home<span class="for-you">For you</span></summary><div class="in"><ul><li>The water heater tank, often 30–80 gallons. Turn off power or gas, let it cool, drain from the bottom valve.</li><li>The toilet tank (not the bowl), if no cleaning tablets are in it.</li><li>Ice, and liquid in canned fruit and vegetables.</li><li>If the supply may be contaminated, close your main valve to keep it out of your pipes.</li></ul></div></details>
+    </div>
+  </article>
+
+  <article class="sub" id="u2-s3">
+    <div class="sub-top"><span class="sub-n">2.3</span><h2>Catching rain</h2></div>
+    <p>One inch of rain on 1,000 sq ft of roof is about 620 gallons. A <b>first-flush diverter</b> sends the dirtiest first water away. Rainwater goes to the garden first, and to drinking only with treatment.</p>
+    <p class="ca">Collecting rain from your roof is legal (Rainwater Capture Act, 2012). Many water agencies offer rebates or free barrels.</p>
+    <div class="accs">
+      <details class="acc" data-for="portable"><summary><span class="who">Portable</span>Balcony scale<span class="for-you">For you</span></summary><div class="in"><p>A lidded bucket under a balcony drip or a chain from the gutter, for plants. Check with whoever owns the building before attaching anything.</p></div></details>
+      <details class="acc" data-for="outdoor invest"><summary><span class="who">Yard</span>Barrels on downspouts<span class="for-you">For you</span></summary><div class="in"><p>One or two 55-gallon barrels with a diverter kit, a screen and an overflow pointed away from the foundation.</p></div></details>
+      <details class="acc" data-for="land"><summary><span class="who">Land</span>Cistern catchment<span class="for-you">For you</span></summary><div class="in"><p>Metal roofs are the best for drinking water. Gutters → first flush → screened cistern (shaded or buried) → filter train in 4.3.</p></div></details>
+      <details class="acc" data-for="dry"><summary><span class="who">Dry climate</span>Sizing for a dry season<span class="for-you">For you</span></summary><div class="in"><p>With winter-only rain, a barrel fills and empties within weeks. Storing water in the soil (mulch, basins, rain gardens) often beats storing it in tanks.</p></div></details>
+    </div>
+  </article>
+
+  <article class="sub" id="u2-s4">
+    <div class="sub-top"><span class="sub-n">2.4</span><h2>Wells and springs</h2></div>
+    <p>Groundwater is filtered by soil and rock, so it’s often cleaner than surface water, but it can pick up arsenic, nitrate, uranium or bacteria along the way.</p>
+    <div class="accs">
+      <details class="acc" data-for="well land"><summary><span class="who">Wells</span>Caring for a well<span class="for-you">For you</span></summary><div class="in"><ul><li>Test yearly for coliform bacteria and nitrate, and after floods or repairs (5.4).</li><li>Keep a sealed cap and slope soil away from the wellhead. No chemicals or septic nearby.</li><li>County environmental health handles well permits and drilling records.</li></ul></div></details>
+      <details class="acc" data-for="well land nohome"><summary><span class="who">Springs</span>Using a spring<span class="for-you">For you</span></summary><div class="in"><p>Find out who owns or cares for it. A “spring box” protects it from runoff. Clear spring water can still carry germs from animals uphill, so treat it unless it’s tested.</p></div></details>
+    </div>
+  </article>
+
+  <article class="sub" id="u2-s5">
+    <div class="sub-top"><span class="sub-n">2.5</span><h2>Rivers, lakes and the wild</h2></div>
+    <ul>
+      <li><b>Running over still:</b> moving water is less likely to breed mosquitoes and algae.</li>
+      <li><b>But ask who’s upstream:</b> towns, farms, roads, mines and factories all drain somewhere. Running water carries their runoff too.</li>
+      <li>Skip water with green or blue-green scum, oily sheen, foam or dead fish.</li>
+      <li>Always purify before drinking (Unit 4).</li>
+    </ul>
+    <p class="old">“Running water is clean water” held when nobody upstream was spraying fields. Keep the habit, and add the question.</p>
+    <p class="links">5.2 Reading the signs · 5.5 Swimming and bathing outdoors</p>
+  </article>
+
+  <nav class="pager"><a href="#u1"><small>← Previous</small><b>1 · Uses</b></a><a class="next" href="#u3"><small>Next unit →</small><b>3 · Storage</b></a></nav>
+  </div>
+</section>
+
+<!-- ============ UNIT 3: STORAGE ============ -->
+<section class="page k3" data-page="u3" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 3</span><h1>Storage</h1><p class="unit-sub">Keeping water safe</p>
+    <p class="lede">Stored water stays good with three things: a clean food-grade container, darkness and coolness. Then a date on the lid, and a reminder to refresh it.</p>
+    <ul class="jumps"><li><a href="#u3/s1"><span>3.1</span>Containers</a></li><li><a href="#u3/s2"><span>3.2</span>Where</a></li><li><a href="#u3/s3"><span>3.3</span>Algae</a></li><li><a href="#u3/s4"><span>3.4</span>Fresh</a></li><li><a href="#u3/s5"><span>3.5</span>How much</a></li></ul>
+  </div>
+
+  <article class="sub" id="u3-s1">
+    <div class="sub-top"><span class="sub-n">3.1</span><h2>Containers</h2></div>
+    <ul>
+      <li>Food-grade only: HDPE plastic (#2), containers sold for water, glass, stainless steel or glazed ceramic.</li>
+      <li>Never one that held chemicals, even rinsed. Milk jugs break down and are hard to clean: plant water only.</li>
+      <li>Secondhand first: food-grade barrels and jugs turn up free from bakeries, juice and soda bottlers, and on Craigslist, Facebook Marketplace and Buy Nothing. Ask what was in them.</li>
+    </ul>
+    <p class="old">Unglazed clay pots keep water cool: a little seeps through the walls and evaporates, carrying heat away.</p>
+    <div class="accs">
+      <details class="acc" data-for="invest land"><summary><span class="who">More space</span>Drums, totes and cisterns<span class="for-you">For you</span></summary><div class="in"><p>A 55-gallon drum full of water weighs about 460 lb: fill it where it will stay and use a hand pump or siphon. 275-gallon IBC totes work for garden water; for drinking, only food-grade ones, covered from light.</p></div></details>
+      <details class="acc" data-for="nohome"><summary><span class="who">On the move</span>What to carry<span class="for-you">For you</span></summary><div class="in"><p>A gallon weighs about 8.3 lb. Two or three sturdy refillable bottles plus a collapsible pouch usually beat one big jug.</p></div></details>
+    </div>
+  </article>
+
+  <article class="sub" id="u3-s2">
+    <div class="sub-top"><span class="sub-n">3.2</span><h2>Where to keep it</h2></div>
+    <p>Cool, dark and away from fumes. Gasoline, paint, pesticides and cleaners can pass through plastic into the water. Spread it around, so one damaged spot doesn’t take it all.</p>
+    <div class="accs">
+      <details class="acc" data-for="portable"><summary><span class="who">Small spaces</span>Hiding spots indoors<span class="for-you">For you</span></summary><div class="in"><p>Under beds, the back of closets, under the sink (away from cleaners), flat bricks behind the couch.</p></div></details>
+    </div>
+  </article>
+
+  <article class="sub" id="u3-s3">
+    <div class="sub-top"><span class="sub-n">3.3</span><h2>Beware green in the sun</h2></div>
+    <p>Algae only need light, water and a few nutrients. A clear jug on a sunny porch can turn green in weeks.</p>
+    <ul>
+      <li>Opaque containers, or cover clear ones and keep them in the dark.</li>
+      <li>Rain barrels: opaque, lidded and screened.</li>
+      <li>Pet bowls and bottles by a window grow the same film in miniature.</li>
+    </ul>
+    <p class="old">Standing water breeds mosquitoes: eggs can become biting adults in about a week. Empty, cover or keep water moving.</p>
+    <p class="do">Walk the house and yard with a child and find every place water sits in sunlight or stands still. Cover, empty or move each one.</p>
+    <p class="links">Animal care · 4.4 Sunlight as a tool (the short-trip exception)</p>
+  </article>
+
+  <article class="sub" id="u3-s4">
+    <div class="sub-top"><span class="sub-n">3.4</span><h2>Keeping it fresh</h2></div>
+    <ul>
+      <li><b>Before filling:</b> wash with soap, rinse, swish with a little unscented bleach and water (about 1 tsp per quart), then rinse.</li>
+      <li><b>Label:</b> “filled on” date. Refresh tap water you bottled yourself every 6 months; sealed bottled water lasts to its date.</li>
+      <li><b>Pour, don’t dip:</b> a spigot or pouring keeps hands and cups out of the supply.</li>
+      <li>Old stored water makes great plant water.</li>
+    </ul>
+  </article>
+
+  <article class="sub" id="u3-s5">
+    <div class="sub-top"><span class="sub-n">3.5</span><h2>How much to keep</h2></div>
+    <p>A short-term bare minimum is about <b>1 gallon per person per day</b>. For longer stretches, humanitarian groups plan around <b>4 gallons (15 L)</b> to cover cooking and washing. Three days is a start; two weeks gives real ease. There’s no rush: a few jugs a month adds up.</p>
+    <div class="tool">
+      <b class="t">Storage planner</b>
+      <div class="row">
+        <label class="f">People<input type="number" id="ppl" min="1" value="2"></label>
+        <label class="f">Days<select id="days"><option value="3">3 days</option><option value="7">1 week</option><option value="14" selected>2 weeks</option></select></label>
+        <label class="f">Level<select id="lvl"><option value="1">Bare minimum (1 gal)</option><option value="4">Comfortable (4 gal)</option></select></label>
+        <label class="chk"><input type="checkbox" id="hot"> Hot weather, nursing or sick</label>
+      </div>
+      <div class="out" id="storeOut" aria-live="polite"></div>
+    </div>
+    <p class="links">Emergency preparedness</p>
+  </article>
+
+  <nav class="pager"><a href="#u2"><small>← Previous</small><b>2 · Sources</b></a><a class="next" href="#u4"><small>Next unit →</small><b>4 · Purify</b></a></nav>
+  </div>
+</section>
+
+<!-- ============ UNIT 4: PURIFY ============ -->
+<section class="page k4" data-page="u4" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 4</span><h1>Purify</h1><p class="unit-sub">From a pitcher to an aquifer</p>
+    <p class="lede">No single method does everything, and the priciest one isn’t automatically right. Start with what’s in your water, then choose the simplest thing that handles it, at whatever scale your life has right now.</p>
+    <ul class="jumps"><li><a href="#u4/s1"><span>4.1</span>Match</a></li><li><a href="#u4/s2"><span>4.2</span>Everyday</a></li><li><a href="#u4/s3"><span>4.3</span>Permanent</a></li><li><a href="#u4/s4"><span>4.4</span>Crisis</a></li><li><a href="#u4/s5"><span>4.5</span>No fixed home</a></li></ul>
+  </div>
+
+  <article class="sub" id="u4-s1">
+    <div class="sub-top"><span class="sub-n">4.1</span><h2>Match the method to the problem</h2></div>
+    <p>A filter’s box can claim anything. An independent certification (in North America, NSF/ANSI: <b>42</b> taste, <b>53</b> health contaminants like lead, <b>58</b> reverse osmosis, <b>401</b> newer chemicals) means someone outside the company tested that claim. NSF’s list is free to search by model number.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Method</th><th>Germs</th><th>Lead</th><th>Nitrate</th><th>PFAS</th><th>Taste</th></tr></thead>
+      <tbody>
+        <tr><td>Boiling</td><td class="y">Yes</td><td class="n">No</td><td class="n">No (concentrates)</td><td class="n">No</td><td class="n">—</td></tr>
+        <tr><td>Carbon pitcher / faucet</td><td class="n">No</td><td class="p">If certified 53</td><td class="n">No</td><td class="p">Some models</td><td class="y">Yes</td></tr>
+        <tr><td>Hollow-fiber squeeze</td><td class="p">Bacteria &amp; parasites</td><td class="n">No</td><td class="n">No</td><td class="n">No</td><td class="n">No</td></tr>
+        <tr><td>Gravity ceramic + carbon</td><td class="p">Bacteria &amp; parasites</td><td class="p">Check cert</td><td class="n">No</td><td class="p">Check cert</td><td class="y">Yes</td></tr>
+        <tr><td>Reverse osmosis</td><td class="p">Most</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td></tr>
+        <tr><td>UV light</td><td class="y">Clear water only</td><td class="n">No</td><td class="n">No</td><td class="n">No</td><td class="n">No</td></tr>
+        <tr><td>Slow sand / biosand</td><td class="p">Most</td><td class="n">No</td><td class="n">No</td><td class="n">No</td><td class="p">Some</td></tr>
+      </tbody>
+    </table></div>
+    <p class="legend">Green = handles it · amber = depends on model or setup · red = doesn’t. Mock-up values; re-check before launch.</p>
+    <div class="tool">
+      <b class="t">Which method?</b>
+      <label class="f">I’m worried about<select id="worry">
+        <option value="taste">Chlorine taste or smell</option><option value="lead">Lead (older pipes)</option>
+        <option value="microbes">Germs (wild water, wells, outages)</option><option value="nitrate">Nitrate (farm areas, wells)</option>
+        <option value="pfas">PFAS (“forever chemicals”)</option><option value="hard">Hard water, scale</option></select></label>
+      <div class="out" id="filterOut" aria-live="polite"></div>
+    </div>
+  </article>
+
+  <article class="sub" id="u4-s2">
+    <div class="sub-top"><span class="sub-n">4.2</span><h2>Everyday filtering</h2></div>
+    <ul>
+      <li><b>Free first:</b> an open pitcher in the fridge overnight lets chlorine leave (not chloramine). Run the cold tap after water sits, cook with cold, clean the aerator.</li>
+      <li><b>Secondhand first:</b> ask Buy Nothing groups and neighbors, then eBay, Craigslist, Facebook Marketplace and OfferUp. Used body, new insides: always fit new cartridges and sanitize the housing. Check that replacement filters are still sold.</li>
+      <li><b>Care:</b> write the install date on every cartridge. An old filter can stop working or grow bacteria.</li>
+    </ul>
+    <div class="accs">
+      <details class="acc" data-for="portable"><summary><span class="who">Can’t change pipes</span>Reverse osmosis as a stop-gap<span class="for-you">For you</span></summary><div class="in"><p>When testing shows lead, nitrate or PFAS and the pipes aren’t yours to change, a countertop reverse osmosis unit (no drilling) removes most of them and moves with you. It sends some water down the drain: catch that for mopping or flushing.</p><p>Still worth a friendly request to whoever owns the building or runs the water: fixes upstream help everyone.</p><p class="links">Emotions &amp; love (Request tool)</p></div></details>
+      <details class="acc" data-for="portable invest"><summary><span class="who">After RO</span>Putting minerals back<span class="for-you">For you</span></summary><div class="in"><p>RO water is very low in calcium and magnesium, so it tastes flat. Most minerals come from food, so this is mostly about taste and a small top-up, and water that tastes good gets drunk.</p><ul><li>A remineralizing cartridge after the membrane.</li><li>Trace-mineral drops, per the label.</li><li>A small pinch of mineral salt per pitcher, to taste.</li></ul><p>A cheap TDS meter shows when the membrane is tiring: the number creeps up.</p></div></details>
+      <details class="acc" data-for="invest"><summary><span class="who">Rooted</span>Under-sink and whole-house<span class="for-you">For you</span></summary><div class="in"><p>Under-sink carbon or RO at the kitchen tap covers drinking and cooking. Whole-house sediment and carbon help with taste and shower chlorine. If lead is the concern, replacing the service line fixes the source.</p></div></details>
+    </div>
+  </article>
+
+  <article class="sub" id="u4-s3">
+    <div class="sub-top"><span class="sub-n">4.3</span><h2>Permanent systems</h2></div>
+    <p>For places you’ll stay and can shape, purification becomes part of the land itself: a chain of steps, each catching what the last one missed.</p>
+    <div class="accs">
+      <details class="acc" data-for="well land"><summary><span class="who">Well</span>A well water train<span class="for-you">For you</span></summary><div class="in"><p>Well → pressure tank → sediment filter → carbon → UV light where water enters the house. Add a treatment for whatever testing finds (an iron filter, RO at the kitchen sink for nitrate or arsenic).</p></div></details>
+      <details class="acc" data-for="land"><summary><span class="who">Rain</span>Rain to drinking water<span class="for-you">For you</span></summary><div class="in"><p>First flush → screened, dark cistern → floating intake (draws from just under the surface, above settled sediment) → sediment → carbon → UV. Test before trusting it.</p></div></details>
+      <details class="acc" data-for="land nohome"><summary><span class="who">Low-tech</span>Slow sand and biosand filters<span class="for-you">For you</span></summary><div class="in"><p>Water trickles through fine sand; a living layer on top (the “schmutzdecke”) eats germs. Buildable from a barrel, gravel and sand, no power. Removes most germs and cloudiness, not chemicals. Takes a few weeks to mature.</p><p class="old">Sand, charcoal, settling and sunlight are some of the oldest water tools people have.</p></div></details>
+      <details class="acc" data-for="land invest dry"><summary><span class="who">Land</span>Feeding the aquifer<span class="for-you">For you</span></summary><div class="in"><p>The longest-term system: help rain sink in instead of running off. Swales, rain gardens, mulch and less pavement recharge the groundwater that wells and springs draw from, for everyone downhill too.</p><p class="links">Gardening · Weather · Death &amp; seasons</p></div></details>
+    </div>
+  </article>
+
+  <article class="sub" id="u4-s4">
+    <div class="sub-top"><span class="sub-n">4.4</span><h2>Crisis: boil, bleach, sun</h2></div>
+    <p>These keep people alive for days when the usual systems stop. They aren’t meant to be how we drink every day.</p>
+    <ol>
+      <li><b>Settle:</b> let cloudy water sit, pour off the clearer top.</li>
+      <li><b>Strain:</b> through clean cloth, a coffee filter or paper towel.</li>
+      <li><b>Boil:</b> a full rolling boil kills germs. Many people keep it boiling for 1 minute to be sure (3 minutes at high altitude).</li>
+    </ol>
+    <p>Boiling won’t remove fuel, chemicals, metals or algae toxins. If a source may have those, choose another one.</p>
+    <p class="old">Boiling water into tea, soup and broth made doubtful water safe long before anyone knew about germs.</p>
+    <div class="accs">
+      <details class="acc" data-for="crisis nohome"><summary><span class="who">Can’t boil</span>The actual bleach situation<span class="for-you">For you</span></summary><div class="in">
+        <div class="cols">
+          <div class="note"><b class="h">What it does</b><ul><li>Kills most bacteria and viruses in clear water.</li><li>Plain, unscented bleach only (about 6–8%). No scented, splash-less or color-safe.</li><li>Stir, wait 30 minutes. A slight chlorine smell means it worked. No smell? Repeat, wait 15 more.</li></ul></div>
+          <div class="note"><b class="h">What it doesn’t</b><ul><li>Doesn’t reliably kill Cryptosporidium. Boiling does.</li><li>Doesn’t remove lead, nitrate, fuel or PFAS.</li><li>With muddy or leafy water it forms by-products. Settle and strain first.</li><li>Loses strength over months: date the bottle, replace yearly.</li></ul></div>
+          <div class="note"><b class="h">Why it’s for crises</b><p>Dosing jugs by hand every day is guesswork on strength, timing and by-products. For everyday life, tap or a matched filter is gentler and tastier.</p><p><b>Safety:</b> keep bleach away from ammonia and vinegar. Mixed, they release toxic gas.</p></div>
+        </div>
+        <div class="tool">
+          <b class="t">Bleach drops</b>
+          <div class="row">
+            <label class="f">Water<select id="gal"><option value="1">1 gallon</option><option value="2">2 gallons</option><option value="4">4 gallons</option><option value="8">8 gallons</option></select></label>
+            <label class="f">Strength<select id="str"><option value="6">6% (most common)</option><option value="8.25">8.25%</option></select></label>
+            <label class="chk"><input type="checkbox" id="cloudy"> Cloudy or very cold</label>
+          </div>
+          <div class="out" id="bleachOut" aria-live="polite"></div>
+        </div>
+      </div></details>
+      <details class="acc" data-for="crisis nohome"><summary><span class="who">Free</span>Sunlight as a tool (SODIS)<span class="for-you">For you</span></summary><div class="in"><p>Clear water in a clear plastic bottle (2 L or smaller), lying in full sun for about 6 hours (2 days if cloudy), is disinfected by UV. The flip side of 3.3: a short trip in the sun cleans; a long stay grows algae.</p></div></details>
+      <details class="acc" data-for="crisis"><summary><span class="who">Notices</span>During a boil-water notice<span class="for-you">For you</span></summary><div class="in"><p>Use boiled or bottled water for drinking, brushing teeth, ice, baby bottles and washing produce. Showering is fine; keep it out of your mouth. When it lifts, run taps for a few minutes, empty the ice maker and change fridge and pitcher filters.</p></div></details>
+    </div>
+    <p class="links">Emergency preparedness · First aid · Cleaning</p>
+  </article>
+
+  <article class="sub" id="u4-s5">
+    <div class="sub-top"><span class="sub-n">4.5</span><h2>With no fixed home</h2></div>
+    <p class="kind">Being unhoused makes all of this much harder: more carrying, more asking, fewer places to wash and store. These are real options, cheapest first.</p>
+    <ul>
+      <li><b>Free:</b> refill points (2.2), SODIS with clear bottles, rinsing bottles with hot water and soap at a library or day center.</li>
+      <li><b>A few dollars:</b> a small dropper bottle of plain bleach (date it).</li>
+      <li><b>Around $10–40:</b> a squeeze hollow-fiber filter for bacteria and parasites. Buy this one new (a used one can’t be checked for cracks, and boiling or freezing damages it); keep it from freezing.</li>
+      <li><b>Tablets:</b> chlorine dioxide tablets are light and handle Cryptosporidium too, with a longer wait (check the label, up to 4 hours).</li>
+      <li><b>Heat:</b> drink before you’re thirsty; shade and a slow pace stretch water further.</li>
+    </ul>
+    <p class="links">First aid · Body care</p>
+  </article>
+
+  <nav class="pager"><a href="#u3"><small>← Previous</small><b>3 · Storage</b></a><a class="next" href="#u5"><small>Next unit →</small><b>5 · Testing</b></a></nav>
+  </div>
+</section>
+
+<!-- ============ UNIT 5: TESTING ============ -->
+<section class="page k5" data-page="u5" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 5</span><h1>Testing</h1><p class="unit-sub">Knowing it’s safe</p>
+    <p class="lede">Your senses and surroundings catch a lot; the serious problems are often invisible. Testing turns worry into a clear picture, and much of it is free.</p>
+    <ul class="jumps"><li><a href="#u5/s1"><span>5.1</span>Safe</a></li><li><a href="#u5/s2"><span>5.2</span>Signs</a></li><li><a href="#u5/s3"><span>5.3</span>Report</a></li><li><a href="#u5/s4"><span>5.4</span>Kits &amp; labs</a></li><li><a href="#u5/s5"><span>5.5</span>Outdoors</a></li></ul>
+  </div>
+
+  <article class="sub" id="u5-s1">
+    <div class="sub-top"><span class="sub-n">5.1</span><h2>What “safe” means</h2></div>
+    <ul>
+      <li><b>Germs:</b> bacteria, viruses, parasites. Invisible; mostly from animal or human waste. Act fast (hours to days).</li>
+      <li><b>Chemicals and metals:</b> lead, nitrate, arsenic, pesticides, PFAS. Invisible, often tasteless; they add up over years.</li>
+      <li><b>Nuisances:</b> chlorine taste, cloudiness, scale, smells. Easy to notice, usually harmless.</li>
+    </ul>
+    <p class="home">Sparkling stream water can carry Giardia; cloudy tap water after a repair is often just air bubbles that clear from the bottom up.</p>
+  </article>
+
+  <article class="sub" id="u5-s2">
+    <div class="sub-top"><span class="sub-n">5.2</span><h2>Reading the signs around you</h2></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>You notice</th><th>Often means</th></tr></thead>
+      <tbody>
+        <tr><td>Rotten-egg smell</td><td>Hydrogen sulfide, or bacteria in a water heater or well</td></tr>
+        <tr><td>Orange or red stains</td><td>Iron</td></tr>
+        <tr><td>Blue-green stains</td><td>Copper from corroding pipes</td></tr>
+        <tr><td>Metallic taste</td><td>Metals from pipes; worth a lead test</td></tr>
+        <tr><td>Fuel or chemical smell</td><td>Contamination. Stop drinking it and report it</td></tr>
+        <tr><td>Mayfly, stonefly or caddisfly larvae under creek stones</td><td>Clean, well-oxygenated water (they’re sensitive to pollution)</td></tr>
+        <tr><td>Only worms, leeches and slime</td><td>Polluted or low-oxygen water</td></tr>
+        <tr><td>Fields, feedlots, mines or factories upstream</td><td>Possible chemicals no sense can detect: test or choose another source</td></tr>
+      </tbody>
+    </table></div>
+    <p class="do">Turn over a few stones in a creek with a child and count the little creatures clinging to them. That’s a real field test.</p>
+    <p class="links">Identification</p>
+  </article>
+
+  <article class="sub" id="u5-s3">
+    <div class="sub-top"><span class="sub-n">5.3</span><h2>Your water report</h2></div>
+    <p>Every public water system publishes a yearly report of what it found. Search your water provider’s name + “water quality report.” Each line shows the <b>legal limit</b> and the <b>health goal</b>. Goals are set on health alone and are often stricter (for lead, the goal is zero), so compare to those.</p>
+    <p class="ca">The State Water Board publishes test results for every public system and maps lead service lines; ask your provider about yours.</p>
+    <p class="do">Find your report and circle anything above its health goal. Bring it to 4.1.</p>
+  </article>
+
+  <article class="sub" id="u5-s4">
+    <div class="sub-top"><span class="sub-n">5.4</span><h2>Kits and labs</h2></div>
+    <ul>
+      <li><b>TDS meter</b> (a few dollars): dissolved minerals. Good for checking an RO filter; it can’t see germs, lead or PFAS.</li>
+      <li><b>Test strips:</b> rough reads for hardness, pH, chlorine, nitrate. Good for spotting changes.</li>
+      <li><b>Certified lab:</b> the real answer for bacteria, lead, arsenic, PFAS. Ask your water provider or county first: many offer free or discounted kits.</li>
+    </ul>
+    <p class="ca">Look for labs accredited by the state’s ELAP program.</p>
+    <div class="accs">
+      <details class="acc" data-for="well land"><summary><span class="who">Wells</span>A yearly testing rhythm<span class="for-you">For you</span></summary><div class="in"><p>Coliform bacteria and nitrate every year; arsenic, uranium and others every few years; again after floods, repairs or a change in taste.</p></div></details>
+      <details class="acc" data-for="portable kids"><summary><span class="who">Older buildings</span>A first-draw lead test<span class="for-you">For you</span></summary><div class="in"><p>Test water that sat in the pipes overnight. Lead matters most for children and pregnancy. Share results with neighbors in the building: one test can help everyone.</p></div></details>
+    </div>
+  </article>
+
+  <article class="sub" id="u5-s5">
+    <div class="sub-top"><span class="sub-n">5.5</span><h2>Swimming and bathing outdoors</h2></div>
+    <p>Rivers, lakes and the sea can be lovely places to wash and swim. A few checks keep it that way.</p>
+    <ul>
+      <li>Skip it for 2–3 days after heavy rain, when sewage and street runoff wash in.</li>
+      <li>Skip water with scum, foam, oily sheen, dead fish or a chemical smell. When in doubt, stay out, and keep dogs out too.</li>
+      <li>Stay away from pipes, storm drains and industrial, farm or mining runoff.</li>
+      <li>Don’t swallow, cover cuts, rinse off afterwards.</li>
+    </ul>
+    <p class="ca">Heal the Bay’s Beach Report Card grades the coast weekly; the state’s harmful algal bloom map covers lakes and rivers.</p>
+    <div class="accs">
+      <details class="acc" data-for="nohome land"><summary><span class="who">Warm water</span>Hot springs and warm lakes<span class="for-you">For you</span></summary><div class="in"><p>Warm fresh water can rarely carry an amoeba (Naegleria fowleri) that is dangerous if it goes up the nose. Keep your head above water or use a nose clip. Same reason to use boiled or distilled water, never plain tap, in a neti pot.</p></div></details>
+      <details class="acc" data-for="land well"><summary><span class="who">Clues</span>Reading fish advisories<span class="for-you">For you</span></summary><div class="in"><p>A “don’t eat the fish” advisory points to mercury, PCBs or other chemicals in the water. Those mostly matter for eating fish, but they’re a signal to choose another spot for regular bathing and never to drink from it, even filtered.</p></div></details>
+    </div>
+    <p class="links">2.5 Rivers, lakes and the wild · Animal care</p>
+  </article>
+
+  <nav class="pager"><a href="#u4"><small>← Previous</small><b>4 · Purify</b></a><a class="next" href="#"><small>Done →</small><b>Course overview</b></a></nav>
+  </div>
+</section>
+
+</main>
+</div>
+</div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ---------- Profile: same key and options as app.js ---------- */
+  var KEY = 'meeting-needs.profile.v1';
+  var OPT = {
+    home: ['Apartment or room', 'House', 'Land or farm', 'Vehicle or boat', 'Shelter or no fixed place', 'Other'],
+    stay: ['No fixed place right now', 'Under a year', 'A few years', 'Long-term, putting down roots', 'Not sure'],
+    shape: ['Nothing: it all has to be portable', 'Small, removable things', 'Bigger changes, with an owner who’s on board', 'It’s ours to shape'],
+    water: ['City tap', 'Private well', 'Spring', 'Rain catchment', 'Hauled or delivered', 'Public refill points', 'Not sure'],
+    rain: ['Rarely (desert or long droughts)', 'Mostly one season (like most of California)', 'Through much of the year']
+  };
+  var profile = {};
+  try { profile = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { profile = {}; }
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(profile)); } catch (e) {} }
+
+  /* Answers → tags. Accordions carry data-for="<tags>"; a match opens and outlines them. */
+  function tags() {
+    var p = profile, t = {};
+    var space = Array.isArray(p.space) ? p.space : [];
+    if (p.home === 'Shelter or no fixed place' || p.stay === 'No fixed place right now') t.nohome = 1;
+    var rooted = p.stay === 'A few years' || p.stay === 'Long-term, putting down roots';
+    var canShape = p.shape === 'Bigger changes, with an owner who’s on board' || p.shape === 'It’s ours to shape';
+    if (rooted && canShape) t.invest = 1;
+    else if (p.shape || p.stay === 'Under a year' || p.home === 'Vehicle or boat') t.portable = 1;
+    if (p.home === 'Land or farm') { t.land = 1; t.outdoor = 1; }
+    if (p.home === 'House' || space.some(function (s) { return /Balcony|yard|plot/i.test(s); })) t.outdoor = 1;
+    if (p.water === 'Private well' || p.water === 'Spring') t.well = 1;
+    if (p.rain && p.rain.indexOf('Through') !== 0) t.dry = 1;
+    if (Number(p.kids) > 0 || (Array.isArray(p.consider) && p.consider.some(function (c) { return /Pregnancy|Babies/.test(c); }))) t.kids = 1;
+    if ($('outage').checked) t.crisis = 1;
+    return t;
+  }
+  function apply() {
+    var t = tags();
+    document.querySelectorAll('.acc').forEach(function (a) {
+      var hit = (a.dataset.for || '').split(' ').some(function (s) { return t[s]; });
+      a.classList.toggle('match', hit); a.open = hit;
+    });
+    var answered = ['home', 'stay', 'shape', 'water', 'rain'].filter(function (k) { return profile[k]; });
+    $('sitChips').innerHTML = answered.map(function (k) { return '<span>' + profile[k].replace(/ \(.*\)/, '') + '</span>'; }).join('');
+    $('sitSum').textContent = answered.length ? 'From your profile:' : 'Five quick questions tailor this course. Everything stays available either way.';
+    $('sitEdit').textContent = answered.length ? 'Change' : 'Answer';
+  }
+  document.querySelectorAll('[data-q]').forEach(function (sel) {
+    var k = sel.dataset.q;
+    sel.innerHTML = '<option value="">Choose…</option>' + OPT[k].map(function (o) { return '<option' + (o === profile[k] ? ' selected' : '') + '>' + o + '</option>'; }).join('');
+    sel.addEventListener('change', function () { profile[k] = sel.value; persist(); apply(); });
+  });
+  $('outage').addEventListener('change', apply);
+  if (!['home', 'stay', 'shape'].some(function (k) { return profile[k]; })) $('sit').open = true;
+
+  /* ---------- Routing: #u3 opens unit 3; #u3/s2 scrolls to 3.2 ---------- */
+  function route() {
+    var parts = location.hash.replace('#', '').split('/'), page = parts[0] || '';
+    if (page && !document.querySelector('.page[data-page="' + page + '"]')) page = '';
+    document.querySelectorAll('.page').forEach(function (p) { p.hidden = p.dataset.page !== page; });
+    document.querySelectorAll('.vt-unit').forEach(function (u) { u.classList.toggle('cur', u.dataset.unit === page); });
+    document.querySelector('.nav-over').classList.toggle('cur', page === '');
+    var target = parts[1] && $(page + '-' + parts[1]);
+    if (target) target.scrollIntoView({ block: 'start' }); else window.scrollTo(0, 0);
+  }
+  window.addEventListener('hashchange', route);
+
+  /* ---------- Tools ---------- */
+  function store() {
+    var p = Math.max(1, parseInt($('ppl').value, 10) || 1), d = +$('days').value, l = +$('lvl').value, h = $('hot').checked ? 2 : 1, g = p * d * l * h;
+    $('storeOut').innerHTML = '<strong>' + g + ' gallons</strong>About ' + Math.ceil(g / 5) + ' five-gallon jugs. A few a month gets you there.<small>' + p + ' people × ' + d + ' days × ' + l + ' gal' + (h > 1 ? ' × 2 for heat or extra needs' : '') + '. Add water for animals.</small>';
+  }
+  /* Same dose as international household guidance: about 2 drops of 6% bleach per liter. */
+  var DOSE = { '6': { 1: '8 drops', 2: '16 drops (¼ tsp)', 4: '⅓ tsp', 8: '⅔ tsp' }, '8.25': { 1: '6 drops', 2: '12 drops (⅛ tsp)', 4: '¼ tsp', 8: '½ tsp' } };
+  function bleach() {
+    var a = DOSE[$('str').value][$('gal').value], d = $('cloudy').checked;
+    $('bleachOut').innerHTML = '<strong>' + a + (d ? ', doubled' : '') + '</strong>Stir, wait 30 minutes; a slight chlorine smell means it’s ready.<small>' + (d ? 'Settle and strain cloudy water first. ' : '') + 'About 2 drops of 6% bleach per liter, the dose used in household guidance worldwide.</small>';
+  }
+  var F = {
+    taste: ['Open pitcher in the fridge overnight (free, chlorine only)', 'Carbon pitcher or faucet filter, NSF 42', 'Chloramine in your report? Carbon handles it'],
+    lead: ['Flush, cook with cold, clean the aerator (free)', 'Carbon filter certified NSF 53 for lead', 'Countertop reverse osmosis, NSF 58'],
+    microbes: ['Rolling boil (free)', 'Hollow-fiber or ceramic filter', 'UV for clear well water; bleach in a crisis'],
+    nitrate: ['Boiling concentrates nitrate, so skip it', 'Reverse osmosis, NSF 58', 'Wells: test yearly'],
+    pfas: ['Check your water report first (free)', 'Carbon certified for PFOA/PFOS (NSF 53 or 401)', 'Reverse osmosis, NSF 58'],
+    hard: ['Safe to drink: it’s calcium and magnesium', 'Vinegar soak for kettles and showerheads (free)', 'A softener only if scale is damaging pipes']
+  };
+  function filt() {
+    $('filterOut').innerHTML = '<ol style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px">' + F[$('worry').value].map(function (s) { return '<li>' + s + '</li>'; }).join('') + '</ol><small>Secondhand where you can, with new cartridges (4.2).</small>';
+  }
+  ['ppl', 'days', 'lvl', 'hot'].forEach(function (id) { $(id).addEventListener('input', store); $(id).addEventListener('change', store); });
+  ['gal', 'str', 'cloudy'].forEach(function (id) { $(id).addEventListener('change', bleach); });
+  $('worry').addEventListener('change', filt);
+  store(); bleach(); filt(); apply(); route();
+})();
+</script>
+</body>
+</html>
