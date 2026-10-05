@@ -133,7 +133,7 @@
       { id: 'rehydrate', num: 3, word: 'Rehydrate', sub: 'Waking up dried food',
         lede: 'Dried food is food with the water taken out, so it keeps. Putting the water back, slowly and cleanly, turns a jar of hard beans into dinner.',
         subs: [
-          { id: 'dried', short: 'Why dried', title: 'Why dried food', html: function () { return '<p>Germs and molds need water to grow. Take it out and food keeps for months or years with no fridge, weighs a fraction as much, and costs less. Beans, lentils, grains, dried fruit, mushrooms and seaweed are the backbone of a pantry that doesn’t need power.</p>' +
+          { id: 'dried', short: 'Why dried', title: 'Why dried food', html: function () { return '<p>Germs and molds need water to grow (what molds make, and which moldy food to let go, lives in <a href="#lens-toxins/living/food">Toxins: Mold on food</a>). Take it out and food keeps for months or years with no fridge, weighs a fraction as much, and costs less. Beans, lentils, grains, dried fruit, mushrooms and seaweed are the backbone of a pantry that doesn’t need power.</p>' +
             old('Sun-dried fruit, beans hung in their pods, strings of chilies and mushrooms on thread: drying is one of the oldest ways people have carried food through winter and across distance.'); } },
           { id: 'beans', short: 'Beans', title: 'Soaking beans', html: function () { return ul([
               '<b>Overnight soak:</b> cover sorted, rinsed beans with about three times their volume of water for 8–12 hours. In a hot kitchen, soak in the fridge.',

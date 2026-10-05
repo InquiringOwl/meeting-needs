@@ -42,6 +42,9 @@
     /* Food: how you can cook and keep food cold right now. */
     kitchen: ['A full kitchen', 'A hot plate, rice cooker or microwave', 'A shared kitchen', 'No way to cook right now'],
     cold: ['Fridge and freezer', 'A small or shared fridge', 'A cooler, or no fridge'],
+    /* Air: what cooks the food, and where the kitchen air goes (Air course). */
+    stove: ['Gas', 'Electric (coil or smooth top)', 'Induction', 'Hot plate or countertop only', 'No stove'],
+    hood: ['Vents outside', 'Recirculates (no duct)', 'No hood or fan', 'Not sure'],
     /* Surroundings: what the building and the neighborhood bring (Toxins course). */
     built: ['Before 1978', '1978 or later', 'Not sure'],
     near: ['A freeway or busy road', 'Factory, refinery or oil and gas wells', 'Farm fields', 'An airport', 'None of these'],
@@ -86,7 +89,7 @@
   }
 
   function blank() {
-    return { address: '', zone: '', home: '', stay: '', shape: '', space: [], sources: {}, filters: [], pipes: '', rain: '', kitchen: '', cold: '', built: '', near: [], adults: '', kids: '', pets: '', consider: [], hours: '', budget: '', priorities: [] };
+    return { address: '', zone: '', home: '', stay: '', shape: '', space: [], sources: {}, filters: [], pipes: '', rain: '', kitchen: '', cold: '', stove: '', hood: '', built: '', near: [], adults: '', kids: '', pets: '', consider: [], hours: '', budget: '', priorities: [] };
   }
   function load() {
     try {
@@ -128,7 +131,7 @@
   }
   function saveSoon() { clearTimeout(saveTimer); saveTimer = setTimeout(function () { save(); }, 500); }
   function isEmpty(p) {
-    return !p.home && !p.stay && !p.shape && !p.rain && !p.pipes && !p.kitchen && !p.cold && !p.built && !p.near.length && !Object.keys(p.sources).length && !p.filters.length && !p.zone && !p.address && !p.adults && !p.kids && !p.pets && !p.hours && !p.budget &&
+    return !p.home && !p.stay && !p.shape && !p.rain && !p.pipes && !p.kitchen && !p.cold && !p.stove && !p.hood && !p.built && !p.near.length && !Object.keys(p.sources).length && !p.filters.length && !p.zone && !p.address && !p.adults && !p.kids && !p.pets && !p.hours && !p.budget &&
       !p.space.length && !p.consider.length && !p.priorities.length;
   }
 
@@ -293,8 +296,8 @@
       '<section class="hero">' +
       '<div class="hero-copy">' +
       '<span class="eyebrow">Free &amp; open source · ' + COUNT + ' lenses</span>' +
-      '<h1 tabindex="-1">Unplug from profit&#8209;extraction loops.</h1>' +
-      '<p>Learn what we all need to live. Fix problems systemically.</p>' +
+      '<h1 tabindex="-1">End systemic profit&#8209;extraction cycles.</h1>' +
+      '<p>Learn how to meet universal needs. Empower yourself to fix problems. Create peace.</p>' +
       '</div></section>' +
       tiers + footer();
   }
@@ -404,7 +407,7 @@
     var p = profile;
     if (step === 'place') return !!(p.home || p.stay || p.shape || p.zone || p.address || p.space.length);
     if (step === 'water') return !!(Object.keys(p.sources).length || p.filters.length || p.pipes || p.rain);
-    if (step === 'food') return !!(p.kitchen || p.cold);
+    if (step === 'food') return !!(p.kitchen || p.cold || p.stove || p.hood);
     if (step === 'toxins') return !!(p.built || p.near.length);
     if (step === 'household') return !!(p.adults || p.kids || p.pets || p.consider.length);
     if (step === 'resources') return !!(p.hours || p.budget);
@@ -449,7 +452,8 @@
 
       '<fieldset id="s-food" class="glass"><legend>Food</legend>' +
       '<div class="row">' + selectField('kitchen', 'How can you cook right now?', OPT.kitchen, p.kitchen) + selectField('cold', 'How do you keep food cold?', OPT.cold, p.cold) + '</div>' +
-      '<p class="hint">The Food course opens the parts that fit: one-pot cooking, cold soaking, a small fridge or none.</p>' +
+      '<div class="row">' + selectField('stove', 'What do you cook on?', OPT.stove, p.stove) + selectField('hood', 'Kitchen fan', OPT.hood, p.hood) + '</div>' +
+      '<p class="hint">The Food course opens the parts that fit: one-pot cooking, cold soaking, a small fridge or none. The Air course reads the stove and fan: gas flames and getting kitchen air out.</p>' +
       '</fieldset>' +
 
       '<fieldset id="s-toxins" class="glass"><legend>Surroundings</legend>' +
@@ -503,7 +507,7 @@
   var sky = '<div class="sky" aria-hidden="true"><span class="a"></span><span class="b"></span><span class="c"></span><span class="d"></span></div>';
 
   /* Course files load only when someone opens that lens, so the home page stays light. */
-  var LAZY = { relationships: { css: 'rel.css', js: ['rel-data.js', 'rel.js'] }, water: { css: 'water.css', js: ['water.js'] }, food: { css: 'food.css', js: ['food.js'] }, toxins: { css: 'tox.css', js: ['tox.js'] }, governance: { css: 'gov.css', js: ['gov.js'] } };
+  var LAZY = { relationships: { css: 'rel.css', js: ['rel-data.js', 'rel.js'] }, water: { css: 'water.css', js: ['water.js'] }, food: { css: 'food.css', js: ['food.js'] }, toxins: { css: 'tox.css', js: ['tox.js'] }, air: { css: 'air.css', js: ['air.js'] }, 'emergency-prep': { css: 'em.css', js: ['em.js'] }, governance: { css: 'gov.css', js: ['gov.js'] } };
   var lazyState = {};
   function needsLazy(r) {
     var lid = r.indexOf('lens-') === 0 ? r.slice(5).split(/[\/?]/)[0] : '';

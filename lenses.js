@@ -34,10 +34,10 @@ window.MN_TIERS = [
         looks: ['Free, shared, bought, grown and foraged food', 'Washing produce, greens, grains and rice well', 'Soaking beans, grains and dried foods, and sprouting', 'Safe heat, little fuel, cooking with kids and a full plate', 'Cold, pantry, leftovers, preserving, and the animals who visit']
       },
       {
-        id: 'air', name: 'Air', status: 'building',
-        blurb: 'Your quickest read on air quality: what’s in the room right now, and the fastest fix.',
-        topics: ['Quality', 'Ventilation', 'Filters'],
-        looks: ['Cooking smoke, gas stoves and stale air', 'Damp, condensation and where mold starts', 'Fans, open windows and filters that are worth it']
+        id: 'air', name: 'Air', status: 'ready',
+        blurb: 'What’s in the air, how to read it around fires and storms, and how ventilation, vacuuming, lower heat and shade clear it.',
+        topics: ['What’s in it', 'Ventilation', 'Dust', 'Heat & smoke', 'Sun & temperature'],
+        looks: ['Particles, gases, living things, and what disasters add to the air', 'Moving air to cleanse it: windows, fans, filters and damp', 'Vacuuming and damp cleaning, new things, asbestos and lead', 'Cooking, gas, nonstick, smoke and solvents, and companions’ lungs', 'Heat waves, shade, cold, and sun on skin']
       },
       {
         id: 'cleaning', name: 'Cleaning', status: 'building',
@@ -61,8 +61,8 @@ window.MN_TIERS = [
       {
         id: 'body-care', name: 'Body care', status: 'next',
         blurb: 'Care for every body in the home: little ones and aging ones, honoring the diversity of bodies including disabilities, and the animals who live with you.',
-        topics: ['Children', 'Aging', 'Diversity', 'Animal care'],
-        looks: ['Skin, teeth and sleep for children and growing bodies', 'Aging bodies, and the care that keeps them comfortable', 'Disabilities and different bodies, plus the animals who share your home']
+        topics: ['Children', 'Aging', 'Diversity', 'Sun', 'Animal care'],
+        looks: ['Sun on skin: shade, clothing and mineral (zinc oxide) sunscreen', 'Skin, teeth and sleep for children and growing bodies', 'Aging bodies, and the care that keeps them comfortable', 'Disabilities and different bodies, plus the animals who share your home']
       },
       {
         id: 'gardening', name: 'Gardening', status: 'next',
@@ -108,10 +108,10 @@ window.MN_TIERS = [
         looks: ['Stopping bleeding and cleaning a wound', 'Burns, breaks and sprains: what helps and what makes it worse', 'When to call emergency services, and what to do until they arrive']
       },
       {
-        id: 'emergency-prep', name: 'Emergency prep', status: 'later',
+        id: 'emergency-prep', name: 'Emergency prep', status: 'building',
         blurb: 'Natural disasters, personal self-defense and securing your home: plan ahead so you can stay calm when it counts.',
-        topics: ['Disasters', 'Self-defense', 'Home security'],
-        looks: ['Go-bags, water and supplies for earthquakes, fires and floods', 'Personal safety and self-defense basics', 'Simple ways to secure doors, windows and your home']
+        topics: ['What to prep for', 'Disasters', 'Self-defense', 'Home security'],
+        looks: ['What to prep for: wildfire, earthquakes, heat, floods, outages and animals', 'Go-bags, water and supplies for earthquakes, fires and floods', 'Personal safety and self-defense basics', 'Simple ways to secure doors, windows and your home']
       },
       {
         id: 'weather', name: 'Weather', status: 'later',

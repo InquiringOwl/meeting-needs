@@ -23,6 +23,10 @@ Plain HTML, CSS and JavaScript. No build step, no server, no accounts.
 | `food.css` | Food course styles (units in dark greens, darkest to lightest; `fo-` prefix) |
 | `tox.js` | Toxins course: seven units (Exposures, Plastics, In the home, Pesticides, Soil, Living toxins, Neighbors), each sub-unit ending in a “How to fix” card (mode: One by one, Test once, Habit, Together; cost; steps free first) that can be added to **My list**, a reorderable one-by-one tracker (`localStorage` `meeting-needs.tox.v1`). Tools: Where to start, Soil batch planner (`#lens-toxins`, `#lens-toxins/list`, `#lens-toxins/<unit>[/<sub-unit>]`) |
 | `tox.css` | Toxins course styles (units in reds, darkest to lightest; `tx-` prefix) |
+| `air.js` | Air course: five units (What’s in the air, Ventilation, Dust, Heat & smoke, Sun & temperature), each sub-unit ending in a “How to fix” card (mode: Right now, Habit, Set up once, Together) that can be added to **My list** (`localStorage` `meeting-needs.air.v1`). Tools sit apart from the units as shortcuts, never gates: What do you notice? (`#lens-air/notice`) and Filter sizer. Reads `stove` and `hood` (`#lens-air`, `#lens-air/list`, `#lens-air/<unit>[/<sub-unit>]`) |
+| `air.css` | Air course styles (units in yellows, darkest to lightest; `ai-` prefix; generated from `tox.css`) |
+| `em.js` | Emergency prep course (tier 4, in progress): unit 1 What to prep for (hazard lookup tool, wildfire, earthquakes, heat, floods, outages, animals), each ending in a Before · During · After “Get ready” card and **My prep list** (`meeting-needs.em.v1`); units 2–6 planned (`#lens-emergency-prep`) |
+| `em.css` | Emergency prep styles (units in blues; `em-` prefix; generated from `tox.css`) |
 | `gov.js` | Governance course (tier 5, in progress): who controls California water, where it goes, stairs for change (`#lens-governance`) |
 | `gov.css` | Governance course styles |
 
@@ -36,7 +40,7 @@ Open `index.html` in a browser, or run `python3 -m http.server` in this folder a
 ## Profile data
 Saved only in the visitor's browser (`localStorage`, key `meeting-needs.profile.v1`). Nothing is sent anywhere. The profile page has Copy backup / Restore for moving between devices.
 
-Place questions describe the place and how long and how much you can shape it, never who owns it: `home` (kind of place), `stay` (how long you expect to stay), `shape` (how much you can change it; a friend who owns it counts) and `space` (outdoor or growing space, including acreage). The Water section (`#profile/water`) holds `sources` (each source with how much it carries you: Sometimes, Often, Main source; plus “No safe tap water at home”), `filters` you already own, `pipes` (before or after 1986) and `rain`. The Food section (`#profile/food`) holds `kitchen` (how you can cook right now) and `cold` (how you keep food cold). The Surroundings section (`#profile/toxins`) holds `built` (before or after 1978, for lead paint) and `near` (freeway, industry or wells, farm fields, airport); the Toxins course also reads `kids`, `consider` and `pets` (birds and cats change some advice). Courses read these to open the sections that fit and tag them "For you", and link back to the profile (with a hover summary of what's on file) for the rare times something changes. Every section stays available either way. Older profiles are migrated on load: renting/owning in `home` becomes the kind of place, “Land or farm” becomes a house plus acreage, and the old single `water` answer becomes a main source.
+Place questions describe the place and how long and how much you can shape it, never who owns it: `home` (kind of place), `stay` (how long you expect to stay), `shape` (how much you can change it; a friend who owns it counts) and `space` (outdoor or growing space, including acreage). The Water section (`#profile/water`) holds `sources` (each source with how much it carries you: Sometimes, Often, Main source; plus “No safe tap water at home”), `filters` you already own, `pipes` (before or after 1986) and `rain`. The Food section (`#profile/food`) holds `kitchen` (how you can cook right now), `cold` (how you keep food cold), `stove` (gas, electric, induction, hot plate, none) and `hood` (kitchen fan: vents outside, recirculates, none); the Air course reads the last two. The Surroundings section (`#profile/toxins`) holds `built` (before or after 1978, for lead paint) and `near` (freeway, industry or wells, farm fields, airport); the Toxins course also reads `kids`, `consider` and `pets` (birds and cats change some advice). Courses read these to open the sections that fit and tag them "For you", and link back to the profile (with a hover summary of what's on file) for the rare times something changes. Every section stays available either way. Older profiles are migrated on load: renting/owning in `home` becomes the kind of place, “Land or farm” becomes a house plus acreage, and the old single `water` answer becomes a main source.
 
 ## Adding or changing a lens
 Edit `lenses.js`. Status is one of `ready`, `building`, `next`, `later`. A lens takes its tier's `color`. A tier with `locked: true` shows its cards on the home page without linking them (Roots, for now).
@@ -69,10 +73,17 @@ Tiers keep their colour at the top level (home page, lens cards, the tier pill).
 | Water | Blues |
 | Food | Dark greens |
 | Air | Yellows |
+| Emergency prep | Blues |
 | Cleaning | Whites |
 | Toxins | Reds |
 
 Laws mentioned in courses are California's; the practices themselves are general.
+
+## Where shared topics live
+- **Mold and poisons live in Toxins** (Living toxins → Mold in the house and Mold on food; Exposures → Companion animals, what each species can’t process). Air, Water and Food mention damp or spoilage where it fits their own job and link there rather than repeating it.
+- **Natural disasters** are planned in Emergency prep; Air covers what each event puts into the air and how to read it, and links both ways.
+- **Sun on skin** is introduced in Air (Sun & temperature) and lives in full in Body care.
+- **Tools never gate the teaching.** Every unit is open to read in order; tools are shortcuts into it.
 
 ## Courses inside a lens
 A lens can open a course instead of the plain lens page. Its files load only when someone opens that lens (see `LAZY` in `app.js`), so the home page stays light. The app is light-theme only.
