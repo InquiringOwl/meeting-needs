@@ -1,6 +1,6 @@
-# Meeting Needs
+# Kinship
 
-Lenses for a healthier home. Each lens is a way of looking at your home and life: what is quietly making you sick, what it costs, and what you can fix yourself.
+Free, open education for meeting our needs, in five tiers: Signals, Roots, Nurture, Resilience and Craft. Each lens is a way of looking at your home and life: what is quietly making you sick, what it costs, and what you can fix yourself.
 
 Plain HTML, CSS and JavaScript. No build step, no server, no accounts.
 
@@ -10,9 +10,9 @@ Plain HTML, CSS and JavaScript. No build step, no server, no accounts.
 | File | What |
 | --- | --- |
 | `index.html` | The page shell |
-| `style.css` | Look: colour tokens (light + dark), glass panels, layout |
-| `lenses.js` | The lens catalogue (`window.MN_TIERS`): tiers, lenses, status, copy |
-| `app.js` | Home, lens pages, profile; hash routes `#`, `#profile`, `#lens-<id>[/<sub>]` |
+| `style.css` | Look: colour tokens (light only), glass panels, layout |
+| `lenses.js` | The lens catalogue (`window.MN_TIERS`): tiers (each with one colour), lenses, status, copy |
+| `app.js` | Home, About, lens pages, profile; hash routes `#`, `#about`, `#plans`, `#favorites`, `#profile`, `#lens-<id>[/<sub>]` |
 | `FOUNDATION.md` | The principles behind every lens |
 | `rel-data.js` | Relationships course data: skill tree, feelings wheel, needs, accusation words, examples |
 | `rel.js` | Relationships course: overview, one page per unit (feel, need, request, dialogue) with the vertical skill-tree sidebar, and tools (`#lens-relationships`, `#lens-relationships/<unit>[/<sub-unit>]`) |
@@ -29,7 +29,7 @@ Open `index.html` in a browser, or run `python3 -m http.server` in this folder a
 Saved only in the visitor's browser (`localStorage`, key `meeting-needs.profile.v1`). Nothing is sent anywhere. The profile page has Copy backup / Restore for moving between devices.
 
 ## Adding or changing a lens
-Edit `lenses.js`. Status is one of `demo`, `building`, `next`, `later`.
+Edit `lenses.js`. Status is one of `ready`, `building`, `next`, `later`. A lens takes its tier's `color`. A tier with `locked: true` shows its cards on the home page without linking them (Roots, for now).
 
 ## Courses inside a lens
 A lens can open a course instead of the plain lens page. Its files load only when someone opens that lens (see `LAZY` in `app.js`), so the home page stays light. The app is light-theme only.

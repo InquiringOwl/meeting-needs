@@ -1,4 +1,4 @@
-/* Meeting Needs: home, lens pages and profile. Plain JS, no build step.
+/* Kinship: home, lens pages and profile. Plain JS, no build step.
    Routes (hash): '' home · 'plans' · 'favorites' · 'profile' · 'lens-<id>[/<sub>]'. A lens with a course registers
    window.MN_LENS_VIEWS[id](sub, lens) → { html, title } (see rel.js).
    The profile is saved only in this browser (localStorage). */
@@ -15,7 +15,7 @@
     ready: '',
     building: 'This lens is being written now.',
     next: 'This lens comes after the Roots lenses.',
-    later: 'This lens is planned for the Craft tier.'
+    later: 'This lens is planned for a later tier.'
   };
 
   var KEY = 'meeting-needs.profile.v1';
@@ -31,14 +31,14 @@
       { id: 'pans', label: 'Nonstick pans and plastic', lens: 'toxins' },
       { id: 'stains', label: 'Clothes ruined by stains', lens: 'cleaning' },
       { id: 'grow', label: 'Want to grow food', lens: 'gardening' },
-      { id: 'damp', label: 'Stuffy, damp rooms', lens: 'airflow' },
+      { id: 'damp', label: 'Stuffy, damp rooms', lens: 'air' },
       { id: 'tension', label: 'Tension at home', lens: 'relationships' },
-      { id: 'products', label: 'Too many products under the sink', lens: 'household-chemistry' },
+      { id: 'products', label: 'Too many products under the sink', lens: 'household-tools' },
       { id: 'broken', label: 'Things break and get tossed', lens: 'repair' }
     ]
   };
   var CONSIDER_LENS = {
-    'Asthma': ['airflow', 'toxins'], 'Allergies': ['airflow', 'cleaning'], 'Pregnancy': ['toxins', 'water'],
+    'Asthma': ['air', 'toxins'], 'Allergies': ['air', 'cleaning'], 'Pregnancy': ['toxins', 'water'],
     'Babies or toddlers': ['toxins', 'water'], 'Chronic illness': ['toxins', 'food'], 'Limited mobility': ['relationships']
   };
   var MAX_PRIORITIES = 3;
@@ -124,23 +124,41 @@
   }
 
   /* ---------- views ---------- */
-  var LEAF = '<svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 25V13"/><path d="M14 15c0-5 3.5-8.5 9-8.5 0 5.5-3.5 9-9 8.5z"/><path d="M14 18c0-4-2.8-6.8-7.5-6.8 0 4.4 2.8 7.2 7.5 6.8z"/><path d="M8 25h12"/></svg>';
+  var HEART = '<svg class="heart" width="22" height="26" viewBox="0 0 24 24" preserveAspectRatio="none" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.3C.9 8.2 3 4.5 6.6 4.5c2.1 0 3.6 1.1 5.4 3.1 1.8-2 3.3-3.1 5.4-3.1 3.6 0 5.7 3.7 4.2 7.2C19.5 16.4 12 21 12 21z"/></svg>';
 
   function header(active) {
     function link(href, label, key) {
       return '<a href="' + href + '"' + (active === key ? ' aria-current="page"' : '') + '>' + label + '</a>';
     }
     return '<header class="top glass">' +
-      '<a class="brand" href="#">' + LEAF + '<b>Meeting Needs</b></a>' +
+      '<a class="brand" href="#">' + HEART + '<b>Kinship</b></a>' +
       '<nav class="nav" aria-label="Main">' +
-      link('#', 'All education', 'home') +
+      link('#about', 'About', 'about') +
+      eduMenu(active === 'home') +
       link('#plans', 'Plans', 'plans') +
       link('#favorites', 'Favorites', 'favorites') +
       link('#profile', 'Profile', 'profile') +
       '</nav></header>';
   }
+  /* Education dropdown: hover (or keyboard focus) shows the tiers; hovering a tier opens its lenses to the left.
+     Only ready lenses link; the rest are shown faded with their status. */
+  function eduMenu(current) {
+    var tiers = TIERS.map(function (t) {
+      var items = t.lenses.map(function (l) {
+        if (l.status === 'ready') return '<a class="nav-item" href="#lens-' + l.id + '">' + esc(l.name) + '</a>';
+        return '<span class="nav-item is-off" aria-disabled="true">' + esc(l.name) + '<small>' + (STATUS[l.status] || '') + '</small></span>';
+      }).join('');
+      return '<div class="nav-tier" style="--tc:' + t.color + '" tabindex="0">' +
+        '<span class="nav-tier-pill">' + t.num + '</span><span class="nav-tier-name">' + esc(t.name) + '</span>' +
+        '<div class="nav-sub"><div class="nav-sub-in">' +
+        '<span class="nav-sub-head">Tier ' + t.num + ' · ' + esc(t.name) + '</span>' + items + '</div></div></div>';
+    }).join('');
+    return '<div class="navdrop">' +
+      '<a href="#"' + (current ? ' aria-current="page"' : '') + ' aria-haspopup="true">Education</a>' +
+      '<div class="nav-menu"><div class="nav-menu-in">' + tiers + '</div></div></div>';
+  }
   function footer() {
-    return '<footer class="foot"><span>Meeting Needs · free and open source</span><span class="eyebrow">Grow · Fix · Share</span></footer>';
+    return '<footer class="foot"><span>Kinship · free and open source</span><span class="eyebrow">Grow · Fix · Share</span></footer>';
   }
 
   function setupCard() {
@@ -171,23 +189,34 @@
   }
 
   function lensCard(l) {
-    var solid = l.tier.num <= 2;
+    var solid = l.tier.num === 1;
     var cls = 'lens is-' + l.status + (solid ? ' is-solid' : '');
     var top = (solid ? '<span class="dot" aria-hidden="true"></span>' : '') +
       (STATUS[l.status] ? '<span class="badge ' + l.status + '">' + STATUS[l.status] + '</span>' : '');
-    return '<a class="' + cls + '" href="#lens-' + l.id + '" style="--lc:' + l.color + '">' +
+    var tag = l.tier.locked ? 'div' : 'a';
+    if (l.tier.locked) cls += ' is-static';
+    return '<' + tag + ' class="' + cls + '"' + (l.tier.locked ? '' : ' href="#lens-' + l.id + '"') + ' style="--lc:' + l.color + '">' +
       (top ? '<div class="lens-top">' + top + '</div>' : '') +
       '<h3>' + esc(l.name) + '</h3>' +
       '<p>' + esc(l.blurb) + '</p>' +
       '<div class="topics">' + l.topics.map(esc).join(' · ') + '</div>' +
-      '</a>';
+      '</' + tag + '>';
+  }
+
+  function viewAbout() {
+    return header('about') +
+      '<section class="hero"><div class="hero-copy">' +
+      '<span class="eyebrow">About</span>' +
+      '<h1 tabindex="-1">Hi, I’m an anonymous dreamer.</h1>' +
+      '<p>Based in San Francisco. Kinship is free and open source, made so we can all learn what we need to live.</p>' +
+      '</div></section>' + footer();
   }
 
   function viewHome() {
     var tiers = TIERS.map(function (t) {
-      return '<section class="tier glass" data-tier="' + t.num + '" aria-labelledby="tier-' + t.id + '">' +
+      return '<section class="tier glass" data-tier="' + t.num + '" style="--tc:' + t.color + '" aria-labelledby="tier-' + t.id + '">' +
         '<div class="tier-head"><div class="tier-title">' +
-        '<span class="eyebrow">Tier ' + t.num + '</span>' +
+        '<span class="tier-pill">Tier ' + t.num + '</span>' +
         '<h2 id="tier-' + t.id + '">' + esc(t.name) + '</h2>' +
         '<p>' + esc(t.blurb) + '</p></div>' +
         (t.status ? '<span class="tier-status">' + esc(t.status) + '</span>' : '') + '</div>' +
@@ -198,7 +227,7 @@
       '<section class="hero">' +
       '<div class="hero-copy">' +
       '<span class="eyebrow">Free &amp; open source · ' + COUNT + ' lenses</span>' +
-      '<h1 tabindex="-1">Unplug from profit extraction loops.</h1>' +
+      '<h1 tabindex="-1">Unplug from profit&#8209;extraction loops.</h1>' +
       '<p>Learn what we all need to live. Fix problems systemically.</p>' +
       '</div></section>' +
       tiers + footer();
@@ -212,7 +241,7 @@
       ? '<div class="note">The garden planner will live in this lens: your zone and light from your profile, then a 12-month plan for your space.</div>'
       : '';
     return header('home') +
-      '<div><a class="back" href="#">← All education</a></div>' +
+      '<div><a class="back" href="#">← Education</a></div>' +
       '<div class="lens-page" style="--lc:' + l.color + '">' +
       '<article class="lens-main glass">' +
       '<div class="lens-top"><span class="eyebrow">Tier ' + l.tier.num + ' · ' + esc(l.tier.name) + '</span>' +
@@ -354,7 +383,7 @@
       '<button type="button" class="btn ghost" data-action="keep">Keep it</button></div>' +
 
       '<details class="backup glass"><summary>Back up or move to another device</summary><div class="inner">' +
-      '<p class="hint">Your profile lives only in this browser. Copy the backup text and paste it into Meeting Needs on another device or browser to restore it.</p>' +
+      '<p class="hint">Your profile lives only in this browser. Copy the backup text and paste it into Kinship on another device or browser to restore it.</p>' +
       '<div class="group" style="display:flex;flex-wrap:wrap;gap:10px"><button type="button" class="btn ghost" data-action="copy">Copy backup</button>' +
       '<button type="button" class="btn ghost" data-action="restore">Restore from pasted text</button></div>' +
       '<label class="label" for="backup-text" style="font-size:14px;font-weight:600">Backup text</label>' +
@@ -395,20 +424,29 @@
     return true;
   }
 
+  var menuPicked = false;
+  document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('.nav-menu a')) menuPicked = true; }, true);
+
   function route() {
     var r = (location.hash || '').replace(/^#/, '');
     if (needsLazy(r)) return;
-    var html, title = 'Meeting Needs';
-    if (r === 'profile') { html = viewProfile(); title = 'Profile · Meeting Needs'; }
-    else if (r === 'plans') { html = viewPlans(); title = 'Plans · Meeting Needs'; }
-    else if (r === 'favorites') { html = viewFavorites(); title = 'Favorites · Meeting Needs'; }
+    var html, title = 'Kinship';
+    if (r === 'profile') { html = viewProfile(); title = 'Profile · Kinship'; }
+    else if (r === 'about') { html = viewAbout(); title = 'About · Kinship'; }
+    else if (r === 'plans') { html = viewPlans(); title = 'Plans · Kinship'; }
+    else if (r === 'favorites') { html = viewFavorites(); title = 'Favorites · Kinship'; }
     else if (r.indexOf('lens-') === 0 && LENS[r.slice(5).split(/[\/?]/)[0]]) {
       var lid = r.slice(5).split(/[\/?]/)[0], l = LENS[lid], custom = (window.MN_LENS_VIEWS || {})[lid];
       if (custom) { var v = custom(r.slice(5 + lid.length).replace(/^\//, ''), l); html = v.html; title = v.title; }
-      else { html = viewLens(l); title = l.name + ' · Meeting Needs'; }
+      else { html = viewLens(l); title = l.name + ' · Kinship'; }
     }
     else html = viewHome();
     app.innerHTML = sky + '<div class="wrap">' + html + '</div>';
+    if (menuPicked) {
+      menuPicked = false;
+      var dd = app.querySelector('.navdrop');
+      if (dd) { dd.classList.add('is-closed'); dd.addEventListener('mouseleave', function () { dd.classList.remove('is-closed'); }, { once: true }); }
+    }
     document.title = title;
     window.scrollTo(0, 0);
     if (r) { var h = app.querySelector('h1'); if (h) h.focus({ preventScroll: true }); }
@@ -497,7 +535,7 @@
         if (!p || typeof p !== 'object') throw new Error('empty');
         profile = normalize(p); save(true); route(); toast('Profile restored');
       } catch (err) {
-        toast('That text isn’t a Meeting Needs backup. Copy it again and paste the whole thing.');
+        toast('That text isn’t a Kinship backup. Copy it again and paste the whole thing.');
       }
     }
   });
