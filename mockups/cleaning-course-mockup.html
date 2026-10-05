@@ -1,0 +1,1474 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kinship · Cleaning (course mock-up)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500..800&family=Instrument+Sans:wght@400..700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Mock-up only. Mirrors Kinship's style.css + the Air mock-up so it can move into clean.css later (prefix cl-). */
+:root {
+  --bg:#F3F4F1; --ink:#1F2428; --ink-2:#363D43; --muted:#58616A; --accent:#3D5A73;
+  --glass:rgba(255,255,255,.5); --glass-strong:rgba(255,255,255,.7); --glass-faint:rgba(255,255,255,.3);
+  --glass-edge:rgba(255,255,255,.85); --chip:rgba(255,255,255,.7); --line:rgba(31,36,40,.16);
+  --soft-line:rgba(31,36,40,.08); --focus:#2F6E9E; --lens:#3E7B3A;
+  --f-head:'Manrope','Instrument Sans',system-ui,sans-serif;
+  --f-body:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  /* Cleaning lens theme: whites, darkest (1) to lightest (5): slate, pewter, silver, pearl, snow.
+     bg: page wash · mid: filled · edge: soft border · dot: the unit's white · on: text on dot */
+  --c1-bg:#ECEFF1; --c1-mid:#DCE2E6; --c1-edge:#C6CFD5; --c1-dot:#46535D; --c1-on:#fff;
+  --c2-bg:#EFF1F2; --c2-mid:#E1E6E9; --c2-edge:#CDD4D9; --c2-dot:#6B7882; --c2-on:#fff;
+  --c3-bg:#F2F4F4; --c3-mid:#E6EAEC; --c3-edge:#D4DADD; --c3-dot:#99A4AB; --c3-on:#1F2428;
+  --c4-bg:#F5F6F6; --c4-mid:#ECEFF0; --c4-edge:#DCE1E3; --c4-dot:#C3CBD0; --c4-on:#1F2428;
+  --c5-bg:#F9FAFA; --c5-mid:#F2F4F5; --c5-edge:#E3E7E9; --c5-dot:#E4E9EC; --c5-on:#1F2428;
+  --k-bg:var(--glass-faint); --k-mid:var(--chip); --k-edge:var(--line); --k-dot:var(--muted); --k-on:#fff;
+}
+.k1{--k-bg:var(--c1-bg);--k-mid:var(--c1-mid);--k-edge:var(--c1-edge);--k-dot:var(--c1-dot);--k-on:var(--c1-on)}
+.k2{--k-bg:var(--c2-bg);--k-mid:var(--c2-mid);--k-edge:var(--c2-edge);--k-dot:var(--c2-dot);--k-on:var(--c2-on)}
+.k3{--k-bg:var(--c3-bg);--k-mid:var(--c3-mid);--k-edge:var(--c3-edge);--k-dot:var(--c3-dot);--k-on:var(--c3-on)}
+.k4{--k-bg:var(--c4-bg);--k-mid:var(--c4-mid);--k-edge:var(--c4-edge);--k-dot:var(--c4-dot);--k-on:var(--c4-on)}
+.k5{--k-bg:var(--c5-bg);--k-mid:var(--c5-mid);--k-edge:var(--c5-edge);--k-dot:var(--c5-dot);--k-on:var(--c5-on)}
+/* The lightest whites need an edge so the dot and band still read on white */
+.k4 .vt-dot,.k5 .vt-dot,.k4 .band,.k5 .band{outline:1.5px solid #AEB8BF;outline-offset:-1.5px}
+.k5 .fix,.k4 .fix{border-color:#AEB8BF}
+.k5 .add.on,.k4 .add.on{border-color:#AEB8BF}
+
+*{box-sizing:border-box}
+html{overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;overflow-x:clip}
+h1,h2,h3{font-family:var(--f-head);margin:0;text-wrap:balance}
+p{margin:0}
+a{color:var(--accent)}
+code{font-family:var(--f-mono);font-size:.9em}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:8px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+.sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.sky span{position:absolute;border-radius:50%;filter:blur(12px)}
+.sky .a{left:-12vw;top:-18vh;width:60vw;height:60vw;max-width:780px;max-height:780px;background:radial-gradient(circle,rgba(255,255,255,.95),transparent 68%)}
+.sky .b{right:-14vw;top:8vh;width:58vw;height:58vw;max-width:780px;max-height:780px;background:radial-gradient(circle,rgba(178,210,226,.32),transparent 68%)}
+.sky .c{left:25vw;bottom:-30vh;width:64vw;height:64vw;max-width:860px;max-height:860px;background:radial-gradient(circle,rgba(214,226,214,.36),transparent 68%)}
+
+.wrap{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:20px clamp(16px,3vw,40px) 72px;display:flex;flex-direction:column;gap:24px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px;border-radius:999px;background:var(--glass);border:1px solid var(--glass-edge)}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink)}
+.brand b{font-family:var(--f-head);font-weight:800;font-size:20px;letter-spacing:-.02em}
+.mock{font-family:var(--f-mono);font-size:12px;padding:4px 10px;border-radius:999px;border:1.5px dashed var(--line);color:var(--muted)}
+
+.layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:28px;align-items:start}
+.main{min-width:0;display:flex;flex-direction:column;gap:20px}
+
+/* Sidebar tree */
+.nav{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;scrollbar-width:thin;padding:14px;border-radius:26px;background:rgba(255,255,255,.72);border:1px solid var(--glass-edge)}
+.nav-head{display:flex;flex-direction:column;padding:2px 6px 8px}
+.nav-head b{font-family:var(--f-head);font-size:21px;font-weight:800;letter-spacing:-.02em}
+.nav-over{display:flex;align-items:center;justify-content:space-between;min-height:36px;padding:0 8px;margin-bottom:6px;border-radius:12px;color:var(--ink);text-decoration:none;font-weight:600;font-size:15px}
+.nav-over:hover,.nav-over.cur{background:var(--chip)}
+.nav-over .cnt{font-family:var(--f-mono);font-size:12px;font-weight:400;padding:1px 8px;border-radius:999px;background:var(--c2-dot);color:#fff}
+.vt{list-style:none;margin:0;padding:0;position:relative}
+.vt::before{content:'';position:absolute;left:21px;top:22px;bottom:22px;width:2px;border-radius:2px;background:linear-gradient(var(--c1-dot),var(--c3-dot),#C9D1D6)}
+.vt-unit{position:relative;padding:3px 0}
+.vt-head{display:flex;align-items:center;gap:12px;min-height:46px;padding:4px 8px;border-radius:16px;color:var(--ink);text-decoration:none}
+.vt-head:hover{background:var(--k-bg)}
+.vt-unit.cur>.vt-head{background:var(--k-mid)}
+.vt-dot{position:relative;z-index:1;width:28px;height:28px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--k-dot);color:var(--k-on);box-shadow:0 0 0 4px var(--bg);font-family:var(--f-mono);font-size:13px}
+.vt-head b{display:block;font-family:var(--f-head);font-size:17px;font-weight:800;line-height:1.1}
+.vt-head small{display:block;font-size:13px;color:var(--muted)}
+.vt-subs{list-style:none;margin:2px 0 4px;padding:0 0 0 36px;display:none;flex-direction:column}
+.vt-unit.cur .vt-subs{display:flex}
+.vt-subs a{position:relative;display:flex;align-items:center;min-height:30px;padding:3px 8px;border-radius:10px;color:var(--ink-2);text-decoration:none;font-size:14px;line-height:1.25}
+.vt-subs a::before{content:'';position:absolute;left:-19px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:var(--k-dot)}
+.vt-subs a:hover{background:var(--k-bg);color:var(--ink)}
+.vt-subs a.tool-link{font-weight:600}
+.nav-pair{margin:8px 6px 0;padding:10px 10px 4px;border-top:1px solid var(--soft-line);font-size:12.5px;color:var(--muted)}
+.nav-pair b{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;display:block;margin-bottom:2px}
+
+/* Situation panel (reads and writes the Kinship profile) */
+.sit{border-radius:22px;background:var(--glass-strong);border:1px solid var(--soft-line)}
+.sit>summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:14px 18px}
+.sit>summary::-webkit-details-marker{display:none}
+.sit-sum{font-size:14.5px;color:var(--ink-2)}
+.sit-chips{display:flex;flex-wrap:wrap;gap:6px}
+.sit-chips span{font-size:13px;padding:3px 10px;border-radius:999px;background:#fff;border:1px solid var(--soft-line)}
+.sit-edit{margin-left:auto;font-size:14px;font-weight:600;color:var(--accent)}
+.sit-body{padding:0 18px 16px;display:flex;flex-direction:column;gap:12px}
+.qgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.qgrid label.f select{width:100%}
+.sit-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:13.5px;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--soft-line);background:#fff;color:var(--ink);font:inherit;font-size:14.5px;font-weight:600;cursor:pointer;text-decoration:none}
+.btn.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.new-q{font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+
+/* Overview */
+.hero{display:flex;flex-direction:column;gap:12px}
+.lens-pill{align-self:flex-start;padding:6px 12px;border-radius:999px;background:var(--lens);color:#fff;font-family:var(--f-mono);font-size:12px;line-height:1}
+.hero h1{font-weight:800;font-size:clamp(46px,6.4vw,84px);line-height:.95;letter-spacing:-.04em}
+.lede{font-size:clamp(17px,1.6vw,20px);color:var(--ink-2);max-width:66ch}
+.ucards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.ucard{display:flex;flex-direction:column;gap:8px;height:100%;padding:0 0 16px;border-radius:24px;background:var(--k-bg);border:1px solid var(--k-edge);text-decoration:none;color:var(--ink);overflow:hidden}
+.ucard>*{margin-inline:18px}
+.ucard .band{margin:0;height:10px;background:var(--k-dot)}
+.ucard:hover{background:var(--k-mid)}
+.ucard .n{font-family:var(--f-mono);font-size:13px;color:var(--muted);margin-top:6px}
+.ucard b{font-family:var(--f-head);font-weight:800;font-size:clamp(23px,2.3vw,28px);line-height:1;letter-spacing:-.03em}
+.ucard span{font-size:15px;color:var(--ink-2)}
+.ucard .kindtag{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.ucard ol{margin:2px 18px 0;padding-left:18px;font-size:13.5px;color:var(--muted);display:flex;flex-direction:column;gap:1px}
+.ucard .modes{display:flex;flex-wrap:wrap;gap:4px;margin-top:auto;padding-top:6px}
+
+.funfact,.review{display:flex;flex-direction:column;gap:8px;padding:16px 20px;border-radius:20px;font-size:14.5px;color:var(--ink-2)}
+.funfact{background:var(--glass-strong);border:1px solid var(--soft-line)}
+.review{border:1.5px dashed var(--line)}
+.review ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+
+/* The course's main idea: two foundations, two kinds of exposure */
+.map{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.map-col{display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:24px;background:rgba(255,255,255,.55);border:1px solid var(--soft-line)}
+.map-col>.eyebrow{padding:0 4px}
+.way{display:flex;flex-direction:column;gap:6px;padding:14px 16px;border-radius:18px;background:var(--k-bg);border:1px solid var(--k-edge);border-left:8px solid var(--k-dot);text-decoration:none;color:var(--ink)}
+.way:hover{background:var(--k-mid)}
+.way b.h{font-family:var(--f-head);font-size:19px;font-weight:800;letter-spacing:-.02em}
+.way p{font-size:14.5px;color:var(--ink-2)}
+.map-note{grid-column:1/-1;font-size:14px;color:var(--muted);padding:0 4px}
+
+/* Unit page */
+.page[hidden]{display:none}
+.unit-hero{display:flex;flex-direction:column;gap:6px;padding:clamp(22px,3vw,32px);border-radius:28px;background:var(--k-bg);border:1px solid var(--k-edge);border-top:10px solid var(--k-dot)}
+.unit-hero h1{font-weight:800;font-size:clamp(42px,5.4vw,70px);line-height:.95;letter-spacing:-.04em}
+.unit-sub{font-family:var(--f-head);font-size:19px;font-weight:600;color:var(--ink-2)}
+.unit-hero .lede{font-size:16.5px;margin-top:4px}
+.unit-mode{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:8px;font-size:14.5px;color:var(--ink-2)}
+.jumps{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.jumps a{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 14px;border-radius:999px;background:var(--glass-strong);color:var(--ink);text-decoration:none;font-size:14px;font-weight:600}
+.jumps a span{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-weight:400}
+.jumps a:hover{background:var(--k-mid)}
+
+.sub{display:flex;flex-direction:column;gap:12px;padding:22px 24px;border-radius:24px;background:rgba(255,255,255,.74);border:1px solid var(--k-edge);scroll-margin-top:16px}
+.sub-top{display:flex;align-items:baseline;gap:10px}
+.sub-n{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);flex:none}
+.sub h2{font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+.sub>p{font-size:15.5px;max-width:78ch}
+.sub ul,.sub ol{margin:0;padding-left:20px;font-size:15px;color:var(--ink-2);display:flex;flex-direction:column;gap:4px;max-width:80ch}
+.home,.ca,.danger,.together,.kin{font-size:14.5px;padding:10px 12px;border-radius:14px}
+.home{background:var(--k-bg);color:var(--ink-2)}
+.home::before{content:'At home · '}
+.ca{background:#FFF7E8;color:var(--ink-2);border-left:4px solid #E3B25B}
+.ca::before{content:'In California · '}
+.danger{background:#FBEDEA;color:var(--ink-2);border-left:4px solid #C9806F}
+.danger::before{content:'Take care · '}
+.together{background:#F3EEF8;color:var(--ink-2);border-left:4px solid #B69AD3}
+.together::before{content:'Together · '}
+.kin{background:#EEF4EA;color:var(--ink-2);border-left:4px solid #8DB07F}
+.kin::before{content:'Animals, plants & soil · '}
+.home::before,.ca::before,.danger::before,.together::before,.kin::before{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.links{font-size:13px;color:var(--muted)}
+.links::before{content:'Links to → ';font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.src{font-size:12.5px;color:var(--muted)}
+.src::before{content:'Sources · ';font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}
+
+/* Cards in a row (signals, ranges, who it reaches) */
+.does{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.does div{padding:12px 14px;border-radius:16px;background:var(--k-bg);border:1px solid var(--k-edge)}
+.does b{display:flex;align-items:center;gap:6px;font-family:var(--f-head);font-size:15.5px;margin-bottom:2px}
+.does p{font-size:14px;color:var(--ink-2)}
+.does i{font-style:normal;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:1px 7px;border-radius:999px;background:#fff;color:var(--muted)}
+
+/* Air flow diagram */
+.flow{display:block;width:100%;height:auto;max-width:720px;border-radius:18px;background:#fff;border:1px solid var(--k-edge)}
+
+/* Mode badges */
+.mode{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;padding:3px 10px;border-radius:999px;line-height:1.3;white-space:nowrap}
+.mode::before{content:'';width:8px;height:8px;border-radius:2px;background:currentColor;flex:none}
+.m-now{background:#F8EBC4;color:#6B4A00}
+.m-now::before{border-radius:50%}
+.m-once{background:#E3ECF6;color:#2E557A}
+.m-habit{background:#E6F1E3;color:#2E6B35}
+.m-habit::before{border-radius:50% 0}
+.m-together{background:#EFE7F6;color:#5B3D86}
+.m-together::before{transform:rotate(45deg)}
+.cost{font-family:var(--f-mono);font-size:11px;padding:3px 9px;border-radius:999px;background:#fff;border:1px solid var(--soft-line);color:var(--ink-2)}
+
+/* How to fix: closes every sub-unit */
+.fix{display:flex;flex-direction:column;gap:10px;padding:16px 18px 18px;border-radius:20px;background:#fff;border:2px solid var(--k-dot);position:relative}
+.fix-top{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.fix-top b.t{font-family:var(--f-head);font-size:19px;font-weight:800;letter-spacing:-.01em;margin-right:4px}
+.fix-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.fix-steps li{display:flex;flex-direction:column;gap:4px;padding:10px 12px;border-radius:14px;background:var(--k-bg);font-size:14px;color:var(--ink-2)}
+.fix-steps li small{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.fix-steps li:nth-child(1){background:var(--k-mid)}
+.fix-foot{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:13.5px;color:var(--muted)}
+.add{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 14px;border-radius:999px;border:1.5px solid var(--k-dot);background:#fff;color:var(--ink);font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.add::before{content:'+';font-family:var(--f-mono);font-size:16px;line-height:1}
+.add.on{background:var(--k-dot);color:var(--k-on)}
+.add.on::before{content:'✓'}
+
+/* Accordions */
+.accs{display:flex;flex-direction:column;gap:8px}
+.acc{border-radius:16px;background:var(--k-bg);border:1px solid var(--k-edge)}
+.acc>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;min-height:48px;padding:8px 14px;font-weight:600;font-size:15.5px}
+.acc>summary::-webkit-details-marker{display:none}
+.acc>summary::after{content:'+';margin-left:auto;font-family:var(--f-mono);font-size:18px;color:var(--muted);flex:none}
+.acc[open]>summary::after{content:'–'}
+.acc>summary:hover{background:var(--k-mid);border-radius:16px}
+.acc .who{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:#fff;color:var(--ink-2);font-weight:400;flex:none}
+.acc .for-you{display:none;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:var(--k-dot);color:var(--k-on);font-weight:400;flex:none}
+.acc.match{box-shadow:0 0 0 2px var(--k-dot)}
+.acc.match .for-you{display:inline-block}
+.acc .in{padding:2px 16px 14px;display:flex;flex-direction:column;gap:8px;font-size:15px;color:var(--ink-2)}
+
+/* Tables, tools */
+.tbl-wrap{overflow-x:auto;border-radius:18px;border:1px solid var(--k-edge);background:#fff}
+table{border-collapse:collapse;width:100%;min-width:600px;font-size:14px}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--soft-line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--k-bg)}
+td:first-child{font-weight:600}
+td.y{color:#2E6B35}td.p{color:#8A6418}td.n{color:#9A4A3A}
+.legend{font-size:12.5px;color:var(--muted)}
+.tool{display:flex;flex-direction:column;gap:12px;padding:18px 20px;border-radius:22px;background:var(--k-mid);border:1px solid var(--k-edge)}
+.tool b.t{font-family:var(--f-head);font-size:21px;font-weight:800}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);font-family:var(--f-mono);min-width:0;max-width:100%}
+select,input[type=number]{font:inherit;font-family:var(--f-body);font-size:15.5px;min-height:40px;padding:0 12px;border-radius:12px;border:1px solid var(--soft-line);background:#fff;color:var(--ink);max-width:100%}
+input[type=number]{width:110px}
+.picks{display:flex;flex-wrap:wrap;gap:8px}
+.pick{font:inherit;font-size:14.5px;min-height:40px;padding:0 14px;border-radius:999px;border:1.5px solid var(--k-edge);background:#fff;color:var(--ink);cursor:pointer;text-align:left}
+.pick:hover{border-color:var(--k-dot)}
+.pick[aria-pressed=true]{background:var(--k-dot);color:var(--k-on);border-color:var(--k-dot)}
+.out{padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.88);font-size:15px;display:flex;flex-direction:column;gap:10px}
+.out strong{font-family:var(--f-head);font-size:24px;font-weight:800;letter-spacing:-.02em;display:block;line-height:1.1}
+.out small{display:block;color:var(--muted);font-size:13px}
+.out ol,.out ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.rn{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border-radius:14px;background:var(--k-bg);border-left:6px solid var(--k-dot)}
+.rn.urgent{background:#FBEDEA;border-left-color:#B8372E}
+.rn b{font-family:var(--f-head);font-size:17px}
+.rn span{font-size:14px;color:var(--ink-2)}
+.rn .row{gap:8px;margin-top:4px}
+
+/* My list (same tracker shape as Toxins) */
+.lst{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.lst li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 14px;border-radius:18px;background:rgba(255,255,255,.8);border:1px solid var(--soft-line);border-left:8px solid var(--k-dot)}
+.lst li.done{opacity:.62}
+.lst li.done .lt b{text-decoration:line-through;text-decoration-thickness:1.5px}
+.lst .num{font-family:var(--f-mono);font-size:13px;color:var(--muted);width:26px;text-align:center}
+.lt b{display:block;font-family:var(--f-head);font-size:16.5px}
+.lt span{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.lt small{font-size:13px;color:var(--muted)}
+.st{font:inherit;font-family:var(--f-mono);font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid var(--soft-line);background:#fff;cursor:pointer;min-width:84px}
+.st[data-s=doing]{background:#FBF0D9;color:#7A5714}
+.st[data-s=done]{background:#E3F1E1;color:#2E6B35}
+.lst-ctl{display:flex;flex-direction:column;gap:4px}
+.lst-ctl button{font:inherit;font-size:12px;line-height:1;padding:3px 7px;border-radius:8px;border:1px solid var(--soft-line);background:#fff;cursor:pointer;color:var(--muted)}
+.empty{padding:22px;border-radius:20px;border:1.5px dashed var(--line);text-align:center;color:var(--muted);font-size:15px}
+.progress{height:12px;border-radius:999px;background:rgba(255,255,255,.7);border:1px solid var(--soft-line);overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--c1-dot),var(--c3-dot));transition:width .3s}
+
+.pager{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.pager a{display:inline-flex;flex-direction:column;gap:2px;padding:12px 18px;border-radius:18px;background:var(--glass-strong);border:1px solid var(--soft-line);color:var(--ink);text-decoration:none;min-width:200px}
+.pager a small{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.pager a b{font-family:var(--f-head);font-size:18px}
+.pager a.next{margin-left:auto;text-align:right}
+.pager a:hover{background:#fff}
+
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);opacity:0;transition:.25s;z-index:5;padding:10px 18px;border-radius:999px;background:var(--ink);color:#fff;font-size:14.5px;pointer-events:none}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr}
+  .nav{position:static;max-height:none}
+  .map{grid-template-columns:1fr}
+  .pager a{min-width:0;flex:1}
+  .sub{padding:18px 16px}
+  .band-rh{font-size:12px}
+}
+
+/* The gentle ladder: the course's main idea */
+.ladder{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;align-items:end}
+.rung{display:flex;flex-direction:column;gap:6px;padding:14px 14px 16px;border-radius:20px;background:#fff;border:1px solid var(--soft-line);text-decoration:none;color:var(--ink);position:relative}
+.rung:hover{box-shadow:0 0 0 2px var(--r)}
+.rung .rn-n{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.rung b{font-family:var(--f-head);font-size:20px;font-weight:800;letter-spacing:-.02em;line-height:1.05}
+.rung p{font-size:13.5px;color:var(--ink-2)}
+.rung::before{content:'';display:block;height:8px;border-radius:999px;background:var(--r);margin-bottom:4px}
+.rung.r1{--r:#9DC3D9;min-height:150px}.rung.r2{--r:#B9D3A8;min-height:175px}.rung.r3{--r:#E6D9B8;min-height:200px}.rung.r4{--r:#D9C3E4;min-height:225px}
+.rung.r5{--r:#C9806F;min-height:250px;background:#FBEDEA;border-color:#EBC6BC}
+.ladder-note{font-size:14px;color:var(--muted);padding:0 4px}
+.rbadge{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;padding:3px 10px;border-radius:999px;line-height:1.3;white-space:nowrap;background:#fff;border:1px solid var(--soft-line);color:var(--ink-2)}
+.rbadge::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--r,#9DC3D9);flex:none}
+.rbadge.r1{--r:#6FA5C4}.rbadge.r2{--r:#8DB07F}.rbadge.r3{--r:#C9AE6A}.rbadge.r4{--r:#A983BF}.rbadge.r5{--r:#C9806F;background:#FBEDEA}
+
+/* Beyond the ladder: hands off to Toxins */
+.beyond{display:flex;flex-direction:column;gap:10px;padding:18px 20px;border-radius:22px;background:#FBEDEA;border:1px solid #EBC6BC;border-left:8px solid #B8372E}
+.beyond b.t{font-family:var(--f-head);font-size:20px;font-weight:800}
+.beyond ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:14.5px;color:var(--ink-2)}
+.beyond a{color:#8E2B23;font-weight:600}
+
+/* Creator's consideration (mirrors .opinion in style.css) */
+.opinion{display:flex;flex-direction:column;gap:8px;padding:16px 20px;border-radius:20px;background:#FCEFF4;border:1px solid #F2CFDF;border-left:6px solid #C2477F;color:#3B2430;font-size:15.5px}
+.opinion-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-family:var(--f-head);font-weight:800;font-size:17px;color:#A3346A}
+.opinion-dot{width:12px;height:12px;border-radius:50%;background:#C2477F}
+.opinion .src{color:#7A5A68}
+
+@media (max-width:900px){
+  .ladder{grid-template-columns:1fr;align-items:stretch}
+  .rung.r1,.rung.r2,.rung.r3,.rung.r4,.rung.r5{min-height:0}
+}
+</style>
+</head>
+<body>
+<div class="sky" aria-hidden="true"><span class="a"></span><span class="b"></span><span class="c"></span></div>
+<div class="wrap">
+
+<header class="top">
+  <a class="brand" href="#"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="#C2477F" d="M12 21s-7.5-4.6-9.3-9.6C1.5 8 3.6 4.5 7 4.5c2 0 3.4 1.1 5 3 1.6-1.9 3-3 5-3 3.4 0 5.5 3.5 4.3 6.9C19.5 16.4 12 21 12 21z"/></svg><b>Kinship</b></a>
+  <span class="mock">Mock-up v1 · Cleaning lens</span>
+</header>
+
+<div class="layout">
+<nav class="nav" aria-label="Cleaning course">
+  <div class="nav-head"><span class="eyebrow">Tier 3 · Nurture</span><b>Cleaning</b></div>
+  <a class="nav-over" href="#" data-nav="">Overview</a>
+  <a class="nav-over" href="#now" data-nav="now">What needs cleaning?</a>
+  <a class="nav-over" href="#list" data-nav="list">My list <span class="cnt" id="navCount">0</span></a>
+  <ol class="vt">
+    <li class="vt-unit k1" data-unit="u1"><a class="vt-head" href="#u1"><span class="vt-dot">1</span><span><b>Water</b><small>Start here, most days end here</small></span></a>
+      <ul class="vt-subs"><li><a href="#u1/s1">Cleaning lifts, it doesn’t kill</a></li><li><a href="#u1/s2">Cloths that grab</a></li><li><a href="#u1/s3">Warm water and waiting</a></li><li><a href="#u1/s4">Top to bottom, clean to dirty</a></li><li><a href="#u1/s5">Dry is clean</a></li><li><a href="#u1/s6">Little hands, real cloths</a></li></ul></li>
+    <li class="vt-unit k2" data-unit="u2"><a class="vt-head" href="#u2"><span class="vt-dot">2</span><span><b>The gentle shelf</b><small>When water needs help</small></span></a>
+      <ul class="vt-subs"><li><a href="#u2/s1">Soap for grease</a></li><li><a href="#u2/s2">Baking soda to scrub</a></li><li><a href="#u2/s3">Vinegar for scale</a></li><li><a href="#u2/s4">Hydrogen peroxide to disinfect</a></li><li><a href="#u2/s5">Pairs that never meet</a></li><li><a href="#u2/s6">Paws, beaks and little mouths</a></li></ul></li>
+    <li class="vt-unit k3" data-unit="u3"><a class="vt-head" href="#u3"><span class="vt-dot">3</span><span><b>Surfaces</b><small>Room by room</small></span></a>
+      <ul class="vt-subs"><li><a href="#u3/s1">Countertops</a></li><li><a href="#u3/s2">Boards, sinks and sponges</a></li><li><a href="#u3/s3">Stove, oven and fridge</a></li><li><a href="#u3/s4">Bathroom</a></li><li><a href="#u3/s5">Floors and glass</a></li><li><a href="#u3/s6">Visitors on the counter</a></li></ul></li>
+    <li class="vt-unit k4" data-unit="u4"><a class="vt-head" href="#u4"><span class="vt-dot">4</span><span><b>Stains</b><small>Which stain is which</small></span></a>
+      <ul class="vt-subs"><li><a href="#u4/s1">Soon, blot, cold</a></li><li><a href="#u4/s2">Protein stains</a></li><li><a href="#u4/s3">Tannins and dyes</a></li><li><a href="#u4/s4">Grease and oil</a></li><li><a href="#u4/s5">Companion animal accidents</a></li><li><a href="#u4/s6">Rust, ink and wax</a></li><li><a class="tool-link" href="#u4/tool">Tool: Stain finder</a></li></ul></li>
+    <li class="vt-unit k5" data-unit="u5"><a class="vt-head" href="#u5"><span class="vt-dot">5</span><span><b>Laundry</b><small>Gentler on fabric and skin</small></span></a>
+      <ul class="vt-subs"><li><a href="#u5/s1">Less detergent, no fragrance</a></li><li><a href="#u5/s2">Cold most of the time</a></li><li><a href="#u5/s3">Sun and line drying</a></li><li><a href="#u5/s4">Softeners and swaps</a></li><li><a href="#u5/s5">Microfibers in the wash</a></li><li><a href="#u5/s6">Without a machine</a></li></ul></li>
+  </ol>
+  <div class="nav-pair"><b>The gentle ladder</b>Water first. Climb one rung only when the rung below didn’t do it. Past vinegar and peroxide, Toxins takes over.</div>
+</nav>
+
+<main class="main">
+
+<!-- Situation: filled from the Profile when answered; asked here only when it isn't. Every section stays available either way. -->
+<details class="sit" id="sit">
+  <summary><span class="eyebrow">Your situation</span><span class="sit-sum" id="sitSum"></span><span class="sit-chips" id="sitChips"></span><span class="sit-edit">Change</span></summary>
+  <div class="sit-body">
+    <div class="qgrid">
+      <label class="f">Kind of place<select data-q="home"></select></label>
+      <label class="f">How much can you change the place?<select data-q="shape"></select></label>
+      <label class="f">Who lives with you?<select data-q="with"></select></label>
+      <label class="f"><span>Your kitchen counters <span class="new-q">new</span></span><select data-q="counter"></select></label>
+      <label class="f"><span>Where you do laundry <span class="new-q">new</span></span><select data-q="laundry"></select></label>
+    </div>
+    <div class="sit-foot"><span>Saved to your Profile in this browser, so every lens can use it. Sections for you open and get a “For you” tag; everything else stays one tap away.</span><a class="btn" href="../index.html#profile">Open Profile</a></div>
+  </div>
+</details>
+
+<!-- ============ OVERVIEW ============ -->
+<section class="page" data-page="">
+  <div class="main">
+  <div class="hero">
+    <span class="lens-pill">TIER 3 · NURTURE</span>
+    <h1>Cleaning</h1>
+    <p class="lede">A clean home is one where dirt, grease and crumbs leave, and nothing harsh stays behind on the counter, in the air or on a cat’s paws. Most of that is done with water and a good cloth. The rest of the course is a short ladder of gentle helpers, climbed one rung at a time, and a clear line where Toxins takes over.</p>
+    <div class="row"><a class="btn dark" href="#now">What needs cleaning?</a><a class="btn" href="#u4/tool">Stain finder</a></div>
+  </div>
+
+  <div class="tool" style="background:rgba(255,255,255,.6)">
+    <span class="eyebrow">The gentle ladder · start at the bottom</span>
+    <ol class="ladder">
+      <li><a class="rung r1" href="#u1"><span class="rn-n">Rung 1</span><b>Water</b><p>Warm water, a cloth that grabs, and a little waiting. Lifts most everyday dirt and most germs with it.</p></a></li>
+      <li><a class="rung r2" href="#u2/s1"><span class="rn-n">Rung 2</span><b>Soap</b><p>A drop of castile or dish soap when there’s grease or skin oil.</p></a></li>
+      <li><a class="rung r3" href="#u2/s2"><span class="rn-n">Rung 3</span><b>Baking soda</b><p>A soft scrub for stuck-on food, and a sponge for smells.</p></a></li>
+      <li><a class="rung r4" href="#u2/s3"><span class="rn-n">Rung 4</span><b>Vinegar · peroxide</b><p>Vinegar for mineral scale and soap scum. 3% hydrogen peroxide when you want to disinfect. Never in one bottle.</p></a></li>
+      <li><a class="rung r5" href="#beyond"><span class="rn-n">Beyond</span><b>Toxins</b><p>Big mold, sewage, droppings, ash, lead dust, a stomach bug. Those need a different plan.</p></a></li>
+    </ol>
+    <p class="ladder-note">Every rung is safe around kids and companion animals when it’s used as described and wiped or dried after. Each “How to fix” shows which rung it uses.</p>
+  </div>
+
+  <ol class="ucards">
+    <li><a class="ucard k1" href="#u1"><i class="band"></i><span class="n">01 · <span class="kindtag">Foundation</span></span><b>Water</b><span>Start here. Most days end here.</span><ol><li>Cleaning lifts, it doesn’t kill</li><li>Cloths that grab</li><li>Warm water and waiting</li><li>Top to bottom, clean to dirty</li><li>Dry is clean</li><li>Little hands, real cloths</li></ol><span class="modes"><span class="mode m-habit">Habit</span><span class="mode m-together">Together</span></span></a></li>
+    <li><a class="ucard k2" href="#u2"><i class="band"></i><span class="n">02 · <span class="kindtag">Foundation</span></span><b>The gentle shelf</b><span>Four helpers, what each does, and what never mixes.</span><ol><li>Soap for grease</li><li>Baking soda to scrub</li><li>Vinegar for scale</li><li>Hydrogen peroxide to disinfect</li><li>Pairs that never meet</li><li>Paws, beaks and little mouths</li></ol><span class="modes"><span class="mode m-once">Set up once</span><span class="mode m-habit">Habit</span></span></a></li>
+    <li><a class="ucard k3" href="#u3"><i class="band"></i><span class="n">03 · <span class="kindtag">Practice</span></span><b>Surfaces</b><span>The ladder, room by room.</span><ol><li>Countertops</li><li>Boards, sinks and sponges</li><li>Stove, oven and fridge</li><li>Bathroom</li><li>Floors and glass</li><li>Visitors on the counter</li></ol><span class="modes"><span class="mode m-now">Right now</span><span class="mode m-habit">Habit</span></span></a></li>
+    <li><a class="ucard k4" href="#u4"><i class="band"></i><span class="n">04 · <span class="kindtag">Practice</span></span><b>Stains</b><span>Name the stain, and the right rung lifts it.</span><ol><li>Soon, blot, cold</li><li>Protein stains</li><li>Tannins and dyes</li><li>Grease and oil</li><li>Companion animal accidents</li><li>Rust, ink and wax</li></ol><span class="modes"><span class="mode m-now">Right now</span></span></a></li>
+    <li><a class="ucard k5" href="#u5"><i class="band"></i><span class="n">05 · <span class="kindtag">Practice</span></span><b>Laundry</b><span>Gentler on fabric, skin, water and the bill.</span><ol><li>Less detergent, no fragrance</li><li>Cold most of the time</li><li>Sun and line drying</li><li>Softeners and swaps</li><li>Microfibers in the wash</li><li>Without a machine</li></ol><span class="modes"><span class="mode m-habit">Habit</span><span class="mode m-once">Set up once</span></span></a></li>
+  </ol>
+
+  <div class="beyond" id="beyond-anchor">
+    <b class="t" id="beyond">Beyond the ladder</b>
+    <p>Some messes carry something harmful that wiping can spread: spores, viruses, metals or fumes. Gentle cleaning isn’t the right tool for these, and that’s okay. Each one has its own page in Toxins with a plan that keeps everyone, animals too, out of harm’s way.</p>
+    <ul>
+      <li><b>Mold larger than about 10 square feet</b> (a 3 × 3 ft patch), mold that keeps coming back, or anything porous that stayed wet for two days → <a href="../index.html#lens-toxins/living/mold">Toxins → Mold in the house</a></li>
+      <li><b>Sewage backup or floodwater</b> inside → <a href="../index.html#lens-toxins/living/mold">Toxins → Mold in the house</a> and <a href="../index.html#lens-air/what/disasters">Air → Floods and the air</a></li>
+      <li><b>Mouse or rat droppings and nests.</b> Dry sweeping or vacuuming lifts hantavirus into the air → <a href="../index.html#lens-toxins/home/cleaners">Toxins → Cleaning products</a></li>
+      <li><b>A stomach bug in the house</b> (norovirus shrugs off most gentle cleaners) → <a href="../index.html#lens-toxins/home/cleaners">Toxins → Cleaning products</a></li>
+      <li><b>Ash and soot after a fire</b> → <a href="../index.html#lens-toxins/neighbors/fire">Toxins → After a fire</a></li>
+      <li><b>Peeling paint in a home built before 1978</b>, or dust from sanding it → <a href="../index.html#lens-air/dust/disturbed">Air → Asbestos and lead</a></li>
+      <li><b>A broken mercury thermometer or CFL bulb</b>, or an unknown chemical spill → <a href="../index.html#lens-toxins/home/cleaners">Toxins → Cleaning products</a> · California Poison Control, 1-800-222-1222</li>
+    </ul>
+  </div>
+
+  <div class="funfact"><span class="eyebrow">Fun fact</span>
+    <p>The baking-soda-and-vinegar volcano is a lovely science lesson and a weak cleaner: the fizz is the two cancelling each other out into carbon dioxide, a little sodium acetate and mostly water. Used one after the other, each does its own job. That small surprise is the whole spirit of this course: knowing what each thing does is what lets so little do so much.</p>
+    <p class="src">American Chemical Society, reactions of acids and bases (sodium bicarbonate and acetic acid). Laws mentioned are California’s; the chemistry is the same everywhere.</p>
+  </div>
+
+  <div class="review"><span class="eyebrow">For review · mock-up notes</span>
+    <ul>
+      <li><b>Shaped around one idea, the gentle ladder:</b> Water → Soap → Baking soda → Vinegar or peroxide → Beyond (Toxins). Every “How to fix” card carries a rung badge, so the ladder stays visible on every page.</li>
+      <li><b>Five units:</b> two foundations (Water, The gentle shelf), then three practice units that match the lens card’s topics (Surfaces, Stains, Laundry). Mold stays in Toxins and is linked, not repeated.</li>
+      <li><b>“Beyond the ladder”</b> hands off to Toxins for the harsh cases. Two gaps there: Toxins has no page yet for <b>droppings and nests</b> (hantavirus wet-cleaning) or <b>sickness cleanups</b> (norovirus, when bleach earns its place), and none for <b>mercury</b>. For now they link to Toxins → Cleaning products. Want a Toxins sub-unit like “Cleanups that need more” to hold them?</li>
+      <li><b>Tools:</b> “What needs cleaning?” (pick a surface and the mess, get the lowest rung that works, with notes for your counters, kids, cats and birds) and a <b>Stain finder</b> in unit 4. My list uses its own key, <code>meeting-needs.clean.v1</code>.</li>
+      <li><b>Two new profile questions:</b> <code>counter</code> (counter material; marble and limestone change the vinegar advice) and <code>laundry</code> (machine at home, shared, laundromat, by hand). Also reads <code>home</code>, <code>shape</code> and <code>with</code>.</li>
+      <li><b>Overlaps to settle:</b> Toxins 3.1 Cleaning products (the swap and bleach) and 3.2 Fragrance; Air 3.2 Vacuuming. Here the angle is how to clean; those pages keep the why. Household tools (tier 3) will hold label reading and never-mix pairs in depth; 2.5 here is the short version.</li>
+      <li>A Creator’s consideration sits at the end of unit 1 as a placeholder. Happy to move or drop it.</li>
+    </ul>
+  </div>
+  </div>
+</section>
+
+<!-- ============ WHAT NEEDS CLEANING? ============ -->
+<section class="page k1" data-page="now" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Your quickest read</span><h1>What needs cleaning?</h1><p class="unit-sub">The lowest rung that does the job</p>
+    <p class="lede">Pick the surface, then the mess. The answer starts at water and only climbs as far as it needs to, with notes for your counters and the people and animals you live with.</p>
+  </div>
+  <div class="tool">
+    <b class="t">1 · What are you cleaning?</b>
+    <div class="picks" id="wnSurf"></div>
+    <b class="t">2 · What’s on it?</b>
+    <div class="picks" id="wnMess"></div>
+    <div class="out" id="wnOut"></div>
+  </div>
+  <p class="legend">A starting point, not a rule. Each answer links to the section that explains it.</p>
+  </div>
+</section>
+
+<!-- ============ MY LIST ============ -->
+<section class="page k2" data-page="list" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Your list</span><h1>My list</h1><p class="unit-sub">One change at a time, in the order you choose</p>
+    <p class="lede">Every “How to fix” you add lands here. Move the ones that matter most, or cost least, to the top. Tap the status to move it along. There’s no deadline and no score.</p>
+    <div class="progress" aria-hidden="true"><i id="lstBar"></i></div>
+    <p class="legend" id="lstSum"></p>
+  </div>
+  <ol class="lst" id="lst"></ol>
+  <div class="empty" id="lstEmpty">Nothing here yet. Try <a href="#now">What needs cleaning?</a>, or add any “How to fix” as you read.</div>
+  <div class="row"><button class="btn" id="lstSort">Free ones first</button><button class="btn" id="lstClear">Clear done</button></div>
+  <p class="legend">Saved only in this browser (<code>meeting-needs.clean.v1</code>).</p>
+  </div>
+</section>
+
+<!-- ============ UNIT 1: WATER ============ -->
+<section class="page k1" data-page="u1" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 1 · Foundation · Rung 1</span><h1>Water</h1><p class="unit-sub">Start here. Most days end here.</p>
+    <p class="lede">Water is the best solvent on earth and the gentlest. With a cloth that grabs, a little warmth and a minute of waiting, it lifts crumbs, spills, sticky fingerprints and most germs off a counter and carries them away. Nothing stays behind to breathe, lick or touch.</p>
+    <div class="unit-mode"><span class="mode m-habit">Habit</span> A wipe after cooking and a dry cloth after. <span class="mode m-together">Together</span> The easiest cleaning to hand to small hands.</div>
+    <ul class="jumps"><li><a href="#u1/s1"><span>1.1</span>Lifts, not kills</a></li><li><a href="#u1/s2"><span>1.2</span>Cloths</a></li><li><a href="#u1/s3"><span>1.3</span>Warm &amp; waiting</a></li><li><a href="#u1/s4"><span>1.4</span>Order</a></li><li><a href="#u1/s5"><span>1.5</span>Dry is clean</a></li><li><a href="#u1/s6"><span>1.6</span>Little hands</a></li></ul>
+  </div>
+
+  <article class="sub" id="u1-s1">
+    <div class="sub-top"><span class="sub-n">1.1</span><h2>Cleaning lifts, it doesn’t kill</h2></div>
+    <p>Three words get mixed up on labels. <b>Cleaning</b> removes dirt and germs from a surface. <b>Sanitizing</b> lowers the number of germs left. <b>Disinfecting</b> kills nearly all of a listed set of germs, given enough time wet. Most of a home only ever needs the first one. Germs ride on grease and grime; lift those off and most of the germs leave with them.</p>
+    <div class="does">
+      <div><b>Clean <i>Every day</i></b><p>Water, a cloth, soap if it’s greasy. Counters, tables, floors, high chairs.</p></div>
+      <div><b>Sanitize <i>Sometimes</i></b><p>Hot water or peroxide on cutting boards, the sponge, baby bottles.</p></div>
+      <div><b>Disinfect <i>When it counts</i></b><p>Someone is sick, or there’s blood, vomit or a bathroom accident. Clean first, then disinfect.</p></div>
+    </div>
+    <p class="home">Disinfecting a dirty counter barely works: grime shields the germs underneath. Wiping with water first is what makes any later rung effective.</p>
+    <div class="fix" data-fix="u1s1" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="rbadge r1">Water</span><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>For a week, clean counters and tables with only warm water and a cloth. Notice what it doesn’t lift; that tells you where the next rung is needed.</li>
+        <li><small>Free</small>Save disinfecting for sickness, blood, vomit and bathroom accidents.</li>
+        <li><small>Free</small>Always clean before you disinfect.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="One week of water-only counter wiping">Add to my list</button></div>
+    </div>
+    <p class="src">CDC, <i>Cleaning and Disinfecting Your Home</i> (2024); US EPA, “What’s the difference between products that disinfect, sanitize and clean surfaces?”</p>
+  </article>
+
+  <article class="sub" id="u1-s2">
+    <div class="sub-top"><span class="sub-n">1.2</span><h2>Cloths that grab</h2></div>
+    <p>The cloth does as much work as whatever is on it. <b>Microfiber</b> is split into fibers far finer than a hair, so it scoops up grease and microbes that a cotton cloth pushes around. In a hospital trial, microfiber mops with plain water removed about 99% of bacteria from floors; conventional cotton mops removed about a third.</p>
+    <div class="does">
+      <div><b>Microfiber <i>Grabs most</i></b><p>Damp, not wet. Washed warm, no softener (it clogs the fibers). Lasts hundreds of washes.</p></div>
+      <div><b>Cotton or linen <i>No plastic</i></b><p>Old towels, T-shirts and flour-sack cloths. Fine for most jobs; rinse and wring more often.</p></div>
+      <div><b>Paper towels <i>For the yucky ones</i></b><p>Vomit, droppings, a companion’s accident: catch it, then compost or bin it.</p></div>
+    </div>
+    <p class="kin">Microfiber is plastic and sheds tiny fibers in the wash. Fewer, longer-lived cloths and a wash bag (5.5) meet both needs: clean counters and clean rivers.</p>
+    <div class="fix" data-fix="u1s2" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="rbadge r1">Water</span><span class="mode m-once">Set up once</span><span class="cost">Free → $</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Cut old towels or shirts into a stack of cloths. Keep them in a basket where everyone can reach.</li>
+        <li><small>Free</small>Colors by job: one color for the kitchen, one for the bathroom, so they never swap.</li>
+        <li><small>$ · once</small>A few microfiber cloths (about $10 for a pack) for counters, glass and dusting.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="A basket of cloths, one color per room">Add to my list</button></div>
+    </div>
+    <p class="src">University of Washington, DEOHS, <i>Microfiber Fact Sheet</i>; US EPA Region 9 and UC Davis Medical Center, <i>Using Microfiber Mops in Hospitals</i> (2002).</p>
+  </article>
+
+  <article class="sub" id="u1-s3">
+    <div class="sub-top"><span class="sub-n">1.3</span><h2>Warm water and waiting</h2></div>
+    <p>Four things clean anything: <b>water</b>, <b>warmth</b>, <b>time</b> and <b>a little rubbing</b> (cleaners call it Sinner’s circle). Turn one up and you need less of the others. Waiting is the most underrated: dried oatmeal, jam or a sticky toddler table loosens on its own under a warm wet cloth for five minutes, and then wipes off with no scrubbing at all.</p>
+    <ul>
+      <li>Warm, not boiling, for counters and floors: hot enough to soften grease, comfortable for hands.</li>
+      <li>Lay a hot wet cloth on dried spills and walk away. Come back after the kettle boils.</li>
+      <li>A pot with burnt-on food: a few cm of water, a simmer for 10 minutes, then a wooden spatula.</li>
+      <li>Steam (from a kettle or a steam mop) loosens grout grime and sanitizes without any product.</li>
+    </ul>
+    <p class="danger">Keep the kettle and steam mop out of reach of toddlers and away from paws. Steam burns fast; it’s a grown-up tool.</p>
+    <div class="fix" data-fix="u1s3" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="rbadge r1">Water</span><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Next stuck-on spill: a warm wet cloth on top for 5 minutes before wiping.</li>
+        <li><small>Free</small>Pots and pans: soak while you eat, so washing up is a rinse.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Soak first: warm cloth on spills, pans soak while we eat">Add to my list</button></div>
+    </div>
+    <p class="src">Sinner, H. (1959), the four factors of cleaning (chemistry, temperature, time, mechanical action), as taught in professional cleaning and food-safety training.</p>
+  </article>
+
+  <article class="sub" id="u1-s4">
+    <div class="sub-top"><span class="sub-n">1.4</span><h2>Top to bottom, clean to dirty</h2></div>
+    <p>Order saves work. Dust and crumbs fall, so start high and finish with the floor. Move from the cleanest spot to the dirtiest so a cloth never carries the toilet to the sink. And dry jobs (dusting, sweeping) come before wet ones, so dust doesn’t turn to mud.</p>
+    <ol>
+      <li>Shelves and high surfaces, with a damp cloth.</li>
+      <li>Counters and tables.</li>
+      <li>Sinks, then the stove.</li>
+      <li>Bathroom last: sink and mirror, then tub, then toilet.</li>
+      <li>Floors, from the far corner toward the door.</li>
+    </ol>
+    <p class="home">Fold a cloth in quarters and you get eight clean faces. Turn to a fresh one each time the face looks used, rather than rinsing in murky water.</p>
+    <div class="fix" data-fix="u1s4" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="rbadge r1">Water</span><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free</small>Fold cloths in quarters and turn to a fresh face as you go.</li>
+        <li><small>Free</small>Two buckets for the floor: one to wet the mop, one to wring into.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Top to bottom, clean to dirty; fold cloths in quarters">Add to my list</button></div>
+    </div>
+  </article>
+
+  <article class="sub" id="u1-s5">
+    <div class="sub-top"><span class="sub-n">1.5</span><h2>Dry is clean</h2></div>
+    <p>Bacteria and mold need water. A counter wiped and left wet is a pool for them; a counter wiped and dried is a desert. The same goes for sponges, dish brushes, the sink, the shower and the cutting board. Drying is the free, product-free half of disinfecting.</p>
+    <ul>
+      <li>After wiping with water, a dry cloth or a minute of air does the rest.</li>
+      <li>Stand sponges, brushes and boards upright so air reaches every side.</li>
+      <li>A squeegee on the shower walls takes 30 seconds and keeps scale and mildew away.</li>
+      <li>Hang wet cloths to dry right away; a balled-up wet cloth smells sour by morning.</li>
+    </ul>
+    <div class="fix" data-fix="u1s5" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="rbadge r1">Water</span><span class="mode m-habit">Habit</span><span class="mode m-once">Set up once</span><span class="cost">Free → $</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>A hook or rail by the sink so cloths hang open to dry.</li>
+        <li><small>Free</small>Dry the sink and counter at the end of the day.</li>
+        <li><small>$ · once</small>A shower squeegee (about $10).</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Dry the sink and counter at night; cloths hung open">Add to my list</button><button class="add" data-title="Shower squeegee after each shower">Add the squeegee</button></div>
+    </div>
+    <p class="links"><a href="../index.html#lens-air/ventilation/damp">Air → Damp air</a> · <a href="../index.html#lens-toxins/living/mold">Toxins → Mold in the house</a></p>
+  </article>
+
+  <article class="sub" id="u1-s6">
+    <div class="sub-top"><span class="sub-n">1.6</span><h2>Little hands, real cloths</h2></div>
+    <p>Water is the rung children can use on their own. A small spray bottle of plain water, a cloth of their own and a real job (the low cupboard doors, the table after dinner, the window they can reach) turns cleaning into play that also cleans. There’s nothing in the bottle to worry about, so nobody has to hover.</p>
+    <div class="does">
+      <div><b>Toddlers <i>1–3</i></b><p>Spray and wipe a low window. Carry the cloth basket. Wipe their own spill.</p></div>
+      <div><b>Little kids <i>4–7</i></b><p>Wipe the table, sort cloths by color, squeegee the shower, mop a small floor.</p></div>
+      <div><b>Bigger kids <i>8+</i></b><p>Choose the rung themselves, mix a baking soda paste, run a whole room.</p></div>
+    </div>
+    <p class="together">Clean side by side at the same time, rather than sending kids off to play while the adults clean. Their wiping won’t be perfect, and the wanting to help is the part worth keeping.</p>
+    <p class="kin">Companion animals join in their own way: a dog who likes to follow the mop, a cat who inspects every cupboard. Water-only cleaning means their curiosity is safe.</p>
+    <div class="fix" data-fix="u1s6" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="rbadge r1">Water</span><span class="mode m-together">Together</span><span class="cost">Free → $</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Give a child their own cloth and a spray bottle of plain water, labeled with their name.</li>
+        <li><small>Free</small>One cleaning time a week where everyone cleans together, with music.</li>
+        <li><small>$</small>A child-size broom and dustpan (about $15) that really works.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="A kid’s own water spray bottle and cloth">Add to my list</button><button class="add" data-title="Weekly cleaning time together, with music">Add cleaning time</button></div>
+    </div>
+    <p class="links"><a href="../index.html#lens-relationships/special/children">Emotions &amp; love → Children</a></p>
+    <p class="src">Michaeleen Doucleff, <i>Hunt, Gather, Parent</i> (2021); Rogoff, B., <i>Learning by Observing and Pitching In</i> (Advances in Child Development and Behavior, 2014).</p>
+  </article>
+
+  <div class="opinion"><div class="opinion-head"><span class="opinion-dot"></span>Creator’s consideration</div>
+    <p>A home that smells like nothing at all is cleaner than one that smells like a cleaning aisle, because the scent is a chemical too.</p>
+    <p class="src">Steinemann, A., <i>Air Quality, Atmosphere &amp; Health</i> (2016), fragranced consumer products and undisclosed ingredients.</p>
+  </div>
+
+  <nav class="pager"><a href="#"><small>← Back</small><b>Overview</b></a><a class="next" href="#u2"><small>Next →</small><b>2 · The gentle shelf</b></a></nav>
+  </div>
+</section>
+
+<!-- ============ UNIT 2: THE GENTLE SHELF ============ -->
+<section class="page k2" data-page="u2" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 2 · Foundation · Rungs 2–4</span><h1>The gentle shelf</h1><p class="unit-sub">When water needs help</p>
+    <p class="lede">Four bottles and a box cover nearly every job water can’t do alone: soap, baking soda, white vinegar and 3% hydrogen peroxide. Each one does one thing well. Knowing which thing is what keeps the shelf short and the house gentle.</p>
+    <div class="unit-mode"><span class="mode m-once">Set up once</span> Stock the shelf as old products run out. <span class="mode m-habit">Habit</span> Reach for the lowest rung first.</div>
+    <ul class="jumps"><li><a href="#u2/s1"><span>2.1</span>Soap</a></li><li><a href="#u2/s2"><span>2.2</span>Baking soda</a></li><li><a href="#u2/s3"><span>2.3</span>Vinegar</a></li><li><a href="#u2/s4"><span>2.4</span>Peroxide</a></li><li><a href="#u2/s5"><span>2.5</span>Never meet</a></li><li><a href="#u2/s6"><span>2.6</span>Paws &amp; mouths</a></li></ul>
+  </div>
+
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Helper</th><th>What it does</th><th>Great for</th><th>Not for</th><th>Cost</th></tr></thead>
+    <tbody>
+      <tr><td>Soap (castile or plain dish soap)</td><td>Grabs grease and oil so water can rinse them away</td><td>Greasy counters, stovetops, hands, dishes, floors</td><td>Mixing with vinegar (they cancel out)</td><td>A bottle lasts months</td></tr>
+      <tr><td>Baking soda</td><td>A soft scrub; mildly alkaline; soaks up smells</td><td>Sinks, tubs, pans, ovens, smelly bins and shoes</td><td>Polished stone or high-gloss finishes (can dull them)</td><td>About $1 a pound</td></tr>
+      <tr><td>White vinegar (5%)</td><td>An acid: dissolves mineral scale and soap scum</td><td>Kettles, faucets, shower glass, windows</td><td>Marble, limestone, travertine, grout, cast iron, waxed wood</td><td>About $4 a gallon</td></tr>
+      <tr><td>Hydrogen peroxide (3%)</td><td>Breaks down germs; turns into water and oxygen</td><td>Disinfecting after sickness, boards, toilets, light fabric stains</td><td>Dark fabrics (can lighten them); storing in a clear bottle</td><td>About $1 a pint</td></tr>
+    </tbody>
+  </table></div>
+
+  <article class="sub" id="u2-s1">
+    <div class="sub-top"><span class="sub-n">2.1</span><span class="rbadge r2">Rung 2</span><h2>Soap for grease</h2></div>
+    <p>Water and oil don’t mix, so water alone slides over grease. A soap molecule has one end that holds water and one end that holds oil. It wraps tiny bits of grease in little balls (micelles) that water can carry away. That’s all soap does, and it’s exactly what kitchen grease, skin oil and fingerprints need.</p>
+    <ul>
+      <li>A few drops in a bowl or spray bottle of warm water is plenty. Too much leaves a film that collects dirt.</li>
+      <li>Castile soap (made from plant oils) or a plain, fragrance-free dish soap both work.</li>
+      <li>Wipe with the soapy cloth, then once with a water-only cloth so no film stays behind.</li>
+    </ul>
+    <p class="home">A kitchen spray: 500 ml warm water and 1 teaspoon of dish soap or castile soap. Label it, and make a fresh bottle every couple of weeks.</p>
+    <div class="fix" data-fix="u2s1" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="rbadge r2">Soap</span><span class="mode m-once">Set up once</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Make the kitchen spray from the soap you already have.</li>
+        <li><small>Free</small>Soapy wipe, then a water wipe: no film.</li>
+        <li><small>As it runs out</small>Swap scented dish soap for a fragrance-free one.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Make a labeled soap-and-water kitchen spray">Add to my list</button></div>
+    </div>
+    <p class="src">American Chemical Society, <i>ChemMatters</i>, how soap works (micelles).</p>
+  </article>
+
+  <article class="sub" id="u2-s2">
+    <div class="sub-top"><span class="sub-n">2.2</span><span class="rbadge r3">Rung 3</span><h2>Baking soda to scrub</h2></div>
+    <p>Baking soda (sodium bicarbonate) is a fine powder that’s softer than most surfaces, so it scrubs without scratching. It’s mildly alkaline, which helps it cut greasy, acidic grime, and it soaks up sour smells rather than covering them.</p>
+    <ul>
+      <li><b>Paste:</b> 3 parts baking soda to 1 part water. Spread, wait 15 minutes (or overnight for an oven), then scrub and rinse.</li>
+      <li><b>Sprinkle:</b> on a damp sponge for sinks, tubs and stained mugs.</li>
+      <li><b>Smells:</b> an open jar in the fridge; a sprinkle in the bin, a shoe or a rug for an hour, then vacuum.</li>
+    </ul>
+    <p class="danger">Test on a hidden spot first on high-gloss, painted or aluminum surfaces; it can dull a polish. Rinse it off aluminum pans quickly.</p>
+    <div class="fix" data-fix="u2s2" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="rbadge r3">Baking soda</span><span class="mode m-once">Set up once</span><span class="cost">$</span></div>
+      <ol class="fix-steps">
+        <li><small>$ · once</small>A big bag of baking soda (about $1 a pound) in a jar with a lid and a scoop.</li>
+        <li><small>Free</small>Paste, wait, then scrub. Waiting does most of the work (1.3).</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="A lidded jar of baking soda on the shelf">Add to my list</button></div>
+    </div>
+  </article>
+
+  <article class="sub" id="u2-s3">
+    <div class="sub-top"><span class="sub-n">2.3</span><span class="rbadge r4">Rung 4</span><h2>Vinegar for scale</h2></div>
+    <p>White vinegar is about 5% acetic acid. Acid dissolves the minerals that hard water leaves behind: white crust on faucets, cloudy shower glass, the inside of a kettle, soap scum. It’s a descaler more than a germ fighter. In lab tests, vinegar knocks back some germs but not reliably, so it isn’t the rung for disinfecting.</p>
+    <ul>
+      <li><b>Spray:</b> half vinegar, half water for glass, mirrors and shower walls.</li>
+      <li><b>Soak:</b> a cloth soaked in full-strength vinegar wrapped around a crusty faucet for 30 minutes.</li>
+      <li><b>Kettle:</b> half vinegar, half water, boil, sit an hour, rinse twice.</li>
+      <li>The smell fades as it dries, usually within an hour. A window open helps.</li>
+    </ul>
+    <p class="danger">Acid etches natural stone. Keep vinegar (and lemon) off marble, limestone, travertine and unsealed concrete, off grout (it slowly eats it), and away from cast iron and waxed or oiled wood. Some washer and dishwasher makers advise against regular vinegar because it can wear rubber seals.</p>
+    <div class="accs">
+      <details class="acc" data-for="stone"><summary><span class="who">Your counters</span>Marble, limestone or travertine<span class="for-you">For you</span></summary><div class="in"><p>Skip rung 4 on these. Water, then a drop of soap, then a little baking soda paste, gently, is the whole ladder for soft stone. A stone-safe, pH-neutral cleaner is the only “extra” it needs. More in 3.1.</p></div></details>
+    </div>
+    <div class="fix" data-fix="u2s3" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="rbadge r4">Vinegar</span><span class="mode m-habit">Habit</span><span class="cost">$</span></div>
+      <ol class="fix-steps">
+        <li><small>$ · once</small>A labeled spray bottle: half white vinegar, half water.</li>
+        <li><small>Free</small>Use it for glass and scale; reach for soap for grease.</li>
+        <li><small>Free</small>Check the counter material before it goes near stone.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Labeled half-vinegar spray for glass and scale">Add to my list</button></div>
+    </div>
+    <p class="src">Rutala, W. et al., “Antimicrobial activity of home disinfectants and natural products against potential human pathogens,” <i>Infection Control &amp; Hospital Epidemiology</i> 21 (2000); Natural Stone Institute, care and cleaning of natural stone.</p>
+  </article>
+
+  <article class="sub" id="u2-s4">
+    <div class="sub-top"><span class="sub-n">2.4</span><span class="rbadge r4">Rung 4</span><h2>Hydrogen peroxide to disinfect</h2></div>
+    <p>The brown bottle of 3% hydrogen peroxide from the pharmacy is the gentlest real disinfectant on the shelf. It breaks germs apart by oxidizing them, then breaks down itself into water and oxygen. It leaves no residue and no smell, and it’s gone by the time a cat walks across the counter.</p>
+    <ul>
+      <li><b>Clean first</b> with water or soap, then spray peroxide straight from a dark bottle.</li>
+      <li><b>Keep it wet.</b> Let it sit 5–10 minutes before wiping; disinfecting happens while it’s wet, not when it touches.</li>
+      <li><b>Keep it dark.</b> Light breaks it down. Screw a spray nozzle onto the original brown bottle, or use an opaque one. Old peroxide that no longer fizzes when poured on a sink drain has turned to water.</li>
+      <li>It can lighten colored fabric, rugs and hair. Test first on anything dyed.</li>
+    </ul>
+    <p class="danger">Only the 3% kind. “Food grade” 35% peroxide burns skin and eyes; it isn’t a home cleaner. Even 3% stings eyes, so spray low and away from faces.</p>
+    <div class="fix" data-fix="u2s4" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="rbadge r4">Peroxide</span><span class="mode m-once">Set up once</span><span class="mode m-habit">Habit</span><span class="cost">$</span></div>
+      <ol class="fix-steps">
+        <li><small>$ · once</small>A spray nozzle that fits the brown peroxide bottle (about $2).</li>
+        <li><small>Free</small>Clean, spray, wait 5–10 minutes, wipe. Only when it counts (1.1).</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Spray top on the brown peroxide bottle, for when it counts">Add to my list</button></div>
+    </div>
+    <p class="src">CDC, <i>Guideline for Disinfection and Sterilization in Healthcare Facilities</i> (2008, updated 2019), hydrogen peroxide; US EPA, List N disinfectants (hydrogen peroxide products and contact times).</p>
+  </article>
+
+  <article class="sub" id="u2-s5">
+    <div class="sub-top"><span class="sub-n">2.5</span><h2>Pairs that never meet</h2></div>
+    <p>Most of the gentle shelf is safe together on the same counter, one after another, wiped between. A few pairs are better kept apart in a bottle, and two of them can hurt.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Pair</th><th>What happens</th><th>Instead</th></tr></thead>
+      <tbody>
+        <tr><td>Peroxide + vinegar in one bottle</td><td class="n">Makes peracetic acid, which irritates eyes, skin and lungs</td><td>One after the other, wiping between, never stored mixed</td></tr>
+        <tr><td>Bleach + vinegar or any acid</td><td class="n">Chlorine gas</td><td>Never together; this is Toxins territory</td></tr>
+        <tr><td>Bleach + ammonia (some glass cleaners, urine)</td><td class="n">Chloramine gas</td><td>Never together</td></tr>
+        <tr><td>Bleach + peroxide</td><td class="n">A fast, hot reaction that releases oxygen and can splash</td><td>Never together</td></tr>
+        <tr><td>Baking soda + vinegar</td><td class="p">They cancel out into salty water and fizz</td><td>Fine for unclogging fun or a science lesson; use each alone for cleaning</td></tr>
+        <tr><td>Castile soap + vinegar</td><td class="p">The soap curdles into a greasy film</td><td>Soap first, rinse, then vinegar</td></tr>
+      </tbody>
+    </table></div>
+    <p class="home">Any bottle you mix gets a label: what’s in it and the date. A mystery bottle is the one most likely to meet the wrong partner.</p>
+    <div class="fix" data-fix="u2s5" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-once">Set up once</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Label every bottle you mix, with the date.</li>
+        <li><small>Free</small>If there’s bleach in the house, store it apart from vinegar and ammonia, on a high shelf.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Label and date every mixed bottle">Add to my list</button></div>
+    </div>
+    <p class="links"><a href="../index.html#lens-toxins/home/cleaners">Toxins → Cleaning products</a> · Household tools (tier 3, coming) → pairs that must never meet</p>
+    <p class="src">Washington State Department of Health, <i>Don’t mix bleach with ammonia or acids</i>; NIOSH, peracetic acid; America’s Poison Centers, cleaning product exposures.</p>
+  </article>
+
+  <article class="sub" id="u2-s6">
+    <div class="sub-top"><span class="sub-n">2.6</span><h2>Paws, beaks and little mouths</h2></div>
+    <p>Children and companion animals meet a home with their mouths, hands and paws, low to the ground. A cat licks whatever she walked through. A toddler licks the window. A bird breathes in fumes faster than anyone in the house. The gentle shelf suits all of them, used this way:</p>
+    <ul>
+      <li><b>Dry before paws and hands.</b> Wipe peroxide or vinegar off floors and counters, or let them dry fully, before kids or animals come back.</li>
+      <li><b>Store high, even the gentle ones.</b> A swallowed mouthful of baking soda or peroxide can make a small body sick.</li>
+      <li><b>Pour onto a cloth</b> rather than spraying into the air, around birds most of all.</li>
+    </ul>
+    <div class="accs">
+      <details class="acc" data-for="animals"><summary><span class="who">Cats</span>Essential oils, pine and phenols<span class="for-you">For you</span></summary><div class="in"><p>Cats’ livers can’t break down many essential oils (tea tree, citrus, pine, eucalyptus, peppermint, wintergreen) or phenols (the “pine” and “disinfectant” smell in some floor cleaners). Many “natural” cleaners are scented with these. Unscented basics are kindest. Quaternary ammonium (“quats”) in disinfecting wipes can burn a cat’s tongue when licked off paws.</p><p class="links"><a href="../index.html#lens-toxins/exposures/companions">Toxins → Companion animals</a></p></div></details>
+      <details class="acc" data-for="birds"><summary><span class="who">Birds</span>Sprays, scent and steam<span class="for-you">For you</span></summary><div class="in"><p>Birds’ lungs pull air through air sacs in one direction and take in airborne chemicals fast. Pour-and-wipe instead of spraying, no air fresheners or scented products, and clean in a different room with a window open while the bird is elsewhere. Cage cleaning: hot water and a brush, peroxide only on a cage that’s empty, rinsed and fully dry before he or she goes back.</p><p class="links"><a href="../index.html#lens-air/smoke/companions">Air → Companions’ lungs</a></p></div></details>
+      <details class="acc" data-for="kids"><summary><span class="who">Kids</span>Babies, toddlers and pregnancy<span class="for-you">For you</span></summary><div class="in"><p>High chairs, toys and teethers: hot soapy water and a water rinse is all they need most days. Peroxide for toys after a stomach bug, rinsed after. Keep every bottle, gentle or not, in its original or labeled container, out of reach. If anything is swallowed or splashed in an eye, rinse with water and call Poison Control (1-800-222-1222), free and open all day and night.</p></div></details>
+    </div>
+    <div class="fix" data-fix="u2s6" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-once">Set up once</span><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Move the cleaning shelf up high, and put Poison Control’s number on the inside of the door.</li>
+        <li><small>Free</small>Check any “natural” cleaner for essential oils if a cat lives with you.</li>
+        <li><small>Free</small>Floors dry before paws and crawlers.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Cleaning shelf up high, Poison Control number on the door">Add to my list</button></div>
+    </div>
+    <p class="src">ASPCA Animal Poison Control, essential oils and cats; household cleaners and companion animals; Association of Avian Veterinarians, household hazards for birds; America’s Poison Centers.</p>
+  </article>
+
+  <nav class="pager"><a href="#u1"><small>← Back</small><b>1 · Water</b></a><a class="next" href="#u3"><small>Next →</small><b>3 · Surfaces</b></a></nav>
+  </div>
+</section>
+
+<!-- ============ UNIT 3: SURFACES ============ -->
+<section class="page k3" data-page="u3" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 3 · Practice</span><h1>Surfaces</h1><p class="unit-sub">The ladder, room by room</p>
+    <p class="lede">Every surface has its own needs. Stone wants no acid, wood wants to stay dry, steel wants to be wiped with the grain. The ladder stays the same; only where you stop changes.</p>
+    <div class="unit-mode"><span class="mode m-now">Right now</span> Most spills: a warm cloth, then dry. <span class="mode m-habit">Habit</span> A few small rhythms keep the bigger jobs rare.</div>
+    <ul class="jumps"><li><a href="#u3/s1"><span>3.1</span>Counters</a></li><li><a href="#u3/s2"><span>3.2</span>Boards &amp; sinks</a></li><li><a href="#u3/s3"><span>3.3</span>Stove &amp; oven</a></li><li><a href="#u3/s4"><span>3.4</span>Bathroom</a></li><li><a href="#u3/s5"><span>3.5</span>Floors &amp; glass</a></li><li><a href="#u3/s6"><span>3.6</span>Visitors</a></li></ul>
+  </div>
+
+  <article class="sub" id="u3-s1">
+    <div class="sub-top"><span class="sub-n">3.1</span><h2>Countertops</h2></div>
+    <p>Counters get the most wiping in the house and touch the most food, so they get the gentlest routine: a warm wet cloth after cooking, then dry. Soap when it’s greasy. Peroxide only after something that matters (a sick day, a spill from the bin). Here is where each material stops on the ladder.</p>
+    <div class="tbl-wrap"><table id="counterTbl">
+      <thead><tr><th>Counter</th><th>Every day</th><th>Stuck-on or greasy</th><th>To disinfect</th><th>Keep away</th></tr></thead>
+      <tbody>
+        <tr data-c="Laminate or plastic"><td>Laminate or plastic</td><td class="y">Water, cloth, dry</td><td>Soap; baking soda paste, gently</td><td class="y">Peroxide, 5–10 min</td><td>Scouring pads; standing water at seams</td></tr>
+        <tr data-c="Sealed granite or quartz"><td>Sealed granite or quartz</td><td class="y">Water, microfiber, dry</td><td>A drop of soap</td><td class="y">Peroxide, then a water wipe</td><td>Vinegar and lemon on granite over time (dulls the sealer); abrasives on quartz</td></tr>
+        <tr data-c="Marble, limestone or travertine"><td>Marble, limestone or travertine</td><td class="y">Water, soft cloth, dry</td><td>A drop of soap; wipe spills fast</td><td class="p">Peroxide sparingly on light stone, rinsed</td><td class="n">Vinegar, lemon, wine, tomato: any acid etches</td></tr>
+        <tr data-c="Wood or butcher block"><td>Wood or butcher block</td><td class="y">Barely damp cloth, dry right away</td><td>Soap; coarse salt and half a lemon scrubbed, then rinsed</td><td class="y">Peroxide, then dry and oil</td><td>Soaking; dishwasher-hot water; leaving wet</td></tr>
+        <tr data-c="Tile and grout"><td>Tile and grout</td><td class="y">Water, cloth</td><td>Baking soda paste and a toothbrush on grout</td><td class="y">Peroxide on grout (lightens it too)</td><td>Vinegar on grout</td></tr>
+        <tr data-c="Stainless steel"><td>Stainless steel</td><td class="y">Water, microfiber, wipe with the grain</td><td>Soap; baking soda paste for spots</td><td class="y">Peroxide, then a water wipe</td><td>Steel wool; leaving salt or bleach on it</td></tr>
+        <tr data-c="Concrete"><td>Concrete</td><td class="y">Water, cloth</td><td>A drop of soap</td><td class="p">Peroxide, then rinse</td><td class="n">Vinegar and acids; concrete is etched by them</td></tr>
+      </tbody>
+    </table></div>
+    <p class="legend" id="counterNote">Tell the course your counters (top of the page) and that row lights up.</p>
+    <p class="home">Not sure what yours are? A drop of water that sits as a bead on stone is a good sign the sealer is working. If it darkens the stone within a few minutes, the stone is thirsty and acid-sensitive; treat it like marble.</p>
+    <div class="accs">
+      <details class="acc" data-for="rent"><summary><span class="who">Renting</span>Counters that aren’t yours<span class="for-you">For you</span></summary><div class="in"><p>The gentlest ladder protects the deposit too: water and soap don’t etch, stain or strip a sealer. Photos of the counters on move-in day help everyone remember what was already there.</p></div></details>
+    </div>
+    <div class="fix" data-fix="u3s1" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="rbadge r1">Water</span><span class="rbadge r2">Soap</span><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · after cooking</small>Warm wet cloth, then a dry one. That’s the whole routine most days.</li>
+        <li><small>Free</small>Greasy? The soap spray (2.1), then a water wipe.</li>
+        <li><small>Free</small>Peroxide only after sickness or a spill from the bin, left wet 5–10 minutes.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Counters: warm cloth, then dry, after cooking">Add to my list</button></div>
+    </div>
+    <p class="src">Natural Stone Institute, <i>Care and Cleaning for Natural Stone Surfaces</i>; manufacturers’ care guides for engineered quartz and laminate.</p>
+  </article>
+
+  <article class="sub" id="u3-s2">
+    <div class="sub-top"><span class="sub-n">3.2</span><h2>Boards, sinks and sponges</h2></div>
+    <p>The kitchen sponge is often the most microbe-rich object in the house: warm, wet and fed. It doesn’t need to be sterile, just dry between uses and swapped often. Cutting boards and the sink need the same thing: a scrub, a rinse, and air.</p>
+    <ul>
+      <li><b>Boards:</b> hot soapy water and a brush right after use, then stand upright to dry. Wood and plastic both work; deep knife grooves in plastic are the time to replace it. Now and then, peroxide for 10 minutes.</li>
+      <li><b>Sponges:</b> squeeze out and stand upright. Replace every week or two, or switch to a dish brush and cloths that can go through the wash. Microwaving or boiling helps for a while, then the sponge refills.</li>
+      <li><b>Sink:</b> baking soda on a damp brush, rinse, dry. A kettle of hot water down the drain weekly keeps grease moving.</li>
+      <li><b>Drains:</b> half a cup of baking soda, a cup of hot water, wait, then more hot water. Leave caustic drain cleaners to Toxins’ list of last resorts.</li>
+    </ul>
+    <div class="fix" data-fix="u3s2" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="rbadge r1">Water</span><span class="rbadge r3">Baking soda</span><span class="mode m-habit">Habit</span><span class="cost">Free → $</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Boards and sponges stand upright to dry.</li>
+        <li><small>$ · once</small>A wooden dish brush with a replaceable head (about $8) instead of sponges.</li>
+        <li><small>Free · weekly</small>Hot kettle down the drain; washable cloths in the laundry.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Dish brush and washable cloths instead of sponges">Add to my list</button></div>
+    </div>
+    <p class="src">Cardinale, M. et al., “Microbiome analysis and confocal microscopy of used kitchen sponges,” <i>Scientific Reports</i> 7 (2017); USDA FSIS, cutting board safety.</p>
+  </article>
+
+  <article class="sub" id="u3-s3">
+    <div class="sub-top"><span class="sub-n">3.3</span><h2>Stove, oven and fridge</h2></div>
+    <p>Oven cleaners are among the harshest products in most homes: lye that burns skin and fumes that sting lungs. Baking soda does the same job overnight, with patience instead of force.</p>
+    <ul>
+      <li><b>Oven:</b> spread a thick baking soda paste inside (not on the heating elements), close the door, wait overnight. Wipe out with a damp cloth and a spatula; spritz any white residue with the vinegar spray so it foams loose, then wipe with water.</li>
+      <li><b>Stovetop:</b> a warm wet cloth on cooked-on spills for 5 minutes, then soap. Glass tops: a razor scraper held flat, and baking soda.</li>
+      <li><b>Fridge:</b> warm water with a spoon of baking soda per liter; dry the shelves. An open jar of baking soda for smells, changed every few months.</li>
+      <li><b>Range hood filter:</b> soak in very hot water with dish soap and baking soda for 15 minutes, brush, rinse.</li>
+    </ul>
+    <p class="danger">Self-cleaning oven cycles heat to around 480 °C and release smoke and fumes. If you run one, open windows and keep birds in another room with the door shut, or skip it for the baking soda method.</p>
+    <div class="fix" data-fix="u3s3" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="rbadge r3">Baking soda</span><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · tonight</small>Baking soda paste in the oven before bed; wipe out in the morning.</li>
+        <li><small>Free</small>Hood filter soak once a month.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Overnight baking soda oven clean, no oven cleaner">Add to my list</button></div>
+    </div>
+    <p class="links"><a href="../index.html#lens-air/smoke/cooking">Air → Cooking smoke</a> · <a href="../index.html#lens-air/smoke/nonstick">Air → Nonstick</a></p>
+  </article>
+
+  <article class="sub" id="u3-s4">
+    <div class="sub-top"><span class="sub-n">3.4</span><h2>Bathroom</h2></div>
+    <p>The bathroom is where the upper rungs earn their place: hard water leaves scale (vinegar), soap leaves scum (vinegar or baking soda), and the toilet is the one spot where disinfecting is often worth it (peroxide). Moisture is the other thing to move out, and a fan or window does most of that.</p>
+    <div class="does">
+      <div><b>Sink &amp; mirror <i>Rung 1–2</i></b><p>Water and a microfiber cloth. Soap for toothpaste. Half-vinegar spray for a cloudy mirror.</p></div>
+      <div><b>Tub &amp; shower <i>Rung 3–4</i></b><p>Baking soda scrub for the tub. Vinegar spray on glass, wait 10 minutes, wipe. Squeegee daily (1.5).</p></div>
+      <div><b>Toilet <i>Rung 3–4</i></b><p>Baking soda and a brush in the bowl. Peroxide on the seat and handle when someone’s been sick. Lid down before flushing.</p></div>
+    </div>
+    <p class="home">Pink film around drains and the shower is a harmless bacteria (Serratia) that lives on soap and water. Scrub it off with baking soda and dry the spot; it returns where things stay wet.</p>
+    <p class="danger">Black spots that spread across a ceiling or wall, or come back right after cleaning, are mold. Small patches: soap, water and drying. Bigger ones belong in <a href="../index.html#lens-toxins/living/mold">Toxins → Mold in the house</a>.</p>
+    <div class="fix" data-fix="u3s4" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="rbadge r3">Baking soda</span><span class="rbadge r4">Vinegar · peroxide</span><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · daily</small>Fan on or window open during and 20 minutes after showers; squeegee.</li>
+        <li><small>Free · weekly</small>Baking soda in the tub and bowl; vinegar on the glass.</li>
+        <li><small>Free · when sick</small>Peroxide on the seat, handle and taps, wet for 10 minutes.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Bathroom: fan 20 min after showers, weekly baking soda and vinegar">Add to my list</button></div>
+    </div>
+    <p class="src">Johns Hopkins Medicine, <i>Serratia</i> in the home; Johnson, D. et al., toilet plume aerosols, <i>American Journal of Infection Control</i> (2013).</p>
+  </article>
+
+  <article class="sub" id="u3-s5">
+    <div class="sub-top"><span class="sub-n">3.5</span><h2>Floors and glass</h2></div>
+    <p>Floors are where crawling babies, paws and noses spend their days, and where most house dust ends up. Plain water on a damp microfiber mop is the right rung almost every time. Glass is where water leaves streaks, and a splash of vinegar or a squeegee solves it.</p>
+    <ul>
+      <li><b>Floors:</b> sweep or vacuum first (dry before wet), then a damp mop with warm water. A few drops of soap for sticky kitchens. Wood: barely damp, never wet.</li>
+      <li><b>Glass:</b> the half-vinegar spray and a dry microfiber, or a squeegee and plain water with a drop of soap. Clean on a cloudy day: sun dries the spray before you can wipe it, which leaves streaks.</li>
+      <li><b>Paws:</b> a damp cloth by the door for a dog’s feet after walks brings less of the street, and of lawn chemicals, inside.</li>
+    </ul>
+    <div class="fix" data-fix="u3s5" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="rbadge r1">Water</span><span class="mode m-habit">Habit</span><span class="mode m-together">Together</span><span class="cost">Free → $</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Shoes off at the door, and a paw cloth beside it.</li>
+        <li><small>$ · once</small>A flat microfiber mop with washable pads (about $25) replaces bottles of floor cleaner.</li>
+        <li><small>Together</small>Window day on a cloudy morning: kids spray, grown-ups squeegee.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Shoes off and a paw cloth at the door">Add to my list</button><button class="add" data-title="Flat microfiber mop, water only">Add the mop</button></div>
+    </div>
+    <p class="links"><a href="../index.html#lens-air/dust/vacuum">Air → Vacuuming</a> · <a href="../index.html#lens-toxins/home/dust">Toxins → Dust</a> · <a href="../index.html#lens-toxins/pesticides/yard">Toxins → Yard &amp; home</a></p>
+  </article>
+
+  <article class="sub" id="u3-s6">
+    <div class="sub-top"><span class="sub-n">3.6</span><h2>Visitors on the counter</h2></div>
+    <p>A line of ants across the counter is a message: the kitchen is offering food and water, and the ants have left a scent trail so their sisters can find it. Cleaning is how we change the offer. Erase the trail and put the food away, and they go back to foraging outdoors.</p>
+    <ul>
+      <li>Wipe the whole trail, not just the ants you can see, with the soapy spray (2.1). Soap and vinegar both erase the scent the colony follows.</li>
+      <li>Crumbs, sticky jars, the pet food bowl, the compost pail: wipe, lid or move them for a few days.</li>
+      <li>Follow the line back to where they come in, and once they’ve moved on, seal the gap with caulk or tape.</li>
+      <li>Fruit flies come for the ripest fruit and the drain: fruit in the fridge, compost lidded, the drain flushed with hot water.</li>
+    </ul>
+    <p class="kin">Ants turn soil and clean up fallen fruit outdoors. They aren’t trying to bother anyone; our kitchen just happened to meet their needs. Change what it offers and everyone gets what they need.</p>
+    <div class="fix" data-fix="u3s6" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="rbadge r2">Soap</span><span class="mode m-now">Right now</span><span class="mode m-once">Set up once</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · now</small>Soapy wipe along the whole trail, and lids on anything sweet.</li>
+        <li><small>Free</small>Companion food bowls picked up between meals, or set in a shallow dish of water.</li>
+        <li><small>Free · once they’ve gone</small>Seal the entry gap.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Ants: wipe the trail, lid the sweet things, seal the gap">Add to my list</button></div>
+    </div>
+    <p class="links"><a href="../index.html#lens-relationships/special/animals">Emotions &amp; love → Animals</a> · <a href="../index.html#lens-food/store/pantry">Food → The pantry</a></p>
+    <p class="src">University of California IPM, <i>Pest Notes: Ants</i> (Pub. 7411) and <i>Fruit Flies</i>.</p>
+  </article>
+
+  <nav class="pager"><a href="#u2"><small>← Back</small><b>2 · The gentle shelf</b></a><a class="next" href="#u4"><small>Next →</small><b>4 · Stains</b></a></nav>
+  </div>
+</section>
+
+<!-- ============ UNIT 4: STAINS ============ -->
+<section class="page k4" data-page="u4" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 4 · Practice</span><h1>Stains</h1><p class="unit-sub">Which stain is which, and what lifts it</p>
+    <p class="lede">A stain is a question about chemistry. Protein wants cold water, tannin wants warm, grease wants soap, dye wants light or peroxide. Name the stain and the right rung lifts it, usually with nothing stronger than the gentle shelf.</p>
+    <div class="unit-mode"><span class="mode m-now">Right now</span> The first five minutes matter more than any product.</div>
+    <ul class="jumps"><li><a href="#u4/s1"><span>4.1</span>Soon, blot, cold</a></li><li><a href="#u4/s2"><span>4.2</span>Protein</a></li><li><a href="#u4/s3"><span>4.3</span>Tannins &amp; dyes</a></li><li><a href="#u4/s4"><span>4.4</span>Grease</a></li><li><a href="#u4/s5"><span>4.5</span>Accidents</a></li><li><a href="#u4/s6"><span>4.6</span>Rust, ink, wax</a></li><li><a href="#u4/tool"><span>Tool</span>Stain finder</a></li></ul>
+  </div>
+
+  <article class="sub" id="u4-s1">
+    <div class="sub-top"><span class="sub-n">4.1</span><h2>Soon, blot, cold</h2></div>
+    <p>Three habits rescue most stains before they set.</p>
+    <div class="does">
+      <div><b>Soon <i>Minutes</i></b><p>A fresh stain is still sitting on the fibers. A dried one has soaked in and bonded.</p></div>
+      <div><b>Blot <i>Don’t rub</i></b><p>Press a cloth on top and lift. Rubbing pushes the stain deeper and spreads it wider.</p></div>
+      <div><b>Cold first <i>Then warm</i></b><p>Hot water cooks protein stains into the fabric. Start cold; warm only once you know what it is.</p></div>
+    </div>
+    <ul>
+      <li>Work from the outside of the stain inward, so it doesn’t ring.</li>
+      <li>Flush from the back of the fabric, so the stain leaves the way it came.</li>
+      <li>Check before the dryer. Dryer heat sets whatever is left; air-dry until it’s gone.</li>
+    </ul>
+    <div class="fix" data-fix="u4s1" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="rbadge r1">Water</span><span class="mode m-now">Right now</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · now</small>Blot, then flush with cold water from the back.</li>
+        <li><small>Free</small>Air-dry stained things until the stain is fully gone.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Stains: blot, cold water from the back, no dryer until gone">Add to my list</button></div>
+    </div>
+    <p class="src">University of Illinois Extension, <i>Stain Solutions</i>; American Cleaning Institute, stain removal guide.</p>
+  </article>
+
+  <article class="sub" id="u4-s2">
+    <div class="sub-top"><span class="sub-n">4.2</span><h2>Protein stains</h2></div>
+    <p>Blood, sweat, vomit, spit-up, mucus, urine and grass (partly) are made of protein. Heat makes protein stick, like an egg turning white in a pan. Cold water and patience lift it.</p>
+    <ol>
+      <li>Rinse under cold running water from the back.</li>
+      <li>Soak in cold water with a little soap for 30 minutes to a few hours.</li>
+      <li>Still there? On white or light fabric, a few drops of 3% peroxide fizz blood away. Test colors first.</li>
+      <li>An enzyme laundry detergent (it digests protein) for anything stubborn, then a normal wash.</li>
+    </ol>
+    <p class="home">Your own saliva lifts a small fresh drop of your own blood: its enzymes start digesting it. A good trick for a paper cut on a favorite shirt.</p>
+    <div class="fix" data-fix="u4s2" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="rbadge r1">Water</span><span class="rbadge r4">Peroxide</span><span class="mode m-now">Right now</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · now</small>Cold rinse, cold soak with soap.</li>
+        <li><small>Free</small>Peroxide drops on light fabrics, rinsed after.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Protein stains: cold soak, then peroxide on light fabrics">Add to my list</button></div>
+    </div>
+  </article>
+
+  <article class="sub" id="u4-s3">
+    <div class="sub-top"><span class="sub-n">4.3</span><h2>Tannins and dyes</h2></div>
+    <p>Coffee, tea, red wine, juice, berries, tomato sauce, turmeric, beet and grass carry plant pigments and tannins. Unlike protein, these come out better with warm water and a little acid or oxidizer. Sunlight is one of the strongest tools there is for them, and it’s free.</p>
+    <ul>
+      <li><b>Coffee, tea, juice, wine:</b> blot, flush with cool then warm water, a drop of dish soap rubbed in, rinse. A little vinegar in the rinse helps.</li>
+      <li><b>Berries and beet:</b> stretch the fabric over a bowl and pour boiling water through from a height (cotton and linen only). Peroxide on whites.</li>
+      <li><b>Turmeric and curry:</b> soap and a rinse, then lay it in direct sun for a few hours, damp. UV fades turmeric remarkably fast.</li>
+      <li><b>Grass:</b> rub in dish soap, rinse warm, then a little vinegar or peroxide on light fabric.</li>
+    </ul>
+    <p class="together">Turmeric-in-the-sun is a fine thing to try with a child: check the stain every hour and watch it fade.</p>
+    <div class="fix" data-fix="u4s3" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="rbadge r2">Soap</span><span class="rbadge r4">Vinegar · peroxide</span><span class="mode m-now">Right now</span><span class="mode m-together">Together</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · now</small>Blot, soap, warm rinse.</li>
+        <li><small>Free</small>Leftover color: damp, in direct sun, a few hours.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Plant stains: soap, warm rinse, then sun">Add to my list</button></div>
+    </div>
+  </article>
+
+  <article class="sub" id="u4-s4">
+    <div class="sub-top"><span class="sub-n">4.4</span><h2>Grease and oil</h2></div>
+    <p>Cooking oil, nut butter, salad dressing, lip balm and avocado leave a darker, see-through patch. Water slides over them, so this is rung 2’s job: soap. A powder first can pull most of the oil out before it spreads.</p>
+    <ol>
+      <li>Scrape or blot off what you can.</li>
+      <li>Sprinkle baking soda or cornstarch on top; wait 15 minutes to soak the oil up; brush off.</li>
+      <li>Rub a drop of dish soap in with your fingers; leave it 10 minutes.</li>
+      <li>Wash in the warmest water the fabric allows, and air-dry to check.</li>
+    </ol>
+    <div class="fix" data-fix="u4s4" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="rbadge r3">Baking soda</span><span class="rbadge r2">Soap</span><span class="mode m-now">Right now</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · now</small>Powder to soak up, dish soap rubbed in, warm wash.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Grease stains: powder, dish soap, warm wash">Add to my list</button></div>
+    </div>
+  </article>
+
+  <article class="sub" id="u4-s5">
+    <div class="sub-top"><span class="sub-n">4.5</span><h2>Companion animal accidents</h2></div>
+    <p>When a cat, dog or rabbit pees outside the box or yard, the cleanup is half the answer. If any scent is left, their sensitive noses read it as “this is the spot” and come back. The other half is the need behind it: a box that needs cleaning or moving, a door they couldn’t reach, a new stress, or a body that’s unwell.</p>
+    <ol>
+      <li>Blot up as much as you can with paper towels; stand on them to press it out of carpet.</li>
+      <li>Flush with cold water and blot again.</li>
+      <li>An enzyme cleaner made for animal accidents breaks down the scent fully. Soak the spot as deep as the urine went and let it dry slowly, covered loosely.</li>
+      <li>No enzyme cleaner? Half-vinegar spray, blot, then baking soda sprinkled on top overnight and vacuumed.</li>
+    </ol>
+    <p class="danger">Skip ammonia-based cleaners for accidents: urine contains ammonia, so they can smell like an invitation. And never bleach over urine; the two make chloramine gas.</p>
+    <p class="kin">A sudden change in where someone pees, straining, or blood in the urine is a reason to see a vet soon, cats especially. A male cat who can’t pee is an emergency.</p>
+    <div class="fix" data-fix="u4s5" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="rbadge r1">Water</span><span class="rbadge r4">Vinegar</span><span class="mode m-now">Right now</span><span class="cost">Free → $</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · now</small>Blot, flush cold, blot again.</li>
+        <li><small>$</small>An unscented enzyme cleaner (about $10–$15) on the shelf.</li>
+        <li><small>Free</small>Ask what changed: the box, the door, the routine, their body.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Unscented enzyme cleaner for animal accidents">Add to my list</button></div>
+    </div>
+    <p class="links"><a href="../index.html#lens-relationships/special/family">Emotions &amp; love → Family animals</a></p>
+    <p class="src">ASPCA, <i>Cat House Soiling</i> and <i>Urine Marking in Dogs</i>; Cornell Feline Health Center, house soiling.</p>
+  </article>
+
+  <article class="sub" id="u4-s6">
+    <div class="sub-top"><span class="sub-n">4.6</span><h2>Rust, ink and wax</h2></div>
+    <div class="does">
+      <div><b>Rust <i>Acid</i></b><p>Lemon juice and salt on the spot, an hour in the sun, rinse. Not on silk or wool.</p></div>
+      <div><b>Ballpoint ink <i>Alcohol</i></b><p>Dab with rubbing alcohol on a cloth underneath, blotting from the back. Ventilate; keep it away from flames.</p></div>
+      <div><b>Candle wax <i>Cold, then warm</i></b><p>Freeze or ice it and pick it off. Then a paper bag over the rest and a warm iron to lift it into the paper.</p></div>
+      <div><b>Gum and sticker glue <i>Oil</i></b><p>A little cooking oil loosens it; then dish soap to lift the oil (4.4).</p></div>
+    </div>
+    <div class="fix" data-fix="u4s6" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="rbadge r4">Acid</span><span class="mode m-now">Right now</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free</small>Match the stain to its helper above; test on a hidden seam first.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Rust: lemon, salt and sun">Add to my list</button></div>
+    </div>
+  </article>
+
+  <article class="sub" id="u4-tool">
+    <div class="sub-top"><span class="sub-n">Tool</span><h2>Stain finder</h2></div>
+    <div class="tool">
+      <div class="row">
+        <label class="f">What spilled?<select id="sfStain"></select></label>
+        <label class="f">On what?<select id="sfOn"><option value="wash">Washable cotton or linen</option><option value="synthetic">Synthetic or blend</option><option value="delicate">Wool or silk</option><option value="carpet">Carpet or upholstery</option></select></label>
+        <label class="f">Color<select id="sfColor"><option value="light">White or light</option><option value="dark">Colored or dark</option></select></label>
+      </div>
+      <div class="out" id="sfOut"></div>
+    </div>
+  </article>
+
+  <nav class="pager"><a href="#u3"><small>← Back</small><b>3 · Surfaces</b></a><a class="next" href="#u5"><small>Next →</small><b>5 · Laundry</b></a></nav>
+  </div>
+</section>
+
+<!-- ============ UNIT 5: LAUNDRY ============ -->
+<section class="page k5" data-page="u5" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 5 · Practice</span><h1>Laundry</h1><p class="unit-sub">Gentler on fabric, skin, water and the bill</p>
+    <p class="lede">Most loads need less than the cap says, colder water than the dial suggests, and no scent at all. Clothes last longer, skin calms down, and the water leaving the house carries less. Sun and a line finish the job for free.</p>
+    <div class="unit-mode"><span class="mode m-habit">Habit</span> Small changes each load. <span class="mode m-once">Set up once</span> A line, a filter bag, dryer balls.</div>
+    <ul class="jumps"><li><a href="#u5/s1"><span>5.1</span>Less detergent</a></li><li><a href="#u5/s2"><span>5.2</span>Cold</a></li><li><a href="#u5/s3"><span>5.3</span>Sun &amp; line</a></li><li><a href="#u5/s4"><span>5.4</span>Swaps</a></li><li><a href="#u5/s5"><span>5.5</span>Microfibers</a></li><li><a href="#u5/s6"><span>5.6</span>No machine</a></li></ul>
+  </div>
+
+  <article class="sub" id="u5-s1">
+    <div class="sub-top"><span class="sub-n">5.1</span><h2>Less detergent, no fragrance</h2></div>
+    <p>Modern detergents are concentrated, and most people use two or three times what a load needs. The extra doesn’t rinse out: it stays in fabric, stiffens towels, holds smells and rubs against skin all day. Fragrance is the part most likely to irritate skin and lungs, and it’s added on purpose to cling.</p>
+    <ul>
+      <li>Start at half the cap line. If clothes come out clean, try less next time.</li>
+      <li>“Free and clear” or “fragrance-free” detergents skip the scent; “unscented” can still mean a masking fragrance.</li>
+      <li>Soft water needs even less. Very hard water: a tablespoon of washing soda helps the detergent work.</li>
+    </ul>
+    <p class="ca">California’s Cleaning Product Right to Know Act requires cleaning products, laundry detergents included, to list their ingredients, including fragrance allergens: online since 2020 and on the label since 2021.</p>
+    <div class="fix" data-fix="u5s1" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · next load</small>Half the detergent; mark the new line on the cap with a marker.</li>
+        <li><small>As it runs out</small>Swap to a fragrance-free detergent.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Half the detergent, fragrance-free when it runs out">Add to my list</button></div>
+    </div>
+    <p class="links"><a href="../index.html#lens-toxins/home/fragrance">Toxins → Fragrance</a></p>
+    <p class="src">California Cleaning Product Right to Know Act of 2017 (SB 258); American Academy of Dermatology, fragrance and contact dermatitis.</p>
+  </article>
+
+  <article class="sub" id="u5-s2">
+    <div class="sub-top"><span class="sub-n">5.2</span><h2>Cold most of the time</h2></div>
+    <p>About 90% of the energy a washing machine uses goes to heating water. Today’s detergents are made to work in cold, and cold water is gentler on colors, elastic and shrink-prone fabric.</p>
+    <div class="does">
+      <div><b>Cold <i>Most loads</i></b><p>Everyday clothes, colors, darks, anything with a protein stain.</p></div>
+      <div><b>Warm <i>Some</i></b><p>Greasy kitchen towels, very dirty work clothes.</p></div>
+      <div><b>Hot <i>When it counts</i></b><p>Sheets and towels after illness, cloth diapers, companion bedding after a sick day.</p></div>
+    </div>
+    <div class="fix" data-fix="u5s2" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · next load</small>Set the dial to cold and leave it there; switch up only for sickness, diapers and bedding.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Cold wash by default; hot only when it counts">Add to my list</button></div>
+    </div>
+    <p class="src">ENERGY STAR, clothes washers (share of energy used to heat water).</p>
+  </article>
+
+  <article class="sub" id="u5-s3">
+    <div class="sub-top"><span class="sub-n">5.3</span><h2>Sun and line drying</h2></div>
+    <p>A clothes dryer is one of the bigger energy users in a home. A line or rack does the same job for free, and sun does more: its UV light fades stains, brightens whites and helps clear odors and microbes. Clothes last longer too; dryer lint is your clothes, a little at a time.</p>
+    <ul>
+      <li>Whites and diapers in direct sun; darks inside out or in shade so they don’t fade.</li>
+      <li>A shake and a snap before hanging means fewer wrinkles.</li>
+      <li>A folding rack indoors works too, and adds welcome moisture to dry winter air.</li>
+    </ul>
+    <p class="ca">California’s Civil Code §1940.20 lets renters use a clothesline or drying rack in their private yard or balcony area, with some conditions, and HOAs can’t ban them in a backyard (Civil Code §4750.10).</p>
+    <div class="fix" data-fix="u5s3" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-once">Set up once</span><span class="mode m-together">Together</span><span class="cost">$</span></div>
+      <ol class="fix-steps">
+        <li><small>$ · once</small>A folding rack (about $25) or line and pins.</li>
+        <li><small>Together</small>Hanging and pairing socks is a great job for kids: color sorting, counting, pinching pins.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="A drying rack or clothesline">Add to my list</button></div>
+    </div>
+    <p class="links"><a href="../index.html#lens-air/ventilation/damp">Air → Damp air</a> (racks indoors in humid weather: a window open)</p>
+  </article>
+
+  <article class="sub" id="u5-s4">
+    <div class="sub-top"><span class="sub-n">5.4</span><h2>Softeners and swaps</h2></div>
+    <p>Fabric softeners and dryer sheets coat fibers with a waxy film, usually carrying fragrance. The coating makes towels and microfiber less absorbent, can make some fabrics more flammable, and is the opposite of what a clean load is for.</p>
+    <div class="does">
+      <div><b>Wool dryer balls <i>Instead of sheets</i></b><p>Soften by tumbling and cut drying time. Last for years.</p></div>
+      <div><b>Less detergent <i>Instead of softener</i></b><p>Stiff towels are usually leftover detergent (5.1), not a missing softener.</p></div>
+      <div><b>A little vinegar <i>Now and then</i></b><p>A quarter cup in the rinse for towels that smell. Check your washer’s manual: some makers advise against it often, for the seals.</p></div>
+    </div>
+    <div class="fix" data-fix="u5s4" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-once">Set up once</span><span class="cost">$</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Use up or pass on the dryer sheets, and don’t replace them.</li>
+        <li><small>$ · once</small>Three wool dryer balls (about $10).</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Wool dryer balls instead of softener and sheets">Add to my list</button></div>
+    </div>
+    <p class="src">US Consumer Product Safety Commission, fabric softener and flammability of fleece; Steinemann, A., fragranced laundry products (2011, <i>Environmental Impact Assessment Review</i>).</p>
+  </article>
+
+  <article class="sub" id="u5-s5">
+    <div class="sub-top"><span class="sub-n">5.5</span><h2>Microfibers in the wash</h2></div>
+    <p>Polyester, fleece, nylon and microfiber cloths shed tiny plastic threads every wash. Water treatment plants catch some; the rest reach rivers and the sea, where fish and seabirds swallow them. A few habits cut what leaves the machine.</p>
+    <ul>
+      <li>Fuller loads, cold water and shorter, gentler cycles shed less.</li>
+      <li>Front-loaders shed noticeably less than top-loaders with an agitator.</li>
+      <li>A filter wash bag for fleece and microfiber cloths catches the threads; empty the lint into the trash, not the sink.</li>
+      <li>Natural fibers (cotton, linen, wool, hemp) when you’re replacing things anyway.</li>
+    </ul>
+    <p class="ca">California’s AB 1628 (2023) requires new washing machines sold in the state to have a microfiber filter starting in 2029.</p>
+    <div class="fix" data-fix="u5s5" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-once">Set up once</span><span class="mode m-habit">Habit</span><span class="cost">$</span></div>
+      <ol class="fix-steps">
+        <li><small>Free</small>Full, cold, gentle loads.</li>
+        <li><small>$ · once</small>A microfiber filter wash bag (about $30) for synthetics and cleaning cloths.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Filter wash bag for fleece and microfiber cloths">Add to my list</button></div>
+    </div>
+    <p class="links"><a href="../index.html#lens-toxins/plastics/what">Toxins → Plastics</a></p>
+    <p class="src">California AB 1628 (McKinnor, 2023); Napper &amp; Thompson, <i>Marine Pollution Bulletin</i> 112 (2016); Hartline et al., <i>Environmental Science &amp; Technology</i> 50 (2016).</p>
+  </article>
+
+  <article class="sub" id="u5-s6">
+    <div class="sub-top"><span class="sub-n">5.6</span><h2>Without a machine</h2></div>
+    <p>Washing by hand is how most people have always done laundry, and it works. Agitation is the machine’s main job, and a bucket, a plunger and a little time replace it.</p>
+    <ol>
+      <li>A bucket with a lid, a teaspoon of soap, cold water, clothes. Soak 20 minutes.</li>
+      <li>Agitate 2–3 minutes with a clean plunger through a hole in the lid, or swish and squeeze by hand.</li>
+      <li>Wring, refill with clean water, rinse, wring again. Roll heavy things in a towel and stand on it.</li>
+      <li>Hang to dry in sun or air.</li>
+    </ol>
+    <div class="accs">
+      <details class="acc" data-for="laundromat"><summary><span class="who">Laundromat or shared</span>Shared machines<span class="for-you">For you</span></summary><div class="in"><ul><li>Bring your own fragrance-free detergent; shared machines carry the last person’s scent, and a quick empty rinse cycle clears it.</li><li>Fewer, fuller loads saves quarters. Dry at home on a rack to halve the cost.</li><li>Many laundromats offer free or discounted days for neighbors in need; libraries and mutual aid groups often know which.</li></ul></div></details>
+      <details class="acc" data-for="portable"><summary><span class="who">On the move</span>Vehicle, boat or no fixed place<span class="for-you">For you</span></summary><div class="in"><ul><li>A 5-gallon bucket with a lid does wash and storage; a dry bag with water and soap, rolled and squeezed, works in a small space.</li><li>Quick-dry fabrics and a few clothespins on a line inside a car or under a tarp.</li><li>Wash water with only plain soap can go on dirt away from creeks, at least 200 feet from water.</li></ul><p class="links"><a href="../index.html#lens-water/uses">Water → Uses (gray water)</a></p></div></details>
+      <details class="acc" data-for="kids"><summary><span class="who">Little ones</span>Cloth diapers and baby clothes<span class="for-you">For you</span></summary><div class="in"><p>Diapers: a cold rinse, then a hot wash with detergent, then sun. Baby clothes: fragrance-free detergent, the same as everyone else’s. No special baby detergent needed.</p></div></details>
+      <details class="acc" data-for="animals"><summary><span class="who">Companions</span>Beds, blankets and harnesses<span class="for-you">For you</span></summary><div class="in"><p>Shake or vacuum fur off first; it clogs drains and machines. Hot wash for beds after illness, fragrance-free always (noses do the noticing). A wet cloth or rubber glove pulls fur off fabric before a wash.</p></div></details>
+    </div>
+    <div class="fix" data-fix="u5s6" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-once">Set up once</span><span class="mode m-together">Together</span><span class="cost">$</span></div>
+      <ol class="fix-steps">
+        <li><small>$ · once</small>A lidded bucket and a new plunger, kept just for laundry (about $20).</li>
+        <li><small>Together</small>Stomping laundry in a tub, feet clean and pants rolled, is how many kids learn it’s fun.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Bucket-and-plunger hand wash kit">Add to my list</button></div>
+    </div>
+    <p class="src">Leave No Trace, dispose of waste properly (wash water 200 feet from water sources).</p>
+  </article>
+
+  <nav class="pager"><a href="#u4"><small>← Back</small><b>4 · Stains</b></a><a class="next" href="#now"><small>Try it →</small><b>What needs cleaning?</b></a></nav>
+  </div>
+</section>
+
+</main>
+</div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  function toast(msg) { var t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(function () { t.classList.remove('show'); }, 1800); }
+
+  /* ---------- Profile: same key as app.js; counter and laundry are new for Cleaning ---------- */
+  var KEY = 'meeting-needs.profile.v1';
+  var OPT = {
+    home: ['Apartment or room', 'House', 'Vehicle or boat', 'Shelter or no fixed place', 'Other'],
+    shape: ['Nothing: it all has to be portable', 'Small, removable things', 'Bigger changes, with an owner who’s on board', 'It’s ours to shape'],
+    with: ['Just adults', 'Kids or a pregnancy', 'Companion animals', 'Kids and animals', 'Birds among them'],
+    counter: ['Laminate or plastic', 'Sealed granite or quartz', 'Marble, limestone or travertine', 'Wood or butcher block', 'Tile and grout', 'Stainless steel', 'Concrete', 'Not sure'],
+    laundry: ['Machine at home', 'Shared machines in the building', 'Laundromat', 'By hand', 'A mix of these']
+  };
+  var QS = ['home', 'shape', 'with', 'counter', 'laundry'];
+  var profile = {};
+  try { profile = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { profile = {}; }
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(profile)); } catch (e) {} }
+  function val(k) { return profile[k] || ''; }
+
+  function tags() {
+    var p = profile, t = {};
+    if (p.home === 'Vehicle or boat' || p.home === 'Shelter or no fixed place') t.portable = 1;
+    if (p.shape === 'Nothing: it all has to be portable') t.portable = 1;
+    if (p.shape && p.shape !== 'It’s ours to shape') t.rent = 1;
+    if (/Kids/.test(p.with || '') || Number(p.kids) > 0) t.kids = 1;
+    if (/animals|Birds/.test(p.with || '') || Number(p.pets) > 0 || (p.pets && typeof p.pets === 'object')) t.animals = 1;
+    if (/Birds/.test(p.with || '') || /bird/i.test(JSON.stringify(p.pets || ''))) t.birds = 1;
+    if (/cat/i.test(JSON.stringify(p.pets || ''))) t.cats = 1;
+    if (/Marble|Concrete/.test(p.counter || '')) t.stone = 1;
+    if (/Shared|Laundromat|mix/.test(p.laundry || '')) t.laundromat = 1;
+    if (/By hand/.test(p.laundry || '')) t.portable = 1;
+    return t;
+  }
+  function apply() {
+    var t = tags();
+    document.querySelectorAll('.acc').forEach(function (a) {
+      var hit = (a.dataset.for || '').split(' ').some(function (s) { return t[s]; });
+      a.classList.toggle('match', hit); a.open = hit;
+    });
+    document.querySelectorAll('#counterTbl tr[data-c]').forEach(function (tr) {
+      var on = tr.dataset.c === profile.counter;
+      tr.style.background = on ? 'var(--c3-mid)' : '';
+      tr.style.boxShadow = on ? 'inset 6px 0 0 var(--c1-dot)' : '';
+    });
+    $('counterNote').textContent = profile.counter && profile.counter !== 'Not sure' ? 'Your counters: ' + profile.counter + '. That row is highlighted.' : 'Tell the course your counters (top of the page) and that row lights up.';
+    var answered = QS.map(val).filter(Boolean);
+    $('sitChips').innerHTML = answered.map(function (v) { return '<span>' + esc(v.replace(/:.*/, '').replace(/ \(.*\)/, '')) + '</span>'; }).join('');
+    $('sitSum').textContent = answered.length ? 'From your profile:' : 'Five quick questions tailor this course. Everything stays available either way.';
+    wnRender(); sfRender();
+  }
+  document.querySelectorAll('[data-q]').forEach(function (sel) {
+    var k = sel.dataset.q;
+    sel.innerHTML = '<option value="">Choose…</option>' + OPT[k].map(function (o) { return '<option' + (o === val(k) ? ' selected' : '') + '>' + esc(o) + '</option>'; }).join('');
+    sel.addEventListener('change', function () { profile[k] = sel.value; persist(); apply(); });
+  });
+  if (!['counter', 'laundry'].some(function (k) { return profile[k]; })) $('sit').open = true;
+
+  /* ---------- My list: every "How to fix" can be added; one-by-one, reorderable ---------- */
+  var LKEY = 'meeting-needs.clean.v1';
+  var list = [];
+  try { list = JSON.parse(localStorage.getItem(LKEY) || '[]') || []; } catch (e) { list = []; }
+  function save() { try { localStorage.setItem(LKEY, JSON.stringify(list)); } catch (e) {} renderList(); syncButtons(); }
+  function has(title) { return list.some(function (x) { return x.title === title; }); }
+  function fixMeta(btn) {
+    var fix = btn.closest('.fix'), sec = btn.closest('.page');
+    var modes = fix ? Array.prototype.map.call(fix.querySelectorAll('.fix-top .mode'), function (m) { return m.className.replace('mode ', '') + '|' + m.textContent; }) : [];
+    var rungs = fix ? Array.prototype.map.call(fix.querySelectorAll('.fix-top .rbadge'), function (m) { return m.className.replace('rbadge ', '') + '|' + m.textContent; }) : [];
+    return { title: btn.dataset.title, unit: sec ? sec.dataset.page : '', where: fix ? fix.dataset.fix : '', cost: fix ? Number(fix.dataset.cost || 0) : 0, modes: modes, rungs: rungs, s: 'next' };
+  }
+  function addByTitle(title) {
+    if (has(title)) return false;
+    var src = Array.prototype.filter.call(document.querySelectorAll('.fix .add[data-title]'), function (b) { return b.dataset.title === title; })[0];
+    if (!src) return false;
+    list.push(fixMeta(src)); return true;
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('.add'); if (!b || !b.dataset.title) return;
+    if (has(b.dataset.title)) { list = list.filter(function (x) { return x.title !== b.dataset.title; }); toast('Taken off My list'); }
+    else { addByTitle(b.dataset.title); toast('Added to My list · ' + list.length); }
+    save();
+  });
+  function syncButtons() {
+    document.querySelectorAll('.add[data-title]').forEach(function (b) {
+      var on = has(b.dataset.title); b.classList.toggle('on', on);
+      if (!b.dataset.label) b.dataset.label = b.textContent;
+      b.textContent = on ? 'On my list' : b.dataset.label;
+    });
+    $('navCount').textContent = list.filter(function (x) { return x.s !== 'done'; }).length;
+  }
+  var COST = ['Free', '$', '$$'], NEXT = { next: 'doing', doing: 'done', done: 'next' }, LABEL = { next: 'Next', doing: 'Doing', done: 'Done' };
+  function chips(arr, cls) { return (arr || []).map(function (m) { var p = m.split('|'); return '<span class="' + cls + ' ' + p[0] + '">' + esc(p[1]) + '</span>'; }).join(''); }
+  function renderList() {
+    var el = $('lst');
+    $('lstEmpty').hidden = list.length > 0;
+    el.innerHTML = list.map(function (x, i) {
+      var k = (x.unit || 'u1').replace('u', 'k');
+      var unitName = (document.querySelector('.vt-unit[data-unit="' + x.unit + '"] b') || {}).textContent || '';
+      return '<li class="' + k + (x.s === 'done' ? ' done' : '') + '"><span class="num">' + (i + 1) + '</span>' +
+        '<span class="lt"><b>' + esc(x.title) + '</b><span>' + chips(x.rungs, 'rbadge') + chips(x.modes, 'mode') + '<span class="cost">' + COST[x.cost || 0] + '</span>' +
+        (x.where ? '<small><a href="#' + x.unit + '/' + x.where.replace(/^u\d+/, '') + '">' + esc(unitName) + ' ' + x.where.replace(/^u(\d+)s(\d+)$/, '$1.$2') + '</a></small>' : '') + '</span></span>' +
+        '<span class="row" style="gap:8px;flex-wrap:nowrap"><button class="st" data-i="' + i + '" data-s="' + x.s + '">' + LABEL[x.s] + '</button>' +
+        '<span class="lst-ctl"><button data-up="' + i + '" aria-label="Move up">▲</button><button data-down="' + i + '" aria-label="Move down">▼</button></span></span></li>';
+    }).join('');
+    var done = list.filter(function (x) { return x.s === 'done'; }).length;
+    $('lstBar').style.width = list.length ? (done / list.length * 100) + '%' : '0';
+    $('lstSum').textContent = list.length ? done + ' of ' + list.length + ' done · ' + list.filter(function (x) { return x.s === 'doing'; }).length + ' in progress' : '';
+  }
+  $('lst').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.i) { var x = list[+b.dataset.i]; x.s = NEXT[x.s]; if (x.s === 'done') toast('Done. One less bottle, one more clean counter.'); }
+    if (b.dataset.up && +b.dataset.up > 0) { var u = +b.dataset.up; list.splice(u - 1, 0, list.splice(u, 1)[0]); }
+    if (b.dataset.down && +b.dataset.down < list.length - 1) { var d = +b.dataset.down; list.splice(d + 1, 0, list.splice(d, 1)[0]); }
+    save();
+  });
+  $('lstSort').addEventListener('click', function () { list.sort(function (a, b) { return (a.s === 'done') - (b.s === 'done') || (a.cost || 0) - (b.cost || 0); }); save(); });
+  $('lstClear').addEventListener('click', function () { list = list.filter(function (x) { return x.s !== 'done'; }); save(); });
+
+  /* ---------- Tool: What needs cleaning? Surface × mess → lowest rung that works ---------- */
+  var RUNG = { 1: ['r1', 'Water'], 2: ['r2', 'Soap'], 3: ['r3', 'Baking soda'], 4: ['r4', 'Vinegar'], 5: ['r4', 'Peroxide'], 9: ['r5', 'Beyond'] };
+  var SURF = [['counter', 'Kitchen counter'], ['table', 'Table or high chair'], ['board', 'Cutting board'], ['stove', 'Stovetop'], ['oven', 'Oven'], ['sink', 'Sink or faucet'], ['shower', 'Tub, shower or glass door'], ['toilet', 'Toilet'], ['floor', 'Floor'], ['glass', 'Window or mirror'], ['carpet', 'Rug, carpet or couch'], ['toys', 'Toys or teethers']];
+  var MESS = [['every', 'Crumbs, everyday spills'], ['sticky', 'Dried or stuck-on'], ['grease', 'Greasy'], ['scale', 'White crust or cloudy'], ['smell', 'A smell'], ['sick', 'Someone’s been sick'], ['accident', 'A companion’s accident'], ['mold', 'Black or fuzzy spots'], ['droppings', 'Mouse or rat droppings'], ['spill', 'A chemical spill or broken thermometer']];
+  var wn = { s: '', m: '' };
+  function picks(el, arr, key) {
+    $(el).innerHTML = arr.map(function (r) { return '<button class="pick" type="button" aria-pressed="false" data-' + key + '="' + r[0] + '">' + esc(r[1]) + '</button>'; }).join('');
+    $(el).addEventListener('click', function (e) {
+      var b = e.target.closest('.pick'); if (!b) return;
+      var v = b.dataset[key]; wn[key] = wn[key] === v ? '' : v;
+      $(el).querySelectorAll('.pick').forEach(function (x) { x.setAttribute('aria-pressed', x.dataset[key] === wn[key] ? 'true' : 'false'); });
+      wnRender();
+    });
+  }
+  picks('wnSurf', SURF, 's'); picks('wnMess', MESS, 'm');
+
+  function plan(s, m, t) {
+    var P = { steps: [], notes: [], link: null, add: '', beyond: false };
+    function st(r, txt) { P.steps.push([r, txt]); }
+    var acidOK = !(s === 'counter' && t.stone) && s !== 'floor';
+    // Beyond the ladder first
+    if (m === 'droppings') { P.beyond = true; st(9, 'Don’t sweep or vacuum: that lifts hantavirus into the air. Open windows for 30 minutes, gloves on, then follow the wet-cleaning steps in Toxins.'); P.link = ['../index.html#lens-toxins/home/cleaners', 'Toxins → Cleaning products']; P.notes.push('Once it’s clean, close the gap they came through, so the mice find their food and shelter outdoors again.'); return P; }
+    if (m === 'spill') { P.beyond = true; st(9, 'Everyone out of the room, animals too, and a window open. Don’t vacuum mercury beads or a broken bulb. Call Poison Control at 1-800-222-1222 for what to do next.'); P.link = ['../index.html#lens-toxins/home/cleaners', 'Toxins → Cleaning products']; return P; }
+    if (m === 'mold') {
+      st(2, 'A small patch (smaller than about 3 × 3 ft): soap and water, scrub, then dry fully. Find the water that fed it.');
+      st(9, 'Bigger than that, coming back, or on something porous that stayed wet: Toxins has the plan.');
+      P.link = ['../index.html#lens-toxins/living/mold', 'Toxins → Mold in the house']; P.add = 'Bathroom: fan 20 min after showers, weekly baking soda and vinegar'; return P;
+    }
+    if (m === 'accident') {
+      st(1, 'Blot up as much as you can, then flush with cold water and blot again.');
+      st(4, 'An enzyme cleaner, or the half-vinegar spray, then baking soda overnight and vacuum.');
+      P.notes.push('No ammonia or bleach on urine. And a change in habits is worth a look at the need behind it.');
+      P.link = ['#u4/s5', '4.5 Companion animal accidents']; P.add = 'Unscented enzyme cleaner for animal accidents'; return P;
+    }
+    if (m === 'sick') {
+      st(1, 'Gloves on. Paper towels first to lift it all up; bag it.');
+      st(2, 'Clean with soap and water: disinfecting a dirty surface barely works.');
+      if (s === 'carpet') st(3, 'Baking soda on the damp spot to soak up what’s left and the smell; vacuum when dry.');
+      else st(5, '3% peroxide, left wet 5–10 minutes, then a water wipe' + (s === 'toys' ? ' and a rinse before little mouths find them again.' : '.'));
+      P.steps.push([9, 'A stomach bug passing through the house (vomiting or diarrhea in more than one person)? Norovirus outlasts gentle cleaners. Toxins has when bleach earns its place, and how to use it safely.']);
+      P.link = ['#u1/s1', '1.1 Cleaning lifts, it doesn’t kill']; P.add = 'Spray top on the brown peroxide bottle, for when it counts'; return P;
+    }
+    // The everyday ladder
+    if (m === 'every') { st(1, s === 'toilet' ? 'Baking soda and the brush in the bowl; a water cloth on the seat and handle.' : s === 'carpet' ? 'Vacuum, or blot a spill with a cold damp cloth.' : 'A warm, damp cloth, then dry. That’s it.'); P.add = s === 'floor' ? 'Flat microfiber mop, water only' : 'Counters: warm cloth, then dry, after cooking'; }
+    if (m === 'sticky') {
+      if (s === 'oven') { st(3, 'Baking soda paste (3 parts soda, 1 water) inside, overnight. Wipe out in the morning; a spritz of vinegar foams off any white film.'); P.add = 'Overnight baking soda oven clean, no oven cleaner'; P.link = ['#u3/s3', '3.3 Stove, oven and fridge']; }
+      else { st(1, 'Lay a hot wet cloth on it for 5 minutes. Then wipe; most of it lifts.'); st(3, 'Still there? A little baking soda on the damp cloth, gently.'); P.add = 'Soak first: warm cloth on spills, pans soak while we eat'; }
+    }
+    if (m === 'grease') { st(1, 'Warm water to soften it.'); st(2, 'A few drops of dish or castile soap on the cloth, then a water wipe so no film stays.'); if (s === 'oven' || s === 'stove') st(3, 'Cooked-on grease: baking soda paste, wait 15 minutes, scrub.'); P.add = 'Make a labeled soap-and-water kitchen spray'; }
+    if (m === 'scale') {
+      if (acidOK && s !== 'carpet') { st(1, 'Wipe off loose dirt first.'); st(4, s === 'sink' ? 'A cloth soaked in white vinegar wrapped around the faucet for 30 minutes, then wipe and rinse.' : 'Half-vinegar spray, wait 10 minutes, wipe, rinse with water.'); P.add = 'Labeled half-vinegar spray for glass and scale'; }
+      else { st(3, 'Acid would etch this surface. A soft baking soda paste, gently, and a water rinse.'); P.notes.push(t.stone && s === 'counter' ? 'Your counters are acid-sensitive stone, so the ladder stops at rung 3 here.' : 'Floors and grout dislike vinegar; this stays gentle.'); }
+      P.link = ['#u2/s3', '2.3 Vinegar for scale'];
+    }
+    if (m === 'smell') { st(1, 'Find the source and wash it out; a smell is usually something damp.'); st(3, s === 'carpet' ? 'Baking soda sprinkled on, an hour or overnight, then vacuum.' : 'Baking soda paste or an open jar of it nearby.'); P.notes.push('Skip sprays and air fresheners: they cover a smell with another one.'); P.link = ['#u2/s2', '2.2 Baking soda to scrub']; P.add = 'A lidded jar of baking soda on the shelf'; }
+    if (s === 'board' && (m === 'every' || m === 'grease' || m === 'sticky')) { P.steps.push([1, 'Stand it upright to dry. Now and then, peroxide for 10 minutes.']); P.link = ['#u3/s2', '3.2 Boards, sinks and sponges']; }
+    if (!P.link) P.link = { counter: ['#u3/s1', '3.1 Countertops'], table: ['#u1/s6', '1.6 Little hands, real cloths'], stove: ['#u3/s3', '3.3 Stove, oven and fridge'], oven: ['#u3/s3', '3.3 Stove, oven and fridge'], sink: ['#u3/s2', '3.2 Boards, sinks and sponges'], shower: ['#u3/s4', '3.4 Bathroom'], toilet: ['#u3/s4', '3.4 Bathroom'], floor: ['#u3/s5', '3.5 Floors and glass'], glass: ['#u3/s5', '3.5 Floors and glass'], carpet: ['#u4/s1', '4.1 Soon, blot, cold'], toys: ['#u2/s6', '2.6 Paws, beaks and little mouths'], board: ['#u3/s2', '3.2 Boards, sinks and sponges'] }[s];
+    return P;
+  }
+  function wnRender() {
+    var out = $('wnOut'); if (!out) return;
+    if (!wn.s || !wn.m) { out.innerHTML = '<small>Pick one of each. Most answers stop at water.</small>'; return; }
+    var t = tags(), P = plan(wn.s, wn.m, t);
+    var top = P.steps.reduce(function (a, b) { return b[0] === 9 ? a : Math.max(a, b[0]); }, 0);
+    var head = P.beyond ? 'This one is beyond the ladder' : top <= 1 ? 'Water does it' : 'Climb to ' + RUNG[top][1].toLowerCase() + ', no further';
+    var notes = P.notes.slice();
+    if (t.cats && P.steps.some(function (x) { return x[0] >= 4; })) notes.push('With a cat: rinse or dry the spot before paws walk through, and keep any essential-oil cleaners off the shelf.');
+    if (t.birds) notes.push('With birds: pour onto a cloth rather than spraying, and clean with a window open while he or she is in another room.');
+    if (t.kids && P.steps.some(function (x) { return x[0] >= 3; })) notes.push('With kids: they can do the water steps alongside you. Bottles back up high when you’re done.');
+    out.innerHTML = '<strong>' + esc(head) + '</strong>' + P.steps.map(function (x, i) {
+      var r = RUNG[x[0]] || RUNG[1];
+      return '<div class="rn' + (x[0] === 9 ? ' urgent' : '') + '"><span class="row" style="gap:8px;margin:0"><span class="eyebrow">Step ' + (i + 1) + '</span><span class="rbadge ' + r[0] + '">' + r[1] + '</span></span><span>' + esc(x[1]) + '</span></div>';
+    }).join('') + (notes.length ? '<ul>' + notes.map(function (n) { return '<li>' + esc(n) + '</li>'; }).join('') + '</ul>' : '') +
+      '<span class="row">' + (P.link ? '<a class="btn" href="' + P.link[0] + '">Read ' + esc(P.link[1]) + '</a>' : '') + (P.add ? '<button class="btn wn-add" data-t="' + esc(P.add) + '">' + (has(P.add) ? 'On my list' : '+ Add the fix') + '</button>' : '') + '</span>';
+  }
+  $('wnOut').addEventListener('click', function (e) {
+    var b = e.target.closest('.wn-add'); if (!b) return;
+    if (addByTitle(b.dataset.t)) toast('Added to My list · ' + list.length); else toast('Already on your list');
+    save(); wnRender();
+  });
+
+  /* ---------- Tool: Stain finder ---------- */
+  // [id, label, kind, sub-unit]
+  var STAINS = [['blood', 'Blood', 'protein', 's2'], ['sweat', 'Sweat or deodorant marks', 'protein', 's2'], ['vomit', 'Vomit or spit-up', 'protein', 's2'], ['urine', 'Urine (anyone’s)', 'urine', 's5'], ['mud', 'Mud', 'mud', 's1'],
+    ['coffee', 'Coffee or tea', 'tannin', 's3'], ['wine', 'Red wine or juice', 'tannin', 's3'], ['berry', 'Berries or beet', 'dye', 's3'], ['tomato', 'Tomato sauce', 'dye', 's3'], ['turmeric', 'Turmeric or curry', 'turmeric', 's3'], ['grass', 'Grass', 'grass', 's3'],
+    ['oil', 'Cooking oil, nut butter or dressing', 'grease', 's4'], ['makeup', 'Makeup or lip balm', 'grease', 's4'], ['rust', 'Rust', 'rust', 's6'], ['ink', 'Ballpoint ink', 'ink', 's6'], ['wax', 'Candle wax', 'wax', 's6'], ['gum', 'Gum or sticker glue', 'gum', 's6']];
+  $('sfStain').innerHTML = STAINS.map(function (x) { return '<option value="' + x[0] + '">' + esc(x[1]) + '</option>'; }).join('');
+  function sfRender() {
+    var out = $('sfOut'); if (!out) return;
+    var st = STAINS.filter(function (x) { return x[0] === $('sfStain').value; })[0], on = $('sfOn').value, light = $('sfColor').value === 'light';
+    var del = on === 'delicate', carpet = on === 'carpet', steps = [], care = [];
+    var peroxOK = light && !del;
+    var first = carpet ? 'Blot with a cold damp cloth, pressing, not rubbing. Work from the outside in.' : 'Blot, then flush with cold water from the back of the fabric.';
+    steps.push(first);
+    switch (st[2]) {
+      case 'protein': steps.push(carpet ? 'Dab with cold water and a drop of soap; blot dry.' : 'Soak in cold water with a little soap, 30 minutes or more.'); if (peroxOK) steps.push('Still there? A few drops of 3% peroxide, let it fizz, rinse.'); else steps.push('Still there? An enzyme detergent rubbed in, then a cold wash.'); care.push('Cold only until it’s gone. Heat sets protein.'); break;
+      case 'urine': steps.push('An enzyme cleaner, soaked as deep as it went, or half-vinegar spray then baking soda overnight.'); care.push('No ammonia or bleach on urine.'); break;
+      case 'mud': steps.length = 0; steps.push('Let it dry completely, then brush or vacuum off the dry dirt.'); steps.push('Rub in a drop of soap and wash cold.'); break;
+      case 'tannin': steps.push('A drop of dish soap rubbed in, then a warm rinse' + (del ? ' (lukewarm for wool or silk)' : '') + '.'); steps.push('A splash of vinegar in the rinse helps lift what’s left.'); if (peroxOK) steps.push('Whites: a little peroxide on the last trace.'); break;
+      case 'dye': if (!del && !carpet && on === 'wash') steps.push('Stretch over a bowl and pour boiling water through from a height.'); else steps.push('A drop of dish soap, then lukewarm water, blotting.'); if (peroxOK) steps.push('A little peroxide on whites, rinsed.'); if (light && !carpet) steps.push('Damp, in direct sun, for a few hours.'); break;
+      case 'turmeric': steps.push('Dish soap rubbed in, rinse.'); if (!carpet && light) steps.push('Lay it damp in direct sun for a few hours. UV fades turmeric fast.'); else if (carpet) steps.push('Open the curtains: sunlight on the spot for a few afternoons fades it.'); else steps.push('A little vinegar in a warm rinse; colors may need a few washes.'); break;
+      case 'grass': steps.push('Rub in dish soap, rinse warm.'); steps.push(peroxOK ? 'A dab of peroxide on what’s left, rinsed.' : 'A little vinegar dabbed on, rinsed.'); break;
+      case 'grease': steps.length = 0; steps.push('Scrape or blot what you can; no water yet.'); steps.push('Baking soda or cornstarch on top for 15 minutes; brush off.'); steps.push('A drop of dish soap rubbed in, 10 minutes, then ' + (carpet ? 'blot with warm water.' : 'the warmest wash the fabric allows.')); break;
+      case 'rust': if (del) { steps.push('Wool and silk dislike acid: take rust on these to a cleaner, or dab very lightly and rinse.'); } else { steps.push('Lemon juice and salt on the spot, an hour in the sun, rinse.'); } break;
+      case 'ink': steps.push('Rubbing alcohol on a cloth, dabbed from the back with a towel underneath; window open, no flames.'); steps.push('Then soap and a cold wash.'); break;
+      case 'wax': steps.length = 0; steps.push('Ice it until it’s hard; pick off what you can.'); steps.push('A paper bag over the rest and a warm iron: the wax melts into the paper.'); steps.push('Any oily mark left: dish soap, as with grease.'); break;
+      case 'gum': steps.length = 0; steps.push('Ice it hard and pick it off, or loosen with a little cooking oil.'); steps.push('Dish soap to lift the oil, then wash.'); break;
+    }
+    if (del) care.push('Wool and silk: lukewarm water, no peroxide, no boiling water, and lay flat to dry.');
+    if (!light) care.push('Colors and darks: skip peroxide and long sun; test anything on a hidden seam.');
+    care.push('Air-dry and check before any dryer.');
+    out.innerHTML = '<strong>' + esc(st[1]) + '</strong><ol>' + steps.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ol><small>' + care.map(esc).join(' ') + '</small>' +
+      '<span class="row"><a class="btn" href="#u4/' + st[3] + '">Read 4.' + st[3].replace('s', '') + '</a></span>';
+  }
+  ['sfStain', 'sfOn', 'sfColor'].forEach(function (id) { $(id).addEventListener('change', sfRender); });
+
+  /* ---------- Routing: #u3 opens unit 3; #u3/s2 scrolls to 3.2; #now and #list open their pages; #beyond scrolls the overview ---------- */
+  function route() {
+    var parts = location.hash.replace('#', '').split('/'), page = parts[0] || '';
+    var anchor = page === 'beyond' ? 'beyond-anchor' : '';
+    if (page && !document.querySelector('.page[data-page="' + page + '"]')) page = '';
+    document.querySelectorAll('.page').forEach(function (p) { p.hidden = p.dataset.page !== page; });
+    document.querySelectorAll('.vt-unit').forEach(function (u) { u.classList.toggle('cur', u.dataset.unit === page); });
+    document.querySelectorAll('.nav-over').forEach(function (a) { a.classList.toggle('cur', a.dataset.nav === page); });
+    var target = anchor ? $(anchor) : parts[1] && $(page + '-' + parts[1]);
+    if (target) target.scrollIntoView({ block: 'start' }); else window.scrollTo(0, 0);
+    if (page === 'now') wnRender();
+  }
+  window.addEventListener('hashchange', route);
+
+  renderList(); syncButtons(); apply(); route();
+})();
+</script>
+</body>
+</html>

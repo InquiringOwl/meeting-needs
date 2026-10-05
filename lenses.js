@@ -40,12 +40,6 @@ window.MN_TIERS = [
         looks: ['Particles, gases, living things, and what disasters add to the air', 'Moving air to cleanse it: windows, fans, filters and damp', 'Vacuuming and damp cleaning, new things, asbestos and lead', 'Cooking, gas, nonstick, smoke and solvents, and companions’ lungs', 'Heat waves, shade, cold, and sun on skin']
       },
       {
-        id: 'cleaning', name: 'Cleaning', status: 'building',
-        blurb: 'Stains, laundry, surfaces and mold with a few simple ingredients.',
-        topics: ['Stains', 'Laundry', 'Surfaces'],
-        looks: ['Which stain is which, and what lifts it', 'Washing that is gentler on fabric and skin', 'Mold: what you can clean and when to call it in']
-      },
-      {
         id: 'toxins', name: 'Toxins', status: 'ready',
         blurb: 'See what is in the pan, the can, the couch and the ground, and swap what matters most first, one at a time.',
         topics: ['Exposures', 'Plastics', 'In the home', 'Pesticides', 'Soil', 'Living toxins', 'Neighbors'],
@@ -55,9 +49,15 @@ window.MN_TIERS = [
   },
   {
     id: 'nurture', num: 3, name: 'Nurture', color: '#3E7B3A',
-    blurb: 'Maintenance-minded self-care and useful plants.',
+    blurb: 'Maintenance-minded care for your body, your home and the people in it.',
     status: 'Next',
     lenses: [
+      {
+        id: 'cleaning', name: 'Cleaning', status: 'building',
+        blurb: 'Stains, laundry, surfaces and mold with a few simple ingredients.',
+        topics: ['Stains', 'Laundry', 'Surfaces'],
+        looks: ['Which stain is which, and what lifts it', 'Washing that is gentler on fabric and skin', 'Mold: what you can clean and when to call it in']
+      },
       {
         id: 'body-care', name: 'Body care', status: 'next',
         blurb: 'Care for every body in the home: little ones and aging ones, honoring the diversity of bodies including disabilities, and the animals who live with you.',
@@ -65,16 +65,35 @@ window.MN_TIERS = [
         looks: ['Sun on skin: shade, clothing and mineral (zinc oxide) sunscreen', 'Skin, teeth and sleep for children and growing bodies', 'Aging bodies, and the care that keeps them comfortable', 'Disabilities and different bodies, plus the animals who share your home', 'Gentle foods for sick days and food as medicine (starts in Food → Gentle)']
       },
       {
-        id: 'gardening', name: 'Gardening', status: 'next',
-        blurb: 'Your teacher and planner: how to plant, your climate zone, a 12-month plan, and what to expect.',
-        topics: ['Learn', 'Plan', 'Seed saving'],
-        looks: ['Your growing zone, frost dates and the light you actually get', 'Soil you can build instead of buy', 'A month-by-month plan for the space you have']
+        id: 'energy', name: 'Energy & light', status: 'later',
+        blurb: 'Heat, light, cook and stay warm with less: fireplaces, gas, lighting, insulation and more.',
+        topics: ['Fireplaces', 'Cooking', 'Gas', 'Light', 'Insulation'],
+        looks: ['Fireplaces and wood stoves that burn clean and safe', 'Gas appliances, leaks and carbon monoxide', 'Daylight, bulbs and staying lit through an outage', 'Insulation and draught-proofing that cut the bill']
+      },
+      {
+        id: 'self-defense', name: 'Self-defense', status: 'next',
+        blurb: 'Keep yourself, the people you love and your home safe: noticing early, calming things with words, getting away, and a home that’s ready.',
+        topics: ['Noticing', 'De-escalation', 'Getting away', 'Home'],
+        looks: ['Trusting the early feeling that something is off, and leaving early', 'De-escalation: distance, calm and words before anything else', 'Simple protective moves for breaking free and getting away', 'Home preparation: locks, lights, a safe room, a plan and neighbors who check in (with Emergency prep)']
       },
       {
         id: 'household-tools', name: 'Household tools', status: 'next',
         blurb: 'The toolbox, the cleaning shelf and the medicine cabinet: what tools do, and how to use them safely.',
         topics: ['Tools', 'Chemistry', 'Safety'],
         looks: ['The few tools that handle most jobs', 'Reading a label for what is actually in it', 'Pairs that must never meet, like bleach and ammonia']
+      }
+    ]
+  },
+  {
+    id: 'resilience', num: 4, name: 'Resilience', color: '#2F6E9E',
+    blurb: 'Grow, cycle and withstand harder times: gardens, waste, storms, emergencies and injuries.',
+    status: 'Later',
+    lenses: [
+      {
+        id: 'gardening', name: 'Gardening', status: 'next',
+        blurb: 'Your teacher and planner: how to plant, your climate zone, a 12-month plan, and what to expect.',
+        topics: ['Learn', 'Plan', 'Seed saving'],
+        looks: ['Your growing zone, frost dates and the light you actually get', 'Soil you can build instead of buy', 'A month-by-month plan for the space you have']
       },
       {
         id: 'composting-waste', name: 'Composting & waste', status: 'next',
@@ -83,29 +102,10 @@ window.MN_TIERS = [
         looks: ['Compost and worm bins that don’t smell', 'How sewage and septic systems work, and why the grid is usually safest', 'Sending less of everything else away']
       },
       {
-        id: 'self-defense', name: 'Self-defense', status: 'next',
-        blurb: 'Keep yourself, the people you love and your home safe: noticing early, calming things with words, getting away, and a home that’s ready.',
-        topics: ['Noticing', 'De-escalation', 'Getting away', 'Home'],
-        looks: ['Trusting the early feeling that something is off, and leaving early', 'De-escalation: distance, calm and words before anything else', 'Simple protective moves for breaking free and getting away', 'Home preparation: locks, lights, a safe room, a plan and neighbors who check in (with Emergency prep)']
-      }
-    ]
-  },
-  {
-    id: 'resilience', num: 4, name: 'Resilience', color: '#2F6E9E',
-    blurb: 'Withstand harder times: injuries, outages, storms, and breakdowns.',
-    status: 'Later',
-    lenses: [
-      {
-        id: 'energy', name: 'Energy', status: 'later',
-        blurb: 'Heat, cook and stay warm with less: fireplaces, gas, insulation and more.',
-        topics: ['Fireplaces', 'Cooking', 'Gas', 'Insulation'],
-        looks: ['Fireplaces and wood stoves that burn clean and safe', 'Gas appliances, leaks and carbon monoxide', 'Insulation and draught-proofing that cut the bill']
-      },
-      {
-        id: 'first-aid', name: 'First aid', status: 'later',
-        blurb: 'Cuts, burns, sprains, choking and bites: what to do in the first minutes.',
-        topics: ['Wounds', 'Burns', 'Sprains', 'Emergencies'],
-        looks: ['Stopping bleeding and cleaning a wound', 'Burns, breaks and sprains: what helps and what makes it worse', 'When to call emergency services, and what to do until they arrive', 'Fluids and gentle food after vomiting, diarrhea or heat (from Food → Gentle)']
+        id: 'weather', name: 'Weather', status: 'later',
+        blurb: 'Read the sky: which clouds bring rain, and the seasonal patterns where you live.',
+        topics: ['Clouds', 'Wind', 'Seasons'],
+        looks: ['Cloud types and which ones turn to rain', 'Wind, pressure and the signs before a storm', 'Your local seasons, frost and rainfall patterns']
       },
       {
         id: 'emergency-prep', name: 'Emergency prep', status: 'building',
@@ -114,10 +114,10 @@ window.MN_TIERS = [
         looks: ['What to prep for: wildfire, earthquakes, heat, floods, outages and animals', 'Go-bags, water and supplies for earthquakes, fires and floods', 'Personal safety, building on the Self-defense lens', 'Simple ways to secure doors, windows and your home']
       },
       {
-        id: 'weather', name: 'Weather', status: 'later',
-        blurb: 'Read the sky: which clouds bring rain, and the seasonal patterns where you live.',
-        topics: ['Clouds', 'Wind', 'Seasons'],
-        looks: ['Cloud types and which ones turn to rain', 'Wind, pressure and the signs before a storm', 'Your local seasons, frost and rainfall patterns']
+        id: 'first-aid', name: 'First aid', status: 'later',
+        blurb: 'Cuts, burns, sprains, choking and bites: what to do in the first minutes.',
+        topics: ['Wounds', 'Burns', 'Sprains', 'Emergencies'],
+        looks: ['Stopping bleeding and cleaning a wound', 'Burns, breaks and sprains: what helps and what makes it worse', 'When to call emergency services, and what to do until they arrive', 'Fluids and gentle food after vomiting, diarrhea or heat (from Food → Gentle)']
       },
       {
         id: 'identification', name: 'Identification', status: 'next',
