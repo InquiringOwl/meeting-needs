@@ -27,7 +27,8 @@ This app talks the way it teaches people to talk.
 
 - **Observations, not judgements.** Say what happened ("the dishes have been in the sink since Tuesday"), not what it means about someone ("you're lazy").
 - **Feelings, not accusations.** Words like *abandoned, ignored, attacked, betrayed, manipulated* hide a "you did this to me". We name the feeling underneath (lonely, scared, hurt) and the need under that.
-- **Needs, not diagnoses.** We never call a person, child, animal or plant "bad", "lazy", "difficult" or a "pest". We ask what it needs.
+- **Needs, not diagnoses.** We never call a person, child, animal or plant "bad", "lazy", "difficult" or a "pest". We ask what they need.
+- **No good/bad people, no "deserve".** Sorting people into good and bad is how a lot of violence gets permission, and nobody deserves to suffer. We ask what happened, who was hurt, what everyone needs, and what would repair it. Protective force (keeping someone safe) is fine; punishment is not something we promote.
 - **Requests, not demands.** The app offers; it never orders. No guilt copy ("you're poisoning your family"), no countdowns, no streak shaming. A "Not now" is always a valid answer.
 - Plain words, short sentences, warm tone. Explain any term the first time it appears.
 
@@ -39,7 +40,7 @@ The same four steps (notice, feel, find the need, ask) work everywhere, so every
 
 - **Ourselves:** feelings are signals that point to our own needs.
 - **Each other:** partners, children, housemates, neighbours, groups and teams.
-- **Animals:** companion animals tell us their needs through their bodies. Wild animals in the house or garden ("pests") are neighbours whose needs (food, water, shelter) our home is accidentally meeting. Change what we offer and they move on, without poisons where possible.
+- **Animals:** animals are someone, not something. Use **they/them** for an animal whose sex you don't know, and **he** or **she** when you do, just as with people; never "it". Call animals by who they are (a cow, a pig, a chicken, a fish), never by the names of what they become as meat ("beef", "pork", "poultry", "seafood"), and say "farmed animals" rather than "livestock". Kinship is a vegan project by nature, as a practice of peace with animals; we say so warmly and never preach or shame anyone's choices. Companion animals tell us their needs through their bodies. Wild animals in the house or garden ("pests") are neighbours whose needs (food, water, shelter) our home is accidentally meeting. Change what we offer and they move on, without poisons where possible.
 - **Plants and land:** a yellow leaf or a bare patch of soil is a message about a need: water, light, nutrients, shelter.
 - **The house itself:** damp, dust and fumes are signals too. The Cleaning, Airflow, Toxins and Water lenses are about meeting the household's needs.
 
@@ -48,6 +49,8 @@ The same four steps (notice, feel, find the need, ask) work everywhere, so every
 - Free fixes come first. Show what people can do with what they have before anything that costs money.
 - Repair, share and borrow before buying. Tool libraries, bulk orders and neighbours are strategies too.
 - Free and open source. No accounts, ads or tracking. Data stays on the person's device.
+
+- **Power with, not power over.** Cooperatives (worker co-ops, housing co-ops, community land trusts) are strategies for meeting needs without extracting profit from the people doing the work or living in the homes.
 
 ## 6. How this shows up in the build
 

@@ -1,5 +1,5 @@
 /* Water lens: course content, profile tailoring and tools. Registers window.MN_LENS_VIEWS.water.
-   Routes: #lens-water (overview) · #lens-water/<unit>[/<sub>]. Units are shades of blue, darkest (1) to lightest (6).
+   Routes: #lens-water (overview) · #lens-water/cows (overview, scrolled to Ashley’s take on cows) · #lens-water/<unit>[/<sub>]. Units are shades of blue, darkest (1) to lightest (6).
    Tailoring: answers from the Profile (Place + Water) become tags; accordions tagged data-for open with a "For you" badge.
    Every section stays available to everyone. Laws mentioned are California's; the practices are general. */
 (function () {
@@ -392,18 +392,19 @@
       '<div class="opinion-facts"><span class="eyebrow">The numbers I’m looking at</span><ul>' +
       '<li><b>Farms use about 40% of California’s water</b> in an average year (roughly half goes to rivers and wetlands, about 10% to cities and homes). That’s about 80% of the water people put to use.</li>' +
       '<li><b>Feed crops take about 27% of farm water</b>: alfalfa, irrigated pasture and silage corn, on about a quarter of farmed acres. The other ~73% grows nuts, fruit, vegetables, grains, rice and fiber, much of it exported.</li>' +
-      '<li><b>Feed becomes food at a steep loss.</b> Worldwide, about 12 of every 100 feed calories reach people as meat, milk or eggs; for beef it’s about 3. Researchers estimate today’s cropland could feed about 4 billion more people if feed and biofuel crops went to food people eat directly.</li>' +
-      '<li><b>One beef animal, start to finish</b> (a classic worked example): about 1,300 kg of grain, 7,200 kg of hay and pasture, 24,000 liters to drink and 7,000 to clean its stalls, for about 200 kg of boneless beef. That’s about 3 million liters (roughly 810,000 gallons) in all. <b>Drinking water is under 1%</b> (about 6,300 gallons); cleaning is about 0.2%; <b>about 99% is the water that grew its feed.</b></li>' +
-      '<li><b>And it’s a short life.</b> The example uses 3 years; in US feedlot systems, beef cattle are usually slaughtered at about 18–22 months. Cattle can live 15–20 years.</li>' +
-      '</ul><p class="opinion-src">Sources: Public Policy Institute of California, <i>Water Use in California’s Agriculture</i> (farm data 2011–13); Cassidy et al., “Redefining agricultural yields,” <i>Environmental Research Letters</i> (2013); Hoekstra / Water Footprint Network beef example.</p></div>' +
-      '<p>So my heart says: the biggest, fastest way to free up water for people, rivers and wells isn’t a new dam. It’s eating, and farming, more plants. Your needs and your choices are yours; I just want the numbers on the table. Who decides how the water is split is in <a href="#lens-governance">Governance</a>.</p>');
+      '<li><b>Feed becomes food at a steep loss.</b> Worldwide, about 12 of every 100 feed calories reach people as meat, milk or eggs; for meat from cows it’s about 3. Researchers estimate today’s cropland could feed about 4 billion more people if feed and biofuel crops went to food people eat directly.</li>' +
+      '<li><b>One cow raised for meat, start to finish</b> (a classic worked example): about 1,300 kg of grain, 7,200 kg of hay and pasture, 24,000 liters to drink and 7,000 to clean their stall, for about 200 kg of boneless meat. That’s about 3 million liters (roughly 810,000 gallons) in all. <b>Drinking water is under 1%</b> (about 6,300 gallons); cleaning is about 0.2%; <b>about 99% is the water that grew their feed.</b></li>' +
+      '<li><b>And it’s a short life.</b> The example uses 3 years; in US feedlot systems, cows raised for meat are usually killed at about 18–22 months. Cows can live 15–20 years.</li>' +
+      '</ul><p class="opinion-src">Sources: Public Policy Institute of California, <i>Water Use in California’s Agriculture</i> (farm data 2011–13); Cassidy et al., “Redefining agricultural yields,” <i>Environmental Research Letters</i> (2013); Hoekstra / Water Footprint Network worked example for one cow.</p></div>' +
+      '<p>So my heart says: the biggest, fastest way to free up water for people, rivers and wells isn’t a new dam. It’s eating, and farming, more plants. Your needs and your choices are yours; I just want the numbers on the table. Who decides how the water is split is in <a href="#lens-governance">Governance</a>.</p>' +
+      '<p>And cows matter in their own right, not only for the water: they have friendships, mothers who bond with their calves, and lives that can last 20 years. More in <a href="#lens-relationships/animals">Emotions &amp; love: Animals</a>.</p>');
   }
   function viewOverview(U) {
     return '<section class="wa-hero"><span class="wa-lens-pill">Tier 2 · Roots · Course</span><h1 tabindex="-1">Water</h1>' +
       '<p class="wa-lede">Every body needs water, and people have met that need for as long as there have been people. Six short units on how we use it, where it comes from, how to keep it, clean it, know it’s safe and pay for it, at every scale: a studio, a farm, a car, a sidewalk.</p></section>' +
       '<ol class="wa-ucards">' + U.map(function (u) {
         return '<li><a class="wa-ucard wk' + u.num + '" href="' + BASE + '/' + u.id + '"><i class="wa-band"></i><span class="wa-n">0' + u.num + '</span><b>' + u.word + '</b><span>' + u.sub + '</span><ol>' + u.subs.map(function (s) { return '<li>' + s.title + '</li>'; }).join('') + '</ol></a></li>';
-      }).join('') + '</ol>' + ashley() +
+      }).join('') + '</ol>' + '<div id="wa-cows">' + ashley() + '</div>' +
       '<aside class="wa-funfact"><span class="eyebrow">A grateful fun fact</span><p>This course leans on three kinds of knowing, checked against each other: old practice that kept people alive for thousands of years, international guidance (the World Health Organization’s drinking-water guidelines and the Sphere humanitarian handbook), and what you can see, smell and test yourself. Legal limits come from politics as well as science, and they change, so we use them as one input, not the last word. Laws mentioned are California’s; water itself is the same everywhere. Thank you to everyone who keeps this knowledge free.</p></aside>';
   }
   function viewUnit(U, u, subId) {
@@ -429,6 +430,7 @@
     T = tags();
     var U = units(), seg = (sub || '').split('/'), u = U.filter(function (x) { return x.id === seg[0]; })[0];
     if (u) return { title: u.word + ' · Water · Kinship', html: layout(U, u.id, viewUnit(U, u, seg[1])) };
+    if (seg[0] === 'cows') setTimeout(function () { var el = document.getElementById('wa-cows'); if (el) el.scrollIntoView({ block: 'start' }); }, 0);
     return { title: 'Water · Kinship', html: layout(U, null, viewOverview(U)) };
   };
 })();

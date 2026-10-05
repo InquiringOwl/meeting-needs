@@ -12,7 +12,7 @@ window.MN_TIERS = [
         id: 'relationships', name: 'Emotions & love', status: 'ready',
         blurb: 'Hear your own needs, meet others’ with kindness, and find strategies that work for everyone.',
         topics: ['Nonviolence', 'Relationships', 'Dialogues'],
-        looks: ['Feelings as signals, and the universal needs they point to', 'Requests instead of demands, and dialogue where both sets of needs count', 'Children, housemates, groups, animals and plants']
+        looks: ['Feelings as signals, and the universal needs they point to', 'Requests instead of demands, and dialogue where both sets of needs count', 'Children, neighbors, animals, cooperatives and power shared instead of held over']
       }
     ]
   },

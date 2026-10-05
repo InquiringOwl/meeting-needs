@@ -15,7 +15,7 @@ Plain HTML, CSS and JavaScript. No build step, no server, no accounts.
 | `app.js` | Home, About, lens pages, profile; hash routes `#`, `#about`, `#plans`, `#favorites`, `#profile`, `#lens-<id>[/<sub>]` |
 | `FOUNDATION.md` | The principles behind every lens |
 | `rel-data.js` | Relationships course data: skill tree, feelings wheel, needs, accusation words, examples |
-| `rel.js` | Relationships course: overview, one page per unit (feel, need, request, dialogue) with the vertical skill-tree sidebar, and tools (`#lens-relationships`, `#lens-relationships/<unit>[/<sub-unit>]`) |
+| `rel.js` | Relationships course: overview, one page per unit (feel, need, request, dialogue) with the vertical skill-tree sidebar, and tools (`#lens-relationships`, `#lens-relationships/<unit>[/<sub-unit>]`). Special-application previews: Neighbors, Cooperatives, Power & peace, Animals (`#lens-relationships/neighbors|coops|power|animals`) |
 | `rel.css` | Relationships course styles |
 | `water.js` | Water course: six units (Uses, Sources, Storage, Purify, Testing, Costs), one page each, tailored from the profile, with tools (`#lens-water`, `#lens-water/<unit>[/<sub-unit>]`) |
 | `water.css` | Water course styles (units in blues, darkest to lightest) |
@@ -38,7 +38,10 @@ Place questions describe the place and how long and how much you can shape it, n
 Edit `lenses.js`. Status is one of `ready`, `building`, `next`, `later`. A lens takes its tier's `color`. A tier with `locked: true` shows its cards on the home page without linking them (Roots, for now).
 
 ## Creator opinions
-Most copy aims to be plain and checkable. Ashley's own opinions are set apart in pink (the tier 1 and logo color) with `MN.opinion(html, title)`, which renders an "Ashley's take · creator opinion" box (`.opinion` in `style.css`). Keep facts inside an opinion sourced, and keep opinions out of the regular copy. The first one is on the Water overview (water for animal agriculture).
+Most copy aims to be plain and checkable. Ashley's own opinions are set apart in pink (the tier 1 and logo color) with `MN.opinion(html, title)`, which renders an "Ashley's take · creator opinion" box (`.opinion` in `style.css`). Keep facts inside an opinion sourced, and keep opinions out of the regular copy. The first one is on the Water overview (water for animal agriculture; deep link `#lens-water/cows`), which links to the Animals page in Emotions & love.
+
+## Language for animals
+Animals are someone, not something: they/them when sex is unknown, he/she when known, never "it". Never call animals by meat names ("beef", "pork", "poultry", "seafood") or "livestock". See FOUNDATION.md section 4.
 
 ## Logo
 A cut-paper chain of three hearts with dotted folds at the joins (the `LOGO` constant in `app.js`; a single paper heart is the favicon in `index.html`).

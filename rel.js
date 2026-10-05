@@ -70,7 +70,7 @@
       '<details class="rel-nav-wrap"' + (wide ? ' open' : '') + '><summary class="rel-nav-head"><span class="eyebrow">Course map</span><b>Emotions &amp; love</b></summary>' +
       '<a class="rel-nav-over" href="' + BASE + '"' + (!cur ? ' aria-current="page"' : '') + '>Overview</a>' +
       '<ol class="rel-vt">' + units + '</ol>' +
-      '<div class="rel-vt-apps"><span class="eyebrow">Then, special applications</span><p>' + D.APPS.map(function (a) { return a.preview ? '<a href="' + href(a.id) + '">' + esc(a.name) + '</a>' : esc(a.name); }).join(' · ') + '</p><span class="rel-later">Neighbors preview open · more later</span></div>' +
+      '<div class="rel-vt-apps"><span class="eyebrow">Then, special applications</span><p>' + D.APPS.map(function (a) { return a.preview ? '<a href="' + href(a.id) + '">' + esc(a.name) + '</a>' : esc(a.name); }).join(' · ') + '</p><span class="rel-later">Previews open · more later</span></div>' +
       '</details></nav>';
   }
   function layout(cur, main) {
@@ -164,6 +164,140 @@
       '</article>' +
       '<nav class="rel-pager" aria-label="Units"><a class="rel-pg prev" href="' + BASE + '"><small>← Back to</small><b>Overview</b></a><a class="rel-pg next" href="#lens-water"><small>Related →</small><b>Water</b></a></nav>';
     return { title: 'Neighbors · Emotions & love · Kinship', html: layout('neighbors', html) };
+  }
+
+  /* ---------- special applications: generic preview page ----------
+     o = { id, letter, name, sub, lede, secs: [[title, short, keys, extra]], note, related: [href, label] } */
+  function viewPreview(o) {
+    var secs = o.secs.map(function (x, j) {
+      var n = j + 1;
+      return '<section class="rel-sec" id="sec-' + o.id + '-' + n + '"><div class="rel-sec-head"><span class="rel-sec-n">' + o.letter + '.' + n + '</span><div><h2>' + esc(x[0]) + '</h2><p>' + esc(x[1]) + '</p></div></div>' +
+        '<ul class="rel-keys">' + x[2].map(function (k) { return '<li>' + md(k) + '</li>'; }).join('') + '</ul>' + (x[3] || '') + '</section>';
+    }).join('');
+    var html = '<article class="rel-unitpage k-apps">' +
+      '<header class="rel-unit-hero"><span class="eyebrow">Special application · Preview</span><h1 tabindex="-1">' + esc(o.name) + '</h1>' +
+      '<p class="rel-unit-sub">' + esc(o.sub) + '</p><p class="lede">' + esc(o.lede) + '</p></header>' +
+      secs + (o.after || '') +
+      '<div class="note">' + esc(o.note) + '</div></article>' +
+      '<nav class="rel-pager" aria-label="Units"><a class="rel-pg prev" href="' + BASE + '"><small>← Back to</small><b>Overview</b></a>' +
+      (o.related ? '<a class="rel-pg next" href="' + o.related[0] + '"><small>Related →</small><b>' + esc(o.related[1]) + '</b></a>' : '') + '</nav>';
+    return { title: o.name + ' · Emotions & love · Kinship', html: layout(o.id, html) };
+  }
+  function tryIt(t) { return '<p class="rel-remember"><span class="eyebrow">Try it</span>' + md(t) + '</p>'; }
+  function src(t) { return '<p class="rel-q"><small>' + t + '</small></p>'; }
+
+  /* Power & peace: nonviolence, abolition and power structures. */
+  function viewPower() {
+    return viewPreview({
+      id: 'power', letter: 'P', name: 'Power & peace', sub: 'Nonviolence, abolition, and power shared instead of held over',
+      lede: 'The same four steps that work between two people work in families, workplaces, towns and whole systems. Underneath every system of punishment is an idea about who is good, who is bad, and who deserves to suffer. Nonviolence asks a different question: what does everyone here need, and how do we meet it together?',
+      secs: [
+        ['Power over, power with', 'Two ways to get things done together.', [
+          '**Power over:** one side decides for the other and backs it up with fear, punishment, shame or reward.',
+          '**Power with:** decisions made together, where everyone’s needs count, including the people with the least say right now.',
+          'Power over can get compliance fast. It costs trust, and people tend to comply only while someone is watching. Power with is slower to start and lasts longer.',
+          '**Protective force isn’t punishment.** Grabbing a child before they run into the street protects a life. Making someone suffer so they “learn their lesson” is punitive. Nonviolence keeps the first and lets go of the second.'
+        ], src('Sources: Mary Parker Follett, “power-over” and “power-with” (1920s); Marshall B. Rosenberg, <i>Nonviolent Communication</i>, on protective vs. punitive use of force.')],
+        ['Beyond good and bad', 'Moral labels make harm feel fair.', [
+          '“Good”, “bad”, “evil”, “criminal” and “deserves” are judgments, not observations. They tell us about the speaker’s values, not about the person.',
+          'Once someone is sorted into “bad”, hurting them can start to feel like justice. Ranking people by worth is how a lot of violence gets permission.',
+          '**Every action is an attempt to meet a need**, even a harmful one; often a tragic, costly attempt. Seeing the need isn’t excusing the harm. It’s where real repair starts.',
+          '**Nobody deserves to suffer.** Instead of “what do they deserve?”, ask: what happened, who was hurt, what do they need, and what would make this less likely to happen again?'
+        ], src('Sources: Marshall B. Rosenberg on moralistic judgments and “deserve” thinking; Walter Wink, <i>The Powers That Be</i> (1998), on the “domination system”.')],
+        ['Abolition', 'Building a world where cages and punishment aren’t needed.', [
+          '**Abolition** (of prisons and policing as we know them) asks: what would make them unnecessary? Most of the answers are needs: housing, health and mental-health care, income, education, belonging, safety.',
+          'It’s as much about building as taking apart: community crisis teams, violence interrupters, restorative and transformative justice circles, mutual aid.',
+          '**Accountability without punishment:** name the harm, hear the needs on every side, repair what can be repaired, and change the conditions that made the harm likely.',
+          'The United States locks up more of its people than almost any other country. Abolitionists point out that this hasn’t made people feel safe, and that harm from punishment falls hardest on people who are already poor, disabled, Black, brown or Indigenous.'
+        ], src('Sources: Angela Y. Davis, <i>Are Prisons Obsolete?</i> (2003); Mariame Kaba, <i>We Do This ’Til We Free Us</i> (2021); Ruth Wilson Gilmore, <i>Golden Gulag</i> (2007); World Prison Brief (prisonstudies.org) for incarceration rates.')],
+        ['Power at home and all around', 'Hierarchies are everywhere, and each one can soften.', [
+          'Adult over child, boss over worker, landlord over tenant, human over animal. Each is a place where power over can become power with.',
+          '**At home:** ask instead of order, decide in a circle, turn rules into agreements and revisit them when they stop working.',
+          '**At work and where you live:** owning and deciding together is an option. See Cooperatives.',
+          '**With animals:** the same respect, all the way down. See Animals.'
+        ], '<p class="rel-q">Next: <a href="' + href('coops') + '">Cooperatives</a> · <a href="' + href('animals') + '">Animals</a> · <a href="#lens-governance">Governance</a></p>' +
+          tryIt('Catch one “should” or “deserves” in your own thinking today. Translate it: which need is underneath it?')]
+      ],
+      note: 'This is a preview. The full Power & peace unit (circles, agreements, restorative practice, and community safety) comes with the special applications tree.',
+      related: ['#lens-governance', 'Governance']
+    });
+  }
+
+  /* Cooperatives: democratic workplaces and housing. */
+  function viewCoops() {
+    return viewPreview({
+      id: 'coops', letter: 'C', name: 'Cooperatives', sub: 'Workplaces and homes owned and run together',
+      lede: 'Most workplaces and most housing are set up so that someone outside the work, or outside the home, owns it and collects the profit. Cooperatives flip that: the people doing the work, or living in the homes, own them together and decide together. It’s one of the oldest ways to share power, and it’s growing.',
+      secs: [
+        ['Why ownership matters', 'Who owns it decides who it serves.', [
+          '**Extracting profit:** in a typical company, value made by workers flows up and out to owners and shareholders. In typical renting, rent flows to a landlord whether or not the home is cared for.',
+          '**In a co-op, the people who use it own it.** Members still earn wages or pay housing costs; what’s left over goes back to members or the community instead of outside owners.',
+          '**One member, one vote,** not one share, one vote. A dishwasher’s voice counts the same as a founder’s.',
+          'The seven cooperative principles: open membership, democratic member control, members share the money, independence, education for members, co-ops helping co-ops, and care for the wider community.'
+        ], src('Source: International Cooperative Alliance, <i>Statement on the Cooperative Identity</i> (1995), ica.coop.')],
+        ['Worker cooperatives', 'A workplace without a boss above it.', [
+          'Workers own the business together, elect or are the board, and decide on pay, hours and direction. Many keep pay ratios small between the highest and lowest paid.',
+          'Close to home: the **Arizmendi** bakeries in the Bay Area are worker-owned. **Cooperative Home Care Associates** in the Bronx (since 1985) is one of the largest worker co-ops in the US. **Mondragon** in the Basque Country employs tens of thousands of worker-owners.',
+          '**Conversions:** when owners retire, a business can be sold to the people who already run it, keeping jobs local.',
+          'California has a **Worker Cooperative Act** (2015) that makes this legal structure easier to set up.'
+        ], src('Sources: US Federation of Worker Cooperatives (usworker.coop); Democracy at Work Institute; California AB 816 (2015).')],
+        ['Living together: housing and land', 'Homes that can’t be flipped for profit.', [
+          '**Housing cooperative:** residents own the building together through a co-op. Each household holds a share and the right to live in their home, and members decide on rules, repairs and costs.',
+          '**Limited-equity co-op:** the share price is capped, so the home stays affordable for the next household instead of rising with the market.',
+          '**Community land trust (CLT):** a nonprofit holds the land forever, for the community. Households own or rent the home on top under a long lease, and agree to a fair resale price. The first one in the US, New Communities in Georgia (1969), was started by Black farmers in the civil rights movement.',
+          '**Cohousing:** private homes clustered around a shared common house, kitchen and garden, with decisions made together. It began in Denmark.',
+          '**Student and group houses:** the Berkeley Student Cooperative has housed students together since 1933. Many land co-ops and farm co-ops work the same way: people hold land together instead of one owner holding it over others.'
+        ], src('Sources: National Association of Housing Cooperatives; Grounded Solutions Network (groundedsolutions.org) on CLTs; Cohousing Association of the US; Berkeley Student Cooperative.')],
+        ['Starting small', 'Practice sharing before owning.', [
+          'A buying club, a tool library, a shared garden or a babysitting swap: each is a tiny co-op with agreements and shared decisions.',
+          'Tenants who talk to each other can start as a tenant association, and some buildings later buy together.',
+          'Deciding together: **consensus** (everyone agrees), **consent** (no one has a strong objection, as in sociocracy), or **majority vote**. Each fits different groups and decisions.',
+          'California help: the **Sustainable Economies Law Center** in Oakland offers free legal resources for co-ops and shared housing.'
+        ], tryIt('Name one thing you already share with others: a laundry room, a car, a garden. What agreement would make it work better for everyone?')]
+      ],
+      note: 'This is a preview. The full Cooperatives unit (meetings, money, conversions, and how to start a housing co-op or CLT) comes with the special applications tree.',
+      related: [href('power'), 'Power & peace']
+    });
+  }
+
+  /* Animals: respect in language, reading signals, cows in their own right, wild neighbors. */
+  function viewAnimals() {
+    var take = mn().opinion ? mn().opinion(
+      '<p>Kinship is a vegan project at heart, because to me peace includes animals. That isn’t a test anyone has to pass here. Your needs and choices are yours; I just want animals to be seen as someone, with needs of their own.</p>') : '';
+    return viewPreview({
+      id: 'animals', letter: 'A', name: 'Animals', sub: 'Someone, not something',
+      lede: 'Animals share our homes, our neighborhoods, our water and our food systems. They have feelings and needs, and they tell us about them with their bodies. The same four steps (notice, feel, find the need, ask) work here, starting with how we talk about them.',
+      secs: [
+        ['Someone, not something', 'Respect starts in language.', [
+          '**Pronouns:** use **they/them** for an animal when you don’t know their sex, and **he** or **she** when you do, the same way you would for a person. “It” turns someone into something.',
+          '**Who, not that:** “the cat who lives next door”, “the cow who…”.',
+          '**Call animals by who they are:** a cow, a pig, a chicken, a fish. Words like “beef”, “pork”, “poultry” and “seafood” are names for what animals become after they die. Language that hides the animal makes the harm easier to look past.',
+          '**Farmed animals,** not “livestock” or “stock”, which count living beings as inventory.'
+        ]],
+        ['Reading their signals', 'Behavior is communication.', [
+          'Ears, tail, posture, appetite, hiding, pacing and play are all signals. “Bad dog” becomes “what is he needing?”',
+          'Shared needs: food, water, safety, rest, play, company and choice. Each species has its own strategies: cats need high places and hunting games, dogs need to sniff, rabbits need another rabbit.',
+          '**Choice and consent:** let animals approach you, and notice when they move away. A “no” from an animal counts too.'
+        ]],
+        ['Cows, in their own right', 'More than the water their lives use.', [
+          'The Water course counts how much water goes into one cow raised for meat (about 99% of it grows their feed). That matters, and it isn’t the main reason a cow matters. She matters because she’s someone.',
+          '**Cows have friends.** Studies find cows are calmer and less stressed when they’re with a preferred companion.',
+          '**Mothers and calves bond.** In dairy farming, calves are usually separated from their mothers within hours to a day of birth so the milk can be sold.',
+          '**Cows feel and learn.** Young cows have shown excitement when they solve a problem themselves. Cows can live 15–20 years; those raised for meat in US feedlots are usually killed at about 18–22 months.',
+          'Scientists agree that mammals and birds have the brain systems for conscious experience, and evidence for fish keeps growing. Pigs, chickens and fish feel fear and pain too.'
+        ], '<p class="rel-q">Water lens: <a href="#lens-water/cows">how much water goes into one cow’s life</a></p>' +
+          src('Sources: McLennan, <i>Social bonds in dairy cattle</i> (University of Northampton, 2013); Hagen &amp; Broom, “Emotional reactions to learning in cattle,” <i>Applied Animal Behaviour Science</i> (2004); <i>Cambridge Declaration on Consciousness</i> (2012); <i>New York Declaration on Animal Consciousness</i> (2024).')],
+        ['Wild neighbors', '“Pests” are neighbors with needs.', [
+          'Mice, ants, raccoons and pigeons come because a home is meeting their needs: food, water, warmth, shelter. Change what the home offers and they move on.',
+          'Seal food, fix drips, close gaps, and use live traps and exclusion before anything that kills.',
+          'Poisons travel: rat poison kills owls, hawks, foxes and cats who eat a poisoned animal. California has restricted the strongest rodenticides since 2021 for this reason.'
+        ], src('Source: California AB 1788 (2020), restrictions on second-generation anticoagulant rodenticides.') +
+          tryIt('Next time you talk about an animal, notice your pronoun. Try “they”, “he” or “she”.')]
+      ],
+      after: take,
+      note: 'This is a preview. The full Animals unit (companion animals by species, sanctuaries, and wildlife at home) comes with the special applications tree.',
+      related: ['#lens-water/cows', 'Water: cows']
+    });
   }
 
   /* Highlight the sub-unit you're reading in the sidebar. */
@@ -410,6 +544,9 @@
     }
     if (UNIT[seg[0]]) return viewUnit(UNIT[seg[0]], seg[1]);
     if (seg[0] === 'neighbors') return viewNeighbors();
+    if (seg[0] === 'power') return viewPower();
+    if (seg[0] === 'coops') return viewCoops();
+    if (seg[0] === 'animals' || seg[0] === 'pets' || seg[0] === 'wild') return viewAnimals();
     return viewOverview();
   };
 

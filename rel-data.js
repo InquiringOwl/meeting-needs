@@ -198,8 +198,9 @@ window.MN_REL = (function () {
     { id: 'neighbors', name: 'Neighbors', short: 'The people, plants and animals you share water, air, walls and streets with.', preview: true },
     { id: 'groups', name: 'Gatherings & groups', short: 'Hosting, rounds and agreements, conflict in a circle.' },
     { id: 'projects', name: 'Projects', short: 'A shared goal, roles by willingness, check-ins.' },
-    { id: 'pets', name: 'Companion animals', short: 'Reading their signals and meeting a species’ needs.' },
-    { id: 'wild', name: 'Wildlife', short: '“Pests” as neighbors with needs: change what your home offers.' },
+    { id: 'coops', name: 'Cooperatives', short: 'Workplaces and homes owned and run together, without extracting profit.', preview: true },
+    { id: 'power', name: 'Power & peace', short: 'Nonviolence, abolition, and power with instead of power over.', preview: true },
+    { id: 'animals', name: 'Animals', short: 'Someone, not something: companion, farmed and wild animals, and their needs.', preview: true },
     { id: 'plants', name: 'Plants', short: 'A plant’s signals as needs; continues in Gardening.' }
   ];
 
