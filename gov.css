@@ -3,7 +3,7 @@
 .gv-hero { display: flex; flex-direction: column; gap: 12px; }
 .gv-pill { align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: var(--gv); color: #fff; font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1; }
 .gv-hero h1 { font-weight: 800; font-size: clamp(46px, 6.4vw, 84px); line-height: 0.95; letter-spacing: -0.04em; }
-.gv-lede { font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-2); max-width: 66ch; }
+.gv-lede { font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-2); max-width: 104ch; }
 .gv-sec { display: flex; flex-direction: column; gap: 12px; padding: clamp(18px, 2.4vw, 28px); border-radius: 26px; background: rgba(255, 255, 255, 0.74); border: 1px solid var(--gv-edge); }
 .gv-sec-head { display: flex; gap: 14px; align-items: flex-start; }
 .gv-n { flex: none; width: 42px; height: 42px; border-radius: 14px; display: grid; place-items: center; background: var(--gv-mid); font-family: var(--f-mono); font-size: 14px; }

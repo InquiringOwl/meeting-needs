@@ -50,6 +50,7 @@
   function care(h) { return box('danger', h); }
   function together(h) { return box('together', h); }
   function kin(h) { return box('kin', h); }
+  function bonus(h) { return box('bonus', h); }
   function links(h) { return '<p class="ai-links">' + h + '</p>'; }
   function src(h) { return '<p class="ai-src">' + h + '</p>'; }
   function legend(h) { return '<p class="ai-legend">' + h + '</p>'; }
@@ -461,6 +462,7 @@
             table(['Signs', 'What it may be', 'What to do'], [
               ['Heavy sweating, cramps, weakness, nausea, headache', '[p]Heat exhaustion', 'A cooler place, sips of water, cool cloths, loosen clothes. Getting worse or over an hour: medical help.'],
               ['Hot skin (dry or damp), confusion, fainting, a very high temperature', '[n]Heat stroke: an emergency', 'Call 911. Cool them with water and fanning while you wait.']]) +
+            bonus('Crop scientist Sarah Taber (<i>Farm to Taber</i>) calls heat stroke’s first signal <b>“the heat stupids.”</b> As you overheat, your body pulls resources away from your brain, so thinking goes dumb first: confusion, dizziness, clumsiness, poor decisions. If you or someone with you suddenly can’t think straight in the heat, treat that as the warning and get cool now, before other signs show.') +
             ul(['<b>Who feels it first:</b> babies and toddlers, elders, pregnancy, people with heart, lung or kidney conditions or on some medicines, people working outside, people without homes, and animals.', '<b>Fans help up to a point.</b> In the high 90s°F and above, a fan alone blows hot air and can’t prevent heat illness; a cool shower, wet cloths and a cooler place do more.', '<b>Night flush.</b> Close windows and shades by mid-morning; open them wide once it’s cooler outside than in, with a fan in a window pointing out.', '<b>Smoke and heat at once:</b> the clean room with a filter, and a cooling center or library if the room gets too hot.']) +
             ca('Counties open cooling centers during heat waves; 211 and county websites list them. Heat and ozone often arrive together on hot afternoons.') +
             kin('Dogs pant to cool and overheat fast, flat-faced ones most. Pavement in the sun gets hot enough to burn paws: if the back of your hand can’t rest on it for seven seconds, it’s too hot for feet. Never leave anyone in a parked car. Birds, rabbits and hens need shade and cool water; wild visitors appreciate a shallow dish too.') +
@@ -694,7 +696,8 @@
       '<aside class="ai-toolcard"><span class="eyebrow">Tools</span><p>Shortcuts into the course, for when something’s happening right now. Every unit above stays open to read either way.</p>' +
       '<div class="ai-btns"><a class="btn" href="' + BASE + '/notice">What do you notice?</a><a class="btn" href="' + BASE + '/ventilation/sizer">Filter sizer</a><a class="btn" href="' + BASE + '/list">My list</a></div></aside>' +
       '<aside class="ai-funfact"><span class="eyebrow">Fun fact</span><p>A gas burner on high, or a pan of something searing, can push fine particles in a kitchen higher than a smoggy day outside, and an open window plus a fan pointing out can bring them back down in well under an hour. Air answers fast, which makes it one of the most satisfying needs to meet.</p>' +
-      '<p>Numbers come from public health research and agencies (EPA, CDC, CARB, Lawrence Berkeley National Laboratory, WHO), cited in each section. Laws mentioned are California’s; the physics is the same everywhere.</p>' + src('Singer et al., <i>Building and Environment</i> 2017; Logue et al., <i>Environmental Health Perspectives</i> 2014.') + '</aside>';
+      '<p>Numbers come from public health research and agencies (EPA, CDC, CARB, Lawrence Berkeley National Laboratory, WHO), cited in each section. Laws mentioned are California’s; the physics is the same everywhere.</p>' + src('Singer et al., <i>Building and Environment</i> 2017; Logue et al., <i>Environmental Health Perspectives</i> 2014.') + '</aside>' +
+      (mn().deeper && mn().credits ? mn().deeper('People whose work shaped this course, and where to go for more.', mn().credits('air')) : '');
   }
   function viewNotice() {
     setTimeout(runTools, 0);

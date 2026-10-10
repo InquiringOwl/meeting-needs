@@ -59,7 +59,7 @@
 .em-hero { display: flex; flex-direction: column; gap: 12px; }
 .em-lens-pill { align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #2F6E9E; color: #fff; font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1; }
 .em-hero h1 { font-weight: 800; font-size: clamp(46px, 6.4vw, 84px); line-height: 0.95; letter-spacing: -0.04em; }
-.em-lede { font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-2); max-width: 66ch; }
+.em-lede { font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-2); max-width: 104ch; }
 .em-ucards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
 .em-ucard { display: flex; flex-direction: column; gap: 8px; height: 100%; padding: 0 0 16px; border-radius: 24px; background: var(--b-bg); border: 1px solid var(--b-edge); text-decoration: none; color: var(--ink); overflow: hidden; }
 .em-ucard > * { margin-inline: 18px; }

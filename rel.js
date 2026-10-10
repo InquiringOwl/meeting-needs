@@ -114,11 +114,10 @@
       (prevH ? '<a class="rel-pg prev" href="' + prevH + '"><small>← Previous course</small><b>' + prevL + '</b></a>' : '<a class="rel-pg prev" href="#"><small>← Back to</small><b>Education</b></a>') +
       (nextH ? '<a class="rel-pg next" href="' + nextH + '"><small>Next course →</small><b>' + nextL + '</b></a>' : '<a class="rel-pg next" href="#lens-water"><small>Next →</small><b>Tier 2 · Water</b></a>') + '</nav>';
   }
-  var NVC = { name: 'Marshall B. Rosenberg & the Center for Nonviolent Communication', who: 'Psychologist · nonprofit', work: '<i>Nonviolent Communication: A Language of Life</i>, and the free feelings and needs inventories.', url: 'https://www.cnvc.org', link: 'cnvc.org' };
-  function withShaped(p, shaped) { var o = {}; Object.keys(p).forEach(function (k) { o[k] = p[k]; }); o.shaped = shaped; return o; }
+  /* Go deeper credits live in app.js (SHOULDERS) so the Resources page and every course share one list. */
 
   /* ---------- Emotions overview: plants, roots, soil ----------
-     Going down is going deeper, so the units read 1 → 3 top to bottom: feelings are the plants that show,
+     Going down is going deeper, so the units read 1 → 3 top to bottom: feelings are what’s alive inside you (the plants),
      needs are the roots, and the soil is who you are underneath. */
   function viewEmotions() {
     var U = COURSE_UNITS.emotions;
@@ -126,7 +125,7 @@
       title: 'Emotions · Kinship',
       html: layout(null,
         '<section class="rel-hero"><span class="eyebrow">Tier 1 · Signals · Course 1 of 2</span><h1 tabindex="-1">Emotions</h1>' +
-        '<p class="lede">Your rich inner world. Feelings are the plants that show: anger, love and pain are all asking to be tended. Beneath them are the roots, what you need, and beneath those the soil: who you are, and what’s going on down there.</p></section>' +
+        '<p class="lede">Your rich inner world. Feelings are what’s alive inside of you: anger, love and pain are all asking to be tended. Beneath them are the roots, what you need, and beneath those the soil: who you are, and what’s going on down there.</p></section>' +
         '<section class="rel-depth" aria-label="Course map: plants, roots and soil">' +
           '<div class="rel-plants">' + SPROUT + '<div class="rel-plants-in"><p class="rel-layer"><b>Plants · what shows</b><span>Anger, love, pain: signals asking to be tended. Others can see them too.</span></p>' + card(U[0]) + '</div></div>' +
           '<div class="rel-ground"><div class="rel-gauge" aria-hidden="true"><span>Deeper</span></div>' +
@@ -134,10 +133,7 @@
             tool('need', 'identify', 'Inner tool', 'Identify a need', 'From a big feeling to the word that fits and the need underneath.') +
             '<p class="rel-layer"><b>Soil · who you are</b><span>What’s going on down there.</span></p>' + card(U[2]) +
           '</div></section>' +
-        mn().deeper('People whose work shaped this course, and where to go for more.', [
-          withShaped(NVC, 'Feelings as signals, universal needs, needs vs. strategies'),
-          { name: 'Howard Schubiner, MD', who: 'Physician', work: '<i>Unlearn Your Pain</i>: how the brain can learn to send pain signals, and how they can be unlearned.', shaped: 'Pain is a signal too, and Mind & body (both planned)' }
-        ]) +
+        mn().deeper('People whose work shaped this course, and where to go for more.', mn().credits('emotions')) +
         coursePager(null, null, BASES.relationships, 'Relationships'), 'emotions')
     };
   }
@@ -161,11 +157,7 @@
         '</section>' +
         '<section class="rel-apps" aria-labelledby="rel-apps-h"><div class="rel-apps-head"><span class="rel-tu-n">3</span><div><h2 id="rel-apps-h"><a href="' + BASE + '/special">Special situations</a></h2><p>Your inner world and theirs, applied to the particular people, animals and places in your life.</p></div></div>' +
         '<ul>' + apps + '</ul></section>' +
-        mn().deeper('People whose work shaped this course, and where to go for more.', [
-          withShaped(NVC, 'Requests, dialogue and the Communicate tool'),
-          { name: 'Michaeleen Doucleff', who: 'Journalist · author', work: '<i>Hunt, Gather, Parent</i> (2021), including the TEAM approach: togetherness, encouragement, autonomy, minimal interference.', shaped: 'Children' },
-          { name: 'Barbara Rogoff', who: 'Researcher', work: 'Research on how children learn by observing and pitching in.', shaped: 'Children' }
-        ]) +
+        mn().deeper('People whose work shaped this course, and where to go for more.', mn().credits('relationships')) +
         coursePager(BASES.emotions, 'Emotions', null, null), 'relationships')
     };
   }

@@ -110,7 +110,7 @@ window.MN_REL = (function () {
   /* ---------- Two courses (Emotions, then Relationships), one page per unit; sub-units are sections on that page.
      course: which lens the unit lives in. planned: shown dashed, with a short description, until it's written. ---------- */
   var UNITS = [
-    { id: 'feel', course: 'emotions', num: 1, word: 'Feel', sub: 'the plants that show', intro: 'Feelings are messages about needs. Learn to read them without blame, and to name them precisely.',
+    { id: 'feel', course: 'emotions', num: 1, word: 'Feel', sub: 'what’s alive inside of you', intro: 'Feelings are messages about needs. Learn to read them without blame, and to name them precisely.',
       subs: [
         { id: 'signals', title: 'Emotions are signals', short: 'Every feeling points to a need, met or not.',
           key: ['A feeling is a messenger. Pleasant ones say a need is met; painful ones say a need is crying out.',

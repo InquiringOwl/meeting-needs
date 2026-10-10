@@ -206,6 +206,7 @@
       '<nav class="nav" aria-label="Main">' +
       eduMenu(active === 'home') +
       plansMenu(active === 'plans') +
+      link('#resources', 'Resources', 'resources') +
       link('#favorites', 'Favorites', 'favorites') +
       (PERSONALIZE ? '<a href="#profile" id="nav-profile"' + (active === 'profile' ? ' aria-current="page"' : (isEmpty(profile) ? ' class="me-nav"' : '')) + '>Profile</a>' : '') +
       '</nav></header>';
@@ -272,12 +273,65 @@
      people: [{ name, who, work (html), shaped, url?, link? }]. Names and descriptions are plain text except work. */
   function deeper(intro, people) {
     return '<section class="deeper" aria-label="Go deeper"><div class="deeper-head"><span class="eyebrow">Shoulders we stand on</span><h2>Go deeper</h2>' +
-      '<p>' + esc(intro) + ' Kinship is its own synthesis, so anything that misses the mark here is Kinship’s, not theirs.</p></div><ul>' +
+      '<p>' + esc(intro) + ' <a href="#resources">More in Resources →</a></p></div><ul>' +
       people.map(function (p) {
         return '<li><b>' + esc(p.name) + '</b><span class="who">' + esc(p.who) + '</span><p>' + p.work + '</p>' +
           '<span class="learned"><span class="eyebrow">Shaped here</span> ' + esc(p.shaped) + '</span>' +
           (p.url ? '<a href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(p.link || p.url) + '<span class="sr-only"> (opens in a new tab)</span> <span aria-hidden="true">↗</span></a>' : '') + '</li>';
       }).join('') + '</ul></section>';
+  }
+
+  /* Resources: the library of shoulders we stand on. One entry per person or group; shaped says what they shaped, per course.
+     Courses pull their Go deeper credits from here with MN.credits(courseId), so the Resources page and every course stay in sync.
+     Keys in shaped are lens ids, or 'kinship' for the project as a whole. work is html; the rest is plain text. */
+  var CONTACT = 'ashley@ashleyhoffmann.com';
+  var SHOULDERS = [
+    { name: 'Marshall B. Rosenberg & the Center for Nonviolent Communication', who: 'Psychologist · nonprofit', work: '<i>Nonviolent Communication: A Language of Life</i>, and the free feelings and needs inventories.', url: 'https://www.cnvc.org', link: 'cnvc.org',
+      shaped: { kinship: 'The spirit of the whole thing: meeting universal needs', emotions: 'Feelings as signals, universal needs, needs vs. strategies', relationships: 'Requests, dialogue and the Communicate tool' } },
+    { name: 'Alicia Bay Laurel', who: 'Author · illustrator', work: '<i>Living on the Earth</i> (1970), a hand-drawn handbook of practical know-how, freely shared.', url: 'https://www.aliciabaylaurel.com', link: 'aliciabaylaurel.com',
+      shaped: { kinship: 'Plain, practical knowledge as a gift' } },
+    { name: 'The San Francisco Diggers', who: 'Community anarchists · 1960s', work: 'Free food in the Panhandle and free stores, named for the English Diggers who farmed common land in 1649.', url: 'https://www.diggers.org', link: 'diggers.org',
+      shaped: { kinship: 'The spirit of it: free, shared, for everyone' } },
+    { name: 'Howard Schubiner, MD', who: 'Physician', work: '<i>Unlearn Your Pain</i>: how the brain can learn to send pain signals, and how they can be unlearned.',
+      shaped: { emotions: 'Pain is a signal too, and Mind & body (both planned)' } },
+    { name: 'Michaeleen Doucleff', who: 'Journalist · author', work: '<i>Hunt, Gather, Parent</i> (2021), including the TEAM approach: togetherness, encouragement, autonomy, minimal interference.',
+      shaped: { relationships: 'Children' } },
+    { name: 'Barbara Rogoff', who: 'Researcher', work: 'Research on how children learn by observing and pitching in.',
+      shaped: { relationships: 'Children' } },
+    { name: 'Dr. Yvonne Burkart', who: 'Toxicologist', work: 'Free education on everyday toxic exposures and gentler swaps.',
+      shaped: { toxins: 'This course’s view of everyday exposures' } },
+    { name: 'Dr. Sarah Taber & Farm to Taber', who: 'Crop scientist · writer · podcaster', work: '<i>Farm to Taber</i>, on farming, food systems and the people who do the work, including field-tested heat safety.', url: 'https://substack.com/@farm2taber', link: 'Farm to Taber on Substack',
+      shaped: { air: 'The heat stupids: confusion as heat’s first warning' } }
+  ];
+  function credits(course) {
+    return SHOULDERS.filter(function (p) { return p.shaped[course]; }).map(function (p) {
+      return { name: p.name, who: p.who, work: p.work, url: p.url, link: p.link, shaped: p.shaped[course] };
+    });
+  }
+  function mailto() { return '<a href="mailto:' + CONTACT + '">' + CONTACT + '</a>'; }
+  function extLink(p) {
+    return p.url ? '<a class="res-out" href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(p.link || p.url) + '<span class="sr-only"> (opens in a new tab)</span> <span aria-hidden="true">↗</span></a>' : '';
+  }
+  function viewResources() {
+    var cards = SHOULDERS.map(function (p) {
+      var shaped = Object.keys(p.shaped).map(function (k) {
+        var where = k === 'kinship' ? '<a class="res-c" href="#about">Kinship</a>' : (LENS[k] ? '<a class="res-c" href="#lens-' + k + '">' + esc(LENS[k].name) + '</a>' : esc(k));
+        return '<span class="learned">' + where + ' · ' + esc(p.shaped[k]) + '</span>';
+      }).join('');
+      return '<li><b>' + esc(p.name) + '</b><span class="who">' + esc(p.who) + '</span><p>' + p.work + '</p>' +
+        '<span class="eyebrow res-shaped">Shaped</span>' + shaped + extLink(p) + '</li>';
+    }).join('');
+    return header('resources') +
+      '<section class="hero"><div class="hero-copy">' +
+      '<span class="eyebrow">Resources</span>' +
+      '<h1 tabindex="-1">Shoulders we stand on</h1>' +
+      '<p>A growing library of the people and places whose work shaped Kinship, and where to go for more. Kinship is its own synthesis, so anything that misses the mark here is Kinship’s, not theirs.</p>' +
+      '<p>For feedback, corrections, or to reach out for any reason, email me at ' + mailto() + '.</p>' +
+      '</div></section>' +
+      '<aside class="res-collab"><b>Are you one of these people, or associated with their work?</b><span>I’d love to collaborate if you’re interested. Reach me at ' + mailto() + '.</span></aside>' +
+      '<section class="deeper res-lib" aria-labelledby="res-lib-h"><div class="deeper-head"><span class="eyebrow">The library</span><h2 id="res-lib-h">Who shaped what</h2>' +
+      '<p>Each course ends with its own Go deeper list; here they all are together.</p></div><ul>' + cards + '</ul></section>' +
+      footer();
   }
 
   function lensCard(l) {
@@ -307,6 +361,8 @@
       '<p>Most of Kinship aims to be plain, checkable information you can weigh for yourself. My own considerations show up in pink, one sentence each:</p>' +
       opinion('<p>One why, for you to weigh.</p>') +
       '<p>The first is at the end of <a href="#lens-water/uses">Water: Uses</a>.</p>' +
+      '<p>The inspiring and helpful people behind Kinship are gathered under <a href="#resources">Resources</a>.</p>' +
+      '<p>I’m just a lady trying to make the world a better place, for free, so please be gentle. And I’m totally open: if I can help you, or you have feedback or anything at all to share, email me at ' + mailto() + '.</p>' +
       '</div></section>' + footer();
   }
 
@@ -333,8 +389,8 @@
       '<section class="hero me-hero">' +
       '<div class="hero-copy">' +
       '<span class="eyebrow">Free &amp; open source · ' + BETA + ' lenses in beta · ' + (COUNT - BETA) + ' upcoming</span>' +
-      '<h1 tabindex="-1">End systemic profit&#8209;extraction cycles.</h1>' +
-      '<p>Learn how to identify and meet universal needs. Empower yourself to fix problems. Create peace.</p>' +
+      '<h1 tabindex="-1">Clarifying how to identify and meet needs we all have.</h1>' +
+      '<p>Empower yourself to fix problems. End systemic profit&#8209;extraction cycles. Create peace.</p>' +
       '</div>' + personalizeCard() + '</section>' +
       tiers + footer();
   }
@@ -570,7 +626,7 @@
   /* Shared pieces for lens modules (e.g. rel.js registers window.MN_LENS_VIEWS.relationships). */
   /* While personalization is hidden, courses see an empty profile, so nothing is tailored and no profile prompts show. */
   window.MN = { header: header, footer: footer, esc: esc, toast: function (m) { toast(m); }, lenses: LENS,
-    profile: function () { return PERSONALIZE ? profile : blank(); }, options: OPT, opinion: opinion, deeper: deeper, personalize: PERSONALIZE };
+    profile: function () { return PERSONALIZE ? profile : blank(); }, options: OPT, opinion: opinion, deeper: deeper, credits: credits, personalize: PERSONALIZE };
 
   /* ---------- render + routing ---------- */
   var app = document.getElementById('app');
@@ -613,6 +669,7 @@
     if (!PERSONALIZE && (r === 'profile' || r.indexOf('profile/') === 0)) { html = viewHome(); }
     else if (r === 'profile' || r.indexOf('profile/') === 0) { html = viewProfile(); title = 'Profile · Kinship'; sec = 's-' + r.slice(8); }
     else if (r === 'about') { html = viewAbout(); title = 'About · Kinship'; }
+    else if (r === 'resources') { html = viewResources(); title = 'Resources · Kinship'; }
     else if (r === 'plans' || r.indexOf('plans/') === 0) { html = viewPlans(); title = 'Plans · Kinship'; sec = 'plan-' + r.slice(6); }
     else if (r === 'favorites') { html = viewFavorites(); title = 'Favorites · Kinship'; }
     else if (r === 'tools') { html = viewTools(); title = 'My tools · Kinship'; }

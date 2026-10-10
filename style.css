@@ -139,12 +139,12 @@ p { margin: 0; }
 .hero { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; }
 .hero-copy { flex: 999 1 540px; min-width: 0; display: flex; flex-direction: column; gap: 18px; }
 .hero h1 { font-weight: 800; font-size: clamp(32px, 4.2vw, 54px); line-height: 1; letter-spacing: -0.03em; overflow-wrap: anywhere; }
-.hero p { max-width: 62ch; font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-2); }
+.hero p { max-width: 104ch; font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-2); }
 
 /* Personalize: wide and short, in the empty space beside the hero text, so the hero is no taller than without it.
    Only new visitors see it; it leaves once anything is on file. */
 .me-hero { position: relative; }
-.me-hero .hero-copy p { max-width: 600px; }
+.me-hero .hero-copy p { max-width: none; }
 .me-card {
   position: absolute; right: 0; bottom: 0; width: min(620px, calc(100% - 640px));
   display: flex; align-items: center; gap: 14px; padding: 10px 14px 10px 18px; border-radius: 18px; text-decoration: none;
@@ -177,7 +177,7 @@ p { margin: 0; }
 .deeper { display: flex; flex-direction: column; gap: 12px; padding: 18px 20px; border-radius: 22px; background: var(--glass-strong); border: 1px solid var(--line); }
 .deeper-head { display: flex; flex-direction: column; gap: 2px; }
 .deeper-head h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.01em; }
-.deeper-head p { font-size: 15px; color: var(--ink-2); max-width: 78ch; }
+.deeper-head p { font-size: 15px; color: var(--ink-2); max-width: 120ch; }
 .deeper ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 10px; }
 .deeper li { display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border-radius: 16px; background: rgba(255, 255, 255, 0.8); border: 1px solid var(--line); }
 .deeper li b { font: 800 16px var(--f-head); }
@@ -186,6 +186,13 @@ p { margin: 0; }
 .deeper li .learned { font-size: 14px; color: var(--ink-2); }
 .deeper li .learned .eyebrow { font-size: 10.5px; }
 .deeper li a { margin-top: auto; padding-top: 2px; font-size: 14.5px; font-weight: 700; color: var(--accent); }
+
+/* Go deeper → Resources link, and the Resources page (viewResources in app.js) */
+.deeper-head p a, .hero-copy p a, .res-collab a { color: var(--accent); font-weight: 700; }
+.res-collab { display: flex; flex-direction: column; gap: 4px; padding: 16px 20px; border-radius: 20px; background: var(--glass-strong); border: 1px solid var(--line); border-left: 6px solid #C2477F; font-size: 15.5px; color: var(--ink-2); }
+.res-collab b { font: 800 17px var(--f-head); color: var(--ink); }
+.deeper li .res-shaped { font-size: 10.5px; margin-top: 2px; }
+.deeper li a.res-c { margin: 0; padding: 0; font-size: inherit; }
 
 .tool-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -282,7 +289,7 @@ p { margin: 0; }
 .lens-page { --lc-ui: color-mix(in oklab, var(--lc), white var(--mixw)); display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; }
 .lens-main { flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 22px; padding: clamp(22px, 3vw, 40px); border-radius: 32px; border-top: 6px solid var(--lc-ui); }
 .lens-main h1 { font-weight: 800; font-size: clamp(44px, 6vw, 76px); line-height: 0.95; letter-spacing: -0.04em; }
-.lens-main .lede { font-size: clamp(18px, 1.8vw, 21px); color: var(--ink-2); max-width: 60ch; }
+.lens-main .lede { font-size: clamp(18px, 1.8vw, 21px); color: var(--ink-2); max-width: 104ch; }
 .lens-main h2 { font-weight: 700; font-size: 22px; letter-spacing: -0.01em; }
 .looks { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
 .looks li { display: flex; gap: 12px; align-items: center; font-size: 17px; }
@@ -334,7 +341,7 @@ a.plan:hover { background: var(--glass-strong); }
 .seg button[aria-pressed="true"] { background: #2C64A0; border-color: #2C64A0; color: #fff; font-weight: 600; }
 
 /* Profile */
-.intro { display: flex; flex-direction: column; gap: 14px; max-width: 760px; }
+.intro { display: flex; flex-direction: column; gap: 14px; max-width: 1100px; }
 .intro h1 { font-weight: 800; font-size: clamp(40px, 5.6vw, 68px); line-height: 0.98; letter-spacing: -0.035em; }
 .intro p { font-size: 19px; color: var(--ink-2); }
 .profile { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; }

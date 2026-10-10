@@ -841,9 +841,7 @@
       }).join('') + '</ol>' +
       '<aside class="tx-funfact"><span class="eyebrow">Fun fact</span><p>When families in one study swapped to fresh food with no cans or plastic packaging for just three days, the BPA in their urine dropped by about two-thirds. Some exposures leave the body that fast, which is part of why one-by-one swaps feel good: the body answers quickly.</p>' +
       '<p>Numbers come from public health research and agencies (EPA, CDC, ATSDR, FDA, California’s OEHHA and DPR), cited in each section. Laws mentioned are California’s; the chemistry is the same everywhere. Thank you to everyone who keeps this knowledge free.</p>' + src('Rudel et al., <i>Environmental Health Perspectives</i> 2011.') + '</aside>' +
-      (mn().deeper ? mn().deeper('People whose work shaped this course, and where to go for more.', [
-        { name: 'Dr. Yvonne Burkart', who: 'Toxicologist', work: 'Free education on everyday toxic exposures and gentler swaps.', shaped: 'This course’s view of everyday exposures' }
-      ]) : '');
+      (mn().deeper ? mn().deeper('People whose work shaped this course, and where to go for more.', mn().credits('toxins')) : '');
   }
   function viewList() {
     return '<article class="tx-unit tk3"><header class="tx-unit-hero"><span class="eyebrow">Your one-by-one list</span><h1 tabindex="-1">My list</h1><p class="tx-unit-sub">One swap at a time, in the order you choose</p>' +

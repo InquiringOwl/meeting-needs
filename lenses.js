@@ -5,13 +5,13 @@
 window.MN_TIERS = [
   {
     id: 'signals', num: 1, name: 'Signals', color: '#C2477F',
-    blurb: 'Start here. Hear what’s happening inside, connect it with others, and know who lives around you.',
+    blurb: 'Face what’s happening inside you, diagnose what needs to change, and unite in mutually-beneficial solutions.',
     lenses: [
       {
         id: 'emotions', name: 'Emotions', status: 'ready',
         blurb: 'Your rich inner world.',
         topics: ['Feelings', 'Needs', 'Who you are'],
-        looks: ['Feelings as signals: the plants that show, pain included', 'The universal needs beneath every feeling and strategy', 'Who you are underneath: the one who chooses, the body that remembers, mind and body']
+        looks: ['Feelings as signals: what’s alive inside of you, pain included', 'The universal needs beneath every feeling and strategy', 'Who you are underneath: the one who chooses, the body that remembers, mind and body']
       },
       {
         id: 'relationships', name: 'Relationships', status: 'ready',
