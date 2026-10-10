@@ -3,13 +3,13 @@
 .gv-hero { display: flex; flex-direction: column; gap: 12px; }
 .gv-pill { align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: var(--gv); color: #fff; font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1; }
 .gv-hero h1 { font-weight: 800; font-size: clamp(46px, 6.4vw, 84px); line-height: 0.95; letter-spacing: -0.04em; }
-.gv-lede { font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-2); max-width: 104ch; }
+.gv-lede { font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-2); }
 .gv-sec { display: flex; flex-direction: column; gap: 12px; padding: clamp(18px, 2.4vw, 28px); border-radius: 26px; background: rgba(255, 255, 255, 0.74); border: 1px solid var(--gv-edge); }
 .gv-sec-head { display: flex; gap: 14px; align-items: flex-start; }
 .gv-n { flex: none; width: 42px; height: 42px; border-radius: 14px; display: grid; place-items: center; background: var(--gv-mid); font-family: var(--f-mono); font-size: 14px; }
 .gv-sec-head h2 { font-size: clamp(22px, 2.4vw, 28px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
 .gv-sec-head p { color: var(--ink-2); font-size: 16px; margin-top: 2px; }
-.gv-sec > p { font-size: 15.5px; max-width: 78ch; }
+.gv-sec > p { font-size: 15.5px; }
 .gv-sec ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; font-size: 15.5px; color: var(--ink-2); }
 .gv-views { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; }
 .gv-view { display: flex; flex-direction: column; gap: 6px; padding: 16px 18px; border-radius: 18px; background: var(--gv-bg); border: 1px solid var(--gv-edge); }
@@ -32,7 +32,7 @@
 .gv-stairs li { counter-increment: st; position: relative; margin-left: calc(var(--i) * clamp(8px, 2.6vw, 34px)); padding: 12px 16px 12px 56px; border-radius: 16px; background: color-mix(in oklab, var(--gv), white calc(90% - var(--i) * 4%)); border: 1px solid var(--gv-edge); display: flex; flex-direction: column; gap: 2px; }
 .gv-stairs li::before { content: counter(st); position: absolute; left: 14px; top: 12px; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--gv); color: #fff; font-family: var(--f-mono); font-size: 13px; }
 .gv-stairs b { font-family: var(--f-head); font-size: 17px; }
-.gv-stairs p { font-size: 14.5px; color: var(--ink-2); max-width: 70ch; }
+.gv-stairs p { font-size: 14.5px; color: var(--ink-2); }
 .gv-stairs a { font-size: 14px; font-weight: 600; }
 .gv-fun { display: flex; flex-direction: column; gap: 4px; padding: 16px 20px; border-radius: 20px; background: var(--glass-faint); border: 1px solid rgba(23, 36, 28, 0.08); }
 .gv-fun p { font-size: 15px; color: var(--ink-2); }

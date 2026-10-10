@@ -127,7 +127,7 @@
         '<section class="rel-hero"><span class="eyebrow">Tier 1 · Signals · Course 1 of 2</span><h1 tabindex="-1">Emotions</h1>' +
         '<p class="lede">Your rich inner world. Feelings are what’s alive inside of you: anger, love and pain are all asking to be tended. Beneath them are the roots, what you need, and beneath those the soil: who you are, and what’s going on down there.</p></section>' +
         '<section class="rel-depth" aria-label="Course map: plants, roots and soil">' +
-          '<div class="rel-plants">' + SPROUT + '<div class="rel-plants-in"><p class="rel-layer"><b>Plants · what shows</b><span>Anger, love, pain: signals asking to be tended. Others can see them too.</span></p>' + card(U[0]) + '</div></div>' +
+          '<div class="rel-plants">' + SPROUT + '<div class="rel-plants-in"><p class="rel-layer"><b>Plants · what shows</b><span>Anger, love, pain: signals asking to be tended. Others can see them too.</span></p>' + card(U[0]) + tool('feel', 'wheel', 'Inner tool', 'Feelings wheel', 'Spin to the feeling that fits, and see the needs it may point to.') + '</div></div>' +
           '<div class="rel-ground"><div class="rel-gauge" aria-hidden="true"><span>Deeper</span></div>' +
             '<p class="rel-layer"><b>Roots · what you need</b><span>Universal, beneath every strategy.</span></p>' + card(U[1]) +
             tool('need', 'identify', 'Inner tool', 'Identify a need', 'From a big feeling to the word that fits and the need underneath.') +
@@ -171,7 +171,10 @@
       if (s.key) h += '<ul class="rel-keys">' + s.key.map(function (k) { return '<li>' + md(k) + '</li>'; }).join('') + '</ul>';
       if (s.ex) h += '<div class="rel-ex">' + s.ex.map(function (e) { return '<div><p class="rel-say">' + md(e[0]) + '</p><p>' + md(e[1]) + '</p></div>'; }).join('') + '</div>';
       if (s.tool) h += '<div class="rel-tool" data-tool="' + s.tool + '">' + TOOLS[s.tool]() + '</div>';
+      if (s.next) h += '<a class="rel-nextunit k-' + KEYS[s.next[0]] + '" href="' + href(s.next[0], s.next[1]) + '"><span class="eyebrow">' + esc(s.next[2]) + '</span><b>' + esc(s.next[3]) + '</b><span>' + esc(s.next[4]) + '</span><i aria-hidden="true">→</i></a>';
       if (s.remember) h += '<p class="rel-remember"><span class="eyebrow">Remember</span>' + md(s.remember) + '</p>';
+      if (s.src) h += '<p class="rel-src">' + s.src + '</p>';
+      if (s.opinion) h += mn().opinion('<p>' + md(s.opinion) + '</p>' + (s.opinionSrc ? '<p class="opinion-src">' + s.opinionSrc + '</p>' : ''));
       return h + '</section>';
     }).join('');
     function pg(x, dir) {
@@ -569,13 +572,14 @@
       detail = '<p class="rel-wheel-fam" style="--h:' + fam.hue + '">' + esc(fam.name) + '</p><p class="rel-q">Which word fits best?' + (ctx === 'finder' ? ' Pick one or two.' : '') + '</p>' +
         '<div class="rel-chips lg">' + fam.words.map(function (w) { return chip('wheel-word', w, w, picked.indexOf(w) !== -1, '', { 'data-ctx': ctx }); }).join('') + '</div>';
       if (ctx === 'solo' && ws.word) {
-        detail += '<div class="rel-out"><p><strong>I feel ' + esc(ws.word) + '.</strong> ' + (ws.mode === 'met' ? 'A need is being met. Often: ' : 'What might it be telling you? Often: ') +
-          esc(list(fam.needs)) + '.</p><a href="' + href('need', 'identify') + '?w=' + encodeURIComponent(ws.word) + '">Follow it to the need →</a></div>';
+        detail += '<div class="rel-out" aria-live="polite"><p><strong>I feel ' + esc(ws.word) + '.</strong> ' + (ws.mode === 'met' ? 'A need is being met. Universal needs it often points to:' : 'What might it be telling you? Universal needs it often points to:') + '</p>' +
+          '<div class="rel-needpills">' + fam.needs.map(function (x) { return '<span class="rel-pill k">' + esc(x) + '</span>'; }).join('') + '</div></div>';
       }
     } else detail = '<p class="rel-q">Drag the wheel round, use the arrows, or tap the family closest to how you feel. Then narrow to the word that fits.</p>';
     if (ctx === 'finder' && picked.length) {
       detail += '<div class="rel-picked"><span class="eyebrow">You feel</span><div class="rel-chips sm">' + picked.map(function (w) { return chip('wheel-word', w, w + ' ×', true, '', { 'data-ctx': ctx, 'aria-label': 'Remove ' + w }); }).join('') + '</div></div>';
     }
+    if (ws.fam || ws.word || ws.mode !== 'unmet' || (ctx === 'finder' && picked.length)) detail += '<div class="rel-row end"><button type="button" class="btn quiet sm" data-rel="wheel-reset" data-ctx="' + ctx + '">↺ Start the wheel over</button></div>';
     return '<div class="rel-wheel' + (ctx === 'finder' ? ' big' : '') + '">' +
       '<div class="rel-wheel-body"><div class="rel-wheel-stage">' +
       '<svg class="rel-wheel-svg" data-ctx="' + ctx + '" viewBox="-12 -30 524 544" role="img" aria-label="Feelings wheel: ' + esc(W.label) + '">' +
@@ -628,7 +632,7 @@
   }
   function translatorTool() {
     var x = FAUX[S.faux];
-    return '<p class="rel-q">Pick a word you’ve said or thought.</p>' +
+    return '<p class="rel-q rel-q-lead"><strong>Pick an accusatory feeling word:</strong></p>' +
       '<div class="rel-chips sm">' + D.FAUX.map(function (f) { return chip('faux', f.word, f.word, f.word === S.faux); }).join('') + '</div>' +
       '<div class="rel-translate">' +
       '<div><span class="eyebrow">You might say</span><p class="rel-say">“I feel ' + esc(x.word) + '.”</p></div>' +
@@ -783,6 +787,11 @@
         S.wheel[ctx] = { mode: v, fam: null, word: null, rot: 0 };
         break;
       case 'wheel-fam': if (!spinning) spinTo(ctx, v); return;
+      case 'wheel-reset':
+        if (spinning) return;
+        S.wheel[ctx] = { mode: 'unmet', fam: null, word: null, rot: 0 };
+        if (ctx === 'finder') { f.feelings = []; f.fam = null; }
+        break;
       case 'wheel-step':
         if (spinning) return;
         var fl = famList(ctx), ci = famIndex(ctx, S.wheel[ctx].fam);

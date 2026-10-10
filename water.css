@@ -57,7 +57,7 @@
 .wa-hero { display: flex; flex-direction: column; gap: 12px; }
 .wa-lens-pill { align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #B85A14; color: #fff; font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1; }
 .wa-hero h1 { font-weight: 800; font-size: clamp(46px, 6.4vw, 84px); line-height: 0.95; letter-spacing: -0.04em; }
-.wa-lede { font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-2); max-width: 104ch; }
+.wa-lede { font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-2); }
 .wa-ucards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
 .wa-ucard { display: flex; flex-direction: column; gap: 8px; height: 100%; padding: 0 0 16px; border-radius: 24px; background: var(--w-bg); border: 1px solid var(--w-edge); text-decoration: none; color: var(--ink); overflow: hidden; }
 .wa-ucard > * { margin-inline: 18px; }
@@ -68,7 +68,7 @@
 .wa-ucard > span:not(.wa-n) { font-size: 15px; color: var(--ink-2); }
 .wa-ucard ol { margin-top: 4px; padding: 8px 0 0 18px; border-top: 1px solid var(--w-edge); font-size: 13.5px; color: var(--ink-2); }
 .wa-funfact { display: flex; flex-direction: column; gap: 4px; padding: 16px 20px; border-radius: 20px; background: var(--glass-faint); border: 1px solid var(--w-soft); }
-.wa-funfact p { font-size: 15px; color: var(--ink-2); max-width: 86ch; }
+.wa-funfact p { font-size: 15px; color: var(--ink-2); }
 
 /* Unit page */
 .wa-unit { display: flex; flex-direction: column; gap: 14px; }
@@ -84,8 +84,8 @@
 .wa-sub-top { display: flex; align-items: baseline; gap: 10px; }
 .wa-sub-n { font-family: var(--f-mono); font-size: 12.5px; color: var(--muted); flex: none; }
 .wa-sub h2 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; }
-.wa-sub > p { font-size: 15.5px; max-width: 78ch; }
-.wa-sub ul, .wa-sub ol { margin: 0; padding-left: 20px; font-size: 15px; color: var(--ink-2); display: flex; flex-direction: column; gap: 4px; max-width: 80ch; }
+.wa-sub > p { font-size: 15.5px; }
+.wa-sub ul, .wa-sub ol { margin: 0; padding-left: 20px; font-size: 15px; color: var(--ink-2); display: flex; flex-direction: column; gap: 4px; }
 .wa-box { font-size: 14.5px; padding: 10px 12px; border-radius: 14px; color: var(--ink-2); }
 .wa-box::before { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
 .wa-home { background: var(--w-bg); }
@@ -150,7 +150,7 @@
 .wa-prices { display: flex; flex-direction: column; gap: 6px; }
 .wa-price { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px; padding: 8px 10px 8px 14px; border-radius: 14px; background: rgba(255, 255, 255, 0.7); }
 .wa-price b { display: block; font-size: 15px; }
-.wa-price small { display: block; font-size: 12.5px; color: var(--muted); max-width: 52ch; }
+.wa-price small { display: block; font-size: 12.5px; color: var(--muted); }
 .wa-money { display: inline-flex; align-items: center; gap: 4px; font-weight: 600; }
 .wa-bars { display: flex; flex-direction: column; gap: 6px; }
 .wa-bar { display: grid; grid-template-columns: 150px 1fr 90px; align-items: center; gap: 10px; font-size: 14px; }

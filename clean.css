@@ -59,7 +59,7 @@
 .cl-hero { display: flex; flex-direction: column; gap: 12px; }
 .cl-lens-pill { align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #A87700; color: #fff; font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1; }
 .cl-hero h1 { font-weight: 800; font-size: clamp(46px, 6.4vw, 84px); line-height: 0.95; letter-spacing: -0.04em; }
-.cl-lede { font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-2); max-width: 104ch; }
+.cl-lede { font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-2); }
 .cl-ucards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
 .cl-ucard { display: flex; flex-direction: column; gap: 8px; height: 100%; padding: 0 0 16px; border-radius: 24px; background: var(--w-bg); border: 1px solid var(--w-edge); text-decoration: none; color: var(--ink); overflow: hidden; }
 .cl-ucard > * { margin-inline: 18px; }
@@ -69,7 +69,7 @@
 .cl-ucard > span:not(.cl-n) { font-size: 15px; color: var(--ink-2); }
 .cl-ucard ol { margin-top: 4px; padding: 8px 0 0 18px; border-top: 1px solid var(--w-edge); font-size: 13.5px; color: var(--ink-2); }
 .cl-funfact { display: flex; flex-direction: column; gap: 4px; padding: 16px 20px; border-radius: 20px; background: var(--glass-faint); border: 1px solid var(--w-soft); }
-.cl-funfact p { font-size: 15px; color: var(--ink-2); max-width: 86ch; }
+.cl-funfact p { font-size: 15px; color: var(--ink-2); }
 
 /* Unit page */
 .cl-unit { display: flex; flex-direction: column; gap: 14px; }
@@ -85,8 +85,8 @@
 .cl-sub-top { display: flex; align-items: baseline; gap: 10px; }
 .cl-sub-n { font-family: var(--f-mono); font-size: 12.5px; color: var(--muted); flex: none; }
 .cl-sub h2 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; }
-.cl-sub > p { font-size: 15.5px; max-width: 78ch; }
-.cl-sub ul, .cl-sub ol { margin: 0; padding-left: 20px; font-size: 15px; color: var(--ink-2); display: flex; flex-direction: column; gap: 4px; max-width: 80ch; }
+.cl-sub > p { font-size: 15.5px; }
+.cl-sub ul, .cl-sub ol { margin: 0; padding-left: 20px; font-size: 15px; color: var(--ink-2); display: flex; flex-direction: column; gap: 4px; }
 .cl-box { font-size: 14.5px; padding: 10px 12px; border-radius: 14px; color: var(--ink-2); }
 .cl-box::before { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
 .cl-home { background: var(--w-bg); }
@@ -175,7 +175,7 @@
 .cl-kin::before { content: 'Animals, plants & soil · '; }
 .cl-danger { background: #FBEDEA; border-left: 4px solid #C9806F; }
 .cl-danger::before { content: 'Take care · '; }
-.cl-src { font-size: 12.5px; color: var(--muted); max-width: 86ch; }
+.cl-src { font-size: 12.5px; color: var(--muted); }
 .cl-src::before { content: 'Sources · '; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; }
 .cl-legend { font-size: 12.5px; color: var(--muted); }
 .cl-unit-mode { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 8px; font-size: 14.5px; color: var(--ink-2); }
@@ -275,7 +275,7 @@
 a.cl-way { text-decoration: none; color: var(--ink); background: var(--w-bg); border: 1px solid var(--w-edge); border-left: 8px solid var(--w-dot); }
 a.cl-way:hover { background: var(--w-mid); }
 .cl-toolcard { display: flex; flex-direction: column; gap: 10px; padding: 16px 20px; border-radius: 20px; background: rgba(255, 255, 255, 0.74); border: 1.5px dashed var(--w-edge); }
-.cl-toolcard p { font-size: 15px; color: var(--ink-2); max-width: 70ch; }
+.cl-toolcard p { font-size: 15px; color: var(--ink-2); }
 .cl-picks { display: flex; flex-wrap: wrap; gap: 8px; }
 .cl-pick { font: inherit; font-size: 14.5px; min-height: 40px; padding: 6px 14px; border-radius: 999px; border: 1.5px solid var(--w-edge); background: #fff; color: var(--ink); cursor: pointer; text-align: left; }
 .cl-pick:hover { border-color: var(--w-dot); }
@@ -315,7 +315,7 @@ a.cl-way:hover { background: var(--w-mid); }
 /* Beyond the ladder: hands off to Poisons */
 .cl-beyond { scroll-margin-top: 96px; display: flex; flex-direction: column; gap: 10px; padding: 18px 20px; border-radius: 22px; background: #FBEDEA; border: 1px solid #EBC6BC; border-left: 8px solid #B8372E; }
 .cl-beyond-t { font-family: var(--f-head); font-size: 20px; font-weight: 800; }
-.cl-beyond p { font-size: 15px; color: var(--ink-2); max-width: 80ch; }
+.cl-beyond p { font-size: 15px; color: var(--ink-2); }
 .cl-beyond ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: 14.5px; color: var(--ink-2); }
 .cl-beyond a { color: #8E2B23; font-weight: 600; }
 
