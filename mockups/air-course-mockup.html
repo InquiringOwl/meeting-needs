@@ -1,0 +1,1180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kinship · Air (course mock-up)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500..800&family=Instrument+Sans:wght@400..700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Mock-up only. Mirrors Kinship's style.css + the Toxins mock-up so it can move into air.css later (prefix ai-). */
+:root {
+  --bg:#F6F2E5; --ink:#26210F; --ink-2:#3E3720; --muted:#5C5235; --accent:#7A5600;
+  --glass:rgba(255,255,255,.42); --glass-strong:rgba(255,255,255,.64); --glass-faint:rgba(255,255,255,.24);
+  --glass-edge:rgba(255,255,255,.78); --chip:rgba(255,255,255,.62); --line:rgba(38,33,15,.16);
+  --soft-line:rgba(38,33,15,.08); --focus:#2F6E9E; --lens:#B85A14;
+  --f-head:'Manrope','Instrument Sans',system-ui,sans-serif;
+  --f-body:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  /* Air lens theme: yellows, darkest (1) to lightest (4).
+     bg: page wash · mid: filled · edge: soft border · dot: the unit's yellow · on: text on dot */
+  --c1-bg:#F4ECD6; --c1-mid:#E8D9AE; --c1-edge:#DAC68A; --c1-dot:#6B4A00; --c1-on:#fff;
+  --c2-bg:#F6EFD8; --c2-mid:#EDDFAE; --c2-edge:#E1CD86; --c2-dot:#99690A; --c2-on:#fff;
+  --c3-bg:#F8F2DA; --c3-mid:#F1E4AF; --c3-edge:#E8D584; --c3-dot:#C99A14; --c3-on:#26210F;
+  --c4-bg:#FAF6E2; --c4-mid:#F5ECBE; --c4-edge:#EEDF98; --c4-dot:#EBC94B; --c4-on:#26210F;
+  --k-bg:var(--glass-faint); --k-mid:var(--chip); --k-edge:var(--line); --k-dot:var(--muted); --k-on:#fff;
+}
+.k1{--k-bg:var(--c1-bg);--k-mid:var(--c1-mid);--k-edge:var(--c1-edge);--k-dot:var(--c1-dot);--k-on:var(--c1-on)}
+.k2{--k-bg:var(--c2-bg);--k-mid:var(--c2-mid);--k-edge:var(--c2-edge);--k-dot:var(--c2-dot);--k-on:var(--c2-on)}
+.k3{--k-bg:var(--c3-bg);--k-mid:var(--c3-mid);--k-edge:var(--c3-edge);--k-dot:var(--c3-dot);--k-on:var(--c3-on)}
+.k4{--k-bg:var(--c4-bg);--k-mid:var(--c4-mid);--k-edge:var(--c4-edge);--k-dot:var(--c4-dot);--k-on:var(--c4-on)}
+
+*{box-sizing:border-box}
+html{overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;overflow-x:clip}
+h1,h2,h3{font-family:var(--f-head);margin:0;text-wrap:balance}
+p{margin:0}
+a{color:var(--accent)}
+code{font-family:var(--f-mono);font-size:.9em}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:8px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+.sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.sky span{position:absolute;border-radius:50%;filter:blur(12px)}
+.sky .a{left:-12vw;top:-18vh;width:60vw;height:60vw;max-width:780px;max-height:780px;background:radial-gradient(circle,rgba(236,200,90,.42),transparent 68%)}
+.sky .b{right:-14vw;top:8vh;width:58vw;height:58vw;max-width:780px;max-height:780px;background:radial-gradient(circle,rgba(170,205,230,.34),transparent 68%)}
+.sky .c{left:25vw;bottom:-30vh;width:64vw;height:64vw;max-width:860px;max-height:860px;background:radial-gradient(circle,rgba(245,222,140,.38),transparent 68%)}
+
+.wrap{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:20px clamp(16px,3vw,40px) 72px;display:flex;flex-direction:column;gap:24px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px;border-radius:999px;background:var(--glass);border:1px solid var(--glass-edge)}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink)}
+.brand b{font-family:var(--f-head);font-weight:800;font-size:20px;letter-spacing:-.02em}
+.mock{font-family:var(--f-mono);font-size:12px;padding:4px 10px;border-radius:999px;border:1.5px dashed var(--line);color:var(--muted)}
+
+.layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:28px;align-items:start}
+.main{min-width:0;display:flex;flex-direction:column;gap:20px}
+
+/* Sidebar tree */
+.nav{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;scrollbar-width:thin;padding:14px;border-radius:26px;background:rgba(255,255,255,.72);border:1px solid var(--glass-edge)}
+.nav-head{display:flex;flex-direction:column;padding:2px 6px 8px}
+.nav-head b{font-family:var(--f-head);font-size:21px;font-weight:800;letter-spacing:-.02em}
+.nav-over{display:flex;align-items:center;justify-content:space-between;min-height:36px;padding:0 8px;margin-bottom:6px;border-radius:12px;color:var(--ink);text-decoration:none;font-weight:600;font-size:15px}
+.nav-over:hover,.nav-over.cur{background:var(--chip)}
+.nav-over .cnt{font-family:var(--f-mono);font-size:12px;font-weight:400;padding:1px 8px;border-radius:999px;background:var(--c2-dot);color:#fff}
+.vt{list-style:none;margin:0;padding:0;position:relative}
+.vt::before{content:'';position:absolute;left:21px;top:22px;bottom:22px;width:2px;border-radius:2px;background:linear-gradient(var(--c1-dot),var(--c2-dot),var(--c4-dot))}
+.vt-unit{position:relative;padding:3px 0}
+.vt-head{display:flex;align-items:center;gap:12px;min-height:46px;padding:4px 8px;border-radius:16px;color:var(--ink);text-decoration:none}
+.vt-head:hover{background:var(--k-bg)}
+.vt-unit.cur>.vt-head{background:var(--k-mid)}
+.vt-dot{position:relative;z-index:1;width:28px;height:28px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--k-dot);color:var(--k-on);box-shadow:0 0 0 4px var(--bg);font-family:var(--f-mono);font-size:13px}
+.vt-head b{display:block;font-family:var(--f-head);font-size:17px;font-weight:800;line-height:1.1}
+.vt-head small{display:block;font-size:13px;color:var(--muted)}
+.vt-subs{list-style:none;margin:2px 0 4px;padding:0 0 0 36px;display:none;flex-direction:column}
+.vt-unit.cur .vt-subs{display:flex}
+.vt-subs a{position:relative;display:flex;align-items:center;min-height:30px;padding:3px 8px;border-radius:10px;color:var(--ink-2);text-decoration:none;font-size:14px;line-height:1.25}
+.vt-subs a::before{content:'';position:absolute;left:-19px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:var(--k-dot)}
+.vt-subs a:hover{background:var(--k-bg);color:var(--ink)}
+.vt-subs a.tool-link{font-weight:600}
+.nav-pair{margin:8px 6px 0;padding:10px 10px 4px;border-top:1px solid var(--soft-line);font-size:12.5px;color:var(--muted)}
+.nav-pair b{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;display:block;margin-bottom:2px}
+
+/* Situation panel (reads and writes the Kinship profile) */
+.sit{border-radius:22px;background:var(--glass-strong);border:1px solid var(--soft-line)}
+.sit>summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:14px 18px}
+.sit>summary::-webkit-details-marker{display:none}
+.sit-sum{font-size:14.5px;color:var(--ink-2)}
+.sit-chips{display:flex;flex-wrap:wrap;gap:6px}
+.sit-chips span{font-size:13px;padding:3px 10px;border-radius:999px;background:#fff;border:1px solid var(--soft-line)}
+.sit-edit{margin-left:auto;font-size:14px;font-weight:600;color:var(--accent)}
+.sit-body{padding:0 18px 16px;display:flex;flex-direction:column;gap:12px}
+.qgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.qgrid label.f select{width:100%}
+.sit-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:13.5px;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--soft-line);background:#fff;color:var(--ink);font:inherit;font-size:14.5px;font-weight:600;cursor:pointer;text-decoration:none}
+.btn.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.new-q{font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+
+/* Overview */
+.hero{display:flex;flex-direction:column;gap:12px}
+.lens-pill{align-self:flex-start;padding:6px 12px;border-radius:999px;background:var(--lens);color:#fff;font-family:var(--f-mono);font-size:12px;line-height:1}
+.hero h1{font-weight:800;font-size:clamp(46px,6.4vw,84px);line-height:.95;letter-spacing:-.04em}
+.lede{font-size:clamp(17px,1.6vw,20px);color:var(--ink-2);max-width:66ch}
+.ucards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.ucard{display:flex;flex-direction:column;gap:8px;height:100%;padding:0 0 16px;border-radius:24px;background:var(--k-bg);border:1px solid var(--k-edge);text-decoration:none;color:var(--ink);overflow:hidden}
+.ucard>*{margin-inline:18px}
+.ucard .band{margin:0;height:10px;background:var(--k-dot)}
+.ucard:hover{background:var(--k-mid)}
+.ucard .n{font-family:var(--f-mono);font-size:13px;color:var(--muted);margin-top:6px}
+.ucard b{font-family:var(--f-head);font-weight:800;font-size:clamp(23px,2.3vw,28px);line-height:1;letter-spacing:-.03em}
+.ucard span{font-size:15px;color:var(--ink-2)}
+.ucard .kindtag{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.ucard ol{margin:2px 18px 0;padding-left:18px;font-size:13.5px;color:var(--muted);display:flex;flex-direction:column;gap:1px}
+.ucard .modes{display:flex;flex-wrap:wrap;gap:4px;margin-top:auto;padding-top:6px}
+
+.funfact,.review{display:flex;flex-direction:column;gap:8px;padding:16px 20px;border-radius:20px;font-size:14.5px;color:var(--ink-2)}
+.funfact{background:var(--glass-strong);border:1px solid var(--soft-line)}
+.review{border:1.5px dashed var(--line)}
+.review ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+
+/* The course's main idea: two foundations, two kinds of exposure */
+.map{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.map-col{display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:24px;background:rgba(255,255,255,.55);border:1px solid var(--soft-line)}
+.map-col>.eyebrow{padding:0 4px}
+.way{display:flex;flex-direction:column;gap:6px;padding:14px 16px;border-radius:18px;background:var(--k-bg);border:1px solid var(--k-edge);border-left:8px solid var(--k-dot);text-decoration:none;color:var(--ink)}
+.way:hover{background:var(--k-mid)}
+.way b.h{font-family:var(--f-head);font-size:19px;font-weight:800;letter-spacing:-.02em}
+.way p{font-size:14.5px;color:var(--ink-2)}
+.map-note{grid-column:1/-1;font-size:14px;color:var(--muted);padding:0 4px}
+
+/* Unit page */
+.page[hidden]{display:none}
+.unit-hero{display:flex;flex-direction:column;gap:6px;padding:clamp(22px,3vw,32px);border-radius:28px;background:var(--k-bg);border:1px solid var(--k-edge);border-top:10px solid var(--k-dot)}
+.unit-hero h1{font-weight:800;font-size:clamp(42px,5.4vw,70px);line-height:.95;letter-spacing:-.04em}
+.unit-sub{font-family:var(--f-head);font-size:19px;font-weight:600;color:var(--ink-2)}
+.unit-hero .lede{font-size:16.5px;margin-top:4px}
+.unit-mode{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:8px;font-size:14.5px;color:var(--ink-2)}
+.jumps{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.jumps a{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 14px;border-radius:999px;background:var(--glass-strong);color:var(--ink);text-decoration:none;font-size:14px;font-weight:600}
+.jumps a span{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-weight:400}
+.jumps a:hover{background:var(--k-mid)}
+
+.sub{display:flex;flex-direction:column;gap:12px;padding:22px 24px;border-radius:24px;background:rgba(255,255,255,.74);border:1px solid var(--k-edge);scroll-margin-top:16px}
+.sub-top{display:flex;align-items:baseline;gap:10px}
+.sub-n{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);flex:none}
+.sub h2{font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+.sub>p{font-size:15.5px;max-width:78ch}
+.sub ul,.sub ol{margin:0;padding-left:20px;font-size:15px;color:var(--ink-2);display:flex;flex-direction:column;gap:4px;max-width:80ch}
+.home,.ca,.danger,.together,.kin{font-size:14.5px;padding:10px 12px;border-radius:14px}
+.home{background:var(--k-bg);color:var(--ink-2)}
+.home::before{content:'At home · '}
+.ca{background:#FFF7E8;color:var(--ink-2);border-left:4px solid #E3B25B}
+.ca::before{content:'In California · '}
+.danger{background:#FBEDEA;color:var(--ink-2);border-left:4px solid #C9806F}
+.danger::before{content:'Take care · '}
+.together{background:#F3EEF8;color:var(--ink-2);border-left:4px solid #B69AD3}
+.together::before{content:'Together · '}
+.kin{background:#EEF4EA;color:var(--ink-2);border-left:4px solid #8DB07F}
+.kin::before{content:'Animals, plants & soil · '}
+.home::before,.ca::before,.danger::before,.together::before,.kin::before{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.links{font-size:13px;color:var(--muted)}
+.links::before{content:'Links to → ';font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.src{font-size:12.5px;color:var(--muted)}
+.src::before{content:'Sources · ';font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}
+
+/* Cards in a row (signals, ranges, who it reaches) */
+.does{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.does div{padding:12px 14px;border-radius:16px;background:var(--k-bg);border:1px solid var(--k-edge)}
+.does b{display:flex;align-items:center;gap:6px;font-family:var(--f-head);font-size:15.5px;margin-bottom:2px}
+.does p{font-size:14px;color:var(--ink-2)}
+.does i{font-style:normal;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:1px 7px;border-radius:999px;background:#fff;color:var(--muted)}
+
+/* Humidity band */
+.band-rh{display:grid;grid-template-columns:30fr 20fr 10fr 40fr;border-radius:14px;overflow:hidden;border:1px solid var(--k-edge);font-size:13px}
+.band-rh div{padding:10px 10px 8px;display:flex;flex-direction:column;gap:2px}
+.band-rh b{font-family:var(--f-mono);font-size:12px;font-weight:500}
+.band-rh .dry{background:#EAF1F6}.band-rh .ok{background:#E3F1E1}.band-rh .edge{background:#FBF0D9}.band-rh .wet{background:#F6E2DC}
+.band-ticks{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:11px;color:var(--muted);padding:0 2px}
+
+/* Air flow diagram */
+.flow{display:block;width:100%;height:auto;max-width:720px;border-radius:18px;background:#fff;border:1px solid var(--k-edge)}
+
+/* Mode badges */
+.mode{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;padding:3px 10px;border-radius:999px;line-height:1.3;white-space:nowrap}
+.mode::before{content:'';width:8px;height:8px;border-radius:2px;background:currentColor;flex:none}
+.m-now{background:#F8EBC4;color:#6B4A00}
+.m-now::before{border-radius:50%}
+.m-once{background:#E3ECF6;color:#2E557A}
+.m-habit{background:#E6F1E3;color:#2E6B35}
+.m-habit::before{border-radius:50% 0}
+.m-together{background:#EFE7F6;color:#5B3D86}
+.m-together::before{transform:rotate(45deg)}
+.cost{font-family:var(--f-mono);font-size:11px;padding:3px 9px;border-radius:999px;background:#fff;border:1px solid var(--soft-line);color:var(--ink-2)}
+
+/* How to fix: closes every sub-unit */
+.fix{display:flex;flex-direction:column;gap:10px;padding:16px 18px 18px;border-radius:20px;background:#fff;border:2px solid var(--k-dot);position:relative}
+.fix-top{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.fix-top b.t{font-family:var(--f-head);font-size:19px;font-weight:800;letter-spacing:-.01em;margin-right:4px}
+.fix-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.fix-steps li{display:flex;flex-direction:column;gap:4px;padding:10px 12px;border-radius:14px;background:var(--k-bg);font-size:14px;color:var(--ink-2)}
+.fix-steps li small{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.fix-steps li:nth-child(1){background:var(--k-mid)}
+.fix-foot{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:13.5px;color:var(--muted)}
+.add{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 14px;border-radius:999px;border:1.5px solid var(--k-dot);background:#fff;color:var(--ink);font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.add::before{content:'+';font-family:var(--f-mono);font-size:16px;line-height:1}
+.add.on{background:var(--k-dot);color:var(--k-on)}
+.add.on::before{content:'✓'}
+
+/* Accordions */
+.accs{display:flex;flex-direction:column;gap:8px}
+.acc{border-radius:16px;background:var(--k-bg);border:1px solid var(--k-edge)}
+.acc>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;min-height:48px;padding:8px 14px;font-weight:600;font-size:15.5px}
+.acc>summary::-webkit-details-marker{display:none}
+.acc>summary::after{content:'+';margin-left:auto;font-family:var(--f-mono);font-size:18px;color:var(--muted);flex:none}
+.acc[open]>summary::after{content:'–'}
+.acc>summary:hover{background:var(--k-mid);border-radius:16px}
+.acc .who{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:#fff;color:var(--ink-2);font-weight:400;flex:none}
+.acc .for-you{display:none;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:var(--k-dot);color:var(--k-on);font-weight:400;flex:none}
+.acc.match{box-shadow:0 0 0 2px var(--k-dot)}
+.acc.match .for-you{display:inline-block}
+.acc .in{padding:2px 16px 14px;display:flex;flex-direction:column;gap:8px;font-size:15px;color:var(--ink-2)}
+
+/* Tables, tools */
+.tbl-wrap{overflow-x:auto;border-radius:18px;border:1px solid var(--k-edge);background:#fff}
+table{border-collapse:collapse;width:100%;min-width:600px;font-size:14px}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--soft-line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--k-bg)}
+td:first-child{font-weight:600}
+td.y{color:#2E6B35}td.p{color:#8A6418}td.n{color:#9A4A3A}
+.legend{font-size:12.5px;color:var(--muted)}
+.tool{display:flex;flex-direction:column;gap:12px;padding:18px 20px;border-radius:22px;background:var(--k-mid);border:1px solid var(--k-edge)}
+.tool b.t{font-family:var(--f-head);font-size:21px;font-weight:800}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);font-family:var(--f-mono);min-width:0;max-width:100%}
+select,input[type=number]{font:inherit;font-family:var(--f-body);font-size:15.5px;min-height:40px;padding:0 12px;border-radius:12px;border:1px solid var(--soft-line);background:#fff;color:var(--ink);max-width:100%}
+input[type=number]{width:110px}
+.picks{display:flex;flex-wrap:wrap;gap:8px}
+.pick{font:inherit;font-size:14.5px;min-height:40px;padding:0 14px;border-radius:999px;border:1.5px solid var(--k-edge);background:#fff;color:var(--ink);cursor:pointer;text-align:left}
+.pick:hover{border-color:var(--k-dot)}
+.pick[aria-pressed=true]{background:var(--k-dot);color:var(--k-on);border-color:var(--k-dot)}
+.out{padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.88);font-size:15px;display:flex;flex-direction:column;gap:10px}
+.out strong{font-family:var(--f-head);font-size:24px;font-weight:800;letter-spacing:-.02em;display:block;line-height:1.1}
+.out small{display:block;color:var(--muted);font-size:13px}
+.out ol,.out ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.rn{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border-radius:14px;background:var(--k-bg);border-left:6px solid var(--k-dot)}
+.rn.urgent{background:#FBEDEA;border-left-color:#B8372E}
+.rn b{font-family:var(--f-head);font-size:17px}
+.rn span{font-size:14px;color:var(--ink-2)}
+.rn .row{gap:8px;margin-top:4px}
+
+/* My list (same tracker shape as Toxins) */
+.lst{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.lst li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 14px;border-radius:18px;background:rgba(255,255,255,.8);border:1px solid var(--soft-line);border-left:8px solid var(--k-dot)}
+.lst li.done{opacity:.62}
+.lst li.done .lt b{text-decoration:line-through;text-decoration-thickness:1.5px}
+.lst .num{font-family:var(--f-mono);font-size:13px;color:var(--muted);width:26px;text-align:center}
+.lt b{display:block;font-family:var(--f-head);font-size:16.5px}
+.lt span{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.lt small{font-size:13px;color:var(--muted)}
+.st{font:inherit;font-family:var(--f-mono);font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid var(--soft-line);background:#fff;cursor:pointer;min-width:84px}
+.st[data-s=doing]{background:#FBF0D9;color:#7A5714}
+.st[data-s=done]{background:#E3F1E1;color:#2E6B35}
+.lst-ctl{display:flex;flex-direction:column;gap:4px}
+.lst-ctl button{font:inherit;font-size:12px;line-height:1;padding:3px 7px;border-radius:8px;border:1px solid var(--soft-line);background:#fff;cursor:pointer;color:var(--muted)}
+.empty{padding:22px;border-radius:20px;border:1.5px dashed var(--line);text-align:center;color:var(--muted);font-size:15px}
+.progress{height:12px;border-radius:999px;background:rgba(255,255,255,.7);border:1px solid var(--soft-line);overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--c1-dot),var(--c4-dot));transition:width .3s}
+
+.pager{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.pager a{display:inline-flex;flex-direction:column;gap:2px;padding:12px 18px;border-radius:18px;background:var(--glass-strong);border:1px solid var(--soft-line);color:var(--ink);text-decoration:none;min-width:200px}
+.pager a small{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.pager a b{font-family:var(--f-head);font-size:18px}
+.pager a.next{margin-left:auto;text-align:right}
+.pager a:hover{background:#fff}
+
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);opacity:0;transition:.25s;z-index:5;padding:10px 18px;border-radius:999px;background:var(--ink);color:#fff;font-size:14.5px;pointer-events:none}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr}
+  .nav{position:static;max-height:none}
+  .map{grid-template-columns:1fr}
+  .pager a{min-width:0;flex:1}
+  .sub{padding:18px 16px}
+  .band-rh{font-size:12px}
+}
+</style>
+</head>
+<body>
+<div class="sky" aria-hidden="true"><span class="a"></span><span class="b"></span><span class="c"></span></div>
+<div class="wrap">
+
+<header class="top">
+  <a class="brand" href="#"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="#C2477F" d="M12 21s-7.5-4.6-9.3-9.6C1.5 8 3.6 4.5 7 4.5c2 0 3.4 1.1 5 3 1.6-1.9 3-3 5-3 3.4 0 5.5 3.5 4.3 6.9C19.5 16.4 12 21 12 21z"/></svg><b>Kinship</b></a>
+  <span class="mock">Mock-up v1 · Air lens</span>
+</header>
+
+<div class="layout">
+<nav class="nav" aria-label="Air course">
+  <div class="nav-head"><span class="eyebrow">Tier 2 · Roots</span><b>Air</b></div>
+  <a class="nav-over" href="#" data-nav="">Overview</a>
+  <a class="nav-over" href="#now" data-nav="now">Right now</a>
+  <a class="nav-over" href="#list" data-nav="list">My list <span class="cnt" id="navCount">0</span></a>
+  <ol class="vt">
+    <li class="vt-unit k1" data-unit="u1"><a class="vt-head" href="#u1"><span class="vt-dot">1</span><span><b>Airflow</b><small>Air needs to move</small></span></a>
+      <ul class="vt-subs"><li><a href="#u1/s1">Stale air you can measure</a></li><li><a href="#u1/s2">Windows and cross-breeze</a></li><li><a href="#u1/s3">Fans that pull air out</a></li><li><a href="#u1/s4">Filters that clean moving air</a></li><li><a href="#u1/s5">When outside air is worse</a></li><li><a class="tool-link" href="#u1/tool">Tool: Filter sizer</a></li></ul></li>
+    <li class="vt-unit k2" data-unit="u2"><a class="vt-head" href="#u2"><span class="vt-dot">2</span><span><b>Damp</b><small>Water in the air</small></span></a>
+      <ul class="vt-subs"><li><a href="#u2/s1">The humidity sweet spot</a></li><li><a href="#u2/s2">Where the water comes from</a></li><li><a href="#u2/s3">Condensation and cold spots</a></li><li><a href="#u2/s4">Where mold starts</a></li><li><a href="#u2/s5">Too dry</a></li></ul></li>
+    <li class="vt-unit k3" data-unit="u3"><a class="vt-head" href="#u3"><span class="vt-dot">3</span><span><b>Heat</b><small>Fumes that come and go</small></span></a>
+      <ul class="vt-subs"><li><a href="#u3/s1">Heat sets things loose</a></li><li><a href="#u3/s2">Cooking smoke</a></li><li><a href="#u3/s3">Gas flames</a></li><li><a href="#u3/s4">Overheated nonstick</a></li><li><a href="#u3/s5">Candles, incense and scent</a></li></ul></li>
+    <li class="vt-unit k4" data-unit="u4"><a class="vt-head" href="#u4"><span class="vt-dot">4</span><span><b>Dust</b><small>Slow sources that stay</small></span></a>
+      <ul class="vt-subs"><li><a href="#u4/s1">Dust is a sponge</a></li><li><a href="#u4/s2">Vacuuming that helps</a></li><li><a href="#u4/s3">New things breathe out</a></li><li><a href="#u4/s4">Asbestos and lead: only when disturbed</a></li><li><a href="#u4/s5">From the ground: radon</a></li></ul></li>
+  </ol>
+  <div class="nav-pair"><b>Two foundations, two exposures</b>Airflow and Damp are the basics. Heat and Dust are the two ways things get into the air.</div>
+</nav>
+
+<main class="main">
+
+<!-- Situation: filled from the Profile when answered; asked here only when it isn't. Every section stays available either way. -->
+<details class="sit" id="sit">
+  <summary><span class="eyebrow">Your situation</span><span class="sit-sum" id="sitSum"></span><span class="sit-chips" id="sitChips"></span><span class="sit-edit">Change</span></summary>
+  <div class="sit-body">
+    <div class="qgrid">
+      <label class="f">Kind of place<select data-q="home"></select></label>
+      <label class="f">How much can you change the place?<select data-q="shape"></select></label>
+      <label class="f">When was the building built?<select data-q="built"></select></label>
+      <label class="f">Who lives with you?<select data-q="with"></select></label>
+      <label class="f">Close by (within ~½ mile)<select data-q="near"></select></label>
+      <label class="f"><span>What do you cook on? <span class="new-q">new</span></span><select data-q="stove"></select></label>
+      <label class="f"><span>Kitchen fan <span class="new-q">new</span></span><select data-q="hood"></select></label>
+    </div>
+    <div class="sit-foot"><span>Saved to your Profile in this browser, so every lens can use it. Sections for you open and get a “For you” tag; everything else stays one tap away.</span><a class="btn" href="../index.html#profile">Open Profile</a></div>
+  </div>
+</details>
+
+<!-- ============ OVERVIEW ============ -->
+<section class="page" data-page="">
+  <div class="main">
+  <div class="hero">
+    <span class="lens-pill">TIER 2 · ROOTS</span>
+    <h1>Air</h1>
+    <p class="lede">We breathe around 10,000 liters of air a day, most of it indoors. Lungs, a bird’s air sacs, a cat’s nose and a houseplant’s leaves all need the same thing: air that moves and isn’t too wet. Four units: two foundations, then the two ways things get into the air, with the fastest fix for each.</p>
+    <div class="row"><a class="btn dark" href="#now">What’s in the room right now?</a></div>
+  </div>
+
+  <div class="map">
+    <div class="map-col"><span class="eyebrow">Foundations</span>
+      <a class="way k1" href="#u1"><b class="h">1 · Airflow</b><p>Air needs to move: in fresh, out stale. Windows, fans and filters are the three tools, and almost every later fix leans on them.</p></a>
+      <a class="way k2" href="#u2"><b class="h">2 · Damp</b><p>Water vapor is the other half. Between 30 and 50% humidity, mold and dust mites don’t settle in, and wood, lungs and skin are comfortable.</p></a>
+    </div>
+    <div class="map-col"><span class="eyebrow">How things get into the air</span>
+      <a class="way k3" href="#u3"><b class="h">3 · Heat · short-lived</b><p>Cooking, flames, an overheated pan, a candle. Heat sets particles and fumes loose all at once. They’re strong but brief, and airflow clears them in minutes.</p></a>
+      <a class="way k4" href="#u4"><b class="h">4 · Dust · long-lasting</b><p>Furniture, walls, floors and the ground release things slowly, or only when disturbed. They settle into dust and stay for years. Vacuuming and wet cleaning carry them out.</p></a>
+    </div>
+    <p class="map-note">Short-lived things answer to airflow. Long-lasting things answer to cleaning and to leaving well-sealed materials alone.</p>
+  </div>
+
+  <ol class="ucards">
+    <li><a class="ucard k1" href="#u1"><i class="band"></i><span class="n">01 · <span class="kindtag">Foundation</span></span><b>Airflow</b><span>Air needs to move.</span><ol><li>Stale air you can measure</li><li>Windows and cross-breeze</li><li>Fans that pull air out</li><li>Filters that clean moving air</li><li>When outside air is worse</li></ol><span class="modes"><span class="mode m-now">Right now</span><span class="mode m-once">Set up once</span></span></a></li>
+    <li><a class="ucard k2" href="#u2"><i class="band"></i><span class="n">02 · <span class="kindtag">Foundation</span></span><b>Damp</b><span>Water in the air, and where it lands.</span><ol><li>The humidity sweet spot</li><li>Where the water comes from</li><li>Condensation and cold spots</li><li>Where mold starts</li><li>Too dry</li></ol><span class="modes"><span class="mode m-habit">Habit</span><span class="mode m-once">Set up once</span></span></a></li>
+    <li><a class="ucard k3" href="#u3"><i class="band"></i><span class="n">03 · <span class="kindtag">Short-lived</span></span><b>Heat</b><span>Fumes and particles that come and go.</span><ol><li>Heat sets things loose</li><li>Cooking smoke</li><li>Gas flames</li><li>Overheated nonstick</li><li>Candles, incense and scent</li></ol><span class="modes"><span class="mode m-now">Right now</span><span class="mode m-habit">Habit</span></span></a></li>
+    <li><a class="ucard k4" href="#u4"><i class="band"></i><span class="n">04 · <span class="kindtag">Long-lasting</span></span><b>Dust</b><span>Slow sources, what settles, and how to carry it out.</span><ol><li>Dust is a sponge</li><li>Vacuuming that helps</li><li>New things breathe out</li><li>Asbestos and lead: only when disturbed</li><li>From the ground: radon</li></ol><span class="modes"><span class="mode m-habit">Habit</span><span class="mode m-once">Set up once</span></span></a></li>
+  </ol>
+
+  <div class="funfact"><span class="eyebrow">Fun fact</span>
+    <p>A single gas burner on high, or a pan of something searing, can push fine particles in a kitchen higher than a smoggy day outside, and an open window plus a fan pointing out can bring them back down in well under an hour. Air answers fast, which makes it one of the most satisfying needs to meet.</p>
+    <p class="src">Lawrence Berkeley National Laboratory, Indoor Environment Group, residential cooking exposure studies (Singer et al., 2017; Logue et al., 2014). Laws mentioned are California’s; the physics is the same everywhere.</p>
+  </div>
+  <div class="review"><span class="eyebrow">For review · mock-up notes</span>
+    <ul>
+      <li><b>Shaped around four ideas, not topics:</b> two foundations (Airflow, Damp), then the two ways exposure happens: <b>Heat</b> (short-lived, released all at once, cleared by airflow) and <b>Dust</b> (long-lasting, released slowly or when disturbed, cleared by cleaning). The overview map makes that split the course’s main idea.</li>
+      <li><b>“Right now”</b> sits beside My list in the sidebar and matches the lens blurb: pick what you notice (stuffy, smoky, musty, a fishy smell from a pan…) and get the fastest fix first. Unit 1 has a <b>Filter sizer</b>.</li>
+      <li><b>Modes for Air:</b> Right now · Habit · Set up once · Together (Toxins uses One by one and Test once instead). My list is the same tracker, under its own key <code>meeting-needs.air.v1</code>. Could merge with Toxins into one shared list later.</li>
+      <li><b>Two new profile questions:</b> <code>stove</code> (gas, electric, induction, hot plate, none) and <code>hood</code> (vents outside, recirculates, none). Also reads <code>home</code>, <code>shape</code>, <code>built</code>, <code>with</code> and <code>near</code> from Toxins.</li>
+      <li><b>Overlaps to settle:</b> PTFE fumes (3.4) and Toxins 3.4 Pots and pans; mold (2.4) and Toxins 6.1; dust (4.1) and Toxins 3.3. Here the angle is how it travels through air; the Toxins pages keep the swap. Linked both ways, not repeated.</li>
+      <li>A Creator’s consideration could sit at the end of 3.3 (gas flames) or 4.3 (secondhand furniture has already finished off-gassing), if you’d like one.</li>
+    </ul>
+  </div>
+  </div>
+</section>
+
+<!-- ============ RIGHT NOW ============ -->
+<section class="page k1" data-page="now" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Your quickest read</span><h1>Right now</h1><p class="unit-sub">What’s in the room, and the fastest fix</p>
+    <p class="lede">No meter needed. Your nose, eyes, windows and body are good instruments. Pick everything you notice, and the fixes come back in order: anything urgent first, then the free ones that work in minutes.</p>
+  </div>
+  <div class="tool">
+    <b class="t">What do you notice?</b>
+    <div class="picks" id="rnPicks"></div>
+    <div class="out" id="rnOut"></div>
+  </div>
+  <p class="legend">This is a quick read, not a diagnosis. Each answer links to the section that explains it.</p>
+  </div>
+</section>
+
+<!-- ============ MY LIST ============ -->
+<section class="page k2" data-page="list" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Your list</span><h1>My list</h1><p class="unit-sub">One change at a time, in the order you choose</p>
+    <p class="lede">Every “How to fix” you add lands here. Move the ones that matter most, or cost least, to the top. Tap the status to move it along. There’s no deadline and no score.</p>
+    <div class="progress" aria-hidden="true"><i id="lstBar"></i></div>
+    <p class="legend" id="lstSum"></p>
+  </div>
+  <ol class="lst" id="lst"></ol>
+  <div class="empty" id="lstEmpty">Nothing here yet. Try <a href="#now">Right now</a>, or add any “How to fix” as you read.</div>
+  <div class="row"><button class="btn" id="lstSort">Free ones first</button><button class="btn" id="lstClear">Clear done</button></div>
+  <p class="legend">Saved only in this browser (<code>meeting-needs.air.v1</code>).</p>
+  </div>
+</section>
+
+<!-- ============ UNIT 1: AIRFLOW ============ -->
+<section class="page k1" data-page="u1" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 1 · Foundation</span><h1>Airflow</h1><p class="unit-sub">Air needs to move</p>
+    <p class="lede">Indoor air is a bathtub: things pour in (breath, cooking, damp, dust) and the only drains are fresh air coming in, stale air going out, and a filter in between. Every unit after this one leans on these three tools.</p>
+    <div class="unit-mode"><span class="mode m-now">Right now</span> Opening up works in minutes. <span class="mode m-once">Set up once</span> A fan, a filter or a $30 meter keeps working after that.</div>
+    <ul class="jumps"><li><a href="#u1/s1"><span>1.1</span>Stale air</a></li><li><a href="#u1/s2"><span>1.2</span>Windows</a></li><li><a href="#u1/s3"><span>1.3</span>Fans out</a></li><li><a href="#u1/s4"><span>1.4</span>Filters</a></li><li><a href="#u1/s5"><span>1.5</span>Outside air</a></li><li><a href="#u1/tool"><span>Tool</span>Filter sizer</a></li></ul>
+  </div>
+
+  <article class="sub" id="u1-s1">
+    <div class="sub-top"><span class="sub-n">1.1</span><h2>Stale air you can measure</h2></div>
+    <p>Every breath out adds carbon dioxide (CO₂). Outdoors it sits around 420 parts per million (ppm). In a closed bedroom with two sleepers it can pass 2,000 by morning. CO₂ itself is mostly a messenger: when it’s high, everything else people and the house release is building up too, so it’s the easiest single gauge of airflow.</p>
+    <div class="does">
+      <div><b>Around 400–800 <i>Fresh</i></b><p>Close to outdoor air. Plenty of air is moving through.</p></div>
+      <div><b>800–1,200 <i>Getting stale</i></b><p>Fine for a while. A good moment to crack a window.</p></div>
+      <div><b>Over 1,200 <i>Stuffy</i></b><p>Often felt as heavy, sleepy or headachy air. Studies link levels like this with slower thinking and lighter sleep.</p></div>
+    </div>
+    <p class="home">The first breath back into a bedroom after a walk is the free meter: if it smells like “people”, the air hasn’t been changing.</p>
+    <div class="fix" data-fix="u1s1" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-now">Right now</span><span class="mode m-once">Set up once</span><span class="cost">Free → $</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Sleep with a window open a crack, or the bedroom door open, even an inch.</li>
+        <li><small>Free</small>Use your nose: step outside for a minute, then walk back in.</li>
+        <li><small>$ · once</small>A CO₂ meter with an “NDIR” sensor (about $30–$80) makes airflow visible. Libraries in some cities lend them; one meter can travel room to room or house to house.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Bedroom window or door open a crack at night">Add to my list</button><button class="add" data-title="Borrow or share a CO₂ meter (NDIR)">Add the meter</button></div>
+    </div>
+    <p class="src">ASHRAE position document on indoor carbon dioxide (2022); Allen et al., <i>Environmental Health Perspectives</i> 2016 (COGfx study); Strøm-Tejsen et al., <i>Indoor Air</i> 2016 (bedroom CO₂ and sleep).</p>
+  </article>
+
+  <article class="sub" id="u1-s2">
+    <div class="sub-top"><span class="sub-n">1.2</span><h2>Windows and cross-breeze</h2></div>
+    <p>One open window lets a little air trade places. Two openings on different sides make a path, and air moves through many times faster. Height helps too: warm air rises and leaves through a high opening while cooler air comes in low (the stack effect).</p>
+    <svg class="flow" viewBox="0 0 720 220" role="img" aria-label="Cross-breeze: air enters a window on one side, crosses the room, and leaves through a window on the far side. A fan in the exit window pointing outward pulls it faster.">
+      <rect x="60" y="30" width="600" height="160" rx="14" fill="#FAF6E2" stroke="#DAC68A" stroke-width="2"/>
+      <rect x="52" y="80" width="16" height="60" rx="4" fill="#fff" stroke="#99690A" stroke-width="2"/>
+      <rect x="652" y="70" width="16" height="60" rx="4" fill="#fff" stroke="#99690A" stroke-width="2"/>
+      <text x="40" y="70" font-family="IBM Plex Mono, monospace" font-size="12" fill="#5C5235" text-anchor="start">fresh in</text>
+      <text x="680" y="62" font-family="IBM Plex Mono, monospace" font-size="12" fill="#5C5235" text-anchor="end">stale out</text>
+      <path d="M20 110 C 180 110, 260 150, 360 130 S 560 95, 700 100" fill="none" stroke="#6B4A00" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round"/>
+      <path d="M690 92 L704 100 L690 108" fill="none" stroke="#6B4A00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <g transform="translate(624 100)"><circle r="18" fill="#fff" stroke="#6B4A00" stroke-width="2"/><path d="M0 -12 Q 8 -6 0 0 Q -8 -6 0 -12 M0 12 Q -8 6 0 0 Q 8 6 0 12 M-12 0 Q -6 -8 0 0 Q -6 8 -12 0 M12 0 Q 6 8 0 0 Q 6 -8 12 0" fill="#EBC94B"/></g>
+      <text x="624" y="150" font-family="IBM Plex Mono, monospace" font-size="12" fill="#5C5235" text-anchor="middle">fan faces out</text>
+      <text x="360" y="182" font-family="Instrument Sans, sans-serif" font-size="14" fill="#3E3720" text-anchor="middle">Two openings, opposite sides. The fan pushes stale air out; fresh air follows.</text>
+    </svg>
+    <ul>
+      <li><b>A 5 to 10 minute wide-open “purge”</b> swaps most of a room’s air, even in winter, and walls and furniture hold their warmth.</li>
+      <li><b>A fan in a window pointing out</b> works better than one pointing in: it pulls from the whole room, and fresh air finds its own way through every other gap.</li>
+      <li><b>Interior doors</b> are part of the path. Open them between the two windows.</li>
+    </ul>
+    <div class="fix" data-fix="u1s2" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-now">Right now</span><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Find your best cross-breeze pair: two windows on different sides, with open doors between.</li>
+        <li><small>Free</small>A morning purge: both wide open for 5–10 minutes while the kettle boils. Kids love being the window crew.</li>
+        <li><small>Free</small>Any fan you own, set in the far window facing out.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Morning 5–10 minute window purge">Add to my list</button></div>
+    </div>
+    <div class="accs">
+      <details class="acc" data-for="vehicle"><summary><span class="who">Vehicle or boat</span>Small spaces fill up fast<span class="for-you">For you</span></summary><div class="in"><p>A van or cabin has a fraction of a room’s air, so breath and cooking build up in minutes. A roof vent fan pulling out plus one window cracked on the far side is the classic setup. Never run a fuel heater, stove or engine for warmth in a closed vehicle; carbon monoxide builds silently (3.3).</p></div></details>
+      <details class="acc" data-for="portable"><summary><span class="who">Can’t change much</span>Airflow with nothing permanent<span class="for-you">For you</span></summary><div class="in"><p>Everything here is portable: windows, doors, a box fan, a filter. A window fan that sits in the frame with no screws comes along to the next place.</p></div></details>
+    </div>
+    <p class="src">US EPA, <i>Guide to Air Cleaners in the Home</i> and ventilation guidance; Building Science Corporation on the stack effect.</p>
+  </article>
+
+  <article class="sub" id="u1-s3">
+    <div class="sub-top"><span class="sub-n">1.3</span><h2>Fans that pull air out</h2></div>
+    <p>A window lets air drift. An exhaust fan grabs it where it’s made: steam in the bathroom, smoke over the stove. The catch is the duct: a fan only removes air if it leads outside.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Fan</th><th>What it removes</th><th>Make it count</th></tr></thead>
+      <tbody>
+        <tr><td>Range hood, vented outside</td><td class="y">Smoke, grease, gas combustion fumes, steam</td><td>Turn it on before the burner, use the back burners, leave it on 10–15 minutes after.</td></tr>
+        <tr><td>Range hood, recirculating</td><td class="p">Grease (on its filter); some odor with a carbon filter</td><td>It doesn’t remove fumes, steam or fine particles. Pair it with a window.</td></tr>
+        <tr><td>Bathroom fan</td><td class="y">Steam, odors</td><td>Run during the shower and about 20 minutes after. Hold a tissue to it: if it doesn’t cling, the fan or duct needs cleaning.</td></tr>
+        <tr><td>Ceiling or standing fan</td><td class="n">Nothing; it stirs</td><td>Comfortable, but it moves air around, not out. Point it at a window to help.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="legend">Green: removes it · Amber: partly · Red: moves it around.</p>
+    <div class="fix" data-fix="u1s3" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="cost">Free → $</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>The tissue test on every exhaust fan. Look outside for a flap where it should exit.</li>
+        <li><small>Free</small>Hood on before the burner; bathroom fan on before the shower.</li>
+        <li><small>Free → $</small>Soak a greasy hood filter in hot water with baking soda and a drop of dish soap; dust off a bathroom fan grille.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Tissue test the hood and bathroom fan; clean filters">Add to my list</button></div>
+    </div>
+    <div class="accs">
+      <details class="acc" data-for="nohood"><summary><span class="who">No vented hood</span>Getting kitchen air out anyway<span class="for-you">For you</span></summary><div class="in"><ul><li>A box fan in the nearest window facing out, running while you cook, does much of a hood’s job.</li><li>Lids on pots cut steam and spatter at the source.</li><li>A HEPA filter in or near the kitchen catches fine smoke particles (not gases).</li></ul></div></details>
+      <details class="acc" data-for="rent"><summary><span class="who">Renting</span>Asking for a working fan<span class="for-you">For you</span></summary><div class="in"><p class="ca">Bathrooms in California need either an opening window or a working exhaust fan under the housing code. A clear, dated request with a photo works best.</p><p class="links">Emotions &amp; love → Requests</p></div></details>
+    </div>
+    <p class="src">Lawrence Berkeley National Laboratory, range hood capture efficiency studies (Delp &amp; Singer 2012); California Building Standards Code (Title 24) and Health &amp; Safety Code §17920.3.</p>
+  </article>
+
+  <article class="sub" id="u1-s4">
+    <div class="sub-top"><span class="sub-n">1.4</span><h2>Filters that clean moving air</h2></div>
+    <p>A filter catches particles (smoke, dust, pollen, mold spores, the tiny droplets that carry colds) from air that’s pushed through it. It doesn’t remove gases like CO₂, cooking fumes or most smells; that’s what airflow is for. Three labels tell you what you’re getting:</p>
+    <div class="does">
+      <div><b>HEPA <i>Purifiers</i></b><p>Catches at least 99.97% of particles at the hardest size to catch. Real HEPA, not “HEPA-type”.</p></div>
+      <div><b>MERV 13 <i>Furnace & box fans</i></b><p>Catches most fine smoke particles. A good balance of clean and easy airflow.</p></div>
+      <div><b>CADR <i>How much</i></b><p>Clean air delivery rate: how many cubic feet of clean air per minute. Bigger room, bigger number.</p></div>
+    </div>
+    <p><b>The box-fan filter.</b> A 20-inch box fan with a MERV 13 filter strapped to the back is a well-tested, low-cost purifier. Four or five filters taped into a cube around the fan (a Corsi–Rosenthal box) clean several times more air, often rivaling purifiers that cost far more. Neighbors build them together on a Saturday and share leftover filters.</p>
+    <p class="danger">Skip ozone generators, “activated oxygen” and most ionizers. Ozone irritates lungs and reacts with scents to make formaldehyde. Houseplants are lovely kin, but a home would need hundreds per room to clean air measurably.</p>
+    <p class="ca">Air cleaners sold in California have to meet CARB’s ozone limit (0.050 ppm). CARB keeps a list of certified devices.</p>
+    <div class="fix" data-fix="u1s4" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-once">Set up once</span><span class="mode m-together">Together</span><span class="cost">$</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · first</small>Airflow first. A filter is for particles you can’t open a window on: smoke days, a busy road, a cold.</li>
+        <li><small>$ · once</small>Box fan + MERV 13 filter, or a four-filter cube. Size it with the tool below. Use a newer fan (2012 or later) with a UL or ETL mark.</li>
+        <li><small>Together</small>Build a batch with neighbors, a school or a library, and keep a few ready for fire season.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Build a box-fan filter (MERV 13) for the bedroom">Add to my list</button></div>
+    </div>
+    <p class="src">US EPA, <i>Guide to Air Cleaners in the Home</i> and EPA research on DIY box-fan air cleaners; Dal Porto et al., <i>Aerosol and Air Quality Research</i> 2022 (Corsi–Rosenthal box); Cummings &amp; Waring, <i>Journal of Exposure Science &amp; Environmental Epidemiology</i> 2019 (plants); CARB Air Cleaner Regulation (2010).</p>
+  </article>
+
+  <article class="sub" id="u1-s5">
+    <div class="sub-top"><span class="sub-n">1.5</span><h2>When outside air is worse</h2></div>
+    <p>Most days, outside air is cleaner than inside. Wildfire smoke, a freeway at rush hour and high pollen days flip that. Then the plan turns around: close up, keep the air moving through a filter, and make one room the clean room.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Air Quality Index</th><th>Means</th><th>Indoors</th></tr></thead>
+      <tbody>
+        <tr><td>0–100 · Good to moderate</td><td class="y">Open up as usual</td><td>Windows, cross-breeze, purge.</td></tr>
+        <tr><td>101–150 · Sensitive groups</td><td class="p">Kids, elders, pregnancy, asthma, companion animals feel it</td><td>Close the windows on that side, run a filter in the bedroom.</td></tr>
+        <tr><td>151+ · Unhealthy</td><td class="n">Everyone</td><td>Clean room: windows shut, filter on high, no frying or candles, fans recirculating only.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="ca">AirNow.gov and the Fire and Smoke Map show smoke in real time. Many counties open cleaner-air centers on smoke days.</p>
+    <p class="kin">Birds, cats with asthma, older dogs and outdoor neighbors like hens all feel smoke early. Bring companions inside the clean room; leave water out for wild visitors, whose need for water rises on smoky days.</p>
+    <div class="fix" data-fix="u1s5" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-once">Set up once</span><span class="mode m-together">Together</span><span class="cost">Free → $</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · now</small>Choose the clean room: usually the bedroom with the fewest windows. Save AirNow on your phone.</li>
+        <li><small>$</small>One filter ready for that room, with a spare filter, before fire season.</li>
+        <li><small>Together</small>Check on neighbors who live alone or have no filter; lend yours if their room needs it more.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Smoke-day clean room ready (filter + spare)">Add to my list</button></div>
+    </div>
+    <div class="accs">
+      <details class="acc" data-for="road"><summary><span class="who">Near a freeway</span>The busy-road rhythm<span class="for-you">For you</span></summary><div class="in"><p>Traffic pollution is highest within about 500 feet and peaks at rush hours. Air out on the side away from the road, in the middle of the day or late evening, and run a filter in the bedroom overnight.</p><p class="links">Toxins → Neighbors → Roads, freeways, airports</p></div></details>
+      <details class="acc" data-for="farm"><summary><span class="who">Near fields</span>Spray days and dust<span class="for-you">For you</span></summary><div class="in"><p>Close the windows facing the fields on windy days and when spraying is planned (California’s SprayDays notices list upcoming applications). Wet dusting matters more here (4.2).</p></div></details>
+    </div>
+    <p class="src">US EPA, AirNow and <i>Wildfire Smoke: A Guide for Public Health Officials</i> (2019 revision); CARB, traffic proximity guidance (<i>Air Quality and Land Use Handbook</i>, 2005); California DPR SprayDays.</p>
+  </article>
+
+  <article class="sub" id="u1-tool">
+    <div class="sub-top"><span class="sub-n">Tool</span><h2>Filter sizer</h2></div>
+    <div class="tool">
+      <b class="t">How much filter does this room need?</b>
+      <div class="row">
+        <label class="f">Length (ft)<input type="number" id="fsL" value="12" min="4" max="60"></label>
+        <label class="f">Width (ft)<input type="number" id="fsW" value="11" min="4" max="60"></label>
+        <label class="f">Ceiling (ft)<input type="number" id="fsH" value="8" min="6" max="20"></label>
+        <label class="f">For<select id="fsFor"><option value="4">Everyday</option><option value="6">Smoke days or someone sick</option></select></label>
+      </div>
+      <div class="out" id="fsOut"></div>
+    </div>
+  </article>
+
+  <nav class="pager"><a href="#"><small>← Back</small><b>Overview</b></a><a class="next" href="#u2"><small>Next unit →</small><b>2 · Damp</b></a></nav>
+  </div>
+</section>
+
+<!-- ============ UNIT 2: DAMP ============ -->
+<section class="page k2" data-page="u2" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 2 · Foundation</span><h1>Damp</h1><p class="unit-sub">Water in the air, and where it lands</p>
+    <p class="lede">Air always carries some water you can’t see. Warm air holds more; cool air holds less, so when warm, damp air meets a cold window or wall, the water lands. Where it lands and stays, mold and dust mites move in. Keep it in the middle range and most of that never starts.</p>
+    <div class="unit-mode"><span class="mode m-habit">Habit</span> Lids, fans and drying habits do most of it. <span class="mode m-once">Set up once</span> A $10 humidity meter shows where you are.</div>
+    <ul class="jumps"><li><a href="#u2/s1"><span>2.1</span>Sweet spot</a></li><li><a href="#u2/s2"><span>2.2</span>Sources</a></li><li><a href="#u2/s3"><span>2.3</span>Cold spots</a></li><li><a href="#u2/s4"><span>2.4</span>Mold</a></li><li><a href="#u2/s5"><span>2.5</span>Too dry</a></li></ul>
+  </div>
+
+  <article class="sub" id="u2-s1">
+    <div class="sub-top"><span class="sub-n">2.1</span><h2>The humidity sweet spot</h2></div>
+    <p>Relative humidity (RH) is how full the air is of water, as a share of the most it could hold at that temperature. A humidity meter (hygrometer) costs about $10 and is one of the most useful things a home can own.</p>
+    <div class="band-rh" role="img" aria-label="Humidity bands: below 30 percent dry; 30 to 50 comfortable; 50 to 60 edge; above 60 damp.">
+      <div class="dry"><b>Under 30%</b>Dry skin, static, sore throats, cracking wood</div>
+      <div class="ok"><b>30–50%</b>Sweet spot</div>
+      <div class="edge"><b>50–60%</b>Dust mites thrive</div>
+      <div class="wet"><b>Over 60%</b>Mold, musty smells, condensation, peeling paint</div>
+    </div>
+    <div class="band-ticks"><span>0</span><span>30</span><span>50</span><span>60</span><span>100%</span></div>
+    <div class="fix" data-fix="u2s1" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-once">Set up once</span><span class="cost">$</span></div>
+      <ol class="fix-steps">
+        <li><small>$ · once</small>One hygrometer (about $10). Check it in the morning, after showers and after cooking for a week.</li>
+        <li><small>Free</small>Move it room to room: the bedroom, the bathroom, the closet on an outside wall.</li>
+        <li><small>Free</small>Over 60% for days at a time? Unit 2.2 has the sources; 2.3 has the cold spots.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Humidity meter: a week of readings">Add to my list</button></div>
+    </div>
+    <p class="src">US EPA, <i>A Brief Guide to Mold, Moisture and Your Home</i>; Arlian et al. on the humidity dust mites need.</p>
+  </article>
+
+  <article class="sub" id="u2-s2">
+    <div class="sub-top"><span class="sub-n">2.2</span><h2>Where the water comes from</h2></div>
+    <p>A household adds several liters of water to the air every day without anyone spilling a drop. Most of it comes from a handful of places, and each has a free fix.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Source</th><th>The fix</th></tr></thead>
+      <tbody>
+        <tr><td>Showers and baths</td><td>Fan on, door shut while it runs, window cracked. Squeegee the walls: it takes a minute and the water goes down the drain, not into the air.</td></tr>
+        <tr><td>Cooking, especially boiling</td><td>Lids on. Hood or window fan on.</td></tr>
+        <tr><td>Laundry drying indoors</td><td>Outside when you can; inside, one room with the door shut and the window open.</td></tr>
+        <tr><td>Breathing and sleeping</td><td>A cracked window at night (1.1).</td></tr>
+        <tr><td>Leaks, wet ground, crawlspaces</td><td>Find and stop. Gutters and soil sloping away from the walls keep rain off them.</td></tr>
+        <tr><td>Plants, aquariums, unvented dryers and gas heaters</td><td>Lids on tanks; dryers vented outside; unvented gas heaters add both water and fumes (3.3).</td></tr>
+      </tbody>
+    </table></div>
+    <div class="fix" data-fix="u2s2" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Lids on boiling pots and a 1-minute shower squeegee: two habits kids can own.</li>
+        <li><small>Free</small>Pick a drying room for laundry, door shut, window open.</li>
+        <li><small>Free</small>Walk the outside after rain: where does water pool against the house?</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Lids on, shower squeegee, a drying room for laundry">Add to my list</button></div>
+    </div>
+    <p class="src">Building Science Corporation, moisture sources in houses; Lstiburek, <i>Moisture Control Handbook</i>.</p>
+  </article>
+
+  <article class="sub" id="u2-s3">
+    <div class="sub-top"><span class="sub-n">2.3</span><h2>Condensation and cold spots</h2></div>
+    <p>Condensation is the same as a cold glass sweating. Water lands on the coldest surface the damp air can reach: single-pane windows, outside corners, the wall behind a dresser where warm air never gets in. Morning fog on the windows is the house showing you its cold spots.</p>
+    <ul>
+      <li><b>Wipe it, don’t leave it.</b> A dedicated towel for the windows each morning. Water left on the sill feeds mold on the frame.</li>
+      <li><b>Let warm air reach the walls.</b> Furniture a few inches out from outside walls; closet doors cracked; beds not jammed into corners.</li>
+      <li><b>Even heat helps.</b> A room left very cold next to warm ones collects the house’s water.</li>
+    </ul>
+    <div class="fix" data-fix="u2s3" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Pull furniture off outside walls by 2–4 inches.</li>
+        <li><small>Free</small>Morning window wipe, then a 5-minute purge (1.2) to carry the water out.</li>
+        <li><small>Free</small>Look behind the bed and in closets on outside walls for gray spots or a musty smell.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Furniture off outside walls; morning window wipe">Add to my list</button></div>
+    </div>
+    <div class="accs">
+      <details class="acc" data-for="vehicle"><summary><span class="who">Vehicle or boat</span>Metal walls and morning drips<span class="for-you">For you</span></summary><div class="in"><p>Thin metal walls are always cold, so condensation comes every night. A roof fan on low while sleeping, a cracked window and a small towel routine make the most difference. Wool and cork stay comfortable when damp; check under the mattress for moisture weekly.</p></div></details>
+    </div>
+    <p class="src">US EPA, <i>Mold Remediation in Schools and Commercial Buildings</i> (condensation and dew point); Building Science Corporation.</p>
+  </article>
+
+  <article class="sub" id="u2-s4">
+    <div class="sub-top"><span class="sub-n">2.4</span><h2>Where mold starts</h2></div>
+    <p>Mold spores float in every breath of outdoor air. Indoors, they only grow where something stays wet for a day or two. So mold is a message about water: it shows exactly where the house needs drying. Damp homes are linked with more coughing, wheezing and asthma, in children most.</p>
+    <ul>
+      <li>A musty or earthy smell is mold you can’t see yet.</li>
+      <li>Gray, black or green specks along window frames, grout, ceilings over showers and the back of closets.</li>
+      <li>Soft or stained drywall and swollen wood point to a hidden leak.</li>
+    </ul>
+    <div class="fix" data-fix="u2s4" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="mode m-together">Together</span><span class="cost">Free → $</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · first</small>Find and stop the water. Mold comes back as long as the water does.</li>
+        <li><small>Free</small>Small patches (under about 10 square feet): scrub with soap and water, then dry fully with a fan. Bleach isn’t needed and adds fumes.</li>
+        <li><small>Ask</small>Larger areas, a hidden leak or anything after a flood: the owner, or a professional, ideally with the source fixed first.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Find & stop the water behind any mold">Add to my list</button></div>
+    </div>
+    <div class="accs">
+      <details class="acc" data-for="rent"><summary><span class="who">Renting</span>When the leak isn’t yours to fix<span class="for-you">For you</span></summary><div class="in"><p class="ca">Since 2016, visible mold that affects health counts as a substandard-housing condition in California (SB 655). Write to the landlord with photos and dates and keep a copy; local code enforcement can inspect.</p><p class="links">Emotions &amp; love → Requests · Toxins → Living toxins → Mold in the house</p></div></details>
+    </div>
+    <p class="links">Toxins → Living toxins (mold on food, what molds make) · Cleaning lens (mold on surfaces)</p>
+    <p class="src">WHO, <i>Guidelines for Indoor Air Quality: Dampness and Mould</i> (2009); US EPA, <i>A Brief Guide to Mold, Moisture and Your Home</i>; California SB 655 (2015).</p>
+  </article>
+
+  <article class="sub" id="u2-s5">
+    <div class="sub-top"><span class="sub-n">2.5</span><h2>Too dry</h2></div>
+    <p>Winter heating and desert air can drop humidity below 30%. Skin cracks, noses bleed, throats get scratchy, wood floors gap and static zaps fly. The fix is gentle: a little water back in, not a lot.</p>
+    <ul>
+      <li>Air-dry a rack of laundry indoors; leave bathwater in the tub until it cools.</li>
+      <li>A pot of water simmering on the stove (lid off, hood off) for a while.</li>
+      <li>A humidifier, if you use one: clean it every few days and fill it with distilled water, or it can spread mold and a fine white mineral dust. Stop at 50%.</li>
+    </ul>
+    <p class="kin">Many houseplants are from humid forests. Grouping them together on a tray of pebbles and water raises the air around their leaves without raising the room.</p>
+    <div class="fix" data-fix="u2s5" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free</small>Check the meter before adding water: dry air feels different from cold air.</li>
+        <li><small>Free</small>Laundry rack inside on dry days; outside on damp ones.</li>
+        <li><small>Free</small>Group houseplants on a pebble tray.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Dry-air habits: indoor laundry rack, plant pebble tray">Add to my list</button></div>
+    </div>
+    <p class="src">US EPA, <i>Indoor Air Facts: Use and Care of Home Humidifiers</i>; US CPSC humidifier safety alert.</p>
+  </article>
+
+  <nav class="pager"><a href="#u1"><small>← Back</small><b>1 · Airflow</b></a><a class="next" href="#u3"><small>Next unit →</small><b>3 · Heat</b></a></nav>
+  </div>
+</section>
+
+<!-- ============ UNIT 3: HEAT ============ -->
+<section class="page k3" data-page="u3" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 3 · Short-lived</span><h1>Heat</h1><p class="unit-sub">Fumes and particles that come and go</p>
+    <p class="lede">Heat is the fastest way things get into air. A searing pan, a gas flame, a pan left empty on high, a candle: each releases a burst of particles and gases at once. The burst is strong but brief. With the air moving, most of it is gone within the hour, so the fixes here are about the moment: lower heat, fan on, window open.</p>
+    <div class="unit-mode"><span class="mode m-now">Right now</span> Fan on before the heat. <span class="mode m-habit">Habit</span> Lower heat, lids, back burners.</div>
+    <ul class="jumps"><li><a href="#u3/s1"><span>3.1</span>Heat sets loose</a></li><li><a href="#u3/s2"><span>3.2</span>Cooking smoke</a></li><li><a href="#u3/s3"><span>3.3</span>Gas flames</a></li><li><a href="#u3/s4"><span>3.4</span>Nonstick</a></li><li><a href="#u3/s5"><span>3.5</span>Candles &amp; scent</a></li></ul>
+  </div>
+
+  <article class="sub" id="u3-s1">
+    <div class="sub-top"><span class="sub-n">3.1</span><h2>Heat sets things loose</h2></div>
+    <p>Heat does three things to the air. It <b>burns</b> (smoke and soot from food, wax, wood, gas). It <b>breaks down</b> materials that are stable when cool (an overheated nonstick coating, the first run of a dusty space heater). And it <b>speeds up</b> what materials slowly breathe out anyway: a new couch in a hot room or a car in the sun gives off its fumes several times faster.</p>
+    <div class="does">
+      <div><b>Burns <i>Particles</i></b><p>Searing, toasting, frying, candles, incense, wood fires, gas flames.</p></div>
+      <div><b>Breaks down <i>Fumes</i></b><p>Nonstick coatings over about 500°F, dust on heater coils, plastic left on a hot surface.</p></div>
+      <div><b>Speeds up <i>Off-gassing</i></b><p>New furniture, paint, a hot car interior. Unit 4.3 covers the slow version.</p></div>
+    </div>
+    <p>What makes heat exposures short-lived is that they stop when the heat stops. The level peaks while cooking or burning, then falls as air carries it out. How fast it falls is up to airflow: a sealed kitchen can stay smoky for hours; a kitchen with a vented hood or a window fan clears in minutes.</p>
+    <div class="fix" data-fix="u3s1" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Air on before heat: hood, window fan or cross-breeze, then the burner.</li>
+        <li><small>Free</small>Run a new space heater or the first heat of the season with the window open; the burnt-dust smell passes in an hour or so.</li>
+        <li><small>Free</small>Park in shade and open the car windows for a minute before driving on hot days.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Air on before heat (hood, fan or window first)">Add to my list</button></div>
+    </div>
+    <p class="src">US EPA, <i>Introduction to Indoor Air Quality</i>; Parthasarathy et al., <i>Journal of the Air &amp; Waste Management Association</i> 2011 (temperature, humidity and formaldehyde emissions).</p>
+  </article>
+
+  <article class="sub" id="u3-s2">
+    <div class="sub-top"><span class="sub-n">3.2</span><h2>Cooking smoke</h2></div>
+    <p>Cooking is the biggest indoor source of fine particles in most homes, gas or electric. High heat and oil make the most: searing, stir-frying, broiling, toasting. Boiling and steaming make very little. Burnt food makes a lot.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Cooking</th><th>Particles</th><th>Easy shift</th></tr></thead>
+      <tbody>
+        <tr><td>Boiling, steaming, simmering</td><td class="y">Low</td><td>Lid on for the steam.</td></tr>
+        <tr><td>Baking, roasting</td><td class="p">Medium, more when it drips or burns</td><td>A tray under drips; oven light instead of opening the door.</td></tr>
+        <tr><td>Frying, searing, broiling, toasting</td><td class="n">High</td><td>Medium heat, oils with a higher smoke point, back burner, hood on high.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="home">Back burners matter: most range hoods catch far more from the back than the front. Switching a pan back is free and makes a measurable difference.</p>
+    <p class="together">Kids next to the stove are learning to cook. A step stool at the back-burner side, a lid in their hands and the hood switch as their job makes them part of the clean air.</p>
+    <div class="fix" data-fix="u3s2" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Back burners first, hood on high or a window fan out.</li>
+        <li><small>Free</small>Medium heat for oil; if it smokes, pull the pan off and let it cool.</li>
+        <li><small>Free</small>Leave the fan running 10–15 minutes after the burner’s off.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Back burners, hood on high, 15 minutes after">Add to my list</button></div>
+    </div>
+    <div class="accs">
+      <details class="acc" data-for="nohood"><summary><span class="who">No vented hood</span>Clearing smoke with a window<span class="for-you">For you</span></summary><div class="in"><p>A box fan in the nearest window facing out, plus another window open somewhere else in the home, removes much of what a hood would. For high-heat cooking, a camping stove or electric pan on a porch or balcony keeps the smoke outside entirely.</p></div></details>
+    </div>
+    <p class="links">Food → Cook (safe heat, little fuel)</p>
+    <p class="src">Abdullahi et al., <i>Atmospheric Environment</i> 2013 (cooking particle emissions review); Lawrence Berkeley National Laboratory, range hood studies (Delp &amp; Singer 2012, back vs front burners).</p>
+  </article>
+
+  <article class="sub" id="u3-s3">
+    <div class="sub-top"><span class="sub-n">3.3</span><h2>Gas flames</h2></div>
+    <p>A gas flame burns methane, and burning makes more than heat. It makes <b>nitrogen dioxide</b> (NO₂), which inflames airways; a little <b>carbon monoxide</b> (CO); and, along with leaked unburned gas, small amounts of <b>benzene</b> and formaldehyde. All of this happens whether or not food is on the burner.</p>
+    <ul>
+      <li>An estimated 1 in 8 cases of childhood asthma in the US is linked to gas stove use, about the same share as secondhand smoke.</li>
+      <li>In small kitchens without a vented hood, NO₂ from a stove can pass the outdoor health limit within an hour of cooking.</li>
+      <li>Unvented gas wall heaters, oven doors left open for warmth and fuel heaters in vans release the same gases straight into the room.</li>
+    </ul>
+    <p class="danger">Carbon monoxide has no smell. Headache, dizziness, nausea or sleepiness in more than one person (or companion animal) at once means fresh air first: everyone outside, then call 911. A rotten-egg smell is a gas leak: no switches or flames; leave and call from outside.</p>
+    <p class="ca">Homes with a gas appliance, fireplace or attached garage need a carbon monoxide alarm (Carbon Monoxide Poisoning Prevention Act, 2010).</p>
+    <div class="fix" data-fix="u3s3" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-now">Right now</span><span class="mode m-once">Set up once</span><span class="cost">Free → $</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · now</small>Hood or window fan every time a burner is on; not using the oven or stovetop for heat.</li>
+        <li><small>$ · once</small>A CO alarm near sleeping areas (about $20–$40); test it monthly.</li>
+        <li><small>$</small>An induction hot plate (about $60–$100) and an electric kettle move most daily cooking off the flame, and come with you when you move.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="CO alarm near the bedrooms">Add the alarm</button><button class="add" data-title="Induction hot plate + electric kettle for daily cooking">Add the hot plate</button></div>
+    </div>
+    <div class="accs">
+      <details class="acc" data-for="gas"><summary><span class="who">Gas stove</span>Living well with the stove you have<span class="for-you">For you</span></summary><div class="in"><ul><li>Fan on before the burner, back burners first, smallest burner that does the job.</li><li>A blue, steady flame burns cleaner than a yellow, flickering one; a yellow flame is worth a call to the gas utility, which often checks for free.</li><li>Kids, pregnancy, asthma and birds: these are the times an induction plate for daily cooking matters most.</li></ul></div></details>
+      <details class="acc" data-for="rent"><summary><span class="who">Renting</span>Asking about the stove<span class="for-you">For you</span></summary><div class="in"><p>Some California cities and utilities offer induction rebates and loaner programs for renters and owners alike. A request framed around a shared need (cleaner air for a child with asthma, lower bills) often goes well.</p><p class="links">Emotions &amp; love → Requests · Governance (shared air)</p></div></details>
+    </div>
+    <p class="src">Gruenwald et al., <i>International Journal of Environmental Research and Public Health</i> 2023 (12.7% of US childhood asthma attributable to gas stoves); Kashtan et al., <i>Environmental Science &amp; Technology</i> 2023 (benzene); Lebel et al., <i>Environmental Science &amp; Technology</i> 2022 (NO₂ and methane); California Health &amp; Safety Code §17926 (SB 183).</p>
+  </article>
+
+  <article class="sub" id="u3-s4">
+    <div class="sub-top"><span class="sub-n">3.4</span><h2>Overheated nonstick</h2></div>
+    <p>Most nonstick coatings are PTFE (often sold as Teflon), a PFAS plastic. At normal cooking heat it stays put. Above about <b>500°F (260°C)</b> it starts to break down, and above about 660°F it releases a mix of fluorinated gases and very fine particles, some of them PFAS themselves. An empty nonstick pan on high can pass 500°F in a few minutes.</p>
+    <div class="does">
+      <div><b>People <i>Air</i></b><p>Breathing the fumes can cause “polymer fume fever”: chills, aches and a fever for a day or two, often mistaken for flu.</p></div>
+      <div><b>Birds <i>Air</i></b><p>Birds breathe so efficiently that these fumes can kill a bird within minutes, even from another room.</p></div>
+      <div><b>Short-lived <i>Gone fast</i></b><p>The fumes clear with airflow, like any heat burst. The bigger long-term question is the pan itself; Toxins 3.4 covers the swap.</p></div>
+    </div>
+    <p class="danger">A sharp, chemical or “hot plastic” smell from a pan: heat off, pan to a cold burner, windows open, fan out, and birds and people to the freshest room.</p>
+    <div class="fix" data-fix="u3s4" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="mode m-once">Set up once</span><span class="cost">Free → $</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Nonstick on low to medium only, never preheated empty, always with the fan on.</li>
+        <li><small>Free</small>Searing, broiling and anything on high goes in cast iron or steel.</li>
+        <li><small>$ · as they wear</small>When a nonstick pan scratches or flakes, let it go and replace it with cast iron, carbon steel or stainless (secondhand ones last a lifetime).</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Nonstick on low–medium only; never preheat empty">Add to my list</button></div>
+    </div>
+    <div class="accs">
+      <details class="acc" data-for="birds"><summary><span class="who">Birds</span>Keeping your bird safe from kitchen fumes<span class="for-you">For you</span></summary><div class="in"><ul><li>The safest home for a bird has no PTFE pans at all; the next safest keeps the bird in a room far from the kitchen, door shut, during cooking.</li><li>PTFE is also on some space heaters, oven liners, irons and self-cleaning ovens (the cleaning cycle runs very hot). Run those with the bird out of the house or far away and windows open.</li><li>Fumes from an overheated pan need an emergency avian vet right away; ASPCA Animal Poison Control is 888-426-4435 (a fee may apply).</li></ul></div></details>
+    </div>
+    <p class="links">Toxins → In the house → Pots and pans · Toxins → Plastics → PFAS</p>
+    <p class="src">Sajid &amp; Ilyas, <i>Environmental Science and Pollution Research</i> 2017 (PTFE thermal decomposition); Ellis et al., <i>Nature</i> 2001 (fluorinated breakdown products, including TFA); Merck Veterinary Manual (PTFE toxicosis in birds); CDC/NIOSH on polymer fume fever.</p>
+  </article>
+
+  <article class="sub" id="u3-s5">
+    <div class="sub-top"><span class="sub-n">3.5</span><h2>Candles, incense and scent</h2></div>
+    <p>Flames and smolder make particles: incense most of all, then paraffin candles (the black soot on the jar), then wood fires. Fragrance adds a second layer: many scent chemicals react with ozone in the air to make formaldehyde and new ultrafine particles, so plug-in fresheners and diffusers add to the air even with no flame.</p>
+    <ul>
+      <li>Incense burned in a closed room can make more fine particles than a busy road.</li>
+      <li>Beeswax or soy candles with short-trimmed cotton wicks smoke less than paraffin; a draft makes any candle sooty.</li>
+      <li>Wood stoves and fireplaces leak smoke into the room each time the door opens or the draft reverses.</li>
+    </ul>
+    <p class="kin">Cats can’t break down many essential oils well, and birds react to scented air quickly. Diffusers belong in rooms companions can leave, if anywhere.</p>
+    <div class="fix" data-fix="u3s5" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Unplug any plug-in fresheners; open a window for smell instead (it removes the cause rather than covering it).</li>
+        <li><small>Free</small>Candles and incense with a window open, for a shorter time, or outside on a porch.</li>
+        <li><small>Free</small>Someone in the house smokes or vapes? Outside, away from open windows, is the strategy that meets everyone’s needs.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Unplug fresheners; candles & incense with a window open">Add to my list</button></div>
+    </div>
+    <p class="links">Toxins → In the house → Fragrance</p>
+    <p class="src">Lee &amp; Wang, <i>Atmospheric Environment</i> 2004 (incense and candle emissions); Nazaroff &amp; Weschler, <i>Atmospheric Environment</i> 2004 (terpenes, ozone and secondary pollutants); ASPCA on essential oils and cats.</p>
+  </article>
+
+  <nav class="pager"><a href="#u2"><small>← Back</small><b>2 · Damp</b></a><a class="next" href="#u4"><small>Next unit →</small><b>4 · Dust</b></a></nav>
+  </div>
+</section>
+
+<!-- ============ UNIT 4: DUST ============ -->
+<section class="page k4" data-page="u4" hidden>
+  <div class="main">
+  <div class="unit-hero">
+    <span class="eyebrow">Unit 4 · Long-lasting</span><h1>Dust</h1><p class="unit-sub">Slow sources, and what settles and stays</p>
+    <p class="lede">Some things reach the air slowly: a couch breathing out, paint wearing off a window frame, a gas seeping up from the ground. What they release settles into dust, and indoors, out of sun and rain, dust keeps it for years. Airflow helps a little here. Cleaning helps a lot, and so does leaving well-sealed old materials alone.</p>
+    <div class="unit-mode"><span class="mode m-habit">Habit</span> Shoes off, a good vacuum, a damp cloth. <span class="mode m-once">Set up once</span> Test before you renovate; test once for radon.</div>
+    <ul class="jumps"><li><a href="#u4/s1"><span>4.1</span>Dust sponge</a></li><li><a href="#u4/s2"><span>4.2</span>Vacuuming</a></li><li><a href="#u4/s3"><span>4.3</span>New things</a></li><li><a href="#u4/s4"><span>4.4</span>Asbestos &amp; lead</a></li><li><a href="#u4/s5"><span>4.5</span>Radon</a></li></ul>
+  </div>
+
+  <article class="sub" id="u4-s1">
+    <div class="sub-top"><span class="sub-n">4.1</span><h2>Dust is a sponge</h2></div>
+    <p>House dust is skin, hair, fibers, pollen and soil, and it soaks up chemicals from everything around it: flame retardants from foam, phthalates from vinyl, PFAS from treated fabrics, lead from old paint, pesticides tracked in on shoes. Outdoors, sun and rain break many of these down in days. Indoors they can last for years.</p>
+    <div class="does">
+      <div><b>Floors <i>Where it lands</i></b><p>Most dust ends on the floor and in rugs, right where crawling babies, toddlers and companion animals spend their time.</p></div>
+      <div><b>Hands <i>How it moves</i></b><p>Little ones swallow an estimated few dozen milligrams of dust and soil a day, hand to mouth.</p></div>
+      <div><b>Air <i>When stirred</i></b><p>Walking, sweeping and dry dusting toss the finest dust back into the air for an hour or more.</p></div>
+    </div>
+    <div class="fix" data-fix="u4s1" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Shoes off at the door and a mat outside and in. It cuts tracked-in lead and pesticides more than any other single step.</li>
+        <li><small>Free</small>Wash hands before eating, especially kids after floor and yard play.</li>
+        <li><small>Free</small>Damp cloth instead of a feather duster: it carries dust out rather than lifting it.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Shoes off at the door + mats in and out">Add to my list</button></div>
+    </div>
+    <p class="links">Toxins → In the house → Dust and flame retardants</p>
+    <p class="src">Mitro et al., <i>Environmental Science &amp; Technology</i> 2016 (chemicals in US house dust); US EPA, <i>Exposure Factors Handbook</i> ch. 5 (soil and dust ingestion).</p>
+  </article>
+
+  <article class="sub" id="u4-s2">
+    <div class="sub-top"><span class="sub-n">4.2</span><h2>Vacuuming that helps</h2></div>
+    <p>Vacuuming is the main way long-lasting things leave a home. The vacuum matters, though: one without a good filter catches the big bits and blows the finest dust, the part that carries the most chemicals, right back out the exhaust.</p>
+    <ul>
+      <li><b>A HEPA filter and a sealed body.</b> “HEPA” on the label means little if air leaks around the filter; “sealed system” is the phrase to look for. Bagged vacuums keep dust in when emptied.</li>
+      <li><b>Slow passes.</b> Slow strokes, several over the same spot, lift far more from carpet than quick ones.</li>
+      <li><b>Window open, then back.</b> Vacuuming lifts some fine dust for a while. A window open and little ones and companions in another room for half an hour gives it time to settle or leave.</li>
+      <li><b>Then a damp mop.</b> On hard floors, a damp microfiber mop after vacuuming catches what the vacuum missed. Dry sweeping mostly stirs it.</li>
+      <li><b>Empty it outside</b> and wash or tap out filters outdoors.</li>
+    </ul>
+    <p class="together">A weekly “dust round”: one person vacuums, one damp-wipes sills and baseboards, the smallest one wrings out cloths. Music on, ten minutes, done together.</p>
+    <div class="fix" data-fix="u4s2" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="mode m-together">Together</span><span class="cost">Free → $$</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · this week</small>Vacuum slowly with a window open, then damp-mop hard floors. Once a week (twice with crawlers or companions shedding).</li>
+        <li><small>Free</small>Borrow a HEPA vacuum from a tool library or neighbor before buying one.</li>
+        <li><small>$$ · once</small>If buying: sealed HEPA, bagged if possible. Secondhand ones with a fresh filter work well.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Weekly dust round: slow HEPA vacuum + damp mop">Add to my list</button></div>
+    </div>
+    <div class="accs">
+      <details class="acc" data-for="kids"><summary><span class="who">Little ones</span>Floors for crawlers<span class="for-you">For you</span></summary><div class="in"><p>A washable cotton rug or play mat that goes in the laundry weekly gives a clean zone on the floor. Wet-wipe window sills too: in older homes they’re where lead dust collects (4.4).</p></div></details>
+      <details class="acc" data-for="animals"><summary><span class="who">Companions</span>Fur, dander and noses near the floor<span class="for-you">For you</span></summary><div class="in"><p>Dogs and cats breathe at floor level and groom dust off their fur, so floors are their air. Washable bedding, a brushing routine outside, and vacuuming their favorite spots help them and anyone with allergies. Many animals find vacuums scary; another room with a treat while it runs meets their need for safety.</p></div></details>
+    </div>
+    <p class="links">Cleaning lens (surfaces) · Toxins → In the house → Dust</p>
+    <p class="src">Lioy et al., <i>Journal of the Air &amp; Waste Management Association</i> 1999 (vacuum emissions); Knibbs et al., <i>Environmental Science &amp; Technology</i> 2012 (vacuum particle emissions); US HUD, lead-safe cleaning guidance.</p>
+  </article>
+
+  <article class="sub" id="u4-s3">
+    <div class="sub-top"><span class="sub-n">4.3</span><h2>New things breathe out</h2></div>
+    <p>New furniture, mattresses, flooring, carpet and paint release chemicals (VOCs, and formaldehyde from pressed wood) for weeks to months. The “new smell” is the strongest part; it fades as the material settles, and faster when the space is warm and well aired. Things that are already old have mostly finished.</p>
+    <ul>
+      <li><b>Secondhand is already aired out.</b> Used furniture and solid-wood pieces have done most of their off-gassing years ago.</li>
+      <li><b>Air new things out first</b> in a garage, porch or spare room with the window open, for a week or two if you can.</li>
+      <li><b>Low- or zero-VOC paint</b>, windows open and a fan out while it dries, and a few days before sleeping in the room.</li>
+    </ul>
+    <p class="ca">Composite wood sold in California has had to meet CARB’s formaldehyde limits since 2009 (now national). Upholstered furniture carries a label saying whether it contains added flame retardants (SB 1019); “contains NO added flame retardants” is the one to look for.</p>
+    <div class="fix" data-fix="u4s3" data-cost="0">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="cost">Free</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · first</small>Look secondhand, swap or borrow before buying new.</li>
+        <li><small>Free</small>New item? A week or two airing out somewhere other than a bedroom.</li>
+        <li><small>Free</small>Painting or new floors: windows open and a fan out for several days afterward.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Air new furniture out first; secondhand before new">Add to my list</button></div>
+    </div>
+    <p class="src">CARB Airborne Toxic Control Measure for Composite Wood Products (2007; Phase 2 2009–2012); US EPA TSCA Title VI; California SB 1019 (2014) and TB 117-2013; US EPA, <i>Volatile Organic Compounds’ Impact on Indoor Air Quality</i>.</p>
+  </article>
+
+  <article class="sub" id="u4-s4">
+    <div class="sub-top"><span class="sub-n">4.4</span><h2>Asbestos and lead: only when disturbed</h2></div>
+    <p>Two older materials stay harmless while they’re whole and sealed, and only reach the air when they’re damaged, sanded, drilled, scraped or crumbling. That’s the whole key: <b>intact, leave it; disturbed, take care.</b></p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Material</th><th>Where it may be</th><th>How it gets out</th></tr></thead>
+      <tbody>
+        <tr><td>Asbestos (homes built before about 1980)</td><td>Popcorn or textured ceilings, vinyl floor tiles and their glue, pipe and boiler wrap, vermiculite attic insulation, cement siding, old duct tape</td><td>Fibers break loose when it’s cut, sanded, drilled, scraped or crumbling. Tiny and light, they float for hours and lodge in lungs for life.</td></tr>
+        <tr><td>Lead paint (homes built before 1978)</td><td>Window frames and sills, doors, stairs, porches, trim</td><td>Rubbing and chipping turn paint to dust. Windows opening and closing grind it fine. Dry sanding or scraping releases a lot at once.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="danger">Suspect crumbling asbestos? Keep people and animals away from it, don’t sweep or vacuum it (an ordinary vacuum spreads the fibers), mist it lightly with water and cover it, and get it tested.</p>
+    <p class="ca">Asbestos work over 100 square feet has to be done by a contractor registered with Cal/OSHA. Contractors working on pre-1978 paint in homes need EPA lead-safe (RRP) certification.</p>
+    <div class="fix" data-fix="u4s4" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-habit">Habit</span><span class="mode m-once">Set up once</span><span class="cost">Free → $</span></div>
+      <ol class="fix-steps">
+        <li><small>Free · today</small>Leave intact old materials alone: no drilling, sanding or scraping popcorn ceilings, old tiles or old paint.</li>
+        <li><small>Free · weekly</small>Older home: damp-wipe window sills and troughs, then HEPA vacuum. That’s where lead dust gathers.</li>
+        <li><small>$ · before any project</small>Test first. An accredited lab tests an asbestos sample for about $25–$60; lead paint test kits or an inspection for paint.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="Test for asbestos and lead before any renovation">Add to my list</button><button class="add" data-title="Weekly damp-wipe of window sills (older home)">Add the sill wipe</button></div>
+    </div>
+    <div class="accs">
+      <details class="acc" data-for="old"><summary><span class="who">Older building</span>Living in a home built before 1980<span class="for-you">For you</span></summary><div class="in"><ul><li>Most old homes are safe to live in as they are. Peeling paint, damaged ceilings and crumbling pipe wrap are the parts that need attention.</li><li>Children under 6 and pregnancy: a blood lead test through a clinician is simple and covered by Medi-Cal and most insurance; many California counties offer free lead dust wipe kits.</li><li>Planning a project? Test everything you’ll touch at once, in one batch.</li></ul><p class="links">Toxins → In the house (lead in dust) · Toxins → Soil (lead in the yard)</p></div></details>
+      <details class="acc" data-for="rent"><summary><span class="who">Renting</span>When paint is peeling or a ceiling is damaged<span class="for-you">For you</span></summary><div class="in"><p class="ca">Landlords in California can’t create lead hazards, and deteriorating lead paint can be reported to local code enforcement. Landlords of pre-1978 homes provide a lead disclosure at signing; asking to see it is a fair request.</p></div></details>
+    </div>
+    <p class="src">US EPA, <i>Protect Your Family from Asbestos-Contaminated Vermiculite</i> and asbestos in the home; US CPSC, <i>Asbestos in the Home</i>; US EPA Renovation, Repair and Painting Rule; Cal/OSHA asbestos contractor registration (8 CCR 341.6); California Health &amp; Safety Code §17920.10.</p>
+  </article>
+
+  <article class="sub" id="u4-s5">
+    <div class="sub-top"><span class="sub-n">4.5</span><h2>From the ground: radon</h2></div>
+    <p>Radon is a natural radioactive gas from uranium in rock and soil. It seeps up through cracks and gaps in a foundation and collects in the lowest floors. It has no smell or color, and over many years it’s the second leading cause of lung cancer after smoking (the first among people who’ve never smoked). It’s the clearest case of a slow, long-lasting source: steady, every day, for as long as you live there.</p>
+    <ul>
+      <li>Only testing tells. Neighboring houses can differ a lot.</li>
+      <li>A short-term test kit costs about $15–$30. The US action level is 4 picocuries per liter (pCi/L).</li>
+      <li>Above that, a sealed-crack and small-fan system under the floor usually brings it down by more than half.</li>
+      <li>Apartments above the second floor are rarely affected.</li>
+    </ul>
+    <p class="ca">The California Geological Survey maps areas with higher radon potential; parts of the Sierra foothills, Santa Barbara and Ventura counties and others are higher. The California Department of Public Health has low-cost test kits.</p>
+    <div class="fix" data-fix="u4s5" data-cost="1">
+      <div class="fix-top"><b class="t">How to fix</b><span class="mode m-once">Set up once</span><span class="cost">$</span></div>
+      <ol class="fix-steps">
+        <li><small>$ · once</small>One radon test on the lowest lived-in floor, in fall or winter with windows mostly shut.</li>
+        <li><small>Free</small>Under 4 pCi/L: done. Seal visible foundation cracks anyway.</li>
+        <li><small>Ask</small>Over 4: a certified mitigator. Owners on board? It’s a one-time fix that lasts.</li>
+      </ol>
+      <div class="fix-foot"><button class="add" data-title="One radon test on the lowest lived-in floor">Add to my list</button></div>
+    </div>
+    <p class="src">US EPA, <i>A Citizen’s Guide to Radon</i>; WHO, <i>Handbook on Indoor Radon</i> (2009); California Geological Survey radon zone maps; CDPH Radon Program.</p>
+  </article>
+
+  <nav class="pager"><a href="#u3"><small>← Back</small><b>3 · Heat</b></a><a class="next" href="#now"><small>Try it →</small><b>Right now</b></a></nav>
+  </div>
+</section>
+
+</main>
+</div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  function toast(msg) { var t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(function () { t.classList.remove('show'); }, 1800); }
+
+  /* ---------- Profile: same key as app.js; stove and hood are new for Air ---------- */
+  var KEY = 'meeting-needs.profile.v1';
+  var OPT = {
+    home: ['Apartment or room', 'House', 'Vehicle or boat', 'Shelter or no fixed place', 'Other'],
+    shape: ['Nothing: it all has to be portable', 'Small, removable things', 'Bigger changes, with an owner who’s on board', 'It’s ours to shape'],
+    built: ['Before 1978', '1978 or later', 'Not sure'],
+    with: ['Just adults', 'Kids or a pregnancy', 'Companion animals', 'Kids and animals', 'Birds among them'],
+    near: ['None of these', 'A freeway or busy road', 'Factory, refinery or wells', 'Farm fields', 'An airport', 'More than one'],
+    stove: ['Gas', 'Electric (coil or smooth top)', 'Induction', 'Hot plate or countertop only', 'No stove'],
+    hood: ['Vents outside', 'Recirculates (no duct)', 'No hood or fan', 'Not sure']
+  };
+  var QS = ['home', 'shape', 'built', 'with', 'near', 'stove', 'hood'];
+  var profile = {};
+  try { profile = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { profile = {}; }
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(profile)); } catch (e) {} }
+  function val(k) { return profile[k] || ''; }
+
+  function tags() {
+    var p = profile, t = {};
+    if (p.home === 'Vehicle or boat') { t.vehicle = 1; t.portable = 1; }
+    if (p.home === 'Shelter or no fixed place') { t.nohome = 1; t.portable = 1; }
+    if (p.shape === 'Nothing: it all has to be portable' || p.shape === 'Small, removable things') { t.portable = 1; t.rent = 1; }
+    if (p.shape === 'Bigger changes, with an owner who’s on board') t.rent = 1;
+    if (p.built === 'Before 1978' || p.built === 'Not sure') t.old = 1;
+    if (/Kids/.test(p.with || '') || Number(p.kids) > 0 || (Array.isArray(p.consider) && p.consider.some(function (c) { return /Pregnancy|Babies/.test(c); }))) t.kids = 1;
+    if (/animals|Birds/.test(p.with || '') || Number(p.pets) > 0) t.animals = 1;
+    if (/Birds/.test(p.with || '')) t.birds = 1;
+    if (/freeway|More/.test(p.near || '')) t.road = 1;
+    if (/Farm|More/.test(p.near || '')) t.farm = 1;
+    if (p.stove === 'Gas') t.gas = 1;
+    if (p.hood && p.hood !== 'Vents outside') t.nohood = 1;
+    return t;
+  }
+  function apply() {
+    var t = tags();
+    document.querySelectorAll('.acc').forEach(function (a) {
+      var hit = (a.dataset.for || '').split(' ').some(function (s) { return t[s]; });
+      a.classList.toggle('match', hit); a.open = hit;
+    });
+    var answered = QS.map(val).filter(Boolean);
+    $('sitChips').innerHTML = answered.map(function (v) { return '<span>' + esc(v.replace(/:.*/, '').replace(/ \(.*\)/, '')) + '</span>'; }).join('');
+    $('sitSum').textContent = answered.length ? 'From your profile:' : 'Seven quick questions tailor this course. Everything stays available either way.';
+    rnRender();
+  }
+  document.querySelectorAll('[data-q]').forEach(function (sel) {
+    var k = sel.dataset.q;
+    sel.innerHTML = '<option value="">Choose…</option>' + OPT[k].map(function (o) { return '<option' + (o === val(k) ? ' selected' : '') + '>' + esc(o) + '</option>'; }).join('');
+    sel.addEventListener('change', function () { profile[k] = sel.value; persist(); apply(); });
+  });
+  if (!['stove', 'hood'].some(function (k) { return profile[k]; })) $('sit').open = true;
+
+  /* ---------- My list: every "How to fix" can be added; one-by-one, reorderable ---------- */
+  var LKEY = 'meeting-needs.air.v1';
+  var list = [];
+  try { list = JSON.parse(localStorage.getItem(LKEY) || '[]') || []; } catch (e) { list = []; }
+  function save() { try { localStorage.setItem(LKEY, JSON.stringify(list)); } catch (e) {} renderList(); syncButtons(); }
+  function has(title) { return list.some(function (x) { return x.title === title; }); }
+  function fixMeta(btn) {
+    var fix = btn.closest('.fix'), sec = btn.closest('.page');
+    var modes = fix ? Array.prototype.map.call(fix.querySelectorAll('.fix-top .mode'), function (m) { return m.className.replace('mode ', '') + '|' + m.textContent; }) : [];
+    return { title: btn.dataset.title, unit: sec ? sec.dataset.page : '', where: fix ? fix.dataset.fix : '', cost: fix ? Number(fix.dataset.cost || 0) : 0, modes: modes, s: 'next' };
+  }
+  function addByTitle(title) {
+    if (has(title)) return false;
+    var src = Array.prototype.filter.call(document.querySelectorAll('.fix .add[data-title]'), function (b) { return b.dataset.title === title; })[0];
+    if (!src) return false;
+    list.push(fixMeta(src)); return true;
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('.add'); if (!b || !b.dataset.title) return;
+    if (has(b.dataset.title)) { list = list.filter(function (x) { return x.title !== b.dataset.title; }); toast('Taken off My list'); }
+    else { addByTitle(b.dataset.title); toast('Added to My list · ' + list.length); }
+    save();
+  });
+  function syncButtons() {
+    document.querySelectorAll('.add[data-title]').forEach(function (b) {
+      var on = has(b.dataset.title); b.classList.toggle('on', on);
+      if (!b.dataset.label) b.dataset.label = b.textContent;
+      b.textContent = on ? 'On my list' : b.dataset.label;
+    });
+    $('navCount').textContent = list.filter(function (x) { return x.s !== 'done'; }).length;
+  }
+  var COST = ['Free', '$', '$$'], NEXT = { next: 'doing', doing: 'done', done: 'next' }, LABEL = { next: 'Next', doing: 'Doing', done: 'Done' };
+  function renderList() {
+    var el = $('lst');
+    $('lstEmpty').hidden = list.length > 0;
+    el.innerHTML = list.map(function (x, i) {
+      var k = (x.unit || 'u1').replace('u', 'k');
+      var modes = (x.modes || []).map(function (m) { var p = m.split('|'); return '<span class="mode ' + p[0] + '">' + esc(p[1]) + '</span>'; }).join('');
+      var unitName = (document.querySelector('.vt-unit[data-unit="' + x.unit + '"] b') || {}).textContent || '';
+      return '<li class="' + k + (x.s === 'done' ? ' done' : '') + '"><span class="num">' + (i + 1) + '</span>' +
+        '<span class="lt"><b>' + esc(x.title) + '</b><span>' + modes + '<span class="cost">' + COST[x.cost || 0] + '</span>' +
+        (x.where ? '<small><a href="#' + x.unit + '/' + x.where.replace(/^u\d+/, '') + '">' + esc(unitName) + ' ' + x.where.replace(/^u(\d+)s(\d+)$/, '$1.$2') + '</a></small>' : '') + '</span></span>' +
+        '<span class="row" style="gap:8px;flex-wrap:nowrap"><button class="st" data-i="' + i + '" data-s="' + x.s + '">' + LABEL[x.s] + '</button>' +
+        '<span class="lst-ctl"><button data-up="' + i + '" aria-label="Move up">▲</button><button data-down="' + i + '" aria-label="Move down">▼</button></span></span></li>';
+    }).join('');
+    var done = list.filter(function (x) { return x.s === 'done'; }).length;
+    $('lstBar').style.width = list.length ? (done / list.length * 100) + '%' : '0';
+    $('lstSum').textContent = list.length ? done + ' of ' + list.length + ' done · ' + list.filter(function (x) { return x.s === 'doing'; }).length + ' in progress' : '';
+  }
+  $('lst').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.i) { var x = list[+b.dataset.i]; x.s = NEXT[x.s]; if (x.s === 'done') toast('Done. One more breath of clean air.'); }
+    if (b.dataset.up && +b.dataset.up > 0) { var u = +b.dataset.up; list.splice(u - 1, 0, list.splice(u, 1)[0]); }
+    if (b.dataset.down && +b.dataset.down < list.length - 1) { var d = +b.dataset.down; list.splice(d + 1, 0, list.splice(d, 1)[0]); }
+    save();
+  });
+  $('lstSort').addEventListener('click', function () { list.sort(function (a, b) { return (a.s === 'done') - (b.s === 'done') || (a.cost || 0) - (b.cost || 0); }); save(); });
+  $('lstClear').addEventListener('click', function () { list = list.filter(function (x) { return x.s !== 'done'; }); save(); });
+
+  /* ---------- Tool: Right now. Pick what you notice → fastest fix, urgent first ---------- */
+  // [id, what you notice, urgency (2 urgent · 1 care · 0 normal), fastest fix, why, link, link label, list title]
+  var RN = [
+    ['co', 'CO alarm, or headache/dizziness in more than one of us', 2, 'Everyone outside into fresh air, animals too. Then call 911.', 'Carbon monoxide has no smell. Several people or animals feeling unwell at once is the sign.', 'u3/s3', '3.3 Gas flames', 'CO alarm near the bedrooms'],
+    ['gas', 'Rotten-egg smell', 2, 'Leave now. No switches, flames or phones inside; call the gas utility or 911 from outside.', 'Gas utilities add that smell so leaks can be noticed.', 'u3/s3', '3.3 Gas flames', ''],
+    ['pan', 'Sharp chemical or “hot plastic” smell from a pan', 1, 'Heat off, pan to a cold burner, windows open, a fan pointing out. Birds and people to the freshest room.', 'An overheated nonstick coating is breaking down into fluorinated fumes. They clear with airflow.', 'u3/s4', '3.4 Overheated nonstick', 'Nonstick on low–medium only; never preheat empty'],
+    ['crumble', 'Crumbling ceiling texture, pipe wrap or chipped old paint', 1, 'Keep people and animals away. Don’t sweep or vacuum it; mist lightly, cover, and plan a test.', 'Asbestos and lead only reach the air when disturbed. Left damp and covered, they stay put.', 'u4/s4', '4.4 Asbestos and lead', 'Test for asbestos and lead before any renovation'],
+    ['smoke', 'Smoke or haze outside', 1, 'Close the windows, run a filter in one room, and make that the clean room.', 'When outside air is worse, the plan flips: filter instead of open.', 'u1/s5', '1.5 When outside air is worse', 'Smoke-day clean room ready (filter + spare)'],
+    ['cook', 'Cooking smoke or a burnt smell', 0, 'Hood on high or a box fan in a window facing out, plus one more window open. Pan to the back burner.', 'Heat bursts are short-lived; airflow clears them in minutes.', 'u3/s2', '3.2 Cooking smoke', 'Back burners, hood on high, 15 minutes after'],
+    ['stuffy', 'Stuffy, sleepy or heavy air', 0, 'Open two windows on different sides for 5–10 minutes.', 'CO₂ and everything else people release has built up. A purge swaps most of it.', 'u1/s2', '1.2 Windows and cross-breeze', 'Morning 5–10 minute window purge'],
+    ['scent', 'Strong scent, candles or incense', 0, 'Snuff or unplug it and crack a window.', 'Flames make particles; fragrance reacts with ozone to make more.', 'u3/s5', '3.5 Candles, incense and scent', 'Unplug fresheners; candles & incense with a window open'],
+    ['newsmell', 'New-furniture, paint or carpet smell', 0, 'Window open and a fan out. Sleep elsewhere for a few nights if it’s a bedroom.', 'New materials breathe out most in their first weeks, and faster when warm.', 'u4/s3', '4.3 New things breathe out', 'Air new furniture out first; secondhand before new'],
+    ['musty', 'Musty or earthy smell', 0, 'Follow your nose to the dampest spot, open it up to dry, and find the water.', 'That smell is mold growing somewhere damp. Mold is a message about water.', 'u2/s4', '2.4 Where mold starts', 'Find & stop the water behind any mold'],
+    ['fog', 'Windows fogged or dripping', 0, 'Wipe them, then a 5-minute purge to carry the water out.', 'Damp air is landing on the coldest surface it can reach.', 'u2/s3', '2.3 Condensation and cold spots', 'Furniture off outside walls; morning window wipe'],
+    ['dusty', 'Dust in the sunbeams, sneezing', 0, 'Damp-wipe surfaces, then a slow vacuum with a window open.', 'Fine dust carries most of the long-lasting chemicals; damp cloths carry it out.', 'u4/s2', '4.2 Vacuuming that helps', 'Weekly dust round: slow HEPA vacuum + damp mop'],
+    ['dry', 'Dry nose, static zaps, cracking skin', 0, 'A rack of laundry drying indoors, or a pot simmering for a while.', 'Humidity is probably under 30%.', 'u2/s5', '2.5 Too dry', 'Dry-air habits: indoor laundry rack, plant pebble tray']
+  ];
+  var rnOn = {};
+  $('rnPicks').innerHTML = RN.map(function (r) { return '<button class="pick" type="button" aria-pressed="false" data-rn="' + r[0] + '">' + esc(r[1]) + '</button>'; }).join('');
+  $('rnPicks').addEventListener('click', function (e) {
+    var b = e.target.closest('.pick'); if (!b) return;
+    rnOn[b.dataset.rn] = !rnOn[b.dataset.rn]; b.setAttribute('aria-pressed', rnOn[b.dataset.rn] ? 'true' : 'false'); rnRender();
+  });
+  function rnRender() {
+    var t = tags();
+    var picks = RN.filter(function (r) { return rnOn[r[0]]; }).map(function (r) {
+      var u = r[2] + (r[0] === 'pan' && t.birds ? 1 : 0) + (r[0] === 'smoke' && (t.kids || t.animals) ? 0.5 : 0);
+      return { r: r, u: u };
+    }).sort(function (a, b) { return b.u - a.u; });
+    if (!picks.length) { $('rnOut').innerHTML = '<small>Pick anything you notice. Nothing at all? Lovely. A daily 5-minute purge keeps it that way.</small>'; return; }
+    $('rnOut').innerHTML = '<strong>' + (picks[0].u >= 2 ? 'First, fresh air and safety' : 'Fastest fixes, in order') + '</strong>' + picks.map(function (p, i) {
+      var r = p.r;
+      return '<div class="rn' + (p.u >= 2 ? ' urgent' : '') + '"><span class="eyebrow">' + (i + 1) + ' · ' + esc(r[1]) + '</span><b>' + esc(r[3]) + '</b><span>' + esc(r[4]) + (r[0] === 'pan' && t.birds ? ' With birds in the house, this one comes first.' : '') + '</span>' +
+        '<span class="row"><a class="btn" href="#' + r[5] + '">Read ' + esc(r[6]) + '</a>' + (r[7] ? '<button class="btn rn-add" data-t="' + esc(r[7]) + '">' + (has(r[7]) ? 'On my list' : '+ Add the fix') + '</button>' : '') + '</span></div>';
+    }).join('');
+  }
+  $('rnOut').addEventListener('click', function (e) {
+    var b = e.target.closest('.rn-add'); if (!b) return;
+    if (addByTitle(b.dataset.t)) toast('Added to My list · ' + list.length); else toast('Already on your list');
+    save(); rnRender();
+  });
+
+  /* ---------- Tool: Filter sizer. Room volume × air changes ÷ 60 = CFM of clean air ---------- */
+  var FS_T = 'Build a box-fan filter (MERV 13) for the bedroom';
+  function fsRender() {
+    var L = +$('fsL').value || 0, W = +$('fsW').value || 0, H = +$('fsH').value || 8, ach = +$('fsFor').value;
+    var area = L * W, cfm = Math.round(area * H * ach / 60 / 5) * 5;
+    if (!area) { $('fsOut').innerHTML = '<small>Enter the room size.</small>'; return; }
+    var fans = Math.max(1, Math.ceil(cfm / 150)), cubes = Math.max(1, Math.ceil(cfm / 500));
+    $('fsOut').innerHTML = '<strong>About ' + cfm + ' CFM of clean air</strong>' +
+      '<small>' + area + ' sq ft × ' + H + ' ft ceiling, ' + ach + ' air changes an hour' + (ach > 4 ? ' (smoke days or illness)' : '') + '.</small>' +
+      '<ul><li><b>' + fans + ' box fan' + (fans > 1 ? 's' : '') + ' with one MERV 13 filter</b> (roughly 100–200 CFM each) · about $' + fans * 40 + '–$' + fans * 65 + '</li>' +
+      '<li><b>or ' + cubes + ' four-filter cube' + (cubes > 1 ? 's' : '') + '</b> (Corsi–Rosenthal; often 400–800 CFM) · about $' + cubes * 70 + '–$' + cubes * 120 + '</li>' +
+      '<li><b>or a HEPA purifier</b> labeled with a smoke CADR of ' + cfm + ' or more</li></ul>' +
+      '<small>Rough numbers; fans and filters vary. Run it on a speed you can sleep with, and close the door to the room. Replace filters when they turn gray (often every 3–6 months, sooner in smoke).</small>' +
+      '<div class="row"><button class="btn dark" id="fsAdd">' + (has(FS_T) ? 'On my list' : 'Add a box-fan filter to My list') + '</button></div>';
+    $('fsAdd').onclick = function () { if (addByTitle(FS_T)) toast('Added to My list · ' + list.length); else toast('Already on your list'); save(); fsRender(); };
+  }
+  ['fsL', 'fsW', 'fsH', 'fsFor'].forEach(function (id) { $(id).addEventListener('input', fsRender); $(id).addEventListener('change', fsRender); });
+
+  /* ---------- Routing: #u3 opens unit 3; #u3/s2 scrolls to 3.2; #now and #list open their pages ---------- */
+  function route() {
+    var parts = location.hash.replace('#', '').split('/'), page = parts[0] || '';
+    if (page && !document.querySelector('.page[data-page="' + page + '"]')) page = '';
+    document.querySelectorAll('.page').forEach(function (p) { p.hidden = p.dataset.page !== page; });
+    document.querySelectorAll('.vt-unit').forEach(function (u) { u.classList.toggle('cur', u.dataset.unit === page); });
+    document.querySelectorAll('.nav-over').forEach(function (a) { a.classList.toggle('cur', a.dataset.nav === page); });
+    var target = parts[1] && $(page + '-' + parts[1]);
+    if (target) target.scrollIntoView({ block: 'start' }); else window.scrollTo(0, 0);
+    if (page === 'now') rnRender();
+    if (page === 'u1') fsRender();
+  }
+  window.addEventListener('hashchange', route);
+
+  renderList(); syncButtons(); fsRender(); apply(); route();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Water Cornflower Mockup</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500..800&family=Instrument+Sans:wght@400..700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Mock-up: cornflower (#9ABEF8) as unit 5 Testing, and as the one colour water takes everywhere it's referenced. Light theme only, like the site. */
+:root {
+  --bg: #EEF2E8; --ink: #17241C; --ink-2: #2C3D32; --muted: #3F5546; --line: rgba(23,36,28,.16);
+  --glass: rgba(255,255,255,.6); --glass-edge: rgba(255,255,255,.85); --chip: rgba(255,255,255,.7);
+  --f-head: 'Manrope', system-ui, sans-serif; --f-body: 'Instrument Sans', system-ui, sans-serif; --f-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  /* Proposed fundamental water tokens */
+  --water: #9ABEF8;        /* cornflower: the water colour */
+  --water-soft: #E4EEFD;   /* wash behind water content */
+  --water-edge: #C3D8FB;   /* soft border */
+  --water-ink: #16305E;    /* text on or beside cornflower */
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { overflow-x: clip; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.5; }
+h1, h2, h3 { font-family: var(--f-head); margin: 0; text-wrap: balance; letter-spacing: -0.02em; }
+p { margin: 0; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 32px 16px 72px; display: flex; flex-direction: column; gap: 28px; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.panel { background: var(--glass); border: 1px solid var(--glass-edge); border-radius: 26px; padding: 22px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 12px 40px rgba(30,60,30,.06); }
+.panel > p { color: var(--ink-2); max-width: 72ch; }
+.hero { display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: center; }
+.swatch { width: 120px; height: 160px; border-radius: 22px; background: var(--water); box-shadow: inset 0 0 0 1px rgba(22,48,94,.12); display: flex; align-items: flex-end; padding: 12px; font-family: var(--f-mono); font-size: 12px; color: var(--water-ink); }
+.hero h1 { font-size: clamp(28px, 4vw, 40px); font-weight: 800; line-height: 1.05; }
+.hero p { color: var(--ink-2); margin-top: 8px; max-width: 62ch; }
+.opt-tag { display: inline-flex; align-self: flex-start; gap: 8px; align-items: center; padding: 4px 12px; border-radius: 999px; background: var(--ink); color: #fff; font-family: var(--f-mono); font-size: 12px; }
+
+/* Unit ramp */
+.ramp-label { font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
+.ramp { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
+.ramp li { border-radius: 18px; padding: 12px; min-height: 120px; background: var(--u); color: var(--on, #fff); display: flex; flex-direction: column; gap: 4px; position: relative; }
+.ramp li span { font-family: var(--f-mono); font-size: 12px; opacity: .85; }
+.ramp li b { font-family: var(--f-head); font-weight: 800; font-size: 17px; line-height: 1.1; }
+.ramp li small { font-size: 12px; font-family: var(--f-mono); margin-top: auto; opacity: .85; }
+.ramp li.is-new { box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--water-ink); }
+.ramp li.is-new::after { content: 'cornflower'; position: absolute; top: -10px; right: 10px; background: var(--water-ink); color: #fff; font-family: var(--f-mono); font-size: 10px; padding: 2px 8px; border-radius: 999px; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* Unit page header preview */
+.unit { border-radius: 22px; overflow: hidden; border: 1px solid var(--water-edge); background: #fff; }
+.unit-band { height: 10px; background: var(--water); }
+.unit-in { padding: 18px; display: flex; flex-direction: column; gap: 10px; background: linear-gradient(var(--water-soft), #fff 70%); }
+.unit-n { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--water); color: var(--water-ink); font-family: var(--f-mono); font-weight: 500; }
+.unit h3 { font-size: 26px; font-weight: 800; }
+.unit p { color: var(--ink-2); font-size: 15px; }
+.subs { display: flex; flex-wrap: wrap; gap: 8px; }
+.subs a { padding: 6px 12px; border-radius: 999px; background: var(--water-soft); border: 1px solid var(--water-edge); color: var(--water-ink); text-decoration: none; font-size: 14px; font-weight: 600; }
+
+/* Water references in other courses */
+.refs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.ref { border-radius: 20px; padding: 16px; background: rgba(255,255,255,.8); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; border-top: 6px solid var(--c); }
+.ref .eyebrow { font-size: 11px; }
+.ref h3 { font-size: 17px; font-weight: 800; }
+.ref p { font-size: 14px; color: var(--ink-2); }
+.wlink { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; padding: 5px 12px 5px 8px; border-radius: 999px; background: var(--water); color: var(--water-ink); text-decoration: none; font-size: 13px; font-weight: 700; }
+.wlink svg { width: 14px; height: 14px; flex: none; }
+.wtext { background: linear-gradient(transparent 58%, var(--water) 58%); padding: 0 2px; border-radius: 2px; }
+.ladder { display: flex; flex-direction: column; gap: 6px; }
+.ladder div { padding: 6px 10px; border-radius: 10px; font-size: 13px; font-weight: 600; background: #F3F4F1; border: 1px solid var(--line); }
+.ladder div.w { background: var(--water); border-color: transparent; color: var(--water-ink); }
+.lenscard { border-radius: 20px; padding: 16px; background: #B85A14; color: #fff; display: flex; flex-direction: column; gap: 6px; position: relative; }
+.lenscard b { font-family: var(--f-head); font-size: 22px; font-weight: 800; }
+.lenscard .drop { position: absolute; top: 14px; right: 14px; width: 26px; height: 26px; border-radius: 50%; background: var(--water); display: grid; place-items: center; }
+.lenscard .drop svg { width: 14px; height: 14px; }
+.tokens { font-family: var(--f-mono); font-size: 13px; background: #fff; border-radius: 16px; padding: 14px 16px; border: 1px solid var(--line); white-space: pre-wrap; overflow-x: auto; }
+.notes { margin: 0; padding-left: 20px; color: var(--ink-2); display: flex; flex-direction: column; gap: 6px; }
+
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; } .swatch { width: 100%; height: 90px; }
+  .ramp { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cols { grid-template-columns: 1fr; }
+}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><symbol id="drop" viewBox="0 0 24 24"><path d="M12 2.5c-3.6 4.6-7 8.6-7 12.3A7 7 0 0 0 19 14.8c0-3.7-3.4-7.7-7-12.3Z" fill="#16305E"/></symbol></svg>
+<div class="wrap">
+
+  <section class="panel hero">
+    <div class="swatch">#9ABEF8</div>
+    <div>
+      <span class="eyebrow">Mock-up · Kinship · Water</span>
+      <h1>Cornflower is water.</h1>
+      <p>Unit 5 Testing takes this cornflower blue, and the same colour becomes water’s one fundamental colour: anywhere another course points back to water (soaking, cleaning, storing, governing it), the reference wears cornflower, so water reads as the foundation it is.</p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <span class="opt-tag">Step 1 · Testing in cornflower</span>
+    <h2>The Water course ramp</h2>
+    <p>The current ramp steps from navy to pale sky. Two ways to land cornflower on 5 Testing:</p>
+    <div class="ramp-label">Now</div>
+    <ol class="ramp">
+      <li style="--u:#173D69"><span>01</span><b>Uses</b><small>#173D69</small></li>
+      <li style="--u:#255B95"><span>02</span><b>Sources</b><small>#255B95</small></li>
+      <li style="--u:#3B7BBA"><span>03</span><b>Storage</b><small>#3B7BBA</small></li>
+      <li style="--u:#5F9BD0"><span>04</span><b>Purify</b><small>#5F9BD0</small></li>
+      <li style="--u:#8DBDE3;--on:#17241C"><span>05</span><b>Testing</b><small>#8DBDE3</small></li>
+      <li style="--u:#BCDDF4;--on:#17241C"><span>06</span><b>Costs</b><small>#BCDDF4</small></li>
+    </ol>
+    <div class="ramp-label">A · Swap only Testing (smallest change)</div>
+    <ol class="ramp">
+      <li style="--u:#173D69"><span>01</span><b>Uses</b><small>#173D69</small></li>
+      <li style="--u:#255B95"><span>02</span><b>Sources</b><small>#255B95</small></li>
+      <li style="--u:#3B7BBA"><span>03</span><b>Storage</b><small>#3B7BBA</small></li>
+      <li style="--u:#5F9BD0"><span>04</span><b>Purify</b><small>#5F9BD0</small></li>
+      <li class="is-new" style="--u:#9ABEF8;--on:#16305E"><span>05</span><b>Testing</b><small>#9ABEF8</small></li>
+      <li style="--u:#BCDDF4;--on:#17241C"><span>06</span><b>Costs</b><small>#BCDDF4</small></li>
+    </ol>
+    <div class="ramp-label">B · Re-tune the whole ramp around cornflower (every unit shares its hue)</div>
+    <ol class="ramp">
+      <li style="--u:#1B3466"><span>01</span><b>Uses</b><small>#1B3466</small></li>
+      <li style="--u:#294F96"><span>02</span><b>Sources</b><small>#294F96</small></li>
+      <li style="--u:#4170C4"><span>03</span><b>Storage</b><small>#4170C4</small></li>
+      <li style="--u:#6B98E6"><span>04</span><b>Purify</b><small>#6B98E6</small></li>
+      <li class="is-new" style="--u:#9ABEF8;--on:#16305E"><span>05</span><b>Testing</b><small>#9ABEF8</small></li>
+      <li style="--u:#C9DCFB;--on:#16305E"><span>06</span><b>Costs</b><small>#C9DCFB</small></li>
+    </ol>
+    <div class="cols">
+      <div class="unit">
+        <div class="unit-band"></div>
+        <div class="unit-in">
+          <div class="unit-n">05</div>
+          <span class="eyebrow">Water · Unit 5</span>
+          <h3>Testing</h3>
+          <p>Your senses and surroundings catch a lot; the serious problems are often invisible. Testing turns worry into a clear picture, and much of it is free.</p>
+          <div class="subs"><a href="#">Signs</a><a href="#">Free tests</a><a href="#">Wild water</a><a href="#">Reading a report</a></div>
+        </div>
+      </div>
+      <div class="panel" style="background:#fff;border-color:var(--line)">
+        <span class="eyebrow">What changes</span>
+        <ul class="notes">
+          <li>Unit 5’s dot, band, wash and sub-unit chips use cornflower.</li>
+          <li>Text on cornflower is deep navy (#16305E), not white, so it stays easy to read.</li>
+          <li>Option B keeps the darkest-to-lightest order the README asks for, just shifted toward cornflower’s hue.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <span class="opt-tag">Step 2 · Cornflower as fundamental water</span>
+    <h2>Water, wherever other courses lean on it</h2>
+    <p>One token, <code>--water</code>, lives in <code>style.css</code> so every course can use it. Water references keep their course’s own colours around them; only the water part turns cornflower.</p>
+    <div class="refs">
+      <article class="ref" style="--c:#2F5E2C">
+        <span class="eyebrow">Food · 3 Rehydrate</span>
+        <h3>Soaking beans</h3>
+        <p>Cover dried beans with <span class="wtext">clean, cool water</span> by a few inches and soak overnight.</p>
+        <a class="wlink" href="#"><svg><use href="#drop"/></svg>Water → Purify</a>
+      </article>
+      <article class="ref" style="--c:#8A8F86">
+        <span class="eyebrow">Cleaning · The gentle ladder</span>
+        <h3>Water first</h3>
+        <div class="ladder"><div class="w">1 · Water</div><div>2 · Soap</div><div>3 · Baking soda</div><div>4 · Vinegar or 3% peroxide</div><div>5 · Beyond</div></div>
+      </article>
+      <article class="ref" style="--c:#2F5D8A">
+        <span class="eyebrow">Emergency prep · 2 Supplies</span>
+        <h3>Two weeks of water</h3>
+        <p>About a gallon per person per day, plus water for animals.</p>
+        <a class="wlink" href="#"><svg><use href="#drop"/></svg>Water → How much to store</a>
+      </article>
+      <article class="ref" style="--c:#A3352F">
+        <span class="eyebrow">Poisons · 5 Soil</span>
+        <h3>Lead at the tap, too</h3>
+        <p>If the home was built before 1986, test the <span class="wtext">water</span> alongside the soil batch.</p>
+        <a class="wlink" href="#"><svg><use href="#drop"/></svg>Water → Testing</a>
+      </article>
+      <article class="ref" style="--c:#C79A12">
+        <span class="eyebrow">Air &amp; heat · Heat waves</span>
+        <h3>Cool bodies</h3>
+        <p>A shallow dish of <span class="wtext">water</span> for birds, and drinking water within reach for everyone.</p>
+        <a class="wlink" href="#"><svg><use href="#drop"/></svg>Water → Uses</a>
+      </article>
+      <div class="lenscard">
+        <span class="drop"><svg><use href="#drop"/></svg></span>
+        <span class="eyebrow" style="color:rgba(255,255,255,.85)">Roots · home page</span>
+        <b>Water</b>
+        <p style="font-size:14px">The card keeps the Roots tier colour; a small cornflower drop marks it as water.</p>
+      </div>
+    </div>
+    <div class="tokens">/* style.css: fundamental water (any course can use) */
+--water: #9ABEF8;       /* cornflower */
+--water-soft: #E4EEFD;  /* wash */
+--water-edge: #C3D8FB;  /* border */
+--water-ink: #16305E;   /* text on cornflower */
+
+/* water.css */
+--w5-dot: var(--water); --w5-on: var(--water-ink);</div>
+  </section>
+
+</div>
+</body></html>

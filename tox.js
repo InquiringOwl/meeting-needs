@@ -78,7 +78,7 @@
   /* Cross-references by id, so numbering stays right when sub-units move. */
   var NUM = {};
   function r(u, s, text) { return '<a href="' + BASE + '/' + u + (s ? '/' + s : '') + '">' + (text || NUM[u + '/' + s] || NUM[u] || '') + '</a>'; }
-  function animals(text) { return '<a href="#lens-relationships/special/animals">' + (text || 'Animals') + '</a>'; }
+  function animals(text) { return '<a href="#lens-relationships/special/captive">' + (text || 'Captive animals') + '</a>'; }
 
   /* Titles shared by a fix card and the Where to start tool. */
   var F = {
@@ -153,7 +153,7 @@
               ['Free', 'Keep birds out of the kitchen while cooking, and check any flea treatment is labeled for that species.'],
               ['Free', 'Read later units with the most sensitive one in the house in mind; ' + r('exposures', 'companions', 'the next section') + ' covers what each species can’t process.']],
               add: ['Save Animal Poison Control number; check flea products by species'] }) +
-            links(animals('Emotions &amp; love: Animals')) +
+            links(animals('Relationships: Captive animals')) +
             src('ASPCA Animal Poison Control; Merck Veterinary Manual (PTFE toxicosis in birds; permethrin toxicosis in cats); CDC, harmful algal blooms and animals.'); } },
           { id: 'companions', short: 'Companion animals', title: 'Companion animals: what their bodies can’t process', html: function () { return '<p>Companion animals share our homes, air, floors and food scraps, but their bodies process chemicals differently. Something harmless or even healthy for us can be dangerous for them, and because they’re smaller, close to the floor and groom with their tongues, they meet more of it.</p>' +
             table(['Who', 'How their body differs', 'Common household dangers', 'What helps'], [
@@ -169,7 +169,7 @@
               ['Free', 'Homes with cats: no lilies, and no diffusers or essential oils in rooms they can’t leave.'],
               ['Free', 'Every flea, tick or cleaning product checked for the species it’s labeled for.']],
               add: ['Companion safety: meds up high, no lilies with cats, species-checked products'] }) +
-            links(animals('Emotions &amp; love: Animals') + ' · <a href="#lens-air/smoke/companions">Air: Smoke, scent and companions</a> · ' + r('living', 'plants', 'Plants and companions')) +
+            links(animals('Relationships: Captive animals') + ' · <a href="#lens-air/smoke/companions">Air: Smoke, scent and companions</a> · ' + r('living', 'plants', 'Plants and companions')) +
             src('ASPCA Animal Poison Control Center; Pet Poison Helpline; Merck Veterinary Manual; US FDA, <i>Lovely Lilies and Curious Cats</i>; Court &amp; Greenblatt, <i>Pharmacogenetics</i> 1997 (feline glucuronidation).'); } },
           { id: 'start', tool: true, short: 'Where to start', title: 'Where to start', html: function () { return '<p class="tx-legend">Tick what’s true now. No judgement in any box: it just finds the swaps with the biggest return for the least effort.</p><div class="tx-chks" id="tx-ws"></div><div class="tx-out" id="tx-ws-out"></div>'; } },
           { id: 'healthy', short: 'Healthy', title: 'What healthy looks like', html: function () { return '<p>Not everything is poison. People lived for thousands of years among wood, stone, clay, plant fibers and natural rubber, and many of those materials are still the calmest things to have around: they don’t off-gas, don’t shed plastic, and can be repaired, refinished and composted. The aim of this lens is a home made mostly of things you can name.</p>' +
@@ -420,7 +420,7 @@
               ['Free → $', 'Close that offer: seal, store, dry, tip out. Then retire the poison.'],
               ['Free', 'Leave a messy corner of the yard: leaves and stems shelter the insects who keep others in balance.']],
               add: [F.poison] }) +
-            links(animals('Emotions &amp; love: Animals') + ' · <a href="#lens-food/store/visitors">Food → Animals in the pantry</a> · Gardening') +
+            links(animals('Relationships: Captive animals') + ' · <a href="#lens-food/store/visitors">Food → Animals in the pantry</a> · Gardening') +
             src('UC Statewide IPM Program (ipm.ucanr.edu) pest notes; ASPCA, permethrin and cats.'); } },
           { id: 'wood', short: 'Treated wood', title: 'Treated wood, decks and beds', html: function () { return '<p>Wood preservatives are pesticides: US EPA registers them because they kill the fungi and insects that rot wood. Which one depends on when and what the wood was made for.</p>' +
             table(['Treatment', 'Where and when', 'Contains', 'Notes'], [
@@ -529,7 +529,7 @@
               ['Free', 'Small areas (under about 10 sq ft): scrub with soap and water and dry fully. Porous things that stayed wet (ceiling tiles, carpet) usually need to go.'],
               ['$', 'A $10 humidity meter; the bathroom fan for 20 minutes after showers; furniture a few inches off outside walls.']],
               add: [F.mold] }) +
-            accs(acc('rent', 'Renting', 'When the leak isn’t yours to fix', ca('Since 2016, visible mold that affects health counts as a substandard-housing condition (SB 655). Write to the landlord with photos and dates, and keep a copy; local code enforcement can inspect if it isn’t fixed.') + links('<a href="#lens-relationships/request">Emotions &amp; love → Requests</a>'))) +
+            accs(acc('rent', 'Renting', 'When the leak isn’t yours to fix', ca('Since 2016, visible mold that affects health counts as a substandard-housing condition (SB 655). Write to the landlord with photos and dates, and keep a copy; local code enforcement can inspect if it isn’t fixed.') + links('<a href="#lens-relationships/request">Relationships → Requests</a>'))) +
             links('<a href="#lens-air/ventilation/damp">Air: Damp air</a> · <a href="#lens-air/what/disasters">Air: Floods and the air</a> · <a href="#lens-cleaning">Cleaning</a>') +
             src('WHO, <i>Guidelines for Indoor Air Quality: Dampness and Mould</i> (2009); US EPA, <i>A Brief Guide to Mold, Moisture and Your Home</i>; CDC, mold basics.'); } },
           { id: 'food', short: 'Food mold', title: 'Mold on food', html: function () { return '<p>Some molds make mycotoxins that heat doesn’t destroy. <b>Aflatoxin</b> (on peanuts, corn and tree nuts) harms the liver and is a known human carcinogen; <b>ochratoxin</b> grows on grains, coffee and dried fruit; <b>patulin</b> comes from rotten apples in juice.</p>' +
@@ -628,7 +628,7 @@
               ['Free', 'Talk with two neighbors about what they notice. Shared observations are the start of a case.'],
               ['Free', 'Comment at one hearing, even in writing: needs, observations, a clear request.']],
               add: ['Find who permits the nearest polluter; sign up for notices'] }) +
-            links('<a href="#lens-governance">Governance</a> · <a href="#lens-relationships/special/neighbors">Emotions &amp; love: Neighbors</a> · <a href="#lens-relationships/special/power">Power &amp; peace</a>') +
+            links('<a href="#lens-governance">Governance</a> · <a href="#lens-relationships/special/neighbors">Relationships: Neighbors</a> · <a href="#lens-relationships/special/power">Power &amp; peace</a>') +
             src('CARB, Community Air Protection Program (AB 617).'); } }
         ] }
     ];
@@ -840,7 +840,10 @@
           '<span class="tx-modes">' + u.modes.map(function (m) { return mode(m); }).join('') + '</span></a></li>';
       }).join('') + '</ol>' +
       '<aside class="tx-funfact"><span class="eyebrow">Fun fact</span><p>When families in one study swapped to fresh food with no cans or plastic packaging for just three days, the BPA in their urine dropped by about two-thirds. Some exposures leave the body that fast, which is part of why one-by-one swaps feel good: the body answers quickly.</p>' +
-      '<p>Numbers come from public health research and agencies (EPA, CDC, ATSDR, FDA, California’s OEHHA and DPR), cited in each section. Laws mentioned are California’s; the chemistry is the same everywhere. Thank you to everyone who keeps this knowledge free.</p>' + src('Rudel et al., <i>Environmental Health Perspectives</i> 2011.') + '</aside>';
+      '<p>Numbers come from public health research and agencies (EPA, CDC, ATSDR, FDA, California’s OEHHA and DPR), cited in each section. Laws mentioned are California’s; the chemistry is the same everywhere. Thank you to everyone who keeps this knowledge free.</p>' + src('Rudel et al., <i>Environmental Health Perspectives</i> 2011.') + '</aside>' +
+      (mn().deeper ? mn().deeper('People whose work shaped this course, and where to go for more.', [
+        { name: 'Dr. Yvonne Burkart', who: 'Toxicologist', work: 'Free education on everyday toxic exposures and gentler swaps.', shaped: 'This course’s view of everyday exposures' }
+      ]) : '');
   }
   function viewList() {
     return '<article class="tx-unit tk3"><header class="tx-unit-hero"><span class="eyebrow">Your one-by-one list</span><h1 tabindex="-1">My list</h1><p class="tx-unit-sub">One swap at a time, in the order you choose</p>' +

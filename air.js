@@ -95,8 +95,8 @@
   };
   function prep(id, text) { return to('#lens-emergency-prep/prepare' + (id ? '/' + id : ''), text || 'Emergency prep'); }
   var BODY = to('#lens-body-care', 'Body care');
-  var ANIMALS = to('#lens-relationships/special/animals', 'Emotions &amp; love: Animals');
-  var REQ = to('#lens-relationships/request', 'Emotions &amp; love: Requests');
+  var ANIMALS = to('#lens-relationships/special/captive', 'Relationships: Captive animals');
+  var REQ = to('#lens-relationships/request', 'Relationships: Requests');
 
   /* Titles shared by a fix card and the What do you notice? tool. */
   var F = {
@@ -661,7 +661,7 @@
   }
   function sidebar(U, cur) {
     var wide = window.matchMedia && window.matchMedia('(min-width: 900px)').matches;
-    return '<nav class="ai-nav" aria-label="Air course"><details class="ai-nav-wrap"' + (wide ? ' open' : '') + '><summary class="ai-nav-head"><span class="eyebrow">Course map</span><b>Air</b></summary>' +
+    return '<nav class="ai-nav" aria-label="Air course"><details class="ai-nav-wrap"' + (wide ? ' open' : '') + '><summary class="ai-nav-head"><span class="eyebrow">Course map</span><b>Air &amp; temperature</b></summary>' +
       '<a class="ai-nav-over" href="' + BASE + '"' + (!cur ? ' aria-current="page"' : '') + '>Overview</a><ol class="ai-vt">' +
       U.map(function (u) {
         var on = cur === u.id;
@@ -678,7 +678,7 @@
     return mn().header('home') + '<div class="ai-layout">' + sidebar(U, cur) + '<main class="ai-main">' + panel() + main + '</main></div>' + mn().footer();
   }
   function viewOverview(U) {
-    return '<section class="ai-hero"><span class="ai-lens-pill">Tier 2 · Roots · Course</span><h1 tabindex="-1">Air</h1>' +
+    return '<section class="ai-hero"><span class="ai-lens-pill">Tier 2 · Roots · Course</span><h1 tabindex="-1">Air &amp; temperature</h1>' +
       '<p class="ai-lede">We breathe around 10,000 liters of air a day, most of it indoors. Lungs, a bird’s air sacs, a cat’s nose and a houseplant’s leaves all need the same thing: air that’s moving, not too wet, not too hot, and free of what heat and dust put into it. Five units, read in order or dipped into, each ending in a <b>How to fix</b>, free steps first.</p></section>' +
       '<div class="ai-ways">' +
         '<a class="ai-way ak1" href="' + BASE + '/what"><b>1 · Notice</b><p>What’s in the air at all: particles, gases, living things, and what disasters add. Then how to read it yourself.</p></a>' +
@@ -740,9 +740,9 @@
     T = tags();
     var U = units(); index(U);
     var seg = (sub || '').split('/'), u = UIDX[seg[0]];
-    if (seg[0] === 'list') return { title: 'My list · Air · Kinship', html: layout(U, 'list', viewList()) };
-    if (seg[0] === 'notice') return { title: 'What do you notice? · Air · Kinship', html: layout(U, 'notice', viewNotice()) };
-    if (u) return { title: u.word.replace('&amp;', '&') + ' · Air · Kinship', html: layout(U, u.id, viewUnit(U, u, seg[1])) };
-    return { title: 'Air · Kinship', html: layout(U, null, viewOverview(U)) };
+    if (seg[0] === 'list') return { title: 'My list · Air & temperature · Kinship', html: layout(U, 'list', viewList()) };
+    if (seg[0] === 'notice') return { title: 'What do you notice? · Air & temperature · Kinship', html: layout(U, 'notice', viewNotice()) };
+    if (u) return { title: u.word.replace('&amp;', '&') + ' · Air & temperature · Kinship', html: layout(U, u.id, viewUnit(U, u, seg[1])) };
+    return { title: 'Air & temperature · Kinship', html: layout(U, null, viewOverview(U)) };
   };
 })();

@@ -1,21 +1,27 @@
 /* Kinship: the lens catalogue.
    A lens is a way of looking at your home and life: what to notice, what it costs you,
-   and what you can fix yourself. Status: ready | building | next | soon | later.
+   and what you can fix yourself. Status: ready (shown as Beta) | building | soonest | next | soon | later | last.
    Each tier has one colour; every lens in it shares that colour. In a locked tier, only ready lenses are clickable. */
 window.MN_TIERS = [
   {
     id: 'signals', num: 1, name: 'Signals', color: '#C2477F',
-    blurb: 'Start here. Notice your emotions, pointing to unmet needs, and who lives around you.',
+    blurb: 'Start here. Hear what’s happening inside, connect it with others, and know who lives around you.',
     lenses: [
       {
-        id: 'relationships', name: 'Emotions & love', status: 'ready',
-        blurb: 'Hear your own needs, meet others’ with kindness, and find strategies that work for everyone.',
-        topics: ['Nonviolence', 'Relationships', 'Dialogues'],
-        looks: ['Feelings as signals, and the universal needs they point to', 'Requests instead of demands, and dialogue where both sets of needs count', 'Children, neighbors, animals, cooperatives and power shared instead of held over']
+        id: 'emotions', name: 'Emotions', status: 'ready',
+        blurb: 'Your rich inner world.',
+        topics: ['Feelings', 'Needs', 'Who you are'],
+        looks: ['Feelings as signals: the plants that show, pain included', 'The universal needs beneath every feeling and strategy', 'Who you are underneath: the one who chooses, the body that remembers, mind and body']
       },
       {
-        id: 'identification', name: 'Identification', status: 'soon',
-        blurb: 'Name the plants and animals around you, and learn the few real local dangers.',
+        id: 'relationships', name: 'Relationships', status: 'ready',
+        blurb: 'Connecting inner worlds.',
+        topics: ['Requests', 'Dialogue', 'Special situations'],
+        looks: ['Requests instead of demands', 'Dialogue where both sets of needs count', 'Children, neighbors, animals, cooperatives and power shared instead of held over']
+      },
+      {
+        id: 'identification', name: 'Identification', status: 'soonest',
+        blurb: 'Recognize the plants and animals around you to assess threats and opportunities.',
         topics: ['Plants', 'Fungi', 'Animals'],
         looks: ['The features that actually separate species', 'Edible plants and their dangerous twins', 'Tracks, calls and signs of who lives nearby']
       }
@@ -38,7 +44,7 @@ window.MN_TIERS = [
         looks: ['Free, shared, bought, grown and foraged food', 'Washing produce, greens, grains and rice well', 'Soaking beans, grains and dried foods, and sprouting', 'Safe heat, little fuel, cooking with kids and a full plate', 'Cold, pantry, leftovers, preserving, and the animals who visit', 'Babies’ first foods, soft textures for sore mouths, and food as medicine', 'What companion animals eat in nature, kibble and raw, and plant-based options']
       },
       {
-        id: 'air', name: 'Air', status: 'ready',
+        id: 'air', name: 'Air & temperature', status: 'ready',
         blurb: 'What’s in the air, reading it around fires and storms, and how ventilation, vacuuming and shade clear it.',
         topics: ['What’s in it', 'Ventilation', 'Dust', 'Heat & smoke', 'Sun & temperature'],
         looks: ['Particles, gases, living things, and what disasters add to the air', 'Moving air to cleanse it: windows, fans, filters and damp', 'Vacuuming and damp cleaning, new things, asbestos and lead', 'Cooking, gas, nonstick, smoke and solvents, and companions’ lungs', 'Heat waves, shade, cold, and sun on skin']
@@ -56,7 +62,7 @@ window.MN_TIERS = [
     blurb: 'Keep every body and the home safe: shelter, cleaning, care and protection.',
     lenses: [
       {
-        id: 'shelter', name: 'Shelter', status: 'next',
+        id: 'shelter', name: 'Shelter', status: 'soon',
         blurb: 'Temporary shelter: tents, tarps, vehicles and quick fixes for staying dry, warm and safe when home isn’t steady.',
         topics: ['Tents & tarps', 'Vehicles', 'Warmth', 'Safe places'],
         looks: ['Pitching a tarp or tent that sheds rain and wind', 'Living in a car, van or RV: sleep, air, heat and parking', 'Staying warm and dry with little: layers, ground insulation and condensation', 'Shelters, safe parking programs and legal places to stay']
@@ -68,13 +74,13 @@ window.MN_TIERS = [
         looks: ['Why water and a good cloth do most of the work', 'Soap, baking soda, vinegar and peroxide: what each is for, and what never mixes', 'Counters by material, boards, oven, bathroom, floors and ants', 'Which stain is which, and what lifts it', 'Laundry that is gentler on fabric, skin and water']
       },
       {
-        id: 'body-care', name: 'Body care', status: 'next',
+        id: 'body-care', name: 'Body care', status: 'soon',
         blurb: 'Care for every body at home: little and aging ones, disabled and different bodies, and the animals you live with.',
-        topics: ['Children', 'Aging', 'Diversity', 'Sun', 'Animal care'],
-        looks: ['Sun on skin: shade, clothing and mineral (zinc oxide) sunscreen', 'Skin, teeth and sleep for children and growing bodies', 'Aging bodies, and the care that keeps them comfortable', 'Disabilities and different bodies, plus the animals who share your home', 'Gentle foods for sick days and food as medicine (starts in Food → Gentle)']
+        topics: ['Children', 'Aging', 'Diversity', 'Animal care'],
+        looks: ['Skin, teeth and sleep for children and growing bodies', 'Aging bodies, and the care that keeps them comfortable', 'Disabilities and different bodies, plus the animals who share your home', 'Gentle foods for sick days and food as medicine (starts in Food → Gentle)']
       },
       {
-        id: 'self-defense', name: 'Self-defense', status: 'next',
+        id: 'self-defense', name: 'Self-defense', status: 'soon',
         blurb: 'Keep yourself, your people and your home safe: noticing early, calming things with words, and getting away.',
         topics: ['Noticing', 'De-escalation', 'Getting away', 'Home'],
         looks: ['Trusting the early feeling that something is off, and leaving early', 'De-escalation: distance, calm and words before anything else', 'Simple protective moves for breaking free and getting away', 'Home preparation: locks, lights, a safe room, a plan and neighbors who check in (with Emergency prep)']
@@ -164,37 +170,37 @@ window.MN_TIERS = [
     blurb: 'Hands-on skills to make, mend and build.',
     lenses: [
       {
-        id: 'sewing', name: 'Sewing', status: 'later',
+        id: 'sewing', name: 'Sewing', status: 'last',
         blurb: 'Patch, hem, alter and make clothes and soft things, by hand or machine.',
         topics: ['Mending', 'Patterns', 'Machines'],
         looks: ['Patches, darns and seams that last', 'Reading and adjusting a pattern', 'Hand stitching and getting along with a machine']
       },
       {
-        id: 'bikes', name: 'Bikes', status: 'later',
+        id: 'bikes', name: 'Bikes', status: 'last',
         blurb: 'True a wheel, tune gears, fix a flat on the road.',
         topics: ['Wheels', 'Gears', 'Flats'],
         looks: ['The few tools that fix most problems', 'Gears and brakes you can adjust yourself', 'Getting home after a flat']
       },
       {
-        id: 'carpentry', name: 'Carpentry', status: 'later',
+        id: 'carpentry', name: 'Carpentry', status: 'last',
         blurb: 'Read the grain, cut true angles, join without nails.',
         topics: ['Grain', 'Cuts', 'Joinery'],
         looks: ['How wood moves with the seasons', 'Measuring and cutting square', 'Joints that hold without hardware']
       },
       {
-        id: 'home-building', name: 'Home-building', status: 'later',
+        id: 'home-building', name: 'Home-building', status: 'last',
         blurb: 'Timber and metal frames, plus cob, adobe and lime.',
         topics: ['Framing', 'Cob', 'Lime'],
         looks: ['How a frame carries its load', 'Earth and lime walls that breathe', 'Materials that are kinder to build with and live in']
       },
       {
-        id: 'interior-design', name: 'Interior design', status: 'later',
+        id: 'interior-design', name: 'Interior design', status: 'last',
         blurb: 'Sunlight, layout, and permanent stations built around your natural habits.',
         topics: ['Sunlight', 'Layout', 'Stations'],
         looks: ['Following the sun through your rooms', 'Layouts that make daily paths easy', 'Stations that sit where your habits already happen']
       },
       {
-        id: 'digital', name: 'Digital world', status: 'later',
+        id: 'digital', name: 'Digital world', status: 'last',
         blurb: 'Libraries, open tools and connection on one side; surveillance and attention-for-profit on the other.',
         topics: ['Needs it meets', 'Libraries', 'Surveillance', 'Open tools'],
         looks: ['Which needs a screen is meeting right now (learning, connection, help) and which it’s pulling from (rest, presence, play)', 'Public libraries: free internet, devices, classes and quiet, and the librarians who protect your privacy', 'Surveillance: what apps, ad trackers, data brokers and cameras collect, and the free settings that cut most of it', 'Open-source tools, repair and keeping old devices going, so digital life serves people instead of profit']
@@ -206,7 +212,7 @@ window.MN_TIERS = [
         looks: ['Who controls California’s water, and how they’re chosen', 'Where the water goes', 'Criminalization and incarceration: when meeting a need becomes a crime', 'Stairs for change: art, talk, public comment, representatives, organizing, voting, peaceful protest, and paths outside law']
       },
       {
-        id: 'death-seasons', name: 'Death & cycles', status: 'later',
+        id: 'death-seasons', name: 'Death & cycles', status: 'last',
         blurb: 'Seasons, death feeding new life, and the peaceful consensus that keeps ecosystems in balance.',
         topics: ['Cycles', 'Renewal', 'Consensus'],
         looks: ['Seasons and the cycles of growth, decay and return', 'How death and decomposition feed new life', 'Consensus and peaceful self-governance in nature']

@@ -1,5 +1,567 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kinship · Home with new tiers (mock-up)</title>
+<meta name="description" content="Free, open education for meeting our needs: emotions, water, food, air, body care, gardening, first aid, repair and more.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Cpath d=%27M12 21.2C7.4 18 3.3 14.6 2.4 10.9 1.6 7.5 3.8 4.6 6.9 4.6c2.1 0 3.6 1.2 5.1 3.1 1.5-1.9 3-3.1 5.1-3.1 3.1 0 5.3 2.9 4.5 6.3C20.7 14.6 16.6 18 12 21.2z%27 fill=%27%23FCEFF4%27 stroke=%27%23C2477F%27 stroke-width=%272.2%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500..800&family=Instrument+Sans:wght@400..700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../style.css">
+<style>.mock-chip{position:fixed;right:14px;bottom:14px;z-index:99;font-family:var(--f-mono,monospace);font-size:12px;padding:5px 11px;border-radius:999px;border:1.5px dashed rgba(0,0,0,.25);background:rgba(255,255,255,.85);color:#444}</style>
+</head>
+<body>
+<div id="app"></div>
+<noscript><p style="padding:24px">Kinship needs JavaScript turned on.</p></noscript>
+<div class="mock-chip">Mock-up · new tiers 3–5</div>
+<script>
+/* Mock-up of lenses.js: tier 3 Safety (yellow), tier 4 Nurture (green, new), tier 5 Resilience (blue, with the crafts). */
+window.MN_TIERS = [
+ {
+  "id": "signals",
+  "num": 1,
+  "name": "Signals",
+  "color": "#C2477F",
+  "blurb": "Start here. Notice your emotions, pointing to unmet needs.",
+  "status": "",
+  "lenses": [
+   {
+    "id": "relationships",
+    "name": "Emotions & love",
+    "status": "ready",
+    "blurb": "Hear your own needs, meet others’ with kindness, and find strategies that work for everyone.",
+    "topics": [
+     "Nonviolence",
+     "Relationships",
+     "Dialogues"
+    ],
+    "looks": [
+     "Feelings as signals, and the universal needs they point to",
+     "Requests instead of demands, and dialogue where both sets of needs count",
+     "Children, neighbors, animals, cooperatives and power shared instead of held over"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "roots",
+  "num": 2,
+  "name": "Roots",
+  "color": "#B85A14",
+  "blurb": "Fundamentals supporting all healthy life.",
+  "status": "In progress",
+  "locked": true,
+  "lenses": [
+   {
+    "id": "water",
+    "name": "Water",
+    "status": "ready",
+    "blurb": "How we use, find, store, clean, test and pay for water, at every scale from a studio to a farm to a sidewalk.",
+    "topics": [
+     "Uses",
+     "Sources",
+     "Storage",
+     "Purify",
+     "Testing",
+     "Costs"
+    ],
+    "looks": [
+     "Which water each job needs, and gray water",
+     "Taps, refills, rain, wells, springs and wild water",
+     "Containers that keep water safe",
+     "Filters and permanent systems, plus crisis methods",
+     "Knowing it’s safe, at the tap and in a lake",
+     "What water costs, and the household math"
+    ]
+   },
+   {
+    "id": "food",
+    "name": "Food",
+    "status": "ready",
+    "blurb": "Find, cleanse, rehydrate, cook and store plant foods safely, soften them for tender bodies and sick days, and feed the animals you live with.",
+    "topics": [
+     "Gather",
+     "Cleanse",
+     "Rehydrate",
+     "Cook",
+     "Store",
+     "Gentle",
+     "Companions"
+    ],
+    "looks": [
+     "Free, shared, bought, grown and foraged food",
+     "Washing produce, greens, grains and rice well",
+     "Soaking beans, grains and dried foods, and sprouting",
+     "Safe heat, little fuel, cooking with kids and a full plate",
+     "Cold, pantry, leftovers, preserving, and the animals who visit",
+     "Babies’ first foods, soft textures for sore mouths, and food as medicine",
+     "What companion animals eat in nature, kibble and raw, and plant-based options"
+    ]
+   },
+   {
+    "id": "air",
+    "name": "Air",
+    "status": "ready",
+    "blurb": "What’s in the air, how to read it around fires and storms, and how ventilation, vacuuming, lower heat and shade clear it.",
+    "topics": [
+     "What’s in it",
+     "Ventilation",
+     "Dust",
+     "Heat & smoke",
+     "Sun & temperature"
+    ],
+    "looks": [
+     "Particles, gases, living things, and what disasters add to the air",
+     "Moving air to cleanse it: windows, fans, filters and damp",
+     "Vacuuming and damp cleaning, new things, asbestos and lead",
+     "Cooking, gas, nonstick, smoke and solvents, and companions’ lungs",
+     "Heat waves, shade, cold, and sun on skin"
+    ]
+   },
+   {
+    "id": "toxins",
+    "name": "Poisons",
+    "status": "ready",
+    "blurb": "See what is in the pan, the can, the couch and the ground, and swap what matters most first, one at a time.",
+    "topics": [
+     "Exposures",
+     "Plastics",
+     "In the home",
+     "Pesticides",
+     "Soil",
+     "Living toxins",
+     "Neighbors"
+    ],
+    "looks": [
+     "How exposures work, and what a healthy home is made of",
+     "Plastics, when a tarp is the safer bet, can linings, PFAS and pans",
+     "Cleaners, fragrance, furniture, dust and washing produce",
+     "Glyphosate, treated wood, potting mix and drift",
+     "Lead and legacy metals, tested once in one batch",
+     "Molds, algal blooms and plants that harm companions",
+     "Freeways, factories, wells, fire and changing it together"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "safety",
+  "num": 3,
+  "name": "Safety",
+  "color": "#A87700",
+  "blurb": "Keep every body and the home safe and well: cleaning, care, energy and protection.",
+  "status": "Next",
+  "lenses": [
+   {
+    "id": "cleaning",
+    "name": "Cleaning",
+    "status": "ready",
+    "blurb": "Water first, then a short ladder of gentle helpers (soap, baking soda, vinegar, peroxide) for counters, stains and laundry, safe around kids and companion animals.",
+    "topics": [
+     "Water",
+     "Gentle shelf",
+     "Surfaces",
+     "Stains",
+     "Laundry"
+    ],
+    "looks": [
+     "Why water and a good cloth do most of the work",
+     "Soap, baking soda, vinegar and peroxide: what each is for, and what never mixes",
+     "Counters by material, boards, oven, bathroom, floors and ants",
+     "Which stain is which, and what lifts it",
+     "Laundry that is gentler on fabric, skin and water"
+    ]
+   },
+   {
+    "id": "body-care",
+    "name": "Body care",
+    "status": "next",
+    "blurb": "Care for every body in the home: little ones and aging ones, honoring the diversity of bodies including disabilities, and the animals who live with you.",
+    "topics": [
+     "Children",
+     "Aging",
+     "Diversity",
+     "Sun",
+     "Animal care"
+    ],
+    "looks": [
+     "Sun on skin: shade, clothing and mineral (zinc oxide) sunscreen",
+     "Skin, teeth and sleep for children and growing bodies",
+     "Aging bodies, and the care that keeps them comfortable",
+     "Disabilities and different bodies, plus the animals who share your home",
+     "Gentle foods for sick days and food as medicine (starts in Food → Gentle)"
+    ]
+   },
+   {
+    "id": "energy",
+    "name": "Energy & light",
+    "status": "later",
+    "blurb": "Heat, light, cook and stay warm with less: fireplaces, gas, lighting, insulation and more.",
+    "topics": [
+     "Fireplaces",
+     "Cooking",
+     "Gas",
+     "Light",
+     "Insulation"
+    ],
+    "looks": [
+     "Fireplaces and wood stoves that burn clean and safe",
+     "Gas appliances, leaks and carbon monoxide",
+     "Daylight, bulbs and staying lit through an outage",
+     "Insulation and draught-proofing that cut the bill"
+    ]
+   },
+   {
+    "id": "self-defense",
+    "name": "Self-defense",
+    "status": "next",
+    "blurb": "Keep yourself, the people you love and your home safe: noticing early, calming things with words, getting away, and a home that’s ready.",
+    "topics": [
+     "Noticing",
+     "De-escalation",
+     "Getting away",
+     "Home"
+    ],
+    "looks": [
+     "Trusting the early feeling that something is off, and leaving early",
+     "De-escalation: distance, calm and words before anything else",
+     "Simple protective moves for breaking free and getting away",
+     "Home preparation: locks, lights, a safe room, a plan and neighbors who check in (with Emergency prep)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "nurture",
+  "num": 4,
+  "name": "Nurture",
+  "color": "#3E7B3A",
+  "blurb": "Tend the living world: grow, harvest, compost, and know your plant neighbors.",
+  "status": "Later",
+  "lenses": [
+   {
+    "id": "gardening",
+    "name": "Growing",
+    "status": "next",
+    "blurb": "Your teacher and planner for growing food, herbs and flowers: your climate zone, soil, a 12-month plan, pruning, and new plants from cuttings.",
+    "topics": [
+     "Learn",
+     "Plan",
+     "Prune",
+     "Seed saving"
+    ],
+    "looks": [
+     "Your growing zone, frost dates and the light you actually get",
+     "Soil you can build instead of buy",
+     "A month-by-month plan for the space you have",
+     "Pruning that keeps plants young, and free plants from cuttings"
+    ]
+   },
+   {
+    "id": "harvesting",
+    "name": "Harvesting",
+    "status": "next",
+    "blurb": "Cut, sort, clean, dry and store what your plants give, herb by herb, starting with rosemary and lavender, and knowing what’s safe around cats, dogs and other animals.",
+    "topics": [
+     "Cutting",
+     "Drying",
+     "Storing",
+     "Herb by herb",
+     "Animals"
+    ],
+    "looks": [
+     "When and how much to cut so the plant thrives",
+     "Sorting a big pile of trimmings, then rinsing and drying it",
+     "Jars, freezing, and how long dried herbs keep",
+     "Herb by herb: rosemary for the kitchen, lavender for scent and baking",
+     "Which plants and oils are safe for cats, dogs, horses and birds (lavender and essential oils are hard on cats)"
+    ]
+   },
+   {
+    "id": "weather",
+    "name": "Weather",
+    "status": "later",
+    "blurb": "Read the sky: which clouds bring rain, and the seasonal patterns where you live.",
+    "topics": [
+     "Clouds",
+     "Wind",
+     "Seasons"
+    ],
+    "looks": [
+     "Cloud types and which ones turn to rain",
+     "Wind, pressure and the signs before a storm",
+     "Your local seasons, frost and rainfall patterns"
+    ]
+   },
+   {
+    "id": "composting-waste",
+    "name": "Composting & waste",
+    "status": "next",
+    "blurb": "Turn scraps into soil and handle waste safely. For most homes the grid is the best bet, but it’s good to know septic and other alternatives.",
+    "topics": [
+     "Scraps",
+     "Sewage",
+     "Worms"
+    ],
+    "looks": [
+     "Compost and worm bins that don’t smell",
+     "How sewage and septic systems work, and why the grid is usually safest",
+     "Sending less of everything else away"
+    ]
+   },
+   {
+    "id": "identification",
+    "name": "Identification",
+    "status": "next",
+    "blurb": "Name the plants and animals around you, and learn the few real local dangers.",
+    "topics": [
+     "Plants",
+     "Fungi",
+     "Animals"
+    ],
+    "looks": [
+     "The features that actually separate species",
+     "Edible plants and their dangerous twins",
+     "Tracks, calls and signs of who lives nearby"
+    ]
+   },
+   {
+    "id": "household-tools",
+    "name": "Household tools",
+    "status": "next",
+    "blurb": "The toolbox, the cleaning shelf and the medicine cabinet: what tools do, and how to use them safely.",
+    "topics": [
+     "Tools",
+     "Chemistry",
+     "Safety"
+    ],
+    "looks": [
+     "The few tools that handle most jobs",
+     "Reading a label for what is actually in it",
+     "Pairs that must never meet, like bleach and ammonia"
+    ]
+   },
+   {
+    "id": "herbalism",
+    "name": "Herbalism",
+    "status": "later",
+    "blurb": "Plant medicines: teas, oils, salves and tinctures, with dose, evidence and medicines that don’t mix beside each.",
+    "topics": [
+     "Preparations",
+     "Dosing",
+     "Evidence"
+    ],
+    "looks": [
+     "Which plant medicines have evidence behind them, and how much",
+     "Teas, infused oils, salves and tinctures made at home",
+     "Doses, medicines that don’t mix, kids, pregnancy and animals, and when to see a clinician"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "resilience",
+  "num": 5,
+  "name": "Resilience",
+  "color": "#2F6E9E",
+  "blurb": "Withstand hard times, and make, mend and build for yourself.",
+  "status": "Later",
+  "lenses": [
+   {
+    "id": "emergency-prep",
+    "name": "Emergency prep",
+    "status": "building",
+    "blurb": "Natural disasters, personal safety and securing your home: plan ahead so you can stay calm when it counts.",
+    "topics": [
+     "What to prep for",
+     "Disasters",
+     "Self-defense",
+     "Home security"
+    ],
+    "looks": [
+     "What to prep for: wildfire, earthquakes, heat, floods, outages and animals",
+     "Go-bags, water and supplies for earthquakes, fires and floods",
+     "Personal safety, building on the Self-defense lens",
+     "Simple ways to secure doors, windows and your home"
+    ]
+   },
+   {
+    "id": "first-aid",
+    "name": "First aid",
+    "status": "later",
+    "blurb": "Cuts, burns, sprains, choking and bites: what to do in the first minutes.",
+    "topics": [
+     "Wounds",
+     "Burns",
+     "Sprains",
+     "Emergencies"
+    ],
+    "looks": [
+     "Stopping bleeding and cleaning a wound",
+     "Burns, breaks and sprains: what helps and what makes it worse",
+     "When to call emergency services, and what to do until they arrive",
+     "Fluids and gentle food after vomiting, diarrhea or heat (from Food → Gentle)"
+    ]
+   },
+   {
+    "id": "repair",
+    "name": "Repair",
+    "status": "later",
+    "blurb": "Diagnose, open up and mend what usually gets thrown out.",
+    "topics": [
+     "Tools",
+     "Electronics",
+     "Mending"
+    ],
+    "looks": [
+     "Finding the actual fault before buying anything",
+     "Opening things that were built to stay shut",
+     "Fixes that keep things out of the landfill"
+    ]
+   },
+   {
+    "id": "sewing",
+    "name": "Sewing",
+    "status": "later",
+    "blurb": "Patch, hem, alter and make clothes and soft things, by hand or machine.",
+    "topics": [
+     "Mending",
+     "Patterns",
+     "Machines"
+    ],
+    "looks": [
+     "Patches, darns and seams that last",
+     "Reading and adjusting a pattern",
+     "Hand stitching and getting along with a machine"
+    ]
+   },
+   {
+    "id": "bikes",
+    "name": "Bikes",
+    "status": "later",
+    "blurb": "True a wheel, tune gears, fix a flat on the road.",
+    "topics": [
+     "Wheels",
+     "Gears",
+     "Flats"
+    ],
+    "looks": [
+     "The few tools that fix most problems",
+     "Gears and brakes you can adjust yourself",
+     "Getting home after a flat"
+    ]
+   },
+   {
+    "id": "carpentry",
+    "name": "Carpentry",
+    "status": "later",
+    "blurb": "Read the grain, cut true angles, join without nails.",
+    "topics": [
+     "Grain",
+     "Cuts",
+     "Joinery"
+    ],
+    "looks": [
+     "How wood moves with the seasons",
+     "Measuring and cutting square",
+     "Joints that hold without hardware"
+    ]
+   },
+   {
+    "id": "home-building",
+    "name": "Home-building",
+    "status": "later",
+    "blurb": "Timber and metal frames, plus cob, adobe and lime.",
+    "topics": [
+     "Framing",
+     "Cob",
+     "Lime"
+    ],
+    "looks": [
+     "How a frame carries its load",
+     "Earth and lime walls that breathe",
+     "Materials that are kinder to build with and live in"
+    ]
+   },
+   {
+    "id": "interior-design",
+    "name": "Interior design",
+    "status": "later",
+    "blurb": "Sunlight, layout, and permanent stations built around your natural habits.",
+    "topics": [
+     "Sunlight",
+     "Layout",
+     "Stations"
+    ],
+    "looks": [
+     "Following the sun through your rooms",
+     "Layouts that make daily paths easy",
+     "Stations that sit where your habits already happen"
+    ]
+   },
+   {
+    "id": "digital",
+    "name": "Digital world",
+    "status": "next",
+    "blurb": "Rethink which needs digital life meets: libraries, open tools and connection on one side, surveillance and attention-for-profit on the other.",
+    "topics": [
+     "Needs it meets",
+     "Libraries",
+     "Surveillance",
+     "Open tools"
+    ],
+    "looks": [
+     "Which needs a screen is meeting right now (learning, connection, help) and which it’s pulling from (rest, presence, play)",
+     "Public libraries: free internet, devices, classes and quiet, and the librarians who protect your privacy",
+     "Surveillance: what apps, ad trackers, data brokers and cameras collect, and the free settings that cut most of it",
+     "Open-source tools, repair and keeping old devices going, so digital life serves people instead of profit"
+    ]
+   },
+   {
+    "id": "governance",
+    "name": "Governance",
+    "status": "building",
+    "blurb": "What stops people, legally, from meeting basic needs, and how to advocate for yourself in the systems we have while building better ones, in law or outside it.",
+    "topics": [
+     "Decision-makers",
+     "Criminalization",
+     "Stairs for change"
+    ],
+    "looks": [
+     "Who controls California’s water, and how they’re chosen",
+     "Where the water goes",
+     "Criminalization and incarceration: when meeting a need becomes a crime",
+     "Stairs for change: art, talk, public comment, representatives, organizing, voting, peaceful protest, and paths outside law"
+    ]
+   },
+   {
+    "id": "death-seasons",
+    "name": "Death & cycles",
+    "status": "later",
+    "blurb": "How nature runs itself: seasons, death feeding new life, and the natural consensus and peaceful self-governance that keep ecosystems in balance.",
+    "topics": [
+     "Cycles",
+     "Renewal",
+     "Consensus"
+    ],
+    "looks": [
+     "Seasons and the cycles of growth, decay and return",
+     "How death and decomposition feed new life",
+     "Consensus and peaceful self-governance in nature"
+    ]
+   }
+  ]
+ }
+];
+window.MN_TIERS.forEach(function (t) { t.lenses.forEach(function (l) { l.color = t.color; }); });
+</script>
+<script>
+/* app.js, unchanged except: no Ready badge on tier 1, and lazy files load from ../ */
 /* Kinship: home, lens pages and profile. Plain JS, no build step.
-   Routes (hash): '' home · 'plans' · 'favorites' · 'tools' · 'profile' · 'lens-<id>[/<sub>]'. A lens with a course registers
+   Routes (hash): '' home · 'plans' · 'favorites' · 'profile' · 'lens-<id>[/<sub>]'. A lens with a course registers
    window.MN_LENS_VIEWS[id](sub, lens) → { html, title } (see rel.js).
    The profile is saved only in this browser (localStorage). */
 (function () {
@@ -10,33 +572,13 @@
   TIERS.forEach(function (t) { t.lenses.forEach(function (l) { l.tier = t; LENS[l.id] = l; }); });
   var COUNT = Object.keys(LENS).length;
 
-  /* 'ready' shows as Beta: usable now, still growing. Soonest is the next lens to be written; Last is the final stretch. */
-  var STATUS = { ready: 'Beta', building: 'In progress', soonest: 'Soonest', next: 'Next', soon: 'Soon', later: 'Later', last: 'Last' };
+  var STATUS = { ready: 'Ready', building: 'In progress', next: 'Next', later: 'Later' };
   var STATUS_NOTE = {
     ready: '',
     building: 'This lens is being written now.',
-    soonest: 'This lens is the next one to be written.',
     next: 'This lens comes after the Roots lenses.',
-    soon: 'This lens is coming soon.',
-    later: 'This lens is planned for a later tier.',
-    last: 'This lens is planned for the last stretch.'
+    later: 'This lens is planned for a later tier.'
   };
-  var BETA = Object.keys(LENS).filter(function (id) { return LENS[id].status === 'ready'; }).length;
-
-  /* Personalization (the Profile, the Personalize card, "For you" tailoring) is hidden until it's ready.
-     Flip PERSONALIZE to true to turn it on for everyone. To preview it in one browser, open the site with
-     ?personalize=1 (and ?personalize=0 to hide it again); that choice is remembered in this browser only. */
-  var PERSONALIZE = false;
-  (function () {
-    var PK = 'meeting-needs.personalize';
-    try {
-      var m = location.search.match(/[?&]personalize=([01])/);
-      if (m) localStorage.setItem(PK, m[1]);
-      if (localStorage.getItem(PK) === '1') PERSONALIZE = true;
-      if (localStorage.getItem(PK) === '0') PERSONALIZE = false;
-    } catch (e) { /* storage blocked: keep the default */ }
-    document.documentElement.classList.toggle('me-off', !PERSONALIZE);
-  })();
 
   var KEY = 'meeting-needs.profile.v1';
   var OPT = {
@@ -207,7 +749,7 @@
       eduMenu(active === 'home') +
       plansMenu(active === 'plans') +
       link('#favorites', 'Favorites', 'favorites') +
-      (PERSONALIZE ? '<a href="#profile" id="nav-profile"' + (active === 'profile' ? ' aria-current="page"' : (isEmpty(profile) ? ' class="me-nav"' : '')) + '>Profile</a>' : '') +
+      link('#profile', 'Profile', 'profile') +
       '</nav></header>';
   }
   /* Education dropdown: hover (or keyboard focus) shows the tiers; hovering a tier opens its lenses to the left.
@@ -232,14 +774,13 @@
   var PLANS = [
     { id: 'education', name: 'Education plan', blurb: 'Your next most useful lessons' },
     { id: 'budget', name: 'Improvements & budget', blurb: 'What meeting needs costs, now and after upgrades' },
-    { id: 'garden', name: 'Garden planner', blurb: '12 months, seed by seed' },
-    { id: 'tools', name: 'My tools', blurb: 'Every course tool and list in one place', href: '#tools' }
+    { id: 'garden', name: 'Garden planner', blurb: '12 months, seed by seed' }
   ];
   function plansMenu(current) {
     return '<div class="navdrop">' +
       '<a href="#plans"' + (current ? ' aria-current="page"' : '') + ' aria-haspopup="true">Plans</a>' +
       '<div class="nav-menu"><div class="nav-menu-in plans-in">' +
-      PLANS.map(function (pl) { return '<a class="nav-item plan-item" href="' + (pl.href || '#plans/' + pl.id) + '"><b>' + esc(pl.name) + '</b><small>' + esc(pl.blurb) + '</small></a>'; }).join('') +
+      PLANS.map(function (pl) { return '<a class="nav-item plan-item" href="#plans/' + pl.id + '"><b>' + esc(pl.name) + '</b><small>' + esc(pl.blurb) + '</small></a>'; }).join('') +
       '</div></div></div>';
   }
   /* Creator opinions: pink (tier 1 and logo color), set apart so the rest of the site reads as relatively objective. */
@@ -250,46 +791,44 @@
     return '<footer class="foot"><span>Kinship · free and open source</span><span class="eyebrow">Grow · Fix · Share</span></footer>';
   }
 
-  /* Personalize: a wide, short silver card beside the hero text, for new visitors only. The whole card opens the profile;
-     once anything is on file it disappears. The ↑ sits under the Profile button (placed by placeArrow). */
-  function personalizeCard() {
-    if (!PERSONALIZE || !isEmpty(profile)) return '';
-    return '<a class="me-card" href="#profile" id="me-card">' +
-      '<span class="me-up" id="me-up" aria-hidden="true">↑</span>' +
-      '<span class="me-txt"><b>Personalize <span class="eyebrow">· just for you</span></b>' +
-      '<span>Share a little about your life so courses open what fits you. Saved only on this device.</span></span>' +
-      '<span class="me-go">Open my profile <span aria-hidden="true">→</span></span></a>';
-  }
-  function placeArrow() {
-    var up = document.getElementById('me-up'), c = document.getElementById('me-card'), n = document.getElementById('nav-profile');
-    if (!up || !c || !n || !c.offsetWidth) return;
-    var cr = c.getBoundingClientRect(), nr = n.getBoundingClientRect(), k = cr.width / c.offsetWidth || 1;
-    up.style.left = ((nr.left + nr.width / 2 - cr.left) / k - up.offsetWidth / 2) + 'px';
-  }
-  window.addEventListener('resize', function () { requestAnimationFrame(placeArrow); });
-
-  /* Go deeper: the people and places a course stands on, and where to go for more. Same block at the end of every course.
-     people: [{ name, who, work (html), shaped, url?, link? }]. Names and descriptions are plain text except work. */
-  function deeper(intro, people) {
-    return '<section class="deeper" aria-label="Go deeper"><div class="deeper-head"><span class="eyebrow">Shoulders we stand on</span><h2>Go deeper</h2>' +
-      '<p>' + esc(intro) + ' Kinship is its own synthesis, so anything that misses the mark here is Kinship’s, not theirs.</p></div><ul>' +
-      people.map(function (p) {
-        return '<li><b>' + esc(p.name) + '</b><span class="who">' + esc(p.who) + '</span><p>' + p.work + '</p>' +
-          '<span class="learned"><span class="eyebrow">Shaped here</span> ' + esc(p.shaped) + '</span>' +
-          (p.url ? '<a href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(p.link || p.url) + '<span class="sr-only"> (opens in a new tab)</span> <span aria-hidden="true">↗</span></a>' : '') + '</li>';
-      }).join('') + '</ul></section>';
+  function setupCard() {
+    if (isEmpty(profile)) {
+      return '<aside class="setup" aria-label="Personalize">' +
+        '<div class="setup-head"><span class="eyebrow">Your profile</span></div>' +
+        '<h3>Personalize</h3>' +
+        '<p>To personalize, share context about your life circumstances and goals.</p>' +
+        '<div><a class="btn personal" href="#profile">Share your context</a></div>' +
+        '<span class="hint">Saved only on this device.</span>' +
+        '</aside>';
+    }
+    var headline = [profile.home, profile.space.join(' + ')].filter(Boolean).join(' · ') || 'Your home';
+    var chips = [];
+    if (profile.zone) chips.push('Zone ' + profile.zone);
+    var hh = household(profile); if (hh) chips.push(hh);
+    profile.consider.forEach(function (c) { chips.push(c); });
+    if (profile.budget) chips.push(profile.budget);
+    var sug = suggestions(profile);
+    var sugHtml = sug.length
+      ? '<p>Start with ' + sug.map(function (l) { return '<a href="#lens-' + l.id + '"><strong>' + esc(l.name) + '</strong></a>'; }).join(sug.length === 2 ? ' then ' : ', ') + '.</p>'
+      : '<p>Pick what’s bugging you most in your profile and we’ll suggest where to start.</p>';
+    return '<aside class="setup" aria-label="Personalize">' +
+      '<div class="setup-head"><span class="eyebrow">Your profile</span><a class="btn personal sm" href="#profile">Edit</a></div>' +
+      '<h3>' + esc(headline) + '</h3>' +
+      (chips.length ? '<div class="chips">' + chips.map(function (c) { return '<span class="chip">' + esc(c) + '</span>'; }).join('') + '</div>' : '') +
+      sugHtml + '</aside>';
   }
 
   function lensCard(l) {
-    var solid = l.status === 'ready';
+    var solid = l.tier.num === 1 || l.status === 'ready';
     var linked = !l.tier.locked || l.status === 'ready';
     var cls = 'lens is-' + l.status + (solid ? ' is-solid' : '');
-    /* Every card shows its status top right: Beta is filled in the tier colour, the rest are outlined. */
-    var top = STATUS[l.status] ? '<span class="badge ' + l.status + '">' + STATUS[l.status] + '</span>' : '';
+    /* Tier 1 and 2 cards skip the top row when ready: the solid card already says so, and the row only took space. */
+    var top = l.tier.num <= 2 && l.status === 'ready' ? '' : (STATUS[l.status] ? '<span class="badge ' + l.status + '">' + STATUS[l.status] + '</span>' : '');
     var tag = linked ? 'a' : 'div';
     if (!linked) cls += ' is-static';
     return '<' + tag + ' class="' + cls + '"' + (linked ? ' href="#lens-' + l.id + '"' : '') + ' style="--lc:' + l.color + '">' +
-      '<div class="lens-head"><h3>' + esc(l.name) + '</h3>' + top + '</div>' +
+      (top ? '<div class="lens-top">' + top + '</div>' : '') +
+      '<h3>' + esc(l.name) + '</h3>' +
       '<p>' + esc(l.blurb) + '</p>' +
       '<div class="topics">' + l.topics.map(esc).join(' · ') + '</div>' +
       '</' + tag + '>';
@@ -324,18 +863,18 @@
         '<span class="tier-pill">Tier ' + t.num + '</span>' +
         '<h2 id="tier-' + t.id + '">' + esc(t.name) + '</h2>' +
         '<p>' + esc(t.blurb) + '</p></div>' +
-        '</div>' +
-        '<div class="grid">' + t.lenses.map(lensCard).join('') + '</div>' +
-        tierDots(t.lenses.length) +
+        (t.status ? '<span class="tier-status">' + esc(t.status) + '</span>' : '') + '</div>' +
+        '<div class="grid">' + t.lenses.map(lensCard).join('') + (t.num === 1 ? setupCard() : '') + '</div>' +
+        tierDots(t.lenses.length + (t.num === 1 ? 1 : 0)) +
         '</section>';
     }).join('');
     return header('home') +
-      '<section class="hero me-hero">' +
+      '<section class="hero">' +
       '<div class="hero-copy">' +
-      '<span class="eyebrow">Free &amp; open source · ' + BETA + ' lenses in beta · ' + (COUNT - BETA) + ' upcoming</span>' +
+      '<span class="eyebrow">Free &amp; open source · ' + COUNT + ' lenses</span>' +
       '<h1 tabindex="-1">End systemic profit&#8209;extraction cycles.</h1>' +
-      '<p>Learn how to identify and meet universal needs. Empower yourself to fix problems. Create peace.</p>' +
-      '</div>' + personalizeCard() + '</section>' +
+      '<p>Learn how to meet universal needs. Empower yourself to fix problems. Create peace.</p>' +
+      '</div></section>' +
       tiers + footer();
   }
 
@@ -367,9 +906,7 @@
 
   function viewPlans() {
     var sug = suggestions(profile);
-    var start = !PERSONALIZE
-      ? '<p>Tier 1 is the place to begin: <a href="#lens-emotions"><strong>Emotions</strong></a>, then <a href="#lens-relationships"><strong>Relationships</strong></a>. Personal plans arrive with profiles.</p>'
-      : sug.length
+    var start = sug.length
       ? '<p>Based on your profile, start with ' + sug.map(function (l) { return '<a href="#lens-' + l.id + '"><strong>' + esc(l.name) + '</strong></a>'; }).join(', ') + '.</p>'
       : '<p>Share a little about your life in your profile and a starting plan will appear here.</p><div><a class="btn personal" href="#profile">Share your context</a></div>';
     return header('plans') +
@@ -405,30 +942,6 @@
       '<section class="intro"><span class="eyebrow">Favorites</span>' +
       '<h1 tabindex="-1">Your starred sub-units.</h1>' +
       '<p>Everything you’ve starred across all education, saved in this browser.</p></section>' +
-      '<div class="favs">' + body + '</div>' + footer();
-  }
-
-  /* My tools: every course tool and personal list in one place. Each is a shortcut into its course, never a gate. */
-  var TOOLS = [
-    ['water', [['How much to store', '#lens-water/storage/amount'], ['Bleach dose for a crisis', '#lens-water/purify/crisis'], ['Match a filter to the worry', '#lens-water/purify/match'], ['Water prices', '#lens-water/costs/prices'], ['Your water math', '#lens-water/costs/math']]],
-    ['food', [['Soak & cook', '#lens-food/rehydrate/tool'], ['How long it keeps', '#lens-food/store/keeps'], ['Make it gentle', '#lens-food/gentle/tool']]],
-    ['air', [['What do you notice?', '#lens-air/notice'], ['Filter sizer', '#lens-air/ventilation/sizer'], ['My list', '#lens-air/list']]],
-    ['toxins', [['Where to start', '#lens-toxins/exposures/start'], ['Soil batch planner', '#lens-toxins/soil/planner'], ['My list', '#lens-toxins/list']]],
-    ['cleaning', [['What needs cleaning?', '#lens-cleaning/now'], ['Stain finder', '#lens-cleaning/stains/finder'], ['My list', '#lens-cleaning/list']]],
-    ['emergency-prep', [['What to prep for', '#lens-emergency-prep/prepare/planner'], ['My prep list', '#lens-emergency-prep/list']]]
-  ];
-  function viewTools() {
-    var body = TOOLS.filter(function (g) { return LENS[g[0]]; }).map(function (g) {
-      var l = LENS[g[0]];
-      return '<section class="fav-group glass" style="--lc:' + l.color + '">' +
-        '<a class="fav-lens" href="#lens-' + l.id + '"><span class="dot" aria-hidden="true"></span>' + esc(l.name) + '</a>' +
-        '<div class="tool-btns">' + g[1].map(function (t) { return '<a class="btn quiet sm" href="' + t[1] + '">' + esc(t[0]) + '</a>'; }).join('') + '</div>' +
-        '</section>';
-    }).join('');
-    return header('tools') +
-      '<section class="intro"><span class="eyebrow">My tools</span>' +
-      '<h1 tabindex="-1">Your tools, all in one place.</h1>' +
-      '<p>Calculators, finders and your lists from every course. Each one opens inside its course, and your lists stay saved in this browser.</p></section>' +
       '<div class="favs">' + body + '</div>' + footer();
   }
 
@@ -568,22 +1081,21 @@
   }
 
   /* Shared pieces for lens modules (e.g. rel.js registers window.MN_LENS_VIEWS.relationships). */
-  /* While personalization is hidden, courses see an empty profile, so nothing is tailored and no profile prompts show. */
   window.MN = { header: header, footer: footer, esc: esc, toast: function (m) { toast(m); }, lenses: LENS,
-    profile: function () { return PERSONALIZE ? profile : blank(); }, options: OPT, opinion: opinion, deeper: deeper, personalize: PERSONALIZE };
+    profile: function () { return profile; }, options: OPT, opinion: opinion };
 
   /* ---------- render + routing ---------- */
   var app = document.getElementById('app');
   var sky = '<div class="sky" aria-hidden="true"><span class="a"></span><span class="b"></span><span class="c"></span><span class="d"></span></div>';
 
   /* Course files load only when someone opens that lens, so the home page stays light. */
-  var LAZY = { emotions: { css: 'rel.css', js: ['rel-data.js', 'rel.js'] }, relationships: { css: 'rel.css', js: ['rel-data.js', 'rel.js'] }, water: { css: 'water.css', js: ['water.js'] }, food: { css: 'food.css', js: ['food.js'] }, toxins: { css: 'tox.css', js: ['tox.js'] }, air: { css: 'air.css', js: ['air.js'] }, cleaning: { css: 'clean.css', js: ['clean.js'] }, 'emergency-prep': { css: 'em.css', js: ['em.js'] }, governance: { css: 'gov.css', js: ['gov.js'] } };
+  var LAZY = { relationships: { css: 'rel.css', js: ['rel-data.js', 'rel.js'] }, water: { css: 'water.css', js: ['water.js'] }, food: { css: 'food.css', js: ['food.js'] }, toxins: { css: 'tox.css', js: ['tox.js'] }, air: { css: 'air.css', js: ['air.js'] }, cleaning: { css: 'clean.css', js: ['clean.js'] }, 'emergency-prep': { css: 'em.css', js: ['em.js'] }, governance: { css: 'gov.css', js: ['gov.js'] } };
+  /* Mock-up lives in mockups/: point lazy files one folder up. */
+  Object.keys(LAZY).forEach(function (k) { LAZY[k].css = '../' + LAZY[k].css; LAZY[k].js = LAZY[k].js.map(function (f) { return '../' + f; }); });
   var lazyState = {};
   function needsLazy(r) {
     var lid = r.indexOf('lens-') === 0 ? r.slice(5).split(/[\/?]/)[0] : '';
     var m = LAZY[lid];
-    /* Emotions and Relationships share one file: once it has registered a view, don't load it again. */
-    if (m && window.MN_LENS_VIEWS && window.MN_LENS_VIEWS[lid]) lazyState[lid] = 'done';
     if (!m || lazyState[lid] === 'done' || lazyState[lid] === 'failed') return false;
     if (lazyState[lid] !== 'loading') {
       lazyState[lid] = 'loading';
@@ -610,12 +1122,10 @@
     if (needsLazy(r)) return;
     var html, title = 'Kinship';
     var sec = '';
-    if (!PERSONALIZE && (r === 'profile' || r.indexOf('profile/') === 0)) { html = viewHome(); }
-    else if (r === 'profile' || r.indexOf('profile/') === 0) { html = viewProfile(); title = 'Profile · Kinship'; sec = 's-' + r.slice(8); }
+    if (r === 'profile' || r.indexOf('profile/') === 0) { html = viewProfile(); title = 'Profile · Kinship'; sec = 's-' + r.slice(8); }
     else if (r === 'about') { html = viewAbout(); title = 'About · Kinship'; }
     else if (r === 'plans' || r.indexOf('plans/') === 0) { html = viewPlans(); title = 'Plans · Kinship'; sec = 'plan-' + r.slice(6); }
     else if (r === 'favorites') { html = viewFavorites(); title = 'Favorites · Kinship'; }
-    else if (r === 'tools') { html = viewTools(); title = 'My tools · Kinship'; }
     else if (r.indexOf('lens-') === 0 && LENS[r.slice(5).split(/[\/?]/)[0]]) {
       var lid = r.slice(5).split(/[\/?]/)[0], l = LENS[lid], custom = (window.MN_LENS_VIEWS || {})[lid];
       if (custom) { var v = custom(r.slice(5 + lid.length).replace(/^\//, ''), l); html = v.html; title = v.title; }
@@ -630,7 +1140,6 @@
       });
     }
     document.title = title;
-    requestAnimationFrame(placeArrow);
     window.scrollTo(0, 0);
     if (r) { var h = app.querySelector('h1'); if (h) h.focus({ preventScroll: true }); }
     var target = sec && document.getElementById(sec);
@@ -766,3 +1275,7 @@
 
   route();
 })();
+
+</script>
+</body>
+</html>

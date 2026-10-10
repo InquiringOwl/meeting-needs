@@ -58,7 +58,7 @@
           '<b>Voters have moved both ways.</b> Prop 47 (2014) reduced some drug and theft felonies to misdemeanors; Prop 36 (2024) raised penalties for some of them again. Prop 6 (2024), which would have ended forced labor as a punishment in the state constitution, did not pass.',
           '<b>Other strategies being tried:</b> diversion to treatment instead of jail, restorative justice circles, and crisis teams of medics and counselors instead of police for mental health calls (CAHOOTS in Eugene, Oregon, since 1989; San Francisco’s Street Crisis Response Team).']) +
         '<p class="gv-note"><b>Two questions for any rule like this:</b> What need was the person meeting? Does the rule offer another way to meet it?</p>' +
-        '<p>More in <a href="#lens-relationships/special/distress">Emotions &amp; love: People in distress</a> and <a href="#lens-relationships/special/power">Power &amp; peace</a>.</p>' +
+        '<p>More in <a href="#lens-relationships/special/distress">Relationships: People in distress</a> and <a href="#lens-relationships/special/power">Power &amp; peace</a>.</p>' +
         '<p class="gv-src">Sources: <i>City of Grants Pass v. Johnson</i>, 603 U.S. (2024); California Executive Order N-1-24 (2024); Prison Policy Initiative, <i>Mass Incarceration: The Whole Pie</i> (2024); California Department of Corrections and Rehabilitation population reports; California Secretary of State, statements of vote (2014, 2024).</p>') +
 
       sec(5, 'Stairs for change', 'Start on the first step. Each one makes the next easier.',

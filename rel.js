@@ -1,17 +1,25 @@
-/* Relationships lens: overview, one page per unit (sub-units are sections), and the tools
+/* Tier 1 Signals: two courses from one file, Emotions (inside) then Relationships (between).
+   Overviews, one page per unit (sub-units are sections), special situations, and the tools
    (feelings wheel, needs, accusation translator, need-or-strategy, Identify a need, Communicate).
-   Routes: #lens-relationships · #lens-relationships/<unit>[/<sub>]   (unit: feel | need | request | dialogue)
-   The sidebar is the skill tree, drawn vertically. Registers window.MN_LENS_VIEWS.relationships;
-   app.js supplies header/footer/esc/toast via window.MN. */
+   Routes: #lens-emotions[/<unit>[/<sub>]]   (unit: feel | need | soil)
+           #lens-relationships[/<unit>[/<sub>]]   (unit: request | dialogue | special[/<id>])
+   A unit opened under the other course's address (old links like #lens-relationships/feel) is shown in its own course
+   and the address is corrected. The sidebar shows both courses. Registers window.MN_LENS_VIEWS.emotions and .relationships;
+   app.js supplies header/footer/esc/toast/deeper via window.MN. */
 (function () {
   'use strict';
   var D = window.MN_REL;
-  var BASE = '#lens-relationships';
+  var BASES = { emotions: '#lens-emotions', relationships: '#lens-relationships' };
+  var NAMES = { emotions: 'Emotions', relationships: 'Relationships' };
+  var BASE = BASES.relationships;
   var KEY = 'meeting-needs.rel.v3';
-  var ALIAS = { 'feel/narrow': 'need/identify', 'request/observe': 'request/sharing', 'request/kindness': 'request/anticipating', 'dialogue/listening': 'dialogue/ask', 'dialogue/generous': 'dialogue/ask', 'dialogue/gratitude': 'dialogue/narrowing', finder: 'need/identify', identify: 'need/identify', dialogue: 'dialogue/communicate', conflict: 'dialogue/communicate', communicate: 'dialogue/communicate' };
+  var ALIAS = { 'feel/narrow': 'need/identify', 'request/observe': 'request/sharing', 'request/kindness': 'request/anticipating', 'dialogue/listening': 'dialogue/ask', 'dialogue/generous': 'dialogue/ask', 'dialogue/gratitude': 'dialogue/narrowing', animals: 'special/captive', 'special/animals': 'special/captive', finder: 'need/identify', identify: 'need/identify', dialogue: 'dialogue/communicate', conflict: 'dialogue/communicate', communicate: 'dialogue/communicate' };
 
   var UNIT = {}, FAMILY_OF = {}, FAUX = {}, SOURCE = {};
-  D.UNITS.forEach(function (u) { UNIT[u.id] = u; });
+  /* k: the colour key for each unit (rel.css). SEQ: every unit in reading order, across both courses. */
+  var KEYS = { feel: 'feel', need: 'need', soil: 'soil', request: 'request', dialogue: 'dialogue' };
+  var COURSE_UNITS = { emotions: [], relationships: [] }, SEQ = D.UNITS.slice();
+  D.UNITS.forEach(function (u) { UNIT[u.id] = u; u.k = KEYS[u.id] || u.id; COURSE_UNITS[u.course].push(u); });
   ['unmet', 'met'].forEach(function (m) {
     D.WHEEL[m].families.forEach(function (f) { f.mode = m; f.words.forEach(function (w) { FAMILY_OF[w] = f; }); });
   });
@@ -50,95 +58,147 @@
   function chip(action, value, label, on, cls, extra) {
     return '<button type="button" class="rel-chip' + (on ? ' on' : '') + (cls ? ' ' + cls : '') + '" data-rel="' + action + '" data-v="' + esc(value) + '"' + attrs(extra) + ' aria-pressed="' + !!on + '">' + esc(label) + '</button>';
   }
-  function href(u, sub) { return BASE + '/' + u + (sub ? '/' + sub : ''); }
+  function href(u, sub) { return (UNIT[u] ? BASES[UNIT[u].course] : BASE) + '/' + u + (sub ? '/' + sub : ''); }
   function learned(id) { return !!prog.learned[id]; }
 
-  /* ---------- sidebar: the skill tree, vertical ---------- */
-  function sidebar(cur) {
+  /* ---------- sidebar: both Signals courses, inside then outside ----------
+     The current course is open; the other is collapsed to its unit names, so the flow from inner to outer stays visible. */
+  function vtUnit(u, cur) {
+    var on = cur === u.id;
+    return '<li class="rel-vt-unit k-' + u.k + ' u-' + u.id + (on ? ' cur' : '') + (learned(u.id) ? ' done' : '') + (u.planned ? ' planned' : '') + '">' +
+      '<a class="rel-vt-head" href="' + href(u.id) + '"' + (on ? ' aria-current="page"' : '') + '>' +
+      '<span class="rel-vt-dot" aria-hidden="true">' + (learned(u.id) ? '✓' : u.num) + '</span>' +
+      '<span><b>' + esc(u.word) + '</b><small>' + esc(u.sub) + (u.planned ? ' · planned' : '') + '</small></span></a>' +
+      '<ol class="rel-vt-subs">' + u.subs.map(function (s) {
+        return '<li><a href="' + href(u.id, s.id) + '" data-spy="' + u.id + '-' + s.id + '"' + (s.isTool ? ' class="tool"' : '') + '>' + esc(s.title) +
+          (s.isTool ? ' <span class="rel-tooltag">tool</span>' : '') + (s.planned && !u.planned ? ' <span class="rel-soon">planned</span>' : '') + '</a></li>';
+      }).join('') + '</ol></li>';
+  }
+  function sidebar(cur, course) {
     var wide = window.matchMedia && window.matchMedia('(min-width: 900px)').matches;
-    var units = D.UNITS.map(function (u) {
-      var on = cur === u.id;
-      return '<li class="rel-vt-unit k-' + u.id + (on ? ' cur' : '') + (learned(u.id) ? ' done' : '') + '">' +
-        '<a class="rel-vt-head" href="' + href(u.id) + '"' + (on ? ' aria-current="page"' : '') + '>' +
-        '<span class="rel-vt-dot" aria-hidden="true">' + (learned(u.id) ? '✓' : u.num) + '</span>' +
-        '<span><b>' + esc(u.word) + '</b><small>' + esc(u.sub) + '</small></span></a>' +
-        '<ol class="rel-vt-subs">' + u.subs.map(function (s) {
-          return '<li><a href="' + href(u.id, s.id) + '" data-spy="' + u.id + '-' + s.id + '"' + (s.isTool ? ' class="tool"' : '') + '>' + esc(s.title) + (s.isTool ? ' <span class="rel-tooltag">tool</span>' : '') + '</a></li>';
-        }).join('') + '</ol></li>';
-    }).join('');
-    return '<nav class="rel-nav" aria-label="Emotions &amp; love course">' +
-      '<details class="rel-nav-wrap"' + (wide ? ' open' : '') + '><summary class="rel-nav-head"><span class="eyebrow">Course map</span><b>Emotions &amp; love</b></summary>' +
-      '<a class="rel-nav-over" href="' + BASE + '"' + (!cur ? ' aria-current="page"' : '') + '>Overview</a>' +
-      '<ol class="rel-vt">' + units + '</ol>' +
-      '<div class="rel-vt-apps' + (cur === 'special' ? ' cur' : '') + '"><a class="eyebrow" href="' + BASE + '/special">Then, special situations</a><p>' + D.APPS.map(function (a) { return '<a href="' + spHref(a.id) + '">' + esc(a.name) + '</a>'; }).join(' · ') + '</p><span class="rel-later">In progress</span></div>' +
+    function block(c, label, extra) {
+      var open = c === course;
+      return '<div class="rel-course' + (open ? '' : ' collapsed') + '"><a class="rel-course-head" href="' + BASES[c] + '"' + (open && !cur ? ' aria-current="page"' : '') + '><b>' + NAMES[c] + '</b><span class="eyebrow">' + label + '</span></a>' +
+        '<ol class="rel-vt">' + COURSE_UNITS[c].map(function (u) { return vtUnit(u, cur); }).join('') + (extra || '') + '</ol></div>';
+    }
+    var special = '<li class="rel-vt-unit k-apps u-special' + (cur === 'special' ? ' cur' : '') + '"><a class="rel-vt-head" href="' + BASE + '/special"' + (cur === 'special' ? ' aria-current="page"' : '') + '>' +
+      '<span class="rel-vt-dot" aria-hidden="true">3</span><span><b>Special situations</b><small>the people, animals and places in your life</small></span></a>' +
+      '<ol class="rel-vt-subs">' + D.APPS.map(function (a) { return '<li><a href="' + spHref(a.id) + '">' + esc(a.name) + '</a></li>'; }).join('') + '</ol></li>';
+    return '<nav class="rel-nav" aria-label="Signals courses: Emotions and Relationships">' +
+      '<details class="rel-nav-wrap"' + (wide ? ' open' : '') + '><summary class="rel-nav-head"><span class="eyebrow">Tier 1 · Signals</span><b>Inside, then outside</b></summary>' +
+      block('emotions', 'Inside') +
+      '<p class="rel-bridge" aria-hidden="true">then, connect</p>' +
+      block('relationships', 'Between', special) +
       '</details></nav>';
   }
-  function layout(cur, main) {
-    return mn().header('home') + '<div class="rel-layout">' + sidebar(cur) + '<main class="rel-main">' +
+  function layout(cur, main, course) {
+    return mn().header('home') + '<div class="rel-layout">' + sidebar(cur, course) + '<main class="rel-main">' +
       '<div class="rel-topbar"><button type="button" class="rel-back" data-rel="back">← Back</button></div>' + main + '</main></div>' + mn().footer();
   }
 
-  /* ---------- overview: plant roots up ----------
-     Top to bottom: plant roots (inner life: units 1–2 and the inner tool) → the horizon → the visible plant
-     (people and the physical world: units 3–4 and Communicate) → special situations. */
-  function viewOverview() {
-    function card(u) {
-      return '<div class="rel-tu k-' + u.id + (learned(u.id) ? ' done' : '') + '">' +
-        '<span class="rel-tu-n" aria-hidden="true">' + (learned(u.id) ? '✓' : u.num) + '</span><div>' +
-        '<a class="rel-tu-head" href="' + href(u.id) + '"><b>' + esc(u.word) + '</b><small>' + esc(u.sub) + '</small></a>' +
-        '<ol>' + u.subs.filter(function (s) { return !s.isTool; }).map(function (s) { return '<li><a href="' + href(u.id, s.id) + '">' + esc(s.title) + '</a></li>'; }).join('') + '</ol></div></div>';
-    }
-    function tool(u, sub, eyebrow, name, text) {
-      return '<a class="rel-tt k-' + u + '" href="' + href(u, sub) + '"><span class="eyebrow">' + eyebrow + '</span><b>' + name + '</b><span>' + text + '</span><i>Open →</i></a>';
-    }
+  /* ---------- overview pieces ---------- */
+  function card(u) {
+    return '<div class="rel-tu k-' + u.k + (learned(u.id) ? ' done' : '') + (u.planned ? ' planned' : '') + '">' +
+      '<span class="rel-tu-n" aria-hidden="true">' + (learned(u.id) ? '✓' : u.num) + '</span><div>' +
+      '<a class="rel-tu-head" href="' + href(u.id) + '"><b>' + esc(u.word) + '</b><small>' + esc(u.sub) + '</small>' + (u.planned ? ' <span class="rel-soon">planned</span>' : '') + '</a>' +
+      '<ol>' + u.subs.filter(function (s) { return !s.isTool; }).map(function (s) {
+        return '<li><a href="' + href(u.id, s.id) + '"' + (s.planned ? ' class="planned"' : '') + '>' + esc(s.title) + (s.planned ? '<span class="sr-only"> (planned)</span>' : '') + '</a></li>';
+      }).join('') + '</ol></div></div>';
+  }
+  function tool(u, sub, eyebrow, name, text) {
+    return '<a class="rel-tt k-' + u + '" href="' + href(u, sub) + '"><span class="eyebrow">' + eyebrow + '</span><b>' + name + '</b><span>' + text + '</span><i>Open →</i></a>';
+  }
+  var SPROUT = '<svg class="rel-sprout" width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><path d="M17 33V15" stroke="#4E8A3E" stroke-width="2.2" stroke-linecap="round"/><path d="M17 19c-1-6-6-9-12-8 1 6 6 9 12 8z" fill="#8CC07A" stroke="#4E8A3E" stroke-width="1.6"/><path d="M17 15c1-7 6-11 13-10-1 7-6 11-13 10z" fill="#A9D396" stroke="#4E8A3E" stroke-width="1.6"/></svg>';
+  function coursePager(prevH, prevL, nextH, nextL) {
+    return '<nav class="rel-pager" aria-label="Courses">' +
+      (prevH ? '<a class="rel-pg prev" href="' + prevH + '"><small>← Previous course</small><b>' + prevL + '</b></a>' : '<a class="rel-pg prev" href="#"><small>← Back to</small><b>Education</b></a>') +
+      (nextH ? '<a class="rel-pg next" href="' + nextH + '"><small>Next course →</small><b>' + nextL + '</b></a>' : '<a class="rel-pg next" href="#lens-water"><small>Next →</small><b>Tier 2 · Water</b></a>') + '</nav>';
+  }
+  var NVC = { name: 'Marshall B. Rosenberg & the Center for Nonviolent Communication', who: 'Psychologist · nonprofit', work: '<i>Nonviolent Communication: A Language of Life</i>, and the free feelings and needs inventories.', url: 'https://www.cnvc.org', link: 'cnvc.org' };
+  function withShaped(p, shaped) { var o = {}; Object.keys(p).forEach(function (k) { o[k] = p[k]; }); o.shaped = shaped; return o; }
+
+  /* ---------- Emotions overview: plants, roots, soil ----------
+     Going down is going deeper, so the units read 1 → 3 top to bottom: feelings are the plants that show,
+     needs are the roots, and the soil is who you are underneath. */
+  function viewEmotions() {
+    var U = COURSE_UNITS.emotions;
+    return {
+      title: 'Emotions · Kinship',
+      html: layout(null,
+        '<section class="rel-hero"><span class="eyebrow">Tier 1 · Signals · Course 1 of 2</span><h1 tabindex="-1">Emotions</h1>' +
+        '<p class="lede">Your rich inner world. Feelings are the plants that show: anger, love and pain are all asking to be tended. Beneath them are the roots, what you need, and beneath those the soil: who you are, and what’s going on down there.</p></section>' +
+        '<section class="rel-depth" aria-label="Course map: plants, roots and soil">' +
+          '<div class="rel-plants">' + SPROUT + '<div class="rel-plants-in"><p class="rel-layer"><b>Plants · what shows</b><span>Anger, love, pain: signals asking to be tended. Others can see them too.</span></p>' + card(U[0]) + '</div></div>' +
+          '<div class="rel-ground"><div class="rel-gauge" aria-hidden="true"><span>Deeper</span></div>' +
+            '<p class="rel-layer"><b>Roots · what you need</b><span>Universal, beneath every strategy.</span></p>' + card(U[1]) +
+            tool('need', 'identify', 'Inner tool', 'Identify a need', 'From a big feeling to the word that fits and the need underneath.') +
+            '<p class="rel-layer"><b>Soil · who you are</b><span>What’s going on down there.</span></p>' + card(U[2]) +
+          '</div></section>' +
+        mn().deeper('People whose work shaped this course, and where to go for more.', [
+          withShaped(NVC, 'Feelings as signals, universal needs, needs vs. strategies'),
+          { name: 'Howard Schubiner, MD', who: 'Physician', work: '<i>Unlearn Your Pain</i>: how the brain can learn to send pain signals, and how they can be unlearned.', shaped: 'Pain is a signal too, and Mind & body (both planned)' }
+        ]) +
+        coursePager(null, null, BASES.relationships, 'Relationships'), 'emotions')
+    };
+  }
+
+  /* ---------- Relationships overview: between gardens, then special situations ---------- */
+  function viewRelationships() {
+    var U = COURSE_UNITS.relationships;
     var apps = D.APPS.map(function (a) {
       return '<li class="is-open"><a href="' + spHref(a.id) + '"><b>' + esc(a.name) + '</b><span>' + esc(a.short) + '</span><small>In progress · open →</small></a></li>';
     }).join('');
     return {
-      title: 'Emotions & love · Kinship',
+      title: 'Relationships · Kinship',
       html: layout(null,
-        '<section class="rel-hero"><span class="eyebrow">Tier 1 · Signals · Course</span><h1 tabindex="-1">Emotions &amp; love</h1>' +
-        '<p class="lede">Every conflict is two people trying to meet their universal needs through ineffective strategies. Start with the plant roots, what’s alive inside you, then grow up through the horizon to the people, animals and world around you.</p></section>' +
-        '<section class="rel-tree" aria-label="Course map: plant roots, horizon and visible plant">' +
-          '<div class="rel-side ground"><p class="rel-zone"><b>Plant roots · underground</b><span>Inner life: nobody else has to see it.</span></p>' +
-            card(UNIT.feel) + card(UNIT.need) +
-            tool('need', 'identify', 'Inner tool', 'Identify a need', 'From a big feeling to the word that fits and the need underneath.') + '</div>' +
-          '<div class="rel-horizon"><p><b>The horizon</b><span>↑ Inside: Feelings and needs · ↓ Outside: People and the physical world</span></p></div>' +
-          '<div class="rel-side above">' + card(UNIT.request) + card(UNIT.dialogue) +
-            tool('dialogue', 'communicate', 'Between people', 'Communicate', 'Hear each other’s needs and find a strategy that meets you both.') +
-            '<p class="rel-zone"><b>Visible plant · above ground</b><span>Where your needs meet people, animals and the physical world.</span></p></div>' +
+        '<section class="rel-hero"><span class="eyebrow">Tier 1 · Signals · Course 2 of 2</span><h1 tabindex="-1">Relationships</h1>' +
+        '<p class="lede">Connecting inner worlds. Every conflict is two people trying to meet their universal needs through strategies that aren’t working yet. Once you can hear your own needs, say them kindly and keep everyone’s on the table.</p></section>' +
+        '<a class="rel-rooted" href="' + BASES.emotions + '">' + SPROUT + '<span><b>Rooted in Emotions</b><span>Feel and Identify the need come first: what’s showing in you, and what you need.</span></span><i>← Course 1</i></a>' +
+        '<section class="rel-out" aria-label="Course map">' +
+          '<p class="rel-zone"><b>Between gardens</b><span>Others see your plants, and you see theirs.</span></p>' +
+          card(U[0]) + card(U[1]) +
+          tool('dialogue', 'communicate', 'Between people', 'Communicate', 'Hear each other’s needs and find a strategy that meets you both.') +
         '</section>' +
-        '<section class="rel-apps" aria-labelledby="rel-apps-h"><div class="rel-apps-head"><span class="rel-tu-n">5</span><div><h2 id="rel-apps-h"><a href="' + BASE + '/special">Special situations</a></h2><p>The same plant roots and visible plant, applied to the particular people and places in your life.</p></div></div>' +
+        '<section class="rel-apps" aria-labelledby="rel-apps-h"><div class="rel-apps-head"><span class="rel-tu-n">3</span><div><h2 id="rel-apps-h"><a href="' + BASE + '/special">Special situations</a></h2><p>Your inner world and theirs, applied to the particular people, animals and places in your life.</p></div></div>' +
         '<ul>' + apps + '</ul></section>' +
-        '<aside class="rel-funfact"><span class="eyebrow">Nonviolence theory origins</span><p>The idea that feelings point to universal needs, and that conflicts live between strategies, grows out of Marshall B. Rosenberg’s Nonviolent Communication. The feelings and needs words here are adapted from the Center for Nonviolent Communication’s inventories (<a href="https://www.cnvc.org" target="_blank" rel="noopener">cnvc.org</a>). Thank you!</p></aside>')
+        mn().deeper('People whose work shaped this course, and where to go for more.', [
+          withShaped(NVC, 'Requests, dialogue and the Communicate tool'),
+          { name: 'Michaeleen Doucleff', who: 'Journalist · author', work: '<i>Hunt, Gather, Parent</i> (2021), including the TEAM approach: togetherness, encouragement, autonomy, minimal interference.', shaped: 'Children' },
+          { name: 'Barbara Rogoff', who: 'Researcher', work: 'Research on how children learn by observing and pitching in.', shaped: 'Children' }
+        ]) +
+        coursePager(BASES.emotions, 'Emotions', null, null), 'relationships')
     };
   }
 
-  /* ---------- unit page: every sub-unit on one page ---------- */
+  /* ---------- unit page: every sub-unit on one page (planned ones as short dashed sections) ---------- */
   function viewUnit(u, subId) {
-    var i = D.UNITS.indexOf(u), prev = D.UNITS[i - 1], next = D.UNITS[i + 1];
+    var i = SEQ.indexOf(u), prev = SEQ[i - 1], next = SEQ[i + 1], total = COURSE_UNITS[u.course].length;
     var secs = u.subs.map(function (s, j) {
-      var h = '<section class="rel-sec' + (s.isTool ? ' is-tool' : '') + '" id="sec-' + u.id + '-' + s.id + '" data-sec="' + u.id + '-' + s.id + '">' +
-        '<div class="rel-sec-head"><span class="rel-sec-n">' + u.num + '.' + (j + 1) + '</span><div><h2>' + esc(s.title) + (s.isTool ? ' <span class="rel-tooltag">tool</span>' : '') + '</h2><p>' + esc(s.short) + '</p></div></div>' +
-        '<ul class="rel-keys">' + s.key.map(function (k) { return '<li>' + md(k) + '</li>'; }).join('') + '</ul>';
+      var h = '<section class="rel-sec' + (s.isTool ? ' is-tool' : '') + (s.planned ? ' is-planned' : '') + '" id="sec-' + u.id + '-' + s.id + '" data-sec="' + u.id + '-' + s.id + '">' +
+        '<div class="rel-sec-head"><span class="rel-sec-n">' + u.num + '.' + (j + 1) + '</span><div><h2>' + esc(s.title) + (s.isTool ? ' <span class="rel-tooltag">tool</span>' : '') + (s.planned ? ' <span class="rel-soon">planned</span>' : '') + '</h2><p>' + esc(s.short) + '</p></div></div>';
+      if (s.key) h += '<ul class="rel-keys">' + s.key.map(function (k) { return '<li>' + md(k) + '</li>'; }).join('') + '</ul>';
       if (s.ex) h += '<div class="rel-ex">' + s.ex.map(function (e) { return '<div><p class="rel-say">' + md(e[0]) + '</p><p>' + md(e[1]) + '</p></div>'; }).join('') + '</div>';
       if (s.tool) h += '<div class="rel-tool" data-tool="' + s.tool + '">' + TOOLS[s.tool]() + '</div>';
       if (s.remember) h += '<p class="rel-remember"><span class="eyebrow">Remember</span>' + md(s.remember) + '</p>';
       return h + '</section>';
     }).join('');
-    var html = '<article class="rel-unitpage k-' + u.id + '">' +
-      '<header class="rel-unit-hero"><span class="eyebrow">Unit ' + u.num + ' of 4</span><h1 tabindex="-1">' + esc(u.word) + '</h1><p class="rel-unit-sub">' + esc(u.sub) + '</p><p class="lede">' + esc(u.intro) + '</p>' +
+    function pg(x, dir) {
+      if (!x) return dir === 'prev'
+        ? '<a class="rel-pg prev" href="' + BASES[u.course] + '"><small>← Back to</small><b>' + NAMES[u.course] + '</b></a>'
+        : '<a class="rel-pg next" href="' + BASE + '/special"><small>Next →</small><b>Special situations</b></a>';
+      var label = (x.course !== u.course ? NAMES[x.course] + ' · ' : '') + x.num + ' · ' + esc(x.word);
+      return '<a class="rel-pg ' + dir + ' k-' + x.k + '" href="' + href(x.id) + '"><small>' + (dir === 'prev' ? '← Previous' : 'Next →') + '</small><b>' + label + '</b></a>';
+    }
+    var html = '<article class="rel-unitpage k-' + u.k + '">' +
+      '<header class="rel-unit-hero"><span class="eyebrow">' + NAMES[u.course] + ' · Unit ' + u.num + ' of ' + total + (u.planned ? ' · planned' : '') + '</span><h1 tabindex="-1">' + esc(u.word) + '</h1><p class="rel-unit-sub">' + esc(u.sub) + '</p><p class="lede">' + esc(u.intro) + '</p>' +
       '<ol class="rel-jumps">' + u.subs.map(function (s, j) { return '<li><a href="' + href(u.id, s.id) + '"><span>' + u.num + '.' + (j + 1) + '</span>' + esc(s.title) + '</a></li>'; }).join('') + '</ol></header>' +
       secs +
-      '<div class="rel-done"><button type="button" class="btn' + (learned(u.id) ? ' ghost' : '') + '" data-rel="learn" data-v="' + u.id + '">' + (learned(u.id) ? '✓ Unit learned' : 'Mark this unit as learned') + '</button></div>' +
+      (u.planned ? '' : '<div class="rel-done"><button type="button" class="btn' + (learned(u.id) ? ' ghost' : '') + '" data-rel="learn" data-v="' + u.id + '" aria-pressed="' + learned(u.id) + '">' + (learned(u.id) ? '✓ Unit learned' : 'Mark this unit as learned') + '</button></div>') +
       '</article>' +
-      '<nav class="rel-pager" aria-label="Units">' +
-      (prev ? '<a class="rel-pg prev k-' + prev.id + '" href="' + href(prev.id) + '"><small>← Previous</small><b>' + prev.num + ' · ' + esc(prev.word) + '</b></a>' : '<a class="rel-pg prev" href="' + BASE + '"><small>← Back to</small><b>Overview</b></a>') +
-      (next ? '<a class="rel-pg next k-' + next.id + '" href="' + href(next.id) + '"><small>Next →</small><b>' + next.num + ' · ' + esc(next.word) + '</b></a>' : '<a class="rel-pg next" href="' + BASE + '/special"><small>Next →</small><b>Special situations</b></a>') +
-      '</nav>';
+      '<nav class="rel-pager" aria-label="Units">' + pg(prev, 'prev') + pg(next, 'next') + '</nav>';
     if (subId) setTimeout(function () { var el = document.getElementById('sec-' + u.id + '-' + subId); if (el) el.scrollIntoView({ block: 'start' }); }, 0);
     setTimeout(spy, 0);
-    return { title: u.word + ' · Emotions & love · Kinship', html: layout(u.id, html) };
+    return { title: u.word + ' · ' + NAMES[u.course] + ' · Kinship', html: layout(u.id, html, u.course) };
   }
 
   /* ---------- special situations: one page, one accordion each (Animals first) ----------
@@ -155,14 +215,14 @@
       ['Poisons', 'wool, leather, down and silk kept in use secondhand, instead of new.', '#lens-toxins/exposures/healthy', 'Poisons → What healthy looks like'],
       ['Poisons', 'poison-free ways to share a home with ants, mice and other wild neighbors.', '#lens-toxins/pesticides/yard', 'Poisons → Yard, home and companions']
     ];
-    return '<section class="rel-sec" id="sec-animals-3"><div class="rel-sec-head"><span class="rel-sec-n">A.3</span><div><h2>Across Kinship</h2><p>Where peace with animals shows up in the other lenses.</p></div></div>' +
+    return '<section class="rel-sec" id="sec-captive-3"><div class="rel-sec-head"><span class="rel-sec-n">A.3</span><div><h2>Across Kinship</h2><p>Where peace with animals shows up in the other lenses.</p></div></div>' +
       '<ul class="rel-keys">' + items.map(function (x) { return '<li><strong>' + x[0] + ':</strong> ' + esc(x[1]) + ' <a href="' + x[2] + '">' + esc(x[3]) + '</a></li>'; }).join('') + '</ul></section>' +
       (mn().opinion ? mn().opinion('<p>Modern commodification of animal bodies as products is something I never trust enough to recommend, especially new.</p>') : '');
   }
   function specials() {
     return {
-      animals: {
-      id: 'animals', letter: 'A', name: 'Animals', sub: 'Someone, not something',
+      captive: {
+      id: 'captive', letter: 'A', name: 'Captive animals', sub: 'Animals humans keep for use, and someone, not something',
       lede: 'Animals share our homes, our neighborhoods, our water and our food systems. They have feelings and needs, and they tell us about them with their bodies. The same four steps (notice, feel, find the need, ask) work here, starting with how we talk about them.',
       secs: [
         ['Someone, not something', 'Respect starts in language.', [
@@ -182,7 +242,7 @@
       ],
       intro: '<p class="rel-sp-lead">When Kinship says meeting everyone’s needs, everyone includes animals. They’re sentient, they feel, and they share the same universal needs we do: food, water, safety, rest, play, company and choice. So every strategy gets the same question: does it meet the animals’ needs too?</p>',
       after: animalsAfter(),
-      note: 'Family animals and Wild animals each have their own section. The full Animals unit (farmed animals and sanctuaries) is in progress.',
+      note: 'Family animals and Wild animals each have their own section. The full Captive animals unit (farms, labs, shows and sanctuaries) is in progress.',
       related: ['#lens-water/sources/take', 'Water: farm water']
     },
       family: {
@@ -320,6 +380,15 @@
             '**Help in a concentrated place** if one-on-one feels like too much: soup kitchens, community fridges, shower and laundry days, outreach walks. Groups share the load and come with structure.',
             'Trust your body. Distress isn’t danger, and you can still leave any moment that doesn’t feel safe.'
           ]],
+          ['Give, then build together', 'Meet the urgent need generously, then share the skills and systems that keep it met.', [
+            '**First, give generously.** When a need is urgent (food, water, warmth, a safe night), meeting it comes first, with no tests and no conditions. A hungry person is fed, then everything else.',
+            '**Then, stand side by side.** Once the urgent need is met, the next gift is equality: the person as a partner with skills, ideas and needs of their own, not a project. Ask what they want and what they already have.',
+            '**Name what’s met and what isn’t.** Most people have many needs met and a few unmet. Saying them out loud (“I have work, a phone and friends; I don’t have a place to sleep”) shows exactly where help goes furthest.',
+            '**Skills and systems, not only stuff.** The gifts that last let someone meet a need themselves: a skill, a tool, an introduction, or a shared system like a co-op, a tool library or a rotating fund.',
+            '**Together, big needs get small.** A group of people can build a house together for the one person who has everything set except shelter. What no one could give alone becomes a few weekends of many hands, like an old barn raising.',
+            'Getting back on one’s feet happens at their pace and by their choice. Help with strings, or help that keeps someone dependent, tends to meet the giver’s needs more than theirs.'
+          ], '<p class="rel-q">Related: <a href="' + spHref('projects') + '">Projects</a> (a shared goal, roles by willingness) · <a href="' + spHref('coops') + '">Cooperatives</a></p>' +
+            tryIt('Pick one person you’re helping. List the needs that are already met, then the one or two that aren’t. Who else could help with those?')],
           ['Who can meet these needs', 'Learn the local web of help.', [
             '**211** (call or text) knows local shelters, meals, showers, safe parking and benefits.',
             '**988** (call or text) is the crisis line for anyone in emotional distress, including calling on someone else’s behalf. Many California counties also run mobile crisis teams, which don’t send police to a mental-health crisis. For a medical emergency, 911.',
@@ -439,14 +508,14 @@
     if (!S[openId]) openId = '';
     var html = '<article class="rel-unitpage k-apps">' +
       '<header class="rel-unit-hero"><span class="eyebrow">Special situations · In progress</span><h1 tabindex="-1">Special situations</h1>' +
-      '<p class="rel-unit-sub">The same roots and plant, applied to the particular people and beings in your life</p>' +
+      '<p class="rel-unit-sub">Relationships · Unit 3 of 3: your inner world and theirs, applied to the particular people and beings in your life</p>' +
       '<p class="lede">Each of these is in progress. They all start from the same place: meeting everyone’s needs, and everyone means everyone, animals included. Animals are sentient, they feel, and they share the same universal needs. Open one to see where it’s headed.</p></header>' +
       '<div class="rel-sps">' + D.APPS.map(function (a) { return S[a.id] ? spBlock(S[a.id], openId ? a.id === openId : a.id === first) : ''; }).join('') + '</div>' +
       '</article>' +
-      '<nav class="rel-pager" aria-label="Units"><a class="rel-pg prev" href="' + BASE + '"><small>← Back to</small><b>Overview</b></a><a class="rel-pg next" href="' + href('dialogue') + '"><small>Back to →</small><b>4 · Dialogue</b></a></nav>';
+      '<nav class="rel-pager" aria-label="Units"><a class="rel-pg prev k-dialogue" href="' + href('dialogue') + '"><small>← Previous</small><b>2 · Dialogue</b></a><a class="rel-pg next" href="' + BASE + '"><small>Back to →</small><b>Relationships</b></a></nav>';
     if (openId) setTimeout(function () { var el = document.getElementById('sp-' + openId); if (el) el.scrollIntoView({ block: 'start' }); }, 0);
     var o = openId && S[openId];
-    return { title: (o ? o.name + ' · ' : '') + 'Special situations · Emotions & love · Kinship', html: layout('special', html) };
+    return { title: (o ? o.name + ' · ' : '') + 'Special situations · Relationships · Kinship', html: layout('special', html, 'relationships') };
   }
 
   /* Highlight the sub-unit you're reading in the sidebar. */
@@ -680,7 +749,7 @@
 
   /* ---------- router hook ---------- */
   window.MN_LENS_VIEWS = window.MN_LENS_VIEWS || {};
-  window.MN_LENS_VIEWS.relationships = function (sub) {
+  function view(course, sub) {
     var parts = (sub || '').split('?'), path = parts[0], qs = {};
     if (ALIAS[path]) path = ALIAS[path];
     (parts[1] || '').split('&').forEach(function (kv) { var p = kv.split('='); if (p[0]) qs[p[0]] = decodeURIComponent(p[1] || ''); });
@@ -691,13 +760,22 @@
       fw.mode = fam.mode; fw.fam = fam.id;
       var fs = D.WHEEL[fam.mode].families, st = 360 / fs.length; fw.rot = -(fs.indexOf(fam) * st + st / 2);
     }
-    if (UNIT[seg[0]]) return viewUnit(UNIT[seg[0]], seg[1]);
+    /* Old links (#lens-relationships/feel, #lens-emotions/special…) open in the right course, and the address is corrected. */
+    var u = UNIT[seg[0]], isSp = seg[0] === 'special' || seg[0] === 'pets' || seg[0] === 'wild' || D.APPS.some(function (a) { return a.id === seg[0]; });
+    var home = u ? u.course : (isSp ? 'relationships' : course);
+    if (home !== course || path !== (sub || '').split('?')[0]) {
+      var fixed = BASES[home] + (path ? '/' + path : '') + (parts[1] ? '?' + parts[1] : '');
+      try { history.replaceState(null, '', fixed); } catch (e) { /* file:// or blocked */ }
+    }
+    if (u) return viewUnit(u, seg[1]);
     if (seg[0] === 'special') return viewSpecial(seg[1]);
     if (seg[0] === 'pets') return viewSpecial('family');
     if (seg[0] === 'wild') return viewSpecial('wild');
-    if (D.APPS.some(function (a) { return a.id === seg[0]; })) return viewSpecial(seg[0]);
-    return viewOverview();
-  };
+    if (isSp) return viewSpecial(seg[0]);
+    return home === 'emotions' ? viewEmotions() : viewRelationships();
+  }
+  window.MN_LENS_VIEWS.emotions = function (sub) { return view('emotions', sub); };
+  window.MN_LENS_VIEWS.relationships = function (sub) { return view('relationships', sub); };
 
   /* ---------- events ---------- */
   document.addEventListener('click', function (e) {
@@ -751,8 +829,9 @@
         if (prog.learned[v]) delete prog.learned[v]; else prog.learned[v] = Date.now();
         saveProgress();
         b.className = 'btn' + (prog.learned[v] ? ' ghost' : '');
+        b.setAttribute('aria-pressed', String(!!prog.learned[v]));
         b.textContent = prog.learned[v] ? '✓ Unit learned' : 'Mark this unit as learned';
-        var li = document.querySelector('.rel-vt-unit.k-' + v);
+        var li = document.querySelector('.rel-vt-unit.u-' + v);
         if (li) { li.classList.toggle('done', !!prog.learned[v]); li.querySelector('.rel-vt-dot').textContent = prog.learned[v] ? '✓' : UNIT[v].num; }
         mn().toast(prog.learned[v] ? 'Marked as learned' : 'Unmarked');
         return;

@@ -129,7 +129,7 @@
             fix({ rungs: [["r1", "Water"]], modes: [["together"]], cost: "Free → $", c: 1,
               steps: [["Free · today", "Give a child their own cloth and a spray bottle of plain water, labeled with their name."], ["Free", "One cleaning time a week where everyone cleans together, with music."], ["$", "A child-size broom and dustpan (about $15) that really works."]],
               add: ["A kid’s own water spray bottle and cloth", ["Weekly cleaning time together, with music", "Add cleaning time"]] }) +
-            links("<a href=\"#lens-relationships/special/children\">Emotions &amp; love → Children</a>") +
+            links("<a href=\"#lens-relationships/special/children\">Relationships → Children</a>") +
             src("Michaeleen Doucleff, <i>Hunt, Gather, Parent</i> (2021); Rogoff, B., <i>Learning by Observing and Pitching In</i> (Advances in Child Development and Behavior, 2014)."); } }
         ] },
 
@@ -238,7 +238,7 @@
             fix({ rungs: [["r2", "Soap"]], modes: [["now"], ["once"]], cost: "Free", c: 0,
               steps: [["Free · now", "Soapy wipe along the whole trail, and lids on anything sweet."], ["Free", "Companion food bowls picked up between meals, or set in a shallow dish of water."], ["Free · once they’ve gone", "Seal the entry gap."]],
               add: ["Ants: wipe the trail, lid the sweet things, seal the gap"] }) +
-            links("<a href=\"#lens-relationships/special/animals\">Emotions &amp; love → Animals</a> · <a href=\"#lens-food/store/pantry\">Food → The pantry</a>") +
+            links("<a href=\"#lens-relationships/special/captive\">Relationships → Captive animals</a> · <a href=\"#lens-food/store/pantry\">Food → The pantry</a>") +
             src("University of California IPM, <i>Pest Notes: Ants</i> (Pub. 7411) and <i>Fruit Flies</i>."); } }
         ] },
 
@@ -279,7 +279,7 @@
             fix({ rungs: [["r1", "Water"], ["r4", "Vinegar"]], modes: [["now"]], cost: "Free → $", c: 1,
               steps: [["Free · now", "Blot, flush cold, blot again."], ["$", "An unscented enzyme cleaner (about $10–$15) on the shelf."], ["Free", "Ask what changed: the box, the door, the routine, their body."]],
               add: ["Unscented enzyme cleaner for animal accidents"] }) +
-            links("<a href=\"#lens-relationships/special/family\">Emotions &amp; love → Family animals</a>") +
+            links("<a href=\"#lens-relationships/special/family\">Relationships → Family animals</a>") +
             src("ASPCA, <i>Cat House Soiling</i> and <i>Urine Marking in Dogs</i>; Cornell Feline Health Center, house soiling."); } },
           { id: "rust", short: "Rust, ink, wax", title: "Rust, ink and wax", html: function () { return "<div class=\"cl-does\">\n<div><b>Rust <i>Acid</i></b><p>Lemon juice and salt on the spot, an hour in the sun, rinse. Not on silk or wool.</p></div>\n<div><b>Ballpoint ink <i>Alcohol</i></b><p>Dab with rubbing alcohol on a cloth underneath, blotting from the back. Ventilate; keep it away from flames.</p></div>\n<div><b>Candle wax <i>Cold, then warm</i></b><p>Freeze or ice it and pick it off. Then a paper bag over the rest and a warm iron to lift it into the paper.</p></div>\n<div><b>Gum and sticker glue <i>Oil</i></b><p>A little cooking oil loosens it; then dish soap to lift the oil (4.4).</p></div>\n</div>" +
             fix({ rungs: [["r4", "Acid"]], modes: [["now"]], cost: "Free", c: 0,
@@ -506,7 +506,7 @@
     var c = prof().counter || '';
     tb.querySelectorAll('tr[data-c]').forEach(function (tr) { tr.classList.toggle('mine', tr.getAttribute('data-c') === c); });
     var note = tb.parentNode.parentNode.querySelector('.cl-counter-note');
-    if (note) note.innerHTML = c && c !== 'Not sure' ? 'Your counters: <b>' + esc(c) + '</b>. That row is highlighted.' : 'Add your counters in <a href="#profile/cleaning">Profile → Cleaning</a> and that row lights up.';
+    if (note) note.innerHTML = c && c !== 'Not sure' ? 'Your counters: <b>' + esc(c) + '</b>. That row is highlighted.' : (window.MN && window.MN.personalize ? 'Add your counters in <a href="#profile/cleaning">Profile → Cleaning</a> and that row lights up.' : '');
   }
   function runTools() { runNeeds(); runFinder(); markCounter(); syncUi(); }
 

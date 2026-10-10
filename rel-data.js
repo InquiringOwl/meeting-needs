@@ -1,7 +1,7 @@
 /* Relationships lens: course data (skill tree, feelings, needs, translator, examples).
    Built on Marshall B. Rosenberg's Nonviolent Communication. Feelings and needs lists
    are adapted from the Center for Nonviolent Communication's inventories (cnvc.org).
-   Four units (feel, need, request, dialogue), one page each; sub-units are sections on that page. */
+   Emotions: feel, need, soil (planned). Relationships: request, dialogue, then special situations. */
 window.MN_REL = (function () {
 
   /* ---------- Needs (universal: no person, place, object or time inside) ---------- */
@@ -107,9 +107,10 @@ window.MN_REL = (function () {
     thanks: ['relieved', 'grateful']
   };
 
-  /* ---------- The course: four units, one page each; sub-units are sections on that page ---------- */
+  /* ---------- Two courses (Emotions, then Relationships), one page per unit; sub-units are sections on that page.
+     course: which lens the unit lives in. planned: shown dashed, with a short description, until it's written. ---------- */
   var UNITS = [
-    { id: 'feel', num: 1, word: 'Feel', sub: 'what’s alive inside', intro: 'Feelings are messages about needs. Learn to read them without blame, and to name them precisely.',
+    { id: 'feel', course: 'emotions', num: 1, word: 'Feel', sub: 'the plants that show', intro: 'Feelings are messages about needs. Learn to read them without blame, and to name them precisely.',
       subs: [
         { id: 'signals', title: 'Emotions are signals', short: 'Every feeling points to a need, met or not.',
           key: ['A feeling is a messenger. Pleasant ones say a need is met; painful ones say a need is crying out.',
@@ -121,9 +122,10 @@ window.MN_REL = (function () {
           key: ['Some words sound like feelings but tell a story about someone else: *abandoned* means “you left me.”',
             'They point the finger outward, so the other person defends instead of listening, and you lose sight of your own need.',
             'The pain is real. Translate it to the feeling and need underneath.'],
-          tool: 'translator', remember: 'A hidden “you did it”? Translate to feeling + need.' }
+          tool: 'translator', remember: 'A hidden “you did it”? Translate to feeling + need.' },
+        { id: 'pain', title: 'Pain is a signal too', short: 'Tissue damage, or emotional pain the body is sending? Either way it’s real.', planned: true }
       ] },
-    { id: 'need', num: 2, word: 'Identify the need', sub: 'the universal need underneath', intro: 'Underneath every feeling is a universal need. Find it, and you have more than one way to meet it.',
+    { id: 'need', course: 'emotions', num: 2, word: 'Identify the need', sub: 'the roots beneath', intro: 'Underneath every feeling is a universal need. Find it, and you have more than one way to meet it.',
       subs: [
         { id: 'universal', title: 'Universal needs', short: 'Food, safety, rest, freedom, belonging…',
           key: ['Every person shares the same needs: food, water, clean air, rest, safety, belonging, freedom, meaning, play.',
@@ -139,9 +141,18 @@ window.MN_REL = (function () {
           key: ['Start broad (sad, mad, scared) and narrow to the word that fits. “Mad” might be *frustrated* (needs ease), *resentful* (needs fairness) or *irritated* (needs rest).',
             'Ask where it’s coming from: your body, something someone did, something of yours, or too much at once.',
             'Land on the need, and let it matter before you solve anything.'],
-          tool: 'finder', remember: 'Feeling → source → need.' }
+          tool: 'finder', remember: 'Feeling → source → need.' },
+        { id: 'beneath', title: 'Yes, and: beneath the noun', short: 'A job or money is a strategy. Yes, it matters, and beneath it sit needs like safety, choice and care for the people you love.', planned: true }
       ] },
-    { id: 'request', num: 3, word: 'Request', sub: 'ask, don’t demand', intro: 'Once you know your need, say it out loud: kindly, clearly, and in a way the other person can say yes or no to.',
+    { id: 'soil', course: 'emotions', num: 3, word: 'Who you are', sub: 'what’s going on down there', planned: true,
+      intro: 'The soil beneath the roots: the you who chooses, the body that remembers, and the tools your mind brings.',
+      subs: [
+        { id: 'chooser', title: 'The one who chooses', short: 'Present awareness makes choices, never as blame: “I have to go to work” becomes “I choose to, because I want a home and food.”', planned: true },
+        { id: 'remembers', title: 'The body that remembers', short: 'The feeling body carries memories and beliefs, and tries to protect you from pain it has known.', planned: true },
+        { id: 'mindbody', title: 'Mind & body', short: 'How mind and body talk: memories, protection, and signals the brain learns to send.', planned: true },
+        { id: 'tools', title: 'Your mind’s tools', short: 'Imagination, memory, planning and mental math.', planned: true }
+      ] },
+    { id: 'request', course: 'relationships', num: 1, word: 'Request', sub: 'ask, don’t demand', intro: 'Once you know your need, say it out loud: kindly, clearly, and in a way the other person can say yes or no to.',
       subs: [
         { id: 'sharing', title: 'Sharing feelings and needs', short: 'What happened, how you feel, and what you need.',
           key: ['Start with what a camera would record: “The dishes have been in the sink since Tuesday,” not “you never help.” Swap *always* and *never* for what actually happened.',
@@ -161,7 +172,7 @@ window.MN_REL = (function () {
             'Arrive with kindness and curiosity, not a case to argue. Your needs stay on the table too.'],
           remember: 'Same needs, so the same kindness.' }
       ] },
-    { id: 'dialogue', num: 4, word: 'Dialogue', sub: 'meet both needs', intro: 'Listen as well as speak. Keep both sets of needs on the table until you find a strategy that meets them, then say thank you.',
+    { id: 'dialogue', course: 'relationships', num: 2, word: 'Dialogue', sub: 'meet both needs', intro: 'Listen as well as speak. Keep both sets of needs on the table until you find a strategy that meets them, then say thank you.',
       subs: [
         { id: 'ask', title: 'Ask if your strategy meets their needs', short: 'Check for a real yes, not a resentful one.',
           key: ['After you suggest a strategy, ask: “Would that work for you too?” Then listen for the need behind the answer.',
@@ -183,11 +194,11 @@ window.MN_REL = (function () {
   ];
 
   /* ---------- Special applications (later: a second vertical tree beneath the first) ---------- */
-  /* Special situations, in page order (Animals first). Each opens as an accordion on #lens-relationships/special. */
+  /* Special situations, in page order (the three animal groups first). Each opens as an accordion on #lens-relationships/special. */
   var APPS = [
-    { id: 'animals', name: 'Animals', short: 'Someone, not something: respectful words, farmed animals, and peace with animals across Kinship.', status: 'Soon', preview: true },
     { id: 'family', name: 'Family animals', short: 'Companions who share our homes, routines and moods, and their emotional needs.', status: 'Soon', preview: true },
-    { id: 'wild', name: 'Wild animals', short: 'Neighbors who live by their own rules: room, closed offers and land left livable.', status: 'Soon', preview: true },
+    { id: 'wild', name: 'Wild animals', short: 'Neighbors who live by their own rules: room, closed offers, urban wildlife and land left livable.', status: 'Soon', preview: true },
+    { id: 'captive', name: 'Captive animals', short: 'Animals humans keep for use: farms, labs, shows. Respectful words, honest numbers, and peace with animals across Kinship.', status: 'Soon', preview: true },
     { id: 'children', name: 'Children', short: 'Togetherness instead of split labor; kids pitching in beside you.', status: 'Soon' },
     { id: 'neighbors', name: 'Neighbors', short: 'The people, plants and animals you share water, air, walls and streets with.', status: 'Soon', preview: true },
     { id: 'distress', name: 'People in distress', short: 'Meeting someone unhoused or struggling: respect, capacity, boundaries and who can help.', status: 'Soon', preview: true },

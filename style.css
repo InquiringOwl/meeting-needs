@@ -21,9 +21,14 @@
   --mixw: 0%;
   --on-lens: #FFFFFF;
   --focus: #2F6E9E;
-  --personal: #A3346A;
+  /* Personal (just for you): silver with slate ink, everywhere something is only about the visitor. */
+  --personal: #5B6B80;
   --personal-ink: #FFFFFF;
-  --personal-soft: rgba(194, 71, 127, 0.12);
+  --personal-soft: #EEF1F4;
+  --me-bg: linear-gradient(150deg, #F4F6F8 0%, #E3E7EC 55%, #D5DBE2 100%);
+  --me-edge: #8C97A4;
+  --me-ink: #3B4A60;
+  --me-solid: #5B6B80;
   --progress: #2F6E9E;
   --progress-bg: rgba(255, 255, 255, 0.85);
 
@@ -136,18 +141,53 @@ p { margin: 0; }
 .hero h1 { font-weight: 800; font-size: clamp(32px, 4.2vw, 54px); line-height: 1; letter-spacing: -0.03em; overflow-wrap: anywhere; }
 .hero p { max-width: 62ch; font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-2); }
 
-.setup {
-  min-width: 0; min-height: 200px;
-  display: flex; flex-direction: column; gap: 10px; padding: 20px; border-radius: 22px;
-  background: var(--personal-soft); border: 2px solid var(--personal);
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+/* Personalize: wide and short, in the empty space beside the hero text, so the hero is no taller than without it.
+   Only new visitors see it; it leaves once anything is on file. */
+.me-hero { position: relative; }
+.me-hero .hero-copy p { max-width: 600px; }
+.me-card {
+  position: absolute; right: 0; bottom: 0; width: min(620px, calc(100% - 640px));
+  display: flex; align-items: center; gap: 14px; padding: 10px 14px 10px 18px; border-radius: 18px; text-decoration: none;
+  background: var(--me-bg); border: 2px solid var(--me-edge); color: var(--me-ink);
+  box-shadow: 0 8px 24px rgba(60, 74, 96, 0.10); transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.setup .eyebrow { color: var(--personal); }
-.setup h3 { font-weight: 800; font-size: 24px; line-height: 1.1; letter-spacing: -0.02em; }
-.setup .hint { margin-top: auto; }
-.setup-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
-.setup-head .eyebrow, .setup-head .btn { flex: none; margin-top: 3px; }
-.setup p { font-size: 15px; color: var(--ink-2); }
+.me-card:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(60, 74, 96, 0.16); }
+.me-card:focus-visible { outline: 3px solid var(--me-solid); outline-offset: 3px; }
+.me-txt { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.me-txt b { font: 800 19px/1.1 var(--f-head); letter-spacing: -0.01em; color: var(--me-ink); }
+.me-txt .eyebrow { margin-left: 4px; font-size: 10.5px; font-weight: 400; color: var(--me-solid); }
+.me-txt > span:last-child { font-size: 13.5px; line-height: 1.35; color: var(--me-ink); }
+.me-go { flex: none; margin-left: auto; min-height: 36px; display: inline-flex; align-items: center; gap: 6px; padding: 0 14px; border-radius: 999px; background: var(--me-solid); color: #fff; font-weight: 700; font-size: 14px; white-space: nowrap; }
+.me-up { position: absolute; top: -34px; right: 24px; font: 700 26px/1 var(--f-head); color: var(--me-solid); pointer-events: none; }
+.nav a.me-nav { background: var(--personal-soft); color: var(--me-ink); box-shadow: inset 0 0 0 1.5px var(--me-edge); font-weight: 600; }
+/* Narrower screens: no room beside the text, so it becomes one slim row under the paragraph. */
+@media (max-width: 1000px) {
+  .me-card { position: static; width: 100%; padding: 6px 6px 6px 16px; }
+  .me-txt > span:last-child, .me-txt .eyebrow, .me-up { display: none; }
+}
+/* Anywhere a page talks about only you: */
+.me-box { padding: 14px 16px; border-radius: 16px; background: var(--me-bg); border: 1.5px solid var(--me-edge); color: var(--me-ink); }
+/* Hidden while personalization is off (app.js PERSONALIZE). Courses' "Tailor this course" panels go with it. */
+.me-off .me-only, .me-off .wa-sit, .me-off .fo-sit, .me-off .ai-sit, .me-off .tx-sit, .me-off .cl-sit, .me-off .em-sit { display: none !important; }
+
+/* Screen-reader-only text */
+.sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* Go deeper: the people and places a course stands on (MN.deeper in app.js) */
+.deeper { display: flex; flex-direction: column; gap: 12px; padding: 18px 20px; border-radius: 22px; background: var(--glass-strong); border: 1px solid var(--line); }
+.deeper-head { display: flex; flex-direction: column; gap: 2px; }
+.deeper-head h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.01em; }
+.deeper-head p { font-size: 15px; color: var(--ink-2); max-width: 78ch; }
+.deeper ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 10px; }
+.deeper li { display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border-radius: 16px; background: rgba(255, 255, 255, 0.8); border: 1px solid var(--line); }
+.deeper li b { font: 800 16px var(--f-head); }
+.deeper li .who { font-size: 13.5px; color: var(--muted); }
+.deeper li p { font-size: 14.5px; color: var(--ink-2); }
+.deeper li .learned { font-size: 14px; color: var(--ink-2); }
+.deeper li .learned .eyebrow { font-size: 10.5px; }
+.deeper li a { margin-top: auto; padding-top: 2px; font-size: 14.5px; font-weight: 700; color: var(--accent); }
+
+.tool-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .chip { padding: 4px 10px; border-radius: 999px; background: var(--chip); border: 1px solid var(--line); font-size: 13px; }
 
@@ -229,7 +269,11 @@ p { margin: 0; }
 /* Card title and status share one row; the status sits top right. */
 .lens-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
 .lens-head .badge { flex: none; margin-top: 2px; }
-.badge.next, .badge.soon, .badge.later { border: 1.5px solid var(--line); background: rgba(255, 255, 255, 0.7); }
+.badge.next, .badge.soon, .badge.later, .badge.last { border: 1.5px solid var(--line); background: rgba(255, 255, 255, 0.7); }
+.badge.soonest { border: 1.5px dashed var(--dash); background: rgba(255, 255, 255, 0.7); }
+/* Soonest: not ready yet, so the card is quieter than the Beta cards beside it (text stays readable). */
+.lens.is-soonest { filter: saturate(0.4); }
+.lens.is-soonest h3, .lens.is-soonest p { color: var(--muted); }
 .lens h3 { font-weight: 800; font-size: 24px; overflow-wrap: anywhere; line-height: 1.1; letter-spacing: -0.02em; }
 .lens p { font-size: 15px; line-height: 1.45; color: var(--ink-2); flex-grow: 1; }
 .topics { font-family: var(--f-mono); font-size: 12px; line-height: 1.6; color: var(--muted); }

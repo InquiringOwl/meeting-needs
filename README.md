@@ -1,22 +1,22 @@
 # Kinship
 
-Free, open education for meeting our needs, in six tiers: Signals, Roots, Protect, Nurture, Resilience and Craft. Each lens is a way of looking at your home and life: what is quietly making you sick, what it costs, and what you can fix yourself.
+Free, open education for meeting our needs, in six tiers: Signals, Roots, Protect, Nurture, Resilience and Craft. Tier 1, Signals, starts inside (Emotions) and then connects outward (Relationships). Each lens is a way of looking at your home and life: what is quietly making you sick, what it costs, and what you can fix yourself.
 
 Plain HTML, CSS and JavaScript. No build step, no server, no accounts.
 
-**Read [FOUNDATION.md](FOUNDATION.md) first.** It holds the ideas every lens is built on: needs are universal and strategies are many, meeting needs is fun and done together, no blame/shame/"should" language, and the same skills apply to people, animals, plants and the house.
+**Read [FOUNDATION.md](FOUNDATION.md) first.** It holds the ideas every lens is built on: needs are universal and strategies are many, meeting needs is fun and done together, no blame/shame/"should" language, the same skills apply to people, animals, plants and the house, and every page works for disabled people and phone-only visitors from the start (section 7).
 
 ## Files
 | File | What |
 | --- | --- |
 | `index.html` | The page shell |
 | `style.css` | Look: colour tokens (light only), glass panels, layout. On phones (≤720px) each tier's cards scroll sideways one at a time inside the tier panel, with dots below (`tierDots` in `app.js`) |
-| `lenses.js` | The lens catalogue (`window.MN_TIERS`): tiers (each with one colour), lenses, status, copy |
-| `app.js` | Home, About (linked beside the Kinship logo in the header), lens pages, profile; hash routes `#`, `#about`, `#plans`, `#favorites`, `#profile`, `#lens-<id>[/<sub>]` |
+| `lenses.js` | The lens catalogue (`window.MN_TIERS`): tiers (each with one colour), lenses, status, copy. Tier 1 is Emotions, Relationships, Identification |
+| `app.js` | Home, About (linked beside the Kinship logo in the header), lens pages, My tools (in the Plans menu), profile, the `PERSONALIZE` switch and the shared Go deeper block (`MN.deeper`); hash routes `#`, `#about`, `#plans`, `#favorites`, `#tools`, `#profile`, `#lens-<id>[/<sub>]` |
 | `FOUNDATION.md` | The principles behind every lens |
-| `rel-data.js` | Relationships course data: skill tree, feelings wheel, needs, accusation words, examples |
-| `rel.js` | Relationships course: overview, one page per unit (feel, need, request, dialogue) with the vertical skill-tree sidebar, and tools (`#lens-relationships`, `#lens-relationships/<unit>[/<sub-unit>]`). Special situations: one page with an accordion each, Animals first (`#lens-relationships/special[/<id>]`; older routes like `#lens-relationships/animals` open the matching accordion) |
-| `rel.css` | Relationships course styles |
+| `rel-data.js` | Emotions and Relationships data: units (each with its `course`; `planned` units and sub-units show dashed with a short description), feelings wheel, needs, accusation words, examples, special situations |
+| `rel.js` | Both tier 1 Signals courses from one file. **Emotions** (`#lens-emotions[/<unit>[/<sub>]]`): plants, roots and soil, read top to bottom as going deeper: 1 Feel, 2 Identify the need (with the Identify a need tool), 3 Who you are (planned). **Relationships** (`#lens-relationships[/<unit>[/<sub>]]`): 1 Request, 2 Dialogue (with Communicate), 3 Special situations, one page with an accordion each, the three animal groups first (`#lens-relationships/special[/<id>]`). One sidebar shows both courses, inside then outside, the current one open. A unit opened under the other course's address (old links like `#lens-relationships/feel`, or `/special/animals`, now Captive animals) opens in the right place and the address is corrected |
+| `rel.css` | Emotions and Relationships styles |
 | `water.js` | Water course: six units (Uses, Sources, Storage, Purify, Testing, Costs), one page each, tailored from the profile, with tools (`#lens-water`, `#lens-water/<unit>[/<sub-unit>]`) |
 | `water.css` | Water course styles (units in blues, darkest to lightest) |
 | `food.js` | Food course: seven units (Gather, Cleanse, Rehydrate, Cook, Store, Gentle, Companions), one page each, tailored from the profile (including `pets`: cat, dog, small animals), with tools: Soak & cook, How long it keeps, Make it gentle (no-fridge living opens from the profile's `cold` answer or a portable-only place) (`#lens-food`, `#lens-food/<unit>[/<sub-unit>]`) |
@@ -39,13 +39,20 @@ Open `index.html` in a browser, or run `python3 -m http.server` in this folder a
 - **GitHub Pages**: make a repo, push these files, then Settings → Pages → Deploy from branch → `main` / root.
 - **Netlify Drop**: drag this folder onto https://app.netlify.com/drop.
 
+## Personalization (hidden for now)
+The Profile, the home page's Personalize card and all "For you" tailoring sit behind one switch, `PERSONALIZE` near the top of `app.js`, set to `false` until it's ready. While it's off there's no Profile link, `#profile` opens the home page, courses see an empty profile (so nothing is tailored) and their "Tailor this course" panels are hidden (`.me-off` in `style.css`). To preview it in one browser, open the site with `?personalize=1`; `?personalize=0` hides it again. Set `PERSONALIZE = true` to turn it on for everyone.
+
+**Personal colour.** Anything that is only about the visitor is silver with slate text (`--personal`, `--me-*` in `style.css`): the Personalize card, the Profile button while the profile is empty, every course's "For you" pill and "Tailor this course" panel. Pink stays for the logo, tier 1 and creator's considerations.
+
+**Personalize card.** Wide and short, beside the hero text, so it adds no height on wide screens (on narrower ones it becomes one slim row). The whole card opens the profile, with a ↑ under the Profile button, and it disappears once anything is on file.
+
 ## Profile data
 Saved only in the visitor's browser (`localStorage`, key `meeting-needs.profile.v1`). Nothing is sent anywhere. The profile page has Copy backup / Restore for moving between devices.
 
 Place questions describe the place and how long and how much you can shape it, never who owns it: `home` (kind of place), `stay` (how long you expect to stay), `shape` (how much you can change it; a friend who owns it counts) and `space` (outdoor or growing space, including acreage). The Water section (`#profile/water`) holds `sources` (each source with how much it carries you: Sometimes, Often, Main source; plus “No safe tap water at home”), `filters` you already own, `pipes` (before or after 1986) and `rain`. The Food section (`#profile/food`) holds `kitchen` (how you can cook right now), `cold` (how you keep food cold), `stove` (gas, electric, induction, hot plate, none) and `hood` (kitchen fan: vents outside, recirculates, none); the Air course reads the last two. The Cleaning section (`#profile/cleaning`) holds `counter` (counter material; marble, limestone and concrete skip vinegar) and `laundry` (machine at home, shared, laundromat, by hand). The Surroundings section (`#profile/toxins`) holds `built` (before or after 1978, for lead paint) and `near` (freeway, industry or wells, farm fields, airport); the Poisons course also reads `kids`, `consider` and `pets` (birds and cats change some advice). Courses read these to open the sections that fit and tag them "For you", and link back to the profile (with a hover summary of what's on file) for the rare times something changes. Every section stays available either way. Older profiles are migrated on load: renting/owning in `home` becomes the kind of place, “Land or farm” becomes a house plus acreage, and the old single `water` answer becomes a main source.
 
 ## Adding or changing a lens
-Edit `lenses.js`. Status is one of `ready`, `building`, `next`, `soon`, `later`, shown top right on every card (except Ready in tiers 1–2). A lens takes its tier's `color`. A tier with `locked: true` shows its cards on the home page without linking them (Roots, for now).
+Edit `lenses.js`. Status is one of `ready` (shown as **Beta**, filled in the tier colour), `building` (In progress), `soonest` (the next lens to be written; its card is quieter), `next`, `soon`, `later`, `last`, shown top right on every card. Right now tier 2 is all Beta, tier 3 is Soon except Cleaning (Beta), and tier 6 is Last except Governance. The home page counts Beta and upcoming lenses itself. A lens takes its tier's `color`. A tier with `locked: true` shows its cards on the home page without linking them (Roots, for now).
 
 ## Creator opinions
 Most copy aims to be plain and checkable. The creator's own views are set apart in pink (the tier 1 and logo color) with `MN.opinion(html, title)`, which renders a "Creator's consideration" box (no name on it) (`.opinion` in `style.css`).
@@ -54,7 +61,12 @@ Most copy aims to be plain and checkable. The creator's own views are set apart 
 - **One sentence.** A consideration is a pointer to the creator's perspective, usually a why, not an essay in her voice. Never write paragraphs, backstory or feelings on her behalf; the single sentence is the whole expression.
 - **At the bottom.** Considerations sit at the end of a unit or page, after the regular content.
 - **Sourced.** Any fact in or behind the sentence gets a short source line. Keep opinions out of the regular copy.
-- **Animals link home.** Any consideration or copy touching peace with animals (plant foods, farm water, secondhand animal materials) links to the Animals accordion (`#lens-relationships/special/animals`), which lists them under “Across Kinship” and holds the creator’s consideration on commodification.
+- **Animals link home.** Any consideration or copy touching peace with animals (plant foods, farm water, secondhand animal materials) links to the Captive animals accordion (`#lens-relationships/special/captive`), which lists them under “Across Kinship” and holds the creator’s consideration on commodification.
+
+## Go deeper (credits)
+Every course ends with the same **Go deeper** block (“Shoulders we stand on”), built with `MN.deeper(intro, people)` in `app.js`. Each card names a person or organization, who they are, their work, what it shaped in Kinship, and a link when we have a confirmed one. The block says Kinship is its own synthesis, so anything that misses the mark is Kinship’s, not theirs: it recommends where to go for more and credits influence, without presenting anyone’s work as Kinship’s or Kinship’s as theirs. Never guess a link; leave it out until it’s confirmed. Before launch, each person is asked for consent and invited to give feedback or help shape their section; anyone who declines is removed.
+
+So far: Emotions (Marshall B. Rosenberg & CNVC; Howard Schubiner, *Unlearn Your Pain*), Relationships (CNVC; Michaeleen Doucleff; Barbara Rogoff), Poisons (Dr. Yvonne Burkart). It replaces the older “Nonviolence theory origins” fun fact.
 
 ## Labels
 Section labels are plain: “Fun fact”, never “A grateful fun fact” (gratitude can live in the copy itself).
@@ -87,15 +99,15 @@ Laws mentioned in courses are California's; the practices themselves are general
 - **Mold and poisons live in Poisons** (Living toxins → Mold in the house and Mold on food; Exposures → Companion animals, what each species can’t process). Air, Water and Food mention damp or spoilage where it fits their own job and link there rather than repeating it.
 - **Self-defense** (tier 3) holds noticing, de-escalation, getting away and home preparation; Emergency prep → Securing your home and Personal safety link to it rather than repeating it.
 - **Natural disasters** are planned in Emergency prep; Air covers what each event puts into the air and how to read it, and links both ways.
-- **Sun on skin** is introduced in Air (Sun & temperature) and lives in full in Body care.
+- **Sun on skin** lives in Air & temperature (Sun & temperature); Body care links there rather than repeating it.
 - **Food as medicine** (gentle foods, oral rehydration, soft textures) starts in Food → Gentle; Body care and First aid will build on it and link back.
 - **What companion animals eat** lives in Food → Companions; what their bodies can’t process stays in Poisons → Exposures → Companion animals.
-- **People in distress** (unhoused neighbors and people struggling in public) is a special situation in Emotions & love, beside Neighbors.
-- **Animals in Emotions & love** come in three accordions: Animals (respectful language, farmed animals, Across Kinship), Family animals (companions and their emotional needs) and Wild animals (wild neighbors and shared land). Old `/pets` and `/wild` routes open the matching one.
+- **People in distress** (unhoused neighbors and people struggling in public) is a special situation in Relationships, beside Neighbors.
+- **Animals in Relationships** come in three accordions: Family animals (companions and their emotional needs), Wild animals (wild neighbors, urban wildlife and shared land; pest work continues in Poisons) and Captive animals (animals humans keep for use: respectful language, farmed animals, Across Kinship, and the creator's consideration on commodification). Old `/pets`, `/wild` and `/animals` routes open the matching one.
 - **Plastic nuance:** Poisons → Plastics → When plastic is the safer bet holds the calculated-risk view (tarps, tents, water jugs for people living outside or camping).
 - **Tools never gate the teaching.** Every unit is open to read in order; tools are shortcuts into it.
 
 ## Courses inside a lens
 A lens can open a course instead of the plain lens page. Its files load only when someone opens that lens (see `LAZY` in `app.js`), so the home page stays light. The app is light-theme only.
 
-To add a course: register `window.MN_LENS_VIEWS[<lens id>] = function (sub, lens) { return { html, title }; }` in a script loaded before `app.js`. `window.MN` gives you `header`, `footer`, `esc` and `toast`. See `rel.js`. Course progress is saved in `localStorage` (`meeting-needs.rel.v3`).
+To add a course: register `window.MN_LENS_VIEWS[<lens id>] = function (sub, lens) { return { html, title }; }` in a script loaded before `app.js`. `window.MN` gives you `header`, `footer`, `esc`, `toast`, `opinion`, `deeper`, `profile()` and `personalize`. One file can register several lenses (Emotions and Relationships share `rel.js`; `LAZY` loads it once). See `rel.js`. Course progress is saved in `localStorage` (`meeting-needs.rel.v3`). Build every course to FOUNDATION.md section 7 (accessibility and phones).

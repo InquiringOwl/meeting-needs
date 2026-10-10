@@ -84,7 +84,7 @@
               acc('nohome', 'No fixed home', 'Food without a kitchen', kind('Without a home, food takes far more time and planning, because most food systems assume a kitchen and a fridge of your own. That’s a gap in how things are built, not a personal failing.') +
                 ul(['Shelters, day centers and churches often serve hot meals; 211 has the times.', 'Ask pantries for “no-cook” or “ready-to-eat” bags: many keep them.', 'Food that keeps without cold: nut butter, crackers, bread, whole fruit, canned beans with pull-tab lids, oats for cold soaking (' + a('cook/little', '4.2') + ').'])),
               acc('kids', 'With kids', 'Food for children', ul(['WIC helps pregnant people, babies and children under 5 with food and nutrition support.', 'Many districts run free summer meals for anyone under 18; 211 finds sites.']))) +
-            links('<a href="#lens-relationships">Emotions &amp; love</a> (asking for help) · <a href="#lens-relationships/coops">Cooperatives</a>'); } },
+            links('<a href="#lens-relationships">Relationships</a> (asking for help) · <a href="#lens-relationships/coops">Cooperatives</a>'); } },
           { id: 'spend', short: 'Spend less', title: 'Stretching what you spend', html: function () { return ul([
               '<b>Dried beans</b> usually cost half or less per serving than canned, and keep for years (' + a('rehydrate', 'Unit 3') + ').',
               '<b>Buy the staples in bulk</b> with friends or a co-op: a 25-lb sack of rice or beans split three ways.',
@@ -179,7 +179,7 @@
             old('The haybox: a wooden crate packed with hay, used across Europe and Africa to finish porridges, beans and stews while the household went about its day.') +
             accs(
               acc('smallkit', 'One appliance', 'Hot plate, rice cooker or microwave', ul(['A rice cooker steams vegetables in a basket above the rice, and makes oats and lentil stew.', 'A single electric pressure cooker does beans, grains, soups and steaming.', 'Microwave: red lentils in a big bowl with water (they foam), potatoes, frozen vegetables, oats.'])),
-              acc('shared', 'Shared kitchen', 'Cooking in a shared kitchen', '<p>Batch-cook in quiet hours, label your shelf, and keep one crate of your own tools. A shared pot of soup is a lovely way to meet housemates.</p>' + links('<a href="#lens-relationships">Emotions &amp; love</a> (housemates) · Cleaning (shared chores)')),
+              acc('shared', 'Shared kitchen', 'Cooking in a shared kitchen', '<p>Batch-cook in quiet hours, label your shelf, and keep one crate of your own tools. A shared pot of soup is a lovely way to meet housemates.</p>' + links('<a href="#lens-relationships">Relationships</a> (housemates) · Cleaning (shared chores)')),
               acc('nocook nohome', 'No cooking', 'Cold soaking and no-cook meals', ul(['Cold soak in a jar with a tight lid: rolled oats (overnight), couscous (1–2 hours), instant noodles (about an hour), instant mashed potatoes (minutes).', 'Canned beans, chickpeas and lentils are already cooked: rinse and eat.', 'Nut butter, bread, fruit and canned beans meet protein, energy and fiber with no heat.'])),
               acc('land outdoor', 'Outdoors', 'Sun and fire', '<p>A solar oven (a box, a black pot, foil and glass) slow-cooks beans and rice on sunny days. Rocket stoves burn small sticks hot and clean.</p>')) +
             care('Food left wrapped for many hours can cool into the danger zone. If a retained-heat pot has sat more than about 4 hours, bring it back to a boil before eating.'); } },
@@ -189,7 +189,7 @@
               ['Early school', 'Cut and mix', 'A small sharp knife on soft food with a claw grip, cracking open pods, rinsing quinoa.'],
               ['Older kids', 'Cook a dish', 'The stove with an adult nearby, then a whole meal of their own for everyone.']]) +
             together('Sorting a tray of dried beans for stones is a favorite: it’s a treasure hunt that makes dinner.') +
-            links('<a href="#lens-relationships">Emotions &amp; love</a> (children) · Foundation 2 (togetherness)'); } },
+            links('<a href="#lens-relationships">Relationships</a> (children) · Foundation 2 (togetherness)'); } },
           { id: 'pots', short: 'Pots &amp; stoves', title: 'Pots, pans and stoves', html: function () { return ul([
               '<b>Cast iron, carbon steel, stainless steel and glass</b> last a lifetime and turn up secondhand.',
               '<b>Nonstick coatings:</b> keep the heat low and retire pans once scratched or flaking. See Poisons for what’s in them.',
@@ -204,7 +204,7 @@
             '<div><b>Nuts and seeds</b><p>Fats; ground flax, chia and walnuts for omega-3.</p></div></div>' +
             note('A few to plan for', ul(['<b>B12:</b> made by bacteria, not plants. A supplement or fortified foods (plant milks, nutritional yeast) are the reliable source. Many older adults need one whatever they eat.', '<b>Calcium:</b> fortified plant milk, calcium-set tofu, kale, bok choy.', '<b>Vitamin D:</b> sun and fortified foods. <b>Iodine:</b> iodized salt, or seaweed in small amounts.']) +
               '<p>A doctor or dietitian can check levels and doses, especially in pregnancy and for young children.</p>') +
-            tryit('Look at one day’s plates. Which of the four groups showed up? Which one would be easy to add tomorrow?') + links('Why every plate here is plants: <a href="#lens-relationships/special/animals">Emotions &amp; love: Animals</a>'); } }
+            tryit('Look at one day’s plates. Which of the four groups showed up? Which one would be easy to add tomorrow?') + links('Why every plate here is plants: <a href="#lens-relationships/special/captive">Relationships: Captive animals</a>'); } }
         ] },
 
       { id: 'store', num: 5, word: 'Store', sub: 'Keeping food good',
@@ -235,7 +235,7 @@
           { id: 'visitors', short: 'Visitors', title: 'Animals in the pantry', html: function () { return '<p>Moths in the flour, ants on the counter, a mouse behind the rice: they’re neighbors whose need for food our pantry is meeting by accident. Change what we offer and they move on, no poison needed.</p>' +
             ul(['<b>Pantry moths and weevils:</b> flour and grain in glass or metal jars with good lids, so there’s nothing to move into. Carry anything they’ve already moved into out to the compost or a far corner of the yard, and wipe the shelf.', '<b>Ants:</b> follow the trail to the door, wipe it with soapy water or vinegar (it erases their scent path), and seal the crack.', '<b>Mice:</b> food in jars and tins, crumbs swept, nothing left out overnight. With no food on offer, mice move on; once they have, stuff the gaps around pipes with steel wool so the next ones find nothing to come in for.']) +
             old('Bay leaves in the flour bin are a common old remedy for weevils. Studies are thin, but they smell nice and do no harm.') +
-            links('<a href="#lens-relationships/special/animals">Emotions &amp; love: Animals</a> · Cleaning'); } },
+            links('<a href="#lens-relationships/special/captive">Relationships: Captive animals</a> · Cleaning'); } },
           { id: 'keeps', tool: true, short: 'How long it keeps', title: 'How long does it keep?', html: function () { return '<div class="fo-row"><label class="fo-f">Food<select data-fo id="fo-kp-food">' + opts(KP) + '</select></label></div><div class="fo-out" id="fo-kp-out"></div>'; } }
         ] },
 
@@ -324,8 +324,8 @@
               acc('dog', 'Dogs', 'Plant-based food for dogs', ul(['Dogs digest starch and meet their needs on many diets. V-dog and others make complete plant-based dog food.', 'Large-breed puppies need a food made for their growth; check the life stage on the label.']))) +
             tryit('Next vet visit, ask: “What would you look for to know this food is meeting their needs?”') +
             '<p class="fo-src"><small>Sources: Knight et al., <i>PLOS ONE</i> (2022), dogs; Knight et al., <i>PLOS ONE</i> (2023), cats; Dodd et al., <i>PLOS ONE</i> (2021).</small></p>' +
-            links('<a href="#lens-relationships/special/animals">Emotions &amp; love: Animals</a> · <a href="#lens-toxins/exposures/companions">Poisons: what each species can’t process</a>') +
-            (mn().opinion ? mn().opinion('<p>I stay out of judging predators and prey, so a cat’s health comes first here; I offer plant-based food as one option because the animals who became kibble were someone too, with needs it never met (more in <a href="#lens-relationships/special/animals">Animals</a>).</p><p class="opinion-src">In the US, dogs and cats eat about a third as much animal-sourced food energy as all of the country’s people do (Okin, <i>PLOS ONE</i>, 2017).</p>') : ''); } }
+            links('<a href="#lens-relationships/special/captive">Relationships: Captive animals</a> · <a href="#lens-toxins/exposures/companions">Poisons: what each species can’t process</a>') +
+            (mn().opinion ? mn().opinion('<p>I stay out of judging predators and prey, so a cat’s health comes first here; I offer plant-based food as one option because the animals who became kibble were someone too, with needs it never met (more in <a href="#lens-relationships/special/captive">Captive animals</a>).</p><p class="opinion-src">In the US, dogs and cats eat about a third as much animal-sourced food energy as all of the country’s people do (Okin, <i>PLOS ONE</i>, 2017).</p>') : ''); } }
         ] }
     ];
   }
@@ -444,7 +444,7 @@
       '<ol class="fo-ucards">' + U.map(function (u) {
         return '<li><a class="fo-ucard fk' + u.num + '" href="' + BASE + '/' + u.id + '"><i class="fo-band"></i><span class="fo-n">0' + u.num + '</span><b>' + u.word + '</b><span>' + u.sub + '</span><ol>' + u.subs.filter(function (s) { return !s.tool; }).map(function (s) { return '<li>' + s.title + '</li>'; }).join('') + '</ol></a></li>';
       }).join('') + '</ol>' +
-      '<aside class="fo-funfact"><span class="eyebrow">Fun fact</span><p>Every recipe in this course comes from plants, the cheapest, longest-keeping and most shareable way to meet the need for food. Beans and rice alone have fed much of the world for thousands of years. More on the <a href="#lens-relationships/special/animals">Animals</a> page.</p>' +
+      '<aside class="fo-funfact"><span class="eyebrow">Fun fact</span><p>Every recipe in this course comes from plants, the cheapest, longest-keeping and most shareable way to meet the need for food. Beans and rice alone have fed much of the world for thousands of years. More on the <a href="#lens-relationships/special/captive">Captive animals</a> page.</p>' +
       '<p>Safety numbers come from public food-safety and health guidance (USDA, FDA, the UK’s NHS, the National Center for Home Food Preservation, WHO, the American Academy of Pediatrics and IDDSI). Laws mentioned are California’s; food itself is the same everywhere. Thank you to everyone who keeps this knowledge free.</p></aside>';
   }
   function viewUnit(U, u, subId) {

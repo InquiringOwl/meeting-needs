@@ -366,3 +366,65 @@
   .rel-sp > summary .rel-later { display: none; }
   .rel-sp-in { padding: 0 10px 12px; }
 }
+
+/* ---------- Tier 1 split: Emotions (inside) and Relationships (between) ---------- */
+.k-soil { --k-bg: #FBF5EC; --k-mid: #F3E6D2; --k-edge: #E8D5B8; --k-dot: #C9A877; }
+
+/* Sidebar: both courses, the current one open */
+.rel-course + .rel-course { margin-top: 2px; }
+.rel-course-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; min-height: 40px; padding: 6px 8px; margin-bottom: 2px; border-radius: 12px; text-decoration: none; color: var(--ink); }
+.rel-course-head b { font: 800 18px var(--f-head); letter-spacing: -0.01em; }
+.rel-course-head .eyebrow { font-size: 10.5px; }
+.rel-course-head:hover, .rel-course-head[aria-current="page"] { background: var(--chip); }
+.rel-course.collapsed .rel-vt-subs, .rel-course.collapsed .rel-vt-head small { display: none; }
+.rel-course.collapsed .rel-vt-head { min-height: 40px; }
+.rel-bridge { display: flex; align-items: center; gap: 8px; margin: 10px 4px 6px; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.rel-bridge::before, .rel-bridge::after { content: ''; flex: 1; border-top: 2px solid #7FA35F; }
+
+/* Planned: dashed, quieter, still readable (contrast stays AA) */
+.rel-soon { display: inline-block; font-family: var(--f-mono); font-size: 10px; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; padding: 1px 7px; border-radius: 999px; background: rgba(255, 255, 255, 0.85); border: 1px solid var(--k-edge, var(--line)); color: var(--muted); vertical-align: middle; }
+.rel-vt-unit.planned .rel-vt-dot { background: #fff; border: 1.5px dashed var(--k-dot); }
+.rel-vt-unit.planned .rel-vt-head b { color: var(--ink-2); }
+.rel-vt-unit.planned .rel-vt-subs a::before { background: transparent; border: 1.5px dashed var(--k-dot); }
+.rel-tu.planned { background: rgba(255, 255, 255, 0.55); border: 1.5px dashed var(--k-dot); }
+.rel-tu.planned .rel-tu-n { background: #fff; border-style: dashed; }
+.rel-tu li a.planned { background: rgba(255, 255, 255, 0.5); border-style: dashed; border-color: var(--k-dot); color: var(--ink-2); }
+.rel-sec.is-planned { border: 1.5px dashed var(--k-dot); background: rgba(255, 255, 255, 0.5); }
+
+/* Emotions map: plants above the ground line, then roots and soil, getting deeper */
+.rel-depth { border-radius: 24px; overflow: hidden; border: 1px solid var(--soft-line); box-shadow: 0 12px 40px rgba(30, 60, 30, 0.07); }
+.rel-plants { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; align-items: end; padding: 14px 16px 18px 10px; background: linear-gradient(180deg, #F1F7F2, #E8F2EA); }
+.rel-plants .rel-sprout { margin-bottom: -18px; }
+.rel-plants-in { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.rel-ground { position: relative; display: flex; flex-direction: column; gap: 9px; padding: 22px 16px 16px 44px; background: linear-gradient(180deg, #EFE4D1 0%, #E7D8BF 45%, #DCCBB0 75%, #D3C3AA 100%); }
+.rel-ground::before { content: ''; position: absolute; left: 0; right: 0; top: -1px; border-top: 2px solid #7FA35F; }
+.rel-gauge { position: absolute; left: 14px; top: 26px; bottom: 18px; width: 16px; display: flex; flex-direction: column; align-items: center; }
+.rel-gauge::before { content: ''; flex: 1; width: 2px; border-radius: 2px; background: linear-gradient(#B79B73, #6E5B45); }
+.rel-gauge::after { content: ''; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 8px solid #6E5B45; }
+.rel-gauge span { position: absolute; top: 46%; left: 50%; transform: translate(-50%, -50%) rotate(-90deg); white-space: nowrap; padding: 0 6px; background: #E3D3B9; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: #5E4C37; }
+.rel-layer { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; margin: 4px 2px -2px; }
+.rel-layer b { font-family: var(--f-head); font-size: 13px; color: #5E4C37; }
+.rel-layer span { font-size: 12.5px; color: #5E4C37; text-align: right; }
+.rel-plants .rel-layer b { color: #2F5E2C; }
+.rel-plants .rel-layer span { color: var(--ink-2); }
+.rel-tu .rel-tu-head .rel-soon { align-self: center; }
+
+/* Relationships map */
+.rel-rooted { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 18px; text-decoration: none; color: var(--ink); background: linear-gradient(90deg, #EFE4D1, #F1F7F2); border: 1px solid var(--line); }
+.rel-rooted > span { display: flex; flex-direction: column; }
+.rel-rooted b { font-family: var(--f-head); font-size: 14.5px; }
+.rel-rooted > span > span { font-size: 13.5px; color: var(--ink-2); }
+.rel-rooted i { margin-left: auto; font-style: normal; font-weight: 700; font-size: 14px; color: var(--accent); white-space: nowrap; }
+.rel-rooted:hover i { text-decoration: underline; text-underline-offset: 3px; }
+.rel-out { display: flex; flex-direction: column; gap: 9px; padding: 16px; border-radius: 24px; background: linear-gradient(180deg, #F1F7F2, #E8F2EA); border: 1px solid var(--line); }
+
+@media (max-width: 560px) {
+  .rel-ground { padding: 18px 10px 12px 34px; }
+  .rel-gauge { left: 9px; }
+  .rel-layer { flex-direction: column; gap: 0; }
+  .rel-layer span { text-align: left; }
+  .rel-plants { grid-template-columns: minmax(0, 1fr); padding: 12px 10px 14px; }
+  .rel-plants .rel-sprout { display: none; }
+  .rel-rooted { flex-wrap: wrap; }
+  .rel-rooted i { margin-left: 0; }
+}

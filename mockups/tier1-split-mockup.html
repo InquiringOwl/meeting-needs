@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kinship · Tier 1 split (mock-up)</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Cpath d=%27M12 21.2C7.4 18 3.3 14.6 2.4 10.9 1.6 7.5 3.8 4.6 6.9 4.6c2.1 0 3.6 1.2 5.1 3.1 1.5-1.9 3-3.1 5.1-3.1 3.1 0 5.3 2.9 4.5 6.3C20.7 14.6 16.6 18 12 21.2z%27 fill=%27%23FCEFF4%27 stroke=%27%23C2477F%27 stroke-width=%272.2%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500..800&family=Instrument+Sans:wght@400..700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../rel.css">
+<style>
+/* ---------- Personal (just for you): silver, with slate ink ---------- */
+:root {
+  --me-bg: linear-gradient(150deg, #F4F6F8 0%, #E3E7EC 55%, #D5DBE2 100%);
+  --me-edge: #8C97A4;
+  --me-ink: #3B4A60;      /* slate: text that is only about you */
+  --me-solid: #5B6B80;
+  --me-soft: #EEF1F4;
+}
+.me-card {
+  position: relative; display: flex; flex-direction: column; gap: 8px;
+  flex: 0 1 300px; align-self: center; margin: 6px clamp(0px, 4vw, 70px) 0 0;
+  padding: 18px 20px 16px; border-radius: 22px; text-decoration: none;
+  background: var(--me-bg); border: 2px solid var(--me-edge); color: var(--me-ink);
+  box-shadow: 0 10px 30px rgba(60, 74, 96, 0.12); transform: rotate(-1.2deg);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.me-card:hover { transform: rotate(0) translateY(-2px); box-shadow: 0 14px 36px rgba(60, 74, 96, 0.18); }
+.me-card .eyebrow { color: var(--me-solid); font-size: 11.5px; }
+.me-card h3 { font-weight: 800; font-size: 24px; letter-spacing: -0.02em; color: var(--me-ink); }
+.me-card p { font-size: 15px !important; color: var(--me-ink) !important; max-width: none !important; }
+.me-card .me-go { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 14.5px; color: var(--me-ink); }
+.me-card small { font-size: 12.5px; color: var(--me-solid); }
+.nav a.me-nav { background: var(--me-soft); color: var(--me-ink); box-shadow: inset 0 0 0 1.5px var(--me-edge); font-weight: 600; }
+.me-arrow { position: absolute; left: 0; top: 0; pointer-events: none; z-index: 30; overflow: visible; }
+.me-pill { display: inline-block; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; background: var(--me-solid); color: #fff; }
+.me-box { padding: 14px 16px; border-radius: 16px; background: var(--me-bg); border: 1.5px solid var(--me-edge); color: var(--me-ink); display: flex; flex-direction: column; gap: 6px; }
+.me-box .eyebrow { color: var(--me-solid); font-size: 11px; }
+.me-box a { color: var(--me-ink); font-weight: 700; }
+
+/* ---------- Emotions: going deeper (numbers run down, and so does the ground) ---------- */
+.k-parts { --k-bg: #FBF5EC; --k-mid: #F3E6D2; --k-edge: #E8D5B8; --k-dot: #C9A877; }
+.k-body  { --k-bg: #F3F1EE; --k-mid: #E6E1DA; --k-edge: #D6CFC5; --k-dot: #A69A8A; }
+.em-depth { border-radius: 24px; overflow: hidden; border: 1px solid var(--soft-line, rgba(0,0,0,.08)); box-shadow: 0 12px 40px rgba(30,60,30,.07); }
+.em-above { display: flex; align-items: center; gap: 14px; padding: 12px 16px 18px; background: linear-gradient(180deg, #F1F7F2, #E8F2EA); text-decoration: none; color: var(--ink); }
+.em-above svg { flex: none; }
+.em-above b { font-family: var(--f-head); font-size: 14px; }
+.em-above span { font-size: 13px; color: var(--ink-2); }
+.em-above i { margin-left: auto; font-style: normal; font-weight: 700; font-size: 13.5px; color: var(--accent); white-space: nowrap; }
+.em-above:hover i { text-decoration: underline; }
+.em-ground { position: relative; padding: 22px 16px 16px 44px; display: flex; flex-direction: column; gap: 9px;
+  background: linear-gradient(180deg, #EFE4D1 0%, #E7D8BF 45%, #DCCBB0 75%, #D3C3AA 100%); }
+.em-ground::before { content: ''; position: absolute; left: 0; right: 0; top: -1px; border-top: 2px solid #7FA35F; }
+.em-gauge { position: absolute; left: 14px; top: 26px; bottom: 18px; width: 16px; display: flex; flex-direction: column; align-items: center; }
+.em-gauge::before { content: ''; flex: 1; width: 2px; background: linear-gradient(#B79B73, #6E5B45); border-radius: 2px; }
+.em-gauge::after { content: ''; width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 8px solid #6E5B45; }
+.em-gauge span { position: absolute; top: 46%; left: 50%; transform: translate(-50%, -50%) rotate(-90deg); white-space: nowrap; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: #6E5B45; background: #E3D3B9; padding: 0 6px; }
+.em-layer { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; margin: 4px 2px -2px; }
+.em-layer b { font-family: var(--f-head); font-size: 12.5px; color: #5E4C37; }
+.em-layer span { font-size: 12px; color: #6E5B45; text-align: right; }
+.rel-tu.planned { background: rgba(255,255,255,.55); border: 1.5px dashed var(--k-dot); }
+.rel-tu.planned .rel-tu-n { background: #fff; border-style: dashed; }
+.rel-tu .soon-tag, .rel-vt .soon-tag { font-family: var(--f-mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; padding: 1px 7px; border-radius: 999px; background: rgba(255,255,255,.85); border: 1px solid var(--k-edge); color: var(--muted); }
+.rel-tu .plan-li { display: inline-block; font-size: 13px; padding: 2px 9px; border-radius: 999px; background: rgba(255,255,255,.5); border: 1px dashed var(--k-dot); color: var(--ink-2); }
+.rel-tu .tu-note { grid-column: 2; font-size: 13px; color: var(--ink-2); margin-top: 2px; }
+
+/* ---------- Shared sidebar: inside → outside ---------- */
+.sig-course { margin-top: 4px; }
+.sig-course + .sig-course { margin-top: 10px; }
+.sig-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 6px 8px; border-radius: 12px; text-decoration: none; color: var(--ink); }
+.sig-head b { font: 800 17px var(--f-head); letter-spacing: -.01em; }
+.sig-head .eyebrow { font-size: 10.5px; }
+.sig-head:hover, .sig-head[aria-current="page"] { background: var(--chip); }
+.sig-course.collapsed .rel-vt-subs { display: none; }
+.sig-course.collapsed .rel-vt-head { min-height: 38px; }
+.sig-course.collapsed .rel-vt-head small { display: none; }
+.sig-bridge { display: flex; align-items: center; gap: 8px; margin: 10px 4px 2px; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.sig-bridge::before, .sig-bridge::after { content: ''; flex: 1; border-top: 2px solid #7FA35F; }
+.rel-vt-unit.planned .rel-vt-dot { background: #fff; border: 1.5px dashed var(--k-dot); }
+.rel-vt-unit.planned .rel-vt-head b, .rel-vt-unit.planned .rel-vt-subs a { color: var(--muted); }
+.rel-vt-unit.planned .rel-vt-subs a::before { background: transparent; border: 1.5px dashed var(--k-dot); }
+
+/* ---------- Relationships: outward ---------- */
+.rs-roots { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 18px; text-decoration: none; color: var(--ink);
+  background: linear-gradient(90deg, #EFE4D1, #F1F7F2); border: 1px solid var(--line); }
+.rs-roots b { font-family: var(--f-head); font-size: 14px; }
+.rs-roots span { font-size: 13px; color: var(--ink-2); }
+.rs-roots i { margin-left: auto; font-style: normal; font-weight: 700; font-size: 13.5px; color: var(--accent); white-space: nowrap; }
+.rs-out { display: flex; flex-direction: column; gap: 9px; padding: 16px; border-radius: 24px; background: linear-gradient(180deg, #F1F7F2, #E8F2EA); border: 1px solid var(--line); }
+
+/* ---------- mock-up controls ---------- */
+.mock-bar { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 99; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px; padding: 7px 9px; border-radius: 999px; border: 1.5px dashed rgba(0,0,0,.25); background: rgba(255,255,255,.92); font-family: var(--f-mono); font-size: 12px; color: #444; box-shadow: 0 6px 24px rgba(0,0,0,.08); max-width: calc(100vw - 24px); }
+.mock-bar a, .mock-bar button { font: inherit; border: 1px solid rgba(0,0,0,.15); background: #fff; color: #333; border-radius: 999px; padding: 4px 10px; text-decoration: none; cursor: pointer; }
+.mock-bar a.on, .mock-bar button.on { background: #17241C; color: #fff; border-color: #17241C; }
+.mock-bar .sep { width: 1px; height: 18px; background: rgba(0,0,0,.15); }
+.mock-note { padding: 14px 18px; border-radius: 18px; border: 1.5px dashed rgba(0,0,0,.25); background: rgba(255,255,255,.7); font-size: 14px; color: var(--ink-2); display: flex; flex-direction: column; gap: 6px; }
+.mock-note .eyebrow { font-size: 11px; }
+.mock-note ul { margin: 0; padding-left: 18px; }
+@media (max-width: 900px) { .me-card { flex-basis: 100%; transform: none; margin: 0; } }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="../lenses.js"></script>
+<script src="../rel-data.js"></script>
+<script>
+(function () {
+  /* ---------- mock state ---------- */
+  var S = { personalize: true, filled: false };
+  var TIERS = window.MN_TIERS, D = window.MN_REL;
+  var STATUS = { ready: 'Ready', building: 'In progress', next: 'Next', soon: 'Soon', later: 'Later' };
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  var U = {}; D.UNITS.forEach(function (u) { U[u.id] = u; });
+
+  /* Tier 1, proposed: Emotions, Relationships, Identification. */
+  var T1 = TIERS[0];
+  T1.blurb = 'Start here. Hear what’s happening inside, connect it with others, and know who lives around you.';
+  T1.lenses = [
+    { id: 'emotions', name: 'Emotions', status: 'ready', blurb: 'Your rich inner world.', topics: ['Feelings', 'Needs', 'Parts of you', 'Mind & body'] },
+    { id: 'relationships', name: 'Relationships', status: 'ready', blurb: 'Connecting inner worlds.', topics: ['Requests', 'Dialogue', 'Special situations'] },
+    { id: 'identification', name: 'Identification', status: 'soon', blurb: 'Recognize the plants and animals around you to assess threats and opportunities.', topics: ['Plants', 'Fungi', 'Animals'] }
+  ];
+  TIERS.forEach(function (t) { t.lenses.forEach(function (l) { l.color = t.color; l.tier = t; }); });
+
+  /* ---------- shared pieces (copied from app.js) ---------- */
+  var LOGO = (function () {
+    var H = 'M12 21.2C7.4 18 3.3 14.6 2.4 10.9 1.6 7.5 3.8 4.6 6.9 4.6c2.1 0 3.6 1.2 5.1 3.1 1.5-1.9 3-3.1 5.1-3.1 3.1 0 5.3 2.9 4.5 6.3C20.7 14.6 16.6 18 12 21.2z';
+    var hearts = ['rotate(-5 12 13)', 'translate(17 0.6)', 'translate(34 0) rotate(5 12 13)'].map(function (t) { return '<path d="' + H + '" transform="' + t + '"/>'; }).join('');
+    return '<svg class="logo" width="62" height="25" viewBox="0 0 60 24" aria-hidden="true"><g transform="translate(0 -1.4)">' +
+      '<g fill="#C2477F" stroke="#C2477F" stroke-width="3.2" stroke-linejoin="round">' + hearts + '</g>' +
+      '<g fill="#FCEFF4" stroke="none">' + hearts + '</g>' +
+      '<g fill="none" stroke="#C2477F" stroke-width="1" stroke-dasharray="1.4 1.6" stroke-linecap="round" opacity=".7"><path d="M20.6 7.6v6.2"/><path d="M37.6 7.8v6.2"/></g></g></svg>';
+  })();
+  function header(active) {
+    var edu = TIERS.map(function (t) {
+      return '<div class="nav-tier" style="--tc:' + t.color + '" tabindex="0"><span class="nav-tier-pill">' + t.num + '</span><span class="nav-tier-name">' + esc(t.name) + '</span>' +
+        '<div class="nav-sub"><div class="nav-sub-in"><span class="nav-sub-head">Tier ' + t.num + ' · ' + esc(t.name) + '</span>' +
+        t.lenses.map(function (l) { return l.status === 'ready' ? '<a class="nav-item" href="#' + (l.id === 'emotions' || l.id === 'relationships' ? l.id : 'home') + '">' + esc(l.name) + '</a>' : '<span class="nav-item is-off">' + esc(l.name) + '<small>' + STATUS[l.status] + '</small></span>'; }).join('') +
+        '</div></div></div>';
+    }).join('');
+    var plans = [['Education plan', 'Your next most useful lessons'], ['Improvements & budget', 'What meeting needs costs, now and after upgrades'], ['Garden planner', '12 months, seed by seed'], ['My tools', 'Every course tool and list in one place']];
+    var profileLink = S.personalize
+      ? '<a href="#profile" id="nav-profile"' + (active === 'profile' ? ' aria-current="page"' : (!S.filled ? ' class="me-nav"' : '')) + '>Profile</a>' : '';
+    return '<header class="top glass"><div class="top-left"><a class="brand" href="#home">' + LOGO + '<b>Kinship</b></a><nav class="nav"><a href="#home">About</a></nav></div>' +
+      '<nav class="nav" aria-label="Main">' +
+      '<div class="navdrop"><a href="#home"' + (active === 'home' ? ' aria-current="page"' : '') + '>Education</a><div class="nav-menu"><div class="nav-menu-in">' + edu + '</div></div></div>' +
+      '<div class="navdrop"><a href="#home">Plans</a><div class="nav-menu"><div class="nav-menu-in plans-in">' + plans.map(function (p) { return '<a class="nav-item plan-item" href="#home"><b>' + esc(p[0]) + '</b><small>' + esc(p[1]) + '</small></a>'; }).join('') + '</div></div></div>' +
+      '<a href="#home">Favorites</a>' + profileLink + '</nav></header>';
+  }
+  function footer() { return '<footer class="foot"><span>Kinship · free and open source</span><span class="eyebrow">Grow · Fix · Share</span></footer>'; }
+  function lensCard(l) {
+    var solid = l.tier.num === 1 || l.status === 'ready', linked = !l.tier.locked || l.status === 'ready';
+    var cls = 'lens is-' + l.status + (solid ? ' is-solid' : '') + (linked ? '' : ' is-static');
+    var top = l.tier.num <= 2 && l.status === 'ready' ? '' : (STATUS[l.status] ? '<span class="badge ' + l.status + '">' + STATUS[l.status] + '</span>' : '');
+    var tag = linked ? 'a' : 'div';
+    var h = l.id === 'emotions' || l.id === 'relationships' ? '#' + l.id : '#home';
+    return '<' + tag + ' class="' + cls + '"' + (linked ? ' href="' + h + '"' : '') + ' style="--lc:' + l.color + '"><div class="lens-head"><h3>' + esc(l.name) + '</h3>' + top + '</div><p>' + esc(l.blurb) + '</p><div class="topics">' + l.topics.map(esc).join(' · ') + '</div></' + tag + '>';
+  }
+
+  /* ---------- Home ---------- */
+  function personalizeCard() {
+    if (!S.personalize || S.filled) return '';
+    return '<a class="me-card" href="#profile" id="me-card" aria-label="Personalize: open your profile">' +
+      '<span class="eyebrow">Just for you · new here?</span>' +
+      '<h3>Personalize</h3>' +
+      '<p>Share a little about your place and life, and courses will open the parts that fit you.</p>' +
+      '<span class="me-go">Open my profile →</span>' +
+      '<small>Saved only on this device.</small></a>';
+  }
+  function viewHome() {
+    var tiers = TIERS.map(function (t) {
+      return '<section class="tier glass" data-tier="' + t.num + '" style="--tc:' + t.color + '"><div class="tier-head"><div class="tier-title"><span class="tier-pill">Tier ' + t.num + '</span><h2>' + esc(t.name) + '</h2><p>' + esc(t.blurb) + '</p></div></div>' +
+        '<div class="grid">' + t.lenses.map(lensCard).join('') + '</div></section>';
+    }).join('');
+    return header('home') +
+      '<section class="hero"><div class="hero-copy"><span class="eyebrow">Free &amp; open source · 30 lenses</span>' +
+      '<h1>End systemic profit&#8209;extraction cycles.</h1>' +
+      '<p>Learn how to meet universal needs. Empower yourself to fix problems. Create peace.</p></div>' + personalizeCard() + '</section>' +
+      tiers + footer();
+  }
+
+  /* ---------- Shared course sidebar: Emotions (inside) then Relationships (outside) ---------- */
+  var EM_UNITS = [
+    { id: 'feel', k: 'feel', num: 1, word: 'Feel', sub: 'what’s alive inside', subs: U.feel.subs },
+    { id: 'need', k: 'need', num: 2, word: 'Identify the need', sub: 'the need beneath the problem', subs: U.need.subs.concat([{ title: 'Yes, and: beneath the noun', planned: true }]) },
+    { id: 'parts', k: 'parts', num: 3, word: 'Parts of you', sub: 'who chooses, who protects', planned: true, subs: [{ title: 'The one who chooses', planned: true }, { title: 'The body that remembers', planned: true }, { title: 'Your mind’s tools', planned: true }] },
+    { id: 'mindbody', k: 'body', num: 4, word: 'Mind & body', sub: 'signals the brain builds', planned: true, subs: [{ title: 'Pain as a signal', planned: true }, { title: 'The brain builds what we sense', planned: true }] }
+  ];
+  var RS_UNITS = [
+    { id: 'request', k: 'request', num: 1, word: 'Request', sub: U.request.sub, subs: U.request.subs },
+    { id: 'dialogue', k: 'dialogue', num: 2, word: 'Dialogue', sub: U.dialogue.sub, subs: U.dialogue.subs }
+  ];
+  function vtUnits(units) {
+    return '<ol class="rel-vt">' + units.map(function (u) {
+      return '<li class="rel-vt-unit k-' + u.k + (u.planned ? ' planned' : '') + '"><a class="rel-vt-head" href="#">' +
+        '<span class="rel-vt-dot">' + u.num + '</span><span><b>' + esc(u.word) + '</b><small>' + esc(u.sub) + '</small></span></a>' +
+        '<ol class="rel-vt-subs">' + u.subs.map(function (s) {
+          return '<li><a href="#"' + (s.isTool ? ' class="tool"' : '') + '>' + esc(s.title) + (s.isTool ? ' <span class="rel-tooltag">tool</span>' : '') + (s.planned && !u.planned ? ' <span class="soon-tag">soon</span>' : '') + '</a></li>';
+        }).join('') + '</ol></li>';
+    }).join('') + '</ol>';
+  }
+  function sidebar(cur) {
+    var em = cur === 'emotions';
+    return '<nav class="rel-nav" aria-label="Signals courses"><div class="rel-nav-wrap">' +
+      '<div class="rel-nav-head" style="display:flex;flex-direction:column;padding:2px 6px 6px"><span class="eyebrow">Tier 1 · Signals</span><b>Inside, then outside</b></div>' +
+      '<div class="sig-course' + (em ? '' : ' collapsed') + '"><a class="sig-head" href="#emotions"' + (em ? ' aria-current="page"' : '') + '><b>Emotions</b><span class="eyebrow">Inside</span></a>' + vtUnits(EM_UNITS) + '</div>' +
+      '<div class="sig-bridge">then, connect</div>' +
+      '<div class="sig-course' + (em ? ' collapsed' : '') + '"><a class="sig-head" href="#relationships"' + (!em ? ' aria-current="page"' : '') + '><b>Relationships</b><span class="eyebrow">Between</span></a>' + vtUnits(RS_UNITS) +
+      '<div class="rel-vt-apps"><a class="eyebrow" href="#relationships">3 · Special situations</a><p>' + D.APPS.slice(0, 6).map(function (a) { return '<a href="#">' + esc(a.name) + '</a>'; }).join(' · ') + ' …</p></div></div>' +
+      '</div></nav>';
+  }
+  function layout(cur, main) {
+    return header('home') + '<div class="rel-layout">' + sidebar(cur) + '<main class="rel-main"><div class="rel-topbar"><a class="rel-back" href="#home" style="text-decoration:none">← Back</a></div>' + main + '</main></div>' + footer();
+  }
+  function card(u) {
+    var subs = u.subs.filter(function (s) { return !s.isTool; }).map(function (s) {
+      return s.planned ? '<li><span class="plan-li">' + esc(s.title) + '</span></li>' : '<li><a href="#">' + esc(s.title) + '</a></li>';
+    }).join('');
+    return '<div class="rel-tu k-' + u.k + (u.planned ? ' planned' : '') + '"><span class="rel-tu-n">' + u.num + '</span><div>' +
+      '<a class="rel-tu-head" href="#"><b>' + esc(u.word) + '</b><small>' + esc(u.sub) + '</small>' + (u.planned ? ' <span class="soon-tag">Planned</span>' : '') + '</a>' +
+      '<ol>' + subs + '</ol>' + (u.note ? '<p class="tu-note">' + u.note + '</p>' : '') + '</div></div>';
+  }
+  function tool(k, eyebrow, name, text) { return '<a class="rel-tt k-' + k + '" href="#"><span class="eyebrow">' + eyebrow + '</span><b>' + name + '</b><span>' + text + '</span><i>Open →</i></a>'; }
+  var SPROUT = '<svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><path d="M17 33V15" stroke="#4E8A3E" stroke-width="2.2" stroke-linecap="round"/><path d="M17 19c-1-6-6-9-12-8 1 6 6 9 12 8z" fill="#8CC07A" stroke="#4E8A3E" stroke-width="1.6"/><path d="M17 15c1-7 6-11 13-10-1 7-6 11-13 10z" fill="#A9D396" stroke="#4E8A3E" stroke-width="1.6"/></svg>';
+
+  /* ---------- Emotions overview ---------- */
+  function viewEmotions() {
+    EM_UNITS[1].note = '<em>Planned:</em> a job or money is a strategy. Yes, it matters, and beneath it sit needs like safety, choice and care for the people you love.';
+    EM_UNITS[2].note = 'The present awareness that makes choices (“I have to go to work” becomes “I choose to, because I want a home and food”), never as blame; the feeling body that carries memories and beliefs to protect you; and tools like imagination and mental math.';
+    EM_UNITS[3].note = 'Not every pain signal means tissue damage: the brain can turn alarm up or down, and in dreams we see without our eyes. Always alongside medical care.';
+    return {
+      title: 'Emotions · Kinship (mock-up)',
+      html: layout('emotions',
+        '<section class="rel-hero"><span class="eyebrow">Tier 1 · Signals · Course 1 of 2</span><h1>Emotions</h1>' +
+        '<p class="lede">Your rich inner world. Start with what you notice on the surface, then dig down to the roots: the needs underneath, the parts of you that choose and protect, and how mind and body talk.</p></section>' +
+        '<section class="em-depth" aria-label="Course map: from the surface down to the roots">' +
+          '<a class="em-above" href="#relationships">' + SPROUT + '<span><b>Above ground · Relationships</b><br><span>Where your inner world meets other people, animals and places. Comes next.</span></span><i>Course 2 →</i></a>' +
+          '<div class="em-ground"><div class="em-gauge"><span>Deeper</span></div>' +
+            '<p class="em-layer"><b>Topsoil · what you notice</b><span>Inner life: nobody else has to see it.</span></p>' +
+            card(EM_UNITS[0]) +
+            '<p class="em-layer"><b>Roots · what you need</b><span>Universal, beneath every strategy.</span></p>' +
+            card(EM_UNITS[1]) +
+            tool('need', 'Inner tool', 'Identify a need', 'From a big feeling to the word that fits and the need underneath.') +
+            '<p class="em-layer"><b>Deep roots · who is inside</b><span>Planned</span></p>' +
+            card(EM_UNITS[2]) +
+            '<p class="em-layer"><b>Bedrock · mind and body</b><span>Planned · a gentle “by the way”</span></p>' +
+            card(EM_UNITS[3]) +
+          '</div></section>' +
+        '<aside class="rel-funfact"><span class="eyebrow">Nonviolence theory origins</span><p>The idea that feelings point to universal needs, and that conflicts live between strategies, grows out of Marshall B. Rosenberg’s Nonviolent Communication. The feelings and needs words here are adapted from the Center for Nonviolent Communication’s inventories (<a href="https://www.cnvc.org" target="_blank" rel="noopener">cnvc.org</a>). Thank you!</p></aside>' +
+        '<div class="mock-note"><span class="eyebrow">Mock-up notes</span><ul>' +
+          '<li><b>Same content, split:</b> units 1–2 and the Identify a need tool move here unchanged from Emotions &amp; love.</li>' +
+          '<li><b>Dashed = planned</b> (from your notes): “Yes, and” under Need; Parts of you; Mind &amp; body. Copy is placeholder for you to deepen.</li>' +
+          '<li><b>Metaphor:</b> going down = going deeper, so 1→4 reads top to bottom and the ground darkens with it. Relationships sits above ground.</li>' +
+          '<li>Mind &amp; body would carry a short source line (e.g. Howard Schubiner, <i>Unlearn Your Pain</i>).</li></ul></div>')
+    };
+  }
+
+  /* ---------- Relationships overview ---------- */
+  function viewRelationships() {
+    var apps = D.APPS.map(function (a) { return '<li class="is-open"><a href="#"><b>' + esc(a.name) + '</b><span>' + esc(a.short) + '</span><small>In progress · open →</small></a></li>'; }).join('');
+    return {
+      title: 'Relationships · Kinship (mock-up)',
+      html: layout('relationships',
+        '<section class="rel-hero"><span class="eyebrow">Tier 1 · Signals · Course 2 of 2</span><h1>Relationships</h1>' +
+        '<p class="lede">Connecting inner worlds. Every conflict is two people trying to meet their universal needs through strategies that aren’t working yet. Once you can hear your own needs, say them kindly and keep everyone’s on the table.</p></section>' +
+        '<a class="rs-roots" href="#emotions">' + SPROUT + '<span><b>Rooted in Emotions</b><br><span>Feel and Identify the need come first: what’s alive in you, and what you need.</span></span><i>← Course 1</i></a>' +
+        '<section class="rs-out" aria-label="Course map">' +
+          '<p class="rel-zone"><b>Above ground · between people</b><span>Where your needs meet people, animals and the physical world.</span></p>' +
+          card(RS_UNITS[0]) + card(RS_UNITS[1]) +
+          tool('dialogue', 'Between people', 'Communicate', 'Hear each other’s needs and find a strategy that meets you both.') +
+        '</section>' +
+        '<section class="rel-apps"><div class="rel-apps-head"><span class="rel-tu-n">3</span><div><h2>Special situations</h2><p>Your inner world and theirs, applied to the particular people and places in your life.</p></div></div><ul>' + apps + '</ul></section>' +
+        '<div class="mock-note"><span class="eyebrow">Mock-up notes</span><ul>' +
+          '<li><b>Same content, split:</b> Request, Dialogue, the Communicate tool and Special situations move here, renumbered 1–3.</li>' +
+          '<li>Old links like <code>#lens-relationships/feel</code> would redirect to Emotions, so nothing breaks.</li>' +
+          '<li>The fun fact about Rosenberg stays on Emotions only (or both, your call).</li></ul></div>')
+    };
+  }
+
+  /* ---------- Profile (placeholder) + how personal bits look inside courses ---------- */
+  function viewProfile() {
+    return {
+      title: 'Profile · Kinship (mock-up)',
+      html: header('profile') +
+        '<section class="hero"><div class="hero-copy"><span class="eyebrow" style="color:var(--me-solid)">Just for you</span><h1 style="color:var(--me-ink)">Your profile</h1>' +
+        '<p>The real profile page opens here. In the mock-up, use the button below to pretend it’s filled in and watch the Personalize card leave the home page.</p>' +
+        '<div><button class="btn" style="background:var(--me-solid)" id="fill">Pretend I filled it in</button></div></div></section>' +
+        '<section class="tier glass" style="--tc:#5B6B80"><div class="tier-title"><span class="tier-pill">Inside courses</span><h2>The same silver, everywhere it’s about you</h2></div>' +
+        '<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">' +
+          '<div class="me-box"><span class="eyebrow">Tailored to your profile</span><p>Sections for you are open and marked <span class="me-pill">For you</span>. <a href="#profile">Change what’s on file →</a></p></div>' +
+          '<div style="padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.7);border:1px solid var(--line)"><b>Rain barrels</b> <span class="me-pill">For you</span><p style="font-size:14px;color:var(--ink-2)">Each course’s own “For you” badge (blue in Water, green in Food…) becomes this one silver pill.</p></div>' +
+        '</div></section>' + footer()
+    };
+  }
+
+  /* ---------- router + arrow ---------- */
+  var sky = '<div class="sky" aria-hidden="true"><span class="a"></span><span class="b"></span><span class="c"></span><span class="d"></span></div>';
+  function route() {
+    var r = (location.hash || '#home').slice(1), v;
+    if (r === 'emotions') v = viewEmotions();
+    else if (r === 'relationships') v = viewRelationships();
+    else if (r === 'profile' && S.personalize) v = viewProfile();
+    else { r = 'home'; v = { title: 'Kinship · Home (mock-up)', html: viewHome() }; }
+    document.title = v.title || 'Kinship (mock-up)';
+    document.getElementById('app').innerHTML = sky + '<div class="wrap">' + (v.html || v) + '</div>' + bar(r);
+    var f = document.getElementById('fill'); if (f) f.onclick = function () { S.filled = true; location.hash = '#home'; };
+    window.scrollTo(0, 0);
+    requestAnimationFrame(arrow);
+  }
+  function bar(r) {
+    function a(h, l) { return '<a href="#' + h + '" class="' + (r === h ? 'on' : '') + '">' + l + '</a>'; }
+    return '<div class="mock-bar"><span>Mock-up:</span>' + a('home', 'Home') + a('emotions', 'Emotions') + a('relationships', 'Relationships') + '<span class="sep"></span>' +
+      '<button data-m="personalize" class="' + (S.personalize ? 'on' : '') + '">Profile feature ' + (S.personalize ? 'on' : 'hidden') + '</button>' +
+      '<button data-m="filled" class="' + (S.filled ? 'on' : '') + '">' + (S.filled ? 'Profile filled' : 'New visitor') + '</button></div>';
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-m]'); if (!b) return;
+    S[b.getAttribute('data-m')] = !S[b.getAttribute('data-m')]; route();
+  });
+  function arrow() {
+    var old = document.getElementById('me-arrow'); if (old) old.remove();
+    var c = document.getElementById('me-card'), n = document.getElementById('nav-profile');
+    if (!c || !n || window.innerWidth < 900) return;
+    var cr = c.getBoundingClientRect(), nr = n.getBoundingClientRect(), y0 = window.scrollY;
+    var x1 = cr.left + cr.width * 0.62, y1 = cr.top + y0 - 4, x2 = nr.left + nr.width / 2, y2 = nr.bottom + y0 + 8;
+    var cx = Math.max(x1, x2) + 40, cy = (y1 + y2) / 2;
+    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('id', 'me-arrow'); svg.setAttribute('class', 'me-arrow'); svg.setAttribute('width', document.documentElement.scrollWidth); svg.setAttribute('height', y1 + 40);
+    var ang = Math.atan2(y2 - cy, x2 - cx), L = 11;
+    function pt(a) { return (x2 - L * Math.cos(a)) + ',' + (y2 - L * Math.sin(a)); }
+    svg.innerHTML = '<path d="M' + x1 + ' ' + y1 + ' Q ' + cx + ' ' + cy + ' ' + x2 + ' ' + y2 + '" fill="none" stroke="#8C97A4" stroke-width="2.2" stroke-dasharray="5 6" stroke-linecap="round"/>' +
+      '<polyline points="' + pt(ang - 0.5) + ' ' + x2 + ',' + y2 + ' ' + pt(ang + 0.5) + '" fill="none" stroke="#8C97A4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>';
+    document.body.appendChild(svg);
+  }
+  window.addEventListener('hashchange', route);
+  window.addEventListener('resize', function () { requestAnimationFrame(arrow); });
+  route();
+})();
+</script>
+</body>
+</html>

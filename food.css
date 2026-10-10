@@ -47,7 +47,7 @@
 .fo-vt-subs a:hover { background: var(--g-bg); color: var(--ink); }
 
 /* Profile panel */
-.fo-sit { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; padding: 12px 18px; border-radius: 20px; background: var(--glass-strong); border: 1px solid var(--g-soft); }
+.fo-sit { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; padding: 12px 18px; border-radius: 20px; background: var(--me-bg); border: 1.5px solid var(--me-edge); color: var(--me-ink); }
 .fo-sit p { font-size: 14.5px; color: var(--ink-2); flex: 1 1 260px; }
 .fo-review { position: relative; }
 .fo-review > a { font-size: 14.5px; font-weight: 600; }
@@ -120,7 +120,7 @@
 .fo-acc[open] > summary::after { content: '–'; }
 .fo-acc > summary:hover { background: var(--g-mid); border-radius: 16px; }
 .fo-who { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; background: #fff; color: var(--ink-2); font-weight: 400; flex: none; }
-.fo-foryou { display: none; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; background: var(--g2-dot); color: #fff; font-weight: 400; flex: none; }
+.fo-foryou { display: none; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; background: var(--me-solid); color: #fff; font-weight: 400; flex: none; }
 .fo-acc.match { box-shadow: 0 0 0 2px var(--g-dot); }
 .fo-acc.match .fo-foryou, .fo-foryou.is-on { display: inline-block; }
 .fo-in { padding: 2px 16px 14px; display: flex; flex-direction: column; gap: 8px; font-size: 15px; color: var(--ink-2); }

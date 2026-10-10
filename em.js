@@ -71,7 +71,7 @@
     gas: to('#lens-air/smoke/gas', 'Air: carbon monoxide')
   };
   var WATER = to('#lens-water/storage', 'Water: Storage'), FOOD = to('#lens-food/store', 'Food: Store'), MOLD = to('#lens-toxins/living/mold', 'Poisons: Mold in the house'), ASH = to('#lens-toxins/neighbors/fire', 'Poisons: After a fire');
-  var ANIMALS = to('#lens-relationships/special/animals', 'Emotions &amp; love: Animals'), NEIGH = to('#lens-relationships/special/neighbors', 'Emotions &amp; love: Neighbors');
+  var ANIMALS = to('#lens-relationships/special/captive', 'Relationships: Captive animals'), NEIGH = to('#lens-relationships/special/neighbors', 'Relationships: Neighbors');
 
   /* ---------- course content ---------- */
   function units() {
