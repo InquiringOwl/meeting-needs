@@ -442,3 +442,13 @@
 .rel-nextunit b { font-family: var(--f-head); font-size: 20px; font-weight: 800; grid-column: 1; }
 .rel-nextunit span:not(.eyebrow) { font-size: 15px; color: var(--ink-2); grid-column: 1; }
 .rel-nextunit i { grid-column: 2; grid-row: 1 / span 3; font-style: normal; font-size: 24px; font-weight: 700; }
+
+/* Shades within a feelings family: each word plus what sets it apart */
+.rel-shades { display: flex; flex-direction: column; gap: 6px; }
+.rel-shade { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; text-align: left; min-height: 44px; padding: 8px 14px; border-radius: 14px; border: 1px solid var(--soft-line); background: var(--glass-strong); color: var(--ink); font: inherit; cursor: pointer; }
+.rel-shade b { font-size: 16.5px; font-weight: 600; }
+.rel-shade span { font-size: 14px; color: var(--ink-2); line-height: 1.35; }
+.rel-shade:hover { background: var(--k-bg); border-color: var(--k-edge); }
+.rel-shade.on { background: var(--k-mid); border-color: var(--k-dot); }
+.rel-shade.on b { font-weight: 700; }
+.rel-shade:focus-visible { outline: 2px solid var(--k-dot); outline-offset: 2px; }

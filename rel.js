@@ -185,7 +185,7 @@
       return '<a class="rel-pg ' + dir + ' k-' + x.k + '" href="' + href(x.id) + '"><small>' + (dir === 'prev' ? '← Previous' : 'Next →') + '</small><b>' + label + '</b></a>';
     }
     var html = '<article class="rel-unitpage k-' + u.k + '">' +
-      '<header class="rel-unit-hero"><span class="eyebrow">' + NAMES[u.course] + ' · Unit ' + u.num + ' of ' + total + (u.planned ? ' · planned' : '') + '</span><h1 tabindex="-1">' + esc(u.word) + '</h1><p class="rel-unit-sub">' + esc(u.sub) + '</p><p class="lede">' + esc(u.intro) + '</p>' +
+      '<header class="rel-unit-hero"><span class="eyebrow">' + NAMES[u.course] + ' · Unit ' + u.num + ' of ' + total + (u.planned ? ' · planned' : '') + '</span><h1 tabindex="-1">' + esc(u.word) + '</h1><p class="rel-unit-sub">' + esc(u.sub) + '</p>' + u.intro.split('\n').map(function (p) { return '<p class="lede">' + esc(p) + '</p>'; }).join('') +
       '<ol class="rel-jumps">' + u.subs.map(function (s, j) { return '<li><a href="' + href(u.id, s.id) + '"><span>' + u.num + '.' + (j + 1) + '</span>' + esc(s.title) + '</a></li>'; }).join('') + '</ol></header>' +
       secs +
       (u.planned ? '' : '<div class="rel-done"><button type="button" class="btn' + (learned(u.id) ? ' ghost' : '') + '" data-rel="learn" data-v="' + u.id + '" aria-pressed="' + learned(u.id) + '">' + (learned(u.id) ? '✓ Unit learned' : 'Mark this unit as learned') + '</button></div>') +
@@ -543,6 +543,9 @@
      Geometry is drawn at the current rotation, so labels always read upright; a spin animates the group,
      then the wheel is redrawn at its new rotation. */
   var CX = 250, CY = 250, R0 = 56, R1 = 142, R2 = 248;
+  var NU = D.NUANCE || {};
+  /* A word's own needs (its shade), falling back to its family's. */
+  function wordNeeds(w) { var n = NU[w], f = FAMILY_OF[w]; return n ? n.needs : (f ? f.needs : []); }
   function famList(ctx) { return D.WHEEL[S.wheel[ctx].mode].families; }
   function famIndex(ctx, id) { var fs = famList(ctx); for (var i = 0; i < fs.length; i++) if (fs[i].id === id) return i; return -1; }
   function norm(a) { a = a % 360; return a < 0 ? a + 360 : a; }
@@ -569,17 +572,20 @@
         : '<text class="hub-t big" x="' + CX + '" y="' + (CY - 4) + '" text-anchor="middle">Spin me</text><text class="hub-t" x="' + CX + '" y="' + (CY + 14) + '" text-anchor="middle">or tap a feeling</text>');
     var detail;
     if (fam) {
-      detail = '<p class="rel-wheel-fam" style="--h:' + fam.hue + '">' + esc(fam.name) + '</p><p class="rel-q">Which word fits best?' + (ctx === 'finder' ? ' Pick one or two.' : '') + '</p>' +
-        '<div class="rel-chips lg">' + fam.words.map(function (w) { return chip('wheel-word', w, w, picked.indexOf(w) !== -1, '', { 'data-ctx': ctx }); }).join('') + '</div>';
+      detail = '<p class="rel-wheel-fam" style="--h:' + fam.hue + '">' + esc(fam.name) + '</p><p class="rel-q">Which shade fits best?' + (ctx === 'finder' ? ' Pick one or two.' : '') + '</p>' +
+        '<div class="rel-shades" role="group" aria-label="' + esc(fam.name) + ' feelings">' + fam.words.map(function (w) {
+          var nu = NU[w], on = picked.indexOf(w) !== -1;
+          return '<button type="button" class="rel-shade' + (on ? ' on' : '') + '" data-rel="wheel-word" data-ctx="' + ctx + '" data-v="' + esc(w) + '" aria-pressed="' + on + '"><b>' + esc(w) + '</b>' + (nu ? '<span>' + esc(nu.d) + '</span>' : '') + '</button>';
+        }).join('') + '</div>';
       if (ctx === 'solo' && ws.word) {
         detail += '<div class="rel-out" aria-live="polite"><p><strong>I feel ' + esc(ws.word) + '.</strong> ' + (ws.mode === 'met' ? 'A need is being met. Universal needs it often points to:' : 'What might it be telling you? Universal needs it often points to:') + '</p>' +
-          '<div class="rel-needpills">' + fam.needs.map(function (x) { return '<span class="rel-pill k">' + esc(x) + '</span>'; }).join('') + '</div></div>';
+          '<div class="rel-needpills">' + wordNeeds(ws.word).map(function (x) { return '<span class="rel-pill k">' + esc(x) + '</span>'; }).join('') + '</div></div>';
       }
     } else detail = '<p class="rel-q">Drag the wheel round, use the arrows, or tap the family closest to how you feel. Then narrow to the word that fits.</p>';
     if (ctx === 'finder' && picked.length) {
       detail += '<div class="rel-picked"><span class="eyebrow">You feel</span><div class="rel-chips sm">' + picked.map(function (w) { return chip('wheel-word', w, w + ' ×', true, '', { 'data-ctx': ctx, 'aria-label': 'Remove ' + w }); }).join('') + '</div></div>';
     }
-    if (ws.fam || ws.word || ws.mode !== 'unmet' || (ctx === 'finder' && picked.length)) detail += '<div class="rel-row end"><button type="button" class="btn quiet sm" data-rel="wheel-reset" data-ctx="' + ctx + '">↺ Start the wheel over</button></div>';
+    if (ws.fam || ws.word || (ctx === 'finder' && picked.length)) detail += '<div class="rel-row end"><button type="button" class="btn quiet sm" data-rel="wheel-reset" data-ctx="' + ctx + '">↺ Start the wheel over</button></div>';
     return '<div class="rel-wheel' + (ctx === 'finder' ? ' big' : '') + '">' +
       '<div class="rel-wheel-body"><div class="rel-wheel-stage">' +
       '<svg class="rel-wheel-svg" data-ctx="' + ctx + '" viewBox="-12 -30 524 544" role="img" aria-label="Feelings wheel: ' + esc(W.label) + '">' +
@@ -647,7 +653,7 @@
     var f = S.finder, out = [];
     if (f.source && SOURCE[f.source]) out = out.concat(SOURCE[f.source].needs);
     if (f.faux) out = out.concat(FAUX[f.faux].needs);
-    f.feelings.forEach(function (w) { var fam = FAMILY_OF[w]; if (fam) out = out.concat(fam.needs); });
+    f.feelings.forEach(function (w) { out = out.concat(wordNeeds(w)); });
     return uniq(out.concat(f.needs)).slice(0, 16);
   }
   function fStatement() {
@@ -789,7 +795,7 @@
       case 'wheel-fam': if (!spinning) spinTo(ctx, v); return;
       case 'wheel-reset':
         if (spinning) return;
-        S.wheel[ctx] = { mode: 'unmet', fam: null, word: null, rot: 0 };
+        S.wheel[ctx] = { mode: S.wheel[ctx].mode, fam: null, word: null, rot: 0 };
         if (ctx === 'finder') { f.feelings = []; f.fam = null; }
         break;
       case 'wheel-step':
