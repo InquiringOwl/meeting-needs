@@ -91,9 +91,9 @@
       block('relationships', 'Between', special) +
       '</details></nav>';
   }
-  function layout(cur, main, course) {
+  function layout(cur, main, course, topNav) {
     return mn().header('home') + '<div class="rel-layout">' + sidebar(cur, course) + '<main class="rel-main">' +
-      '<div class="rel-topbar"><button type="button" class="rel-back" data-rel="back">← Back</button></div>' + main + '</main></div>' + mn().footer();
+      '<div class="rel-topbar"><button type="button" class="rel-back" data-rel="back">← Back</button>' + (topNav || '') + '</div>' + main + '</main></div>' + mn().footer();
   }
 
   /* ---------- overview pieces ---------- */
@@ -184,16 +184,32 @@
       var label = (x.course !== u.course ? NAMES[x.course] + ' · ' : '') + x.num + ' · ' + esc(x.word);
       return '<a class="rel-pg ' + dir + ' k-' + x.k + '" href="' + href(x.id) + '"><small>' + (dir === 'prev' ? '← Previous' : 'Next →') + '</small><b>' + label + '</b></a>';
     }
+    /* Top: small previous / next arrows beside Back. Bottom: a back card and a big next-unit card.
+       u.next = [sub id, eyebrow, title, blurb] points the big card somewhere more specific (e.g. 2.1). */
+    function short(x, dir) {
+      var h = x ? href(x.id) : (dir === 'prev' ? BASES[u.course] : BASE + '/special');
+      var l = x ? x.num + ' · ' + esc(x.word) : (dir === 'prev' ? NAMES[u.course] : 'Special situations');
+      if (x && x.course !== u.course) l = NAMES[x.course] + ' · ' + l;
+      return '<a class="rel-back" href="' + h + '" aria-label="' + (dir === 'prev' ? 'Previous: ' : 'Next: ') + l + '">' + (dir === 'prev' ? '← ' + l : l + ' →') + '</a>';
+    }
+    function bigNext() {
+      var o = u.next, h, eb, t, b, k;
+      if (o) { h = href(next ? next.id : u.id, o[0]); eb = o[1]; t = o[2]; b = o[3]; k = next ? next.k : u.k; }
+      else if (next) { h = href(next.id); eb = 'Next' + (next.course !== u.course ? ' course · ' + NAMES[next.course] : ' unit') + ' · ' + next.num; t = esc(next.word); b = esc(next.sub); k = next.k; }
+      else { h = BASE + '/special'; eb = 'Next'; t = 'Special situations'; b = 'Your inner world and theirs, applied to the people, animals and places in your life.'; k = 'apps'; }
+      return '<a class="rel-nextunit k-' + k + '" href="' + h + '"><span class="eyebrow">' + esc(eb) + '</span><b>' + t + '</b><span>' + b + '</span><i aria-hidden="true">→</i></a>';
+    }
     var html = '<article class="rel-unitpage k-' + u.k + '">' +
       '<header class="rel-unit-hero"><span class="eyebrow">' + NAMES[u.course] + ' · Unit ' + u.num + ' of ' + total + (u.planned ? ' · planned' : '') + '</span><h1 tabindex="-1">' + esc(u.word) + '</h1><p class="rel-unit-sub">' + esc(u.sub) + '</p>' + u.intro.split('\n').map(function (p) { return '<p class="lede">' + esc(p) + '</p>'; }).join('') +
       '<ol class="rel-jumps">' + u.subs.map(function (s, j) { return '<li><a href="' + href(u.id, s.id) + '"><span>' + u.num + '.' + (j + 1) + '</span>' + esc(s.title) + '</a></li>'; }).join('') + '</ol></header>' +
       secs +
       (u.planned ? '' : '<div class="rel-done"><button type="button" class="btn' + (learned(u.id) ? ' ghost' : '') + '" data-rel="learn" data-v="' + u.id + '" aria-pressed="' + learned(u.id) + '">' + (learned(u.id) ? '✓ Unit learned' : 'Mark this unit as learned') + '</button></div>') +
       '</article>' +
-      '<nav class="rel-pager" aria-label="Units">' + pg(prev, 'prev') + pg(next, 'next') + '</nav>';
+      '<nav class="rel-pager is-big" aria-label="Units">' + pg(prev, 'prev') + bigNext() + '</nav>';
+    var topNav = '<nav class="rel-topnav" aria-label="Units">' + short(prev, 'prev') + short(next, 'next') + '</nav>';
     if (subId) setTimeout(function () { var el = document.getElementById('sec-' + u.id + '-' + subId); if (el) el.scrollIntoView({ block: 'start' }); }, 0);
     setTimeout(spy, 0);
-    return { title: u.word + ' · ' + NAMES[u.course] + ' · Kinship', html: layout(u.id, html, u.course) };
+    return { title: u.word + ' · ' + NAMES[u.course] + ' · Kinship', html: layout(u.id, html, u.course, topNav) };
   }
 
   /* ---------- special situations: one page, one accordion each (Animals first) ----------

@@ -259,7 +259,7 @@ window.MN_REL = (function () {
   /* ---------- Two courses (Emotions, then Relationships), one page per unit; sub-units are sections on that page.
      course: which lens the unit lives in. planned: shown dashed, with a short description, until it's written. ---------- */
   var UNITS = [
-    { id: 'feel', course: 'emotions', num: 1, word: 'Feel', sub: 'what’s alive inside of you', intro: 'Feelings are messages about needs. Learn to listen to them precisely and without blame (because accusations obscure our solution options).\nIf you’re like most people, your physical needs probably aren’t all met, and without hope of resolution, I fully empathize that facing existing pains may just feel painful. However, facing your problems is the first step to meeting your needs.',
+    { id: 'feel', course: 'emotions', num: 1, word: 'Feel', sub: 'what’s alive inside of you', next: ['universal', 'Next unit · 2.1', 'Universal needs', 'The roots beneath every feeling: needs every person shares.'], intro: 'Feelings are messages about needs. Learn to listen to them precisely and without blame (because accusations obscure our solution options).\nIf you’re like most people, your physical needs probably aren’t all met, and without hope of resolution, I fully empathize that facing existing pains may just feel painful. However, facing your problems is the first step to meeting your needs.',
       subs: [
         { id: 'signals', title: 'Emotions are messengers', short: 'Every feeling points to a need, met or not.',
           key: ['Feelings aren’t good or bad. Each one is information.',
@@ -305,8 +305,7 @@ window.MN_REL = (function () {
             '**Tend the body on heavy days.** Water, food, sleep, sunlight, a warm bath, a hug. Some of the de-escalation tools in 1.3 may help too.',
             '**Remember on purpose.** Light a candle, visit a place, keep an object close, mark the day. Rituals give grief somewhere to go.',
             '**Ask for help when it’s too heavy.** If despair turns into not wanting to be here, please reach out to someone right now. In the US you can call or text 988, the Suicide & Crisis Lifeline.'],
-          remember: 'Grieving is a need that wants to be heard as valid, not fought as a burden.',
-          next: ['need', 'universal', 'Next unit · 2.1', 'Universal needs', 'The roots beneath every feeling: needs every person shares.'] }
+          remember: 'Grieving is a need that wants to be heard as valid, not fought as a burden.' }
       ] },
     { id: 'need', course: 'emotions', num: 2, word: 'Identify the need', sub: 'the roots beneath', intro: 'Underneath every feeling is a universal need. Find it, and you have more than one way to meet it.',
       subs: [
