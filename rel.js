@@ -37,7 +37,7 @@
 
   var S = {
     wheel: { solo: { mode: 'unmet', fam: null, word: null, rot: 0 }, finder: { mode: 'unmet', fam: null, word: null, rot: 0 } },
-    needs: [], sort: {}, faux: 'abandoned',
+    need: null, sort: {}, faux: 'abandoned',
     finder: blankFinder(),
     cf: cloneConflict()
   };
@@ -616,11 +616,11 @@
   }
   function needsTool() {
     return D.NEEDS.map(function (g) {
-      return '<div class="rel-ngroup"><h4>' + esc(g.name) + ' <span class="hint">' + esc(g.blurb) + '</span></h4><div class="rel-chips sm">' +
-        g.items.map(function (x) { return chip('need', x, x, S.needs.indexOf(x) !== -1); }).join('') + '</div></div>';
-    }).join('') + (S.needs.length
-      ? '<div class="rel-out"><p><strong>Alive in you right now:</strong> ' + esc(list(S.needs)) + '.</p><p class="hint">None of these name a person, place or time. Everyone you meet has the same list.</p></div>'
-      : '<p class="rel-q">Tap any need that feels alive in you right now, met or not.</p>');
+      var open = g.items.indexOf(S.need) !== -1 ? S.need : null;
+      return '<div class="rel-ngroup"><h4><b>' + esc(g.name) + ':</b>&nbsp;<em>' + esc(g.blurb) + '</em></h4><div class="rel-chips sm">' +
+        g.items.map(function (x) { return chip('need', x, x, x === open); }).join('') + '</div>' +
+        (open ? '<p class="rel-ndef" aria-live="polite"><b>' + esc(open) + ':</b> ' + esc(D.NEED_DEF[open] || '') + '</p>' : '') + '</div>';
+    }).join('') + (S.need ? '' : '<p class="rel-q">Tap any need to see what sets it apart.</p>');
   }
   function sorterTool() {
     var right = 0, answered = 0;
@@ -809,7 +809,7 @@
         else S.wheel.solo.word = S.wheel.solo.word === v ? null : v;
         if (wf && wf.mode === S.wheel[ctx].mode && S.wheel[ctx].fam !== wf.id && !spinning) { spinTo(ctx, wf.id); return; }
         break;
-      case 'need': toggle(S.needs, v); break;
+      case 'need': S.need = S.need === v ? null : v; break;
       case 'sort': p = v.split(':'); S.sort[p[0]] = p[1]; break;
       case 'sort-reset': S.sort = {}; break;
       case 'faux': S.faux = v; break;

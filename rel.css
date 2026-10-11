@@ -182,7 +182,10 @@
 /* Needs, sorter, translator */
 .rel-ngroup { display: flex; flex-direction: column; gap: 6px; }
 .rel-ngroup h4 { margin: 0; font-family: var(--f-head); font-size: 15px; }
-.rel-ngroup h4 .hint { font-family: var(--f-body); font-weight: 400; }
+.rel-ngroup h4 { font-weight: 400; }
+.rel-ngroup h4 b { font-weight: 700; }
+.rel-ngroup h4 em { font-family: var(--f-body); font-size: inherit; font-weight: 400; font-style: italic; color: var(--muted); }
+.rel-ndef { margin: 2px 0 0; padding: 10px 14px; border-radius: 14px; background: var(--k-bg); font-size: 15px; line-height: 1.45; }
 .rel-allneeds { display: flex; flex-direction: column; gap: 12px; padding: 12px; border-radius: 14px; background: var(--glass-faint); }
 .rel-sort { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 8px; }
 .rel-sort-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px; padding: 10px 12px; border-radius: 14px; background: var(--k-bg); }

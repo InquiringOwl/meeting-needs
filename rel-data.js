@@ -7,14 +7,74 @@ window.MN_REL = (function () {
   /* ---------- Needs (universal: no person, place, object or time inside) ---------- */
   var NEEDS = [
     { id: 'body', name: 'Body', blurb: 'What keeps a body alive and well', items: ['food', 'water', 'clean air', 'rest', 'sleep', 'movement', 'shelter', 'warmth', 'touch', 'health'] },
-    { id: 'safety', name: 'Safety', blurb: 'Feeling secure enough to relax', items: ['safety', 'security', 'stability', 'predictability', 'protection', 'trust'] },
-    { id: 'connection', name: 'Connection', blurb: 'Being with and known by others', items: ['connection', 'belonging', 'closeness', 'companionship', 'to be seen', 'to be heard', 'understanding', 'empathy', 'care', 'respect', 'acceptance', 'appreciation', 'support', 'consideration', 'cooperation', 'mutuality', 'fairness'] },
-    { id: 'autonomy', name: 'Freedom', blurb: 'Choosing for yourself', items: ['freedom', 'choice', 'autonomy', 'independence', 'space', 'spontaneity'] },
-    { id: 'honesty', name: 'Honesty', blurb: 'Being real with yourself and others', items: ['honesty', 'authenticity', 'integrity', 'presence', 'clarity'] },
-    { id: 'peace', name: 'Peace', blurb: 'Ease in the body and the home', items: ['ease', 'order', 'calm', 'beauty', 'harmony', 'equality'] },
-    { id: 'play', name: 'Play', blurb: 'Joy for its own sake', items: ['play', 'fun', 'humour', 'adventure', 'stimulation'] },
+    { id: 'safety', name: 'Safety', blurb: 'Feeling secure enough to relax', items: ['safety', 'security', 'predictability', 'trust'] },
+    { id: 'connection', name: 'Connection', blurb: 'Being with and known by others', items: ['connection', 'belonging', 'closeness', 'companionship', 'to be seen', 'to be heard', 'understanding', 'empathy', 'care', 'respect', 'acceptance', 'appreciation', 'support', 'consideration', 'mutuality', 'fairness'] },
+    { id: 'autonomy', name: 'Freedom', blurb: 'Choosing for yourself', items: ['choice', 'autonomy', 'space', 'spontaneity'] },
+    { id: 'honesty', name: 'Honesty', blurb: 'Being real with yourself and others', items: ['honesty', 'integrity', 'presence', 'clarity'] },
+    { id: 'peace', name: 'Peace', blurb: 'Ease in the body and the home', items: ['ease', 'order', 'calm', 'beauty'] },
+    { id: 'play', name: 'Play', blurb: 'Joy for its own sake', items: ['play', 'humour', 'adventure', 'stimulation'] },
     { id: 'meaning', name: 'Meaning', blurb: 'A life that matters to you', items: ['purpose', 'contribution', 'competence', 'growth', 'learning', 'creativity', 'hope', 'celebration', 'mourning', 'inspiration'] }
   ];
+
+  /* One line per need: what sets it apart from its neighbours. Shown when a need is tapped. */
+  var NEED_DEF = {
+    'food': 'your body wants fuel and nutrients.',
+    'water': 'staying hydrated, so every cell can do its work.',
+    'clean air': 'breath that nourishes instead of harms.',
+    'rest': 'pausing while awake, so energy can come back.',
+    'sleep': 'the deep nightly repair that rest alone can’t do.',
+    'movement': 'a body that gets to stretch, walk and use its strength.',
+    'shelter': 'a dry, safe place to be, out of the weather.',
+    'warmth': 'a body that’s not too hot and not too cold.',
+    'touch': 'skin contact that tells the body it isn’t alone.',
+    'health': 'a body working well enough to live your life.',
+    'safety': 'no danger here, right now.',
+    'security': 'confidence that tomorrow’s basics will be there too.',
+    'predictability': 'knowing roughly what’s coming, so you can prepare.',
+    'trust': 'being able to rely on someone’s word and intentions.',
+    'connection': 'a live thread between you and another being.',
+    'belonging': 'being part of a “we” that counts you in.',
+    'closeness': 'letting someone near your inner world.',
+    'companionship': 'someone alongside you for the ordinary days.',
+    'to be seen': 'others noticing who you really are.',
+    'to be heard': 'your words landing and being taken in.',
+    'understanding': 'making sense of things, and of each other.',
+    'empathy': 'someone feeling with you, without fixing or advising.',
+    'care': 'being tended to, and getting to tend.',
+    'respect': 'being treated as someone whose dignity matters.',
+    'consideration': 'your needs counted when others make plans.',
+    'acceptance': 'being welcome as you are, rough edges included.',
+    'appreciation': 'knowing what you give is noticed and valued.',
+    'support': 'help carrying what’s too heavy to carry alone.',
+    'mutuality': 'give and take flowing both ways.',
+    'fairness': 'equal footing, and the same rules for everyone.',
+    'choice': 'having real options, and a say in which one.',
+    'autonomy': 'steering your own life by your own values.',
+    'space': 'room of your own, in time, place or attention.',
+    'spontaneity': 'following the impulse of the moment.',
+    'honesty': 'saying what’s true, to yourself and to others.',
+    'integrity': 'acting in line with what you value.',
+    'presence': 'being fully here, not somewhere else in your head.',
+    'clarity': 'knowing what’s going on and what’s being asked.',
+    'ease': 'things flowing without needless struggle.',
+    'order': 'a place for things, so the space around you settles.',
+    'calm': 'a quiet, settled nervous system.',
+    'beauty': 'something that delights the senses and lifts the spirit.',
+    'play': 'doing something just for the doing, no goal needed.',
+    'humour': 'laughter, and seeing the funny side.',
+    'adventure': 'the thrill of the new and unknown.',
+    'stimulation': 'enough going on to feel awake and interested.',
+    'purpose': 'a reason to get up that’s bigger than the day.',
+    'contribution': 'making life better for someone else.',
+    'competence': 'being able to do what you set out to do.',
+    'growth': 'becoming more fully who you are.',
+    'learning': 'taking in something new.',
+    'creativity': 'bringing something into the world that wasn’t there.',
+    'hope': 'trusting that things can get better.',
+    'celebration': 'marking what went well, ideally together.',
+    'mourning': 'honouring what’s lost, so the grief can move through.',
+    'inspiration': 'being lit up by something, so you want to act.'
+  };
 
   /* ---------- Feelings wheel (descriptions of inside, never of what someone did) ---------- */
   var WHEEL = {
@@ -22,7 +82,7 @@ window.MN_REL = (function () {
       label: 'When needs aren’t met',
       families: [
         { id: 'sad', name: 'Sad', hue: 222, words: ['sad', 'lonely', 'disappointed', 'discouraged', 'wistful'], needs: ['connection', 'belonging', 'to be seen', 'closeness', 'hope'] },
-        { id: 'scared', name: 'Scared', hue: 268, words: ['scared', 'anxious', 'worried', 'nervous', 'wary'], needs: ['safety', 'predictability', 'trust', 'stability', 'support'] },
+        { id: 'scared', name: 'Scared', hue: 268, words: ['scared', 'anxious', 'worried', 'nervous', 'wary'], needs: ['safety', 'predictability', 'trust', 'security', 'support'] },
         { id: 'angry', name: 'Mad', hue: 8, words: ['angry', 'frustrated', 'irritated', 'resentful', 'furious'], needs: ['respect', 'fairness', 'choice', 'consideration', 'to be heard'] },
         { id: 'tense', name: 'Tense', hue: 32, words: ['tense', 'overwhelmed', 'stressed', 'restless', 'cranky'], needs: ['ease', 'order', 'space', 'rest', 'support'] },
         { id: 'tired', name: 'Tired', hue: 200, words: ['tired', 'exhausted', 'depleted', 'weary', 'burnt out'], needs: ['rest', 'sleep', 'food', 'support', 'ease'] },
@@ -35,7 +95,7 @@ window.MN_REL = (function () {
     met: {
       label: 'When needs are met',
       families: [
-        { id: 'joyful', name: 'Joyful', hue: 45, words: ['happy', 'delighted', 'glad', 'amused', 'elated'], needs: ['play', 'fun', 'celebration', 'connection'] },
+        { id: 'joyful', name: 'Joyful', hue: 45, words: ['happy', 'delighted', 'glad', 'amused', 'elated'], needs: ['play', 'humour', 'celebration', 'connection'] },
         { id: 'peaceful', name: 'Peaceful', hue: 160, words: ['calm', 'relaxed', 'content', 'centred', 'relieved'], needs: ['ease', 'calm', 'safety', 'rest'] },
         { id: 'grateful', name: 'Grateful', hue: 95, words: ['grateful', 'moved', 'touched', 'appreciative', 'thankful'], needs: ['appreciation', 'care', 'support', 'contribution'] },
         { id: 'engaged', name: 'Engaged', hue: 190, words: ['curious', 'absorbed', 'interested', 'fascinated', 'alert'], needs: ['learning', 'stimulation', 'growth', 'creativity'] },
@@ -54,13 +114,13 @@ window.MN_REL = (function () {
     'disappointed': { d: 'Something you hoped for didn’t happen.', needs: ['mourning', 'hope', 'trust'] },
     'discouraged': { d: 'Losing heart after effort; is it worth trying again?', needs: ['hope', 'support', 'competence'] },
     'wistful': { d: 'A soft ache for what was, or what might have been.', needs: ['mourning', 'connection', 'beauty'] },
-    'scared': { d: 'Danger feels close, right now.', needs: ['safety', 'protection', 'support'] },
+    'scared': { d: 'Danger feels close, right now.', needs: ['safety', 'support', 'calm'] },
     'anxious': { d: 'Unease without a clear target; the body on alert.', needs: ['calm', 'predictability', 'safety'] },
     'worried': { d: 'Thoughts circling one specific what-if.', needs: ['predictability', 'clarity', 'security'] },
     'nervous': { d: 'Jittery before something that matters to you.', needs: ['competence', 'support', 'acceptance'] },
     'wary': { d: 'Holding back until you know it’s safe.', needs: ['trust', 'safety', 'honesty'] },
     'angry': { d: 'Hot energy saying a line was crossed.', needs: ['respect', 'fairness', 'to be heard'] },
-    'frustrated': { d: 'Blocked: you keep trying and it isn’t working.', needs: ['ease', 'competence', 'cooperation'] },
+    'frustrated': { d: 'Blocked: you keep trying and it isn’t working.', needs: ['ease', 'competence', 'support'] },
     'irritated': { d: 'Small things grating, often when tired or overloaded.', needs: ['rest', 'space', 'ease'] },
     'resentful': { d: 'An old unfairness that hasn’t been made right.', needs: ['fairness', 'appreciation', 'mutuality'] },
     'furious': { d: 'Anger at full volume: something big is at stake.', needs: ['respect', 'safety', 'to be heard'] },
@@ -97,7 +157,7 @@ window.MN_REL = (function () {
     'happy': { d: 'A general sense that things are well.', needs: ['ease', 'connection', 'play'] },
     'delighted': { d: 'A bright burst of pleasure at something specific.', needs: ['play', 'beauty', 'celebration'] },
     'glad': { d: 'Quiet satisfaction that something turned out well.', needs: ['ease', 'hope', 'trust'] },
-    'amused': { d: 'Something struck you as funny.', needs: ['humour', 'play', 'fun'] },
+    'amused': { d: 'Something struck you as funny.', needs: ['humour', 'play', 'spontaneity'] },
     'elated': { d: 'Joy so big it lifts you off the ground.', needs: ['celebration', 'hope', 'adventure'] },
     'calm': { d: 'Still and steady inside.', needs: ['calm', 'safety', 'ease'] },
     'relaxed': { d: 'Your body has stopped bracing.', needs: ['rest', 'ease', 'safety'] },
@@ -118,7 +178,7 @@ window.MN_REL = (function () {
     'tender': { d: 'Gentle and soft, wanting to protect.', needs: ['care', 'closeness', 'touch'] },
     'loving': { d: 'Deep care for someone’s whole being.', needs: ['closeness', 'care', 'mutuality'] },
     'friendly': { d: 'Easy openness, even with new people.', needs: ['companionship', 'connection', 'play'] },
-    'open-hearted': { d: 'Unguarded, letting others in.', needs: ['trust', 'authenticity', 'acceptance'] },
+    'open-hearted': { d: 'Unguarded, letting others in.', needs: ['trust', 'honesty', 'acceptance'] },
     'hopeful': { d: 'Believing something good is possible, though not certain.', needs: ['hope', 'trust', 'purpose'] },
     'encouraged': { d: 'Heartened by a sign of progress or someone’s support.', needs: ['support', 'hope', 'competence'] },
     'optimistic': { d: 'Expecting things to turn out well, in general.', needs: ['hope', 'trust', 'security'] },
@@ -130,10 +190,10 @@ window.MN_REL = (function () {
     'energised': { d: 'Fuel in the tank, ready to move.', needs: ['movement', 'food', 'stimulation'] },
     'alive': { d: 'Fully here and awake to the world.', needs: ['presence', 'adventure', 'beauty'] },
     'confident': { d: 'Trusting you can handle what’s coming.', needs: ['competence', 'trust', 'growth'] },
-    'safe': { d: 'No threat: you can let your guard down.', needs: ['safety', 'protection', 'trust'] },
+    'safe': { d: 'No threat: you can let your guard down.', needs: ['safety', 'trust', 'calm'] },
     'empowered': { d: 'You have the choice and the means to act.', needs: ['autonomy', 'choice', 'competence'] },
     'proud': { d: 'Pleased by what you did or who you are.', needs: ['competence', 'contribution', 'to be seen'] },
-    'secure': { d: 'Steady footing that will hold over time.', needs: ['security', 'stability', 'predictability'] }
+    'secure': { d: 'Steady footing that will hold over time.', needs: ['security', 'predictability', 'support'] }
   };
 
   /* ---------- Accusation words: a "you did this to me" hiding inside ---------- */
@@ -231,14 +291,15 @@ window.MN_REL = (function () {
     { id: 'need', course: 'emotions', num: 2, word: 'Identify the need', sub: 'the roots beneath', intro: 'Underneath every feeling is a universal need. Find it, and you have more than one way to meet it.',
       subs: [
         { id: 'universal', title: 'Universal needs', short: 'Food, safety, rest, freedom, belonging…',
-          key: ['Every person shares the same needs: food, water, clean air, rest, safety, belonging, freedom, meaning, play.',
+          key: ['Every person shares the same needs. We may experience them at different times, in different ways.',
             'A need never names a person, place, object or time. That’s what makes it universal.',
             'Because we share them, we can recognise each other’s needs, even mid-conflict.'],
           tool: 'needs', remember: 'No who, where, what or when inside a need.' },
         { id: 'strategies', title: 'Needs vs. strategies', short: '“I need you to…” is a strategy. Find the need under it.',
           key: ['A strategy is one way to meet a need: a specific person, action, thing or time.',
             'One need has many strategies. Conflict happens when we cling to just one.',
-            'Ask: *if I got this, what would it give me?* Keep asking until it’s universal.',
+            'If you got what you wanted, what would feel resolved inside you? What emotion do you seek?',
+            'One person’s rational strategy to meet their need may look irrational to someone else.',
             'Seeing the need under your strategy brings a responsibility to choose differently to meet those needs.',
             'You may believe you have no choice (e.g. to pay rent, or be unhoused, or something else — and I hear you, let’s face our crummy options through upcoming units!). You may not like your choices, but it’s vital to remember your responsibility for your choices.'],
           tool: 'sorter', remember: 'Conflicts live between strategies. Needs never conflict.' },
@@ -246,8 +307,7 @@ window.MN_REL = (function () {
           key: ['Start broad (sad, mad, scared) and narrow to the word that fits. “Mad” might be *frustrated* (needs ease), *resentful* (needs fairness) or *irritated* (needs rest).',
             'Ask where it’s coming from: your body, something someone did, something of yours, or too much at once.',
             'Land on the need, and let it matter before you solve anything.'],
-          tool: 'finder', remember: 'Feeling → source → need.' },
-        { id: 'beneath', title: 'Yes, and: beneath the noun', short: 'A job or money is a strategy. Yes, it matters, and beneath it sit needs like safety, choice and care for the people you love.', planned: true }
+          tool: 'finder', remember: 'Feeling → source → need.' }
       ] },
     { id: 'soil', course: 'emotions', num: 3, word: 'Who you are', sub: 'what’s going on down there', planned: true,
       intro: 'The soil beneath the roots: the you who chooses, the body that remembers, and the tools your mind brings.',
@@ -314,5 +374,5 @@ window.MN_REL = (function () {
     { id: 'power', name: 'Power & peace', short: 'Nonviolence, abolition, and power with instead of power over.', status: 'Later', preview: true }
   ];
 
-  return { NEEDS: NEEDS, WHEEL: WHEEL, NUANCE: NUANCE, FAUX: FAUX, SORT: SORT, SOURCES: SOURCES, CONFLICT: CONFLICT, UNITS: UNITS, APPS: APPS };
+  return { NEEDS: NEEDS, NEED_DEF: NEED_DEF, WHEEL: WHEEL, NUANCE: NUANCE, FAUX: FAUX, SORT: SORT, SOURCES: SOURCES, CONFLICT: CONFLICT, UNITS: UNITS, APPS: APPS };
 })();
