@@ -134,7 +134,9 @@
             '<p class="rel-layer"><b>Soil · who you are</b><span>What’s going on down there.</span></p>' + card(U[2]) +
           '</div></section>' +
         mn().deeper('People whose work shaped this course, and where to go for more.', mn().credits('emotions')) +
-        coursePager(null, null, BASES.relationships, 'Relationships'), 'emotions')
+        /* Next step from the overview is Unit 1 (feelings), not the Relationships course. */
+        '<nav class="rel-pager" aria-label="Units"><a class="rel-pg prev" href="#"><small>← Back to</small><b>Education</b></a>' +
+          '<a class="rel-pg next k-' + U[0].k + '" href="' + href(U[0].id) + '"><small>Next unit →</small><b>' + U[0].num + ' · ' + esc(U[0].word) + '</b></a></nav>', 'emotions')
     };
   }
 
