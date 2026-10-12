@@ -353,16 +353,14 @@
     return header('about') +
       '<section class="hero"><div class="hero-copy">' +
       '<span class="eyebrow">About</span>' +
-      '<h1 tabindex="-1">Hi, I’m Ashley.</h1>' +
-      '<p>Based in San Francisco. Kinship is simply made from love: free and open source, so we can all learn what we need to live.</p>' +
-      '<p>It’s a modern tribute to the Diggers and the organized hippies: the San Francisco Diggers served free food in the Panhandle and ran free stores in the 1960s, named for the English Diggers who farmed common land in 1649. Alicia Bay Laurel opened <i>Living on the Earth</i> (1970) by dedicating it to people who’d rather chop wood than sit at a desk to pay the power company.</p>' +
-      '<p>My reasons go deeper than free. The system isn’t working for so many people, and we’ve lost touch with what actually meets our needs, putting too much trust in broken systems.</p>' +
+      '<h1 class="hello" tabindex="-1">Hi, I’m Ashley. Based in San Francisco.</h1>' +
+      '<p>Kinship is made from love: free and open source, aiming to clarify what we need to live and teach how to meet universal needs. (I don’t think “jobs” are needs; they’re strategies for money to meet true needs to thrive like water, safety, and love.)</p>' +
+      '<p>In a way, this is my modern contribution to organized hippies. The San Francisco Diggers served free food in the Panhandle and ran free stores in the 1960s. Alicia Bay Laurel opened <i>Living on the Earth</i> (1970): “This book is for people who would rather chop wood than work behind a desk so they can pay P.G.&amp;E.”</p>' +
+      '<p>The system isn’t working for so many people, and in my opinion we’ve lost touch with what actually meets our needs, putting too much trust in broken systems.</p>' +
       '<p>Kinship won’t solve these problems alone. It’s the clearest way I could package self-empowering information, for you to take and apply in your own life.</p>' +
-      '<p>Most of Kinship aims to be plain, checkable information you can weigh for yourself. My own considerations show up in pink, one sentence each:</p>' +
-      opinion('<p>One why, for you to weigh.</p>') +
-      '<p>The first is at the end of <a href="#lens-water/uses">Water: Uses</a>.</p>' +
-      '<p>The inspiring and helpful people behind Kinship are gathered under <a href="#resources">Resources</a>.</p>' +
-      '<p>I’m just a lady trying to make the world a better place, for free, so please be gentle. And I’m totally open: if I can help you, or you have feedback or anything at all to share, email me at ' + mailto() + '.</p>' +
+      '<p>Most of Kinship aims to be plain, checkable information you can weigh for yourself.</p>' +
+      '<p>The inspiring and helpful people whose work I’m amplifying and synthesizing are gathered under <a href="#resources">Resources</a>.</p>' +
+      '<p>Feel free to email me at ' + mailto() + '. I’m just a lady trying to make the world a better place (for free), so I don’t have tons of capacity to build new things, but if I can help you, or you have feedback or anything at all to share, I’m around!</p>' +
       '</div></section>' + footer();
   }
 
