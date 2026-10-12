@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kinship · Logo mock-ups v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500..800&family=Instrument+Sans:wght@400..700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root { --bg:#EEF2E8; --ink:#17241C; --muted:#3F5546; --pink:#C2477F; --line:rgba(23,36,28,.16); }
+* { box-sizing:border-box; margin:0; }
+body { background:var(--bg); color:var(--ink); font:16px/1.5 'Instrument Sans',system-ui,sans-serif; padding:24px 16px 64px; }
+main { max-width:980px; margin:0 auto; }
+h1 { font:800 28px/1.15 Manrope,sans-serif; letter-spacing:-.02em; }
+.lede { color:var(--muted); margin:6px 0 24px; max-width:62ch; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,430px),1fr)); gap:18px; }
+.card { background:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.8); border-radius:22px; padding:18px; box-shadow:0 12px 40px rgba(30,60,30,.08); }
+.card.now { opacity:.85; }
+.tag { font:500 11px 'IBM Plex Mono',monospace; letter-spacing:.06em; text-transform:uppercase; color:var(--pink); }
+.card h2 { font:800 20px Manrope,sans-serif; letter-spacing:-.02em; margin:2px 0 4px; }
+.card p { color:var(--muted); font-size:15px; }
+.big { background:#FFFDF9; border-radius:16px; margin:14px 0; padding:26px 16px; display:flex; justify-content:center; }
+.big svg { width:100%; max-width:340px; height:auto; }
+.label { font:500 11px 'IBM Plex Mono',monospace; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin:12px 0 6px; }
+.hdr { display:flex; align-items:center; justify-content:space-between; gap:10px; background:rgba(255,255,255,.64); border:1px solid rgba(255,255,255,.8); border-radius:16px; padding:8px 14px; max-width:360px; }
+.brand { display:flex; align-items:center; gap:10px; min-height:44px; text-decoration:none; color:var(--ink); }
+.brand b { font:800 20px Manrope,sans-serif; letter-spacing:-.02em; }
+.hdr nav a { font-size:14.5px; color:var(--ink); text-decoration:none; padding:8px 12px; border-radius:999px; background:rgba(255,255,255,.62); }
+.fav { display:flex; align-items:center; gap:14px; }
+.fav span { display:flex; align-items:center; gap:6px; background:#fff; border-radius:8px; padding:5px 10px 5px 6px; font-size:13px; color:var(--muted); border:1px solid var(--line); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Kinship logo mock-ups, v3</h1>
+  <p class="lede">The draped strip with three hearts. The hearts overlap less, so each one shows more of its full shape, but they're still one cut strip joined at the sides. There are three spacings, from a little overlap to just touching, so you can pick how much they hold on.</p>
+  <div class="grid" id="grid"></div>
+</main>
+<script>
+var P = '#C2477F', W = '#FCEFF4', SHADE = '#F4D6E3';
+var H = 'M12 21.2C7.4 18 3.3 14.6 2.4 10.9 1.6 7.5 3.8 4.6 6.9 4.6c2.1 0 3.6 1.2 5.1 3.1 1.5-1.9 3-3.1 5.1-3.1 3.1 0 5.3 2.9 4.5 6.3C20.7 14.6 16.6 18 12 21.2z';
+var uid = 0;
+
+/* A chain of n hearts cut from one strip. R = 0 lays them level; R > 0 drapes them along a smile-shaped curve of that radius. */
+function chain(n, s, R, folded, gap) {
+  gap = gap || 17;
+  var d = gap * s, L = Math.max(2.4, 6.2 - (gap - 17) * 2.5), mid = (n - 1) / 2, pos = [];
+  var th = R ? 2 * Math.asin(d / (2 * R)) : 0;
+  for (var i = 0; i < n; i++) {
+    var k = i - mid;
+    pos.push(R ? { x: R * Math.sin(k * th), y: R - R * Math.cos(k * th), r: -k * th * 180 / Math.PI } : { x: k * d, y: 0, r: 0 });
+  }
+  /* For a smile, the ends sit higher: flip y so the middle is lowest. */
+  pos.forEach(function (p) { p.y = -p.y; });
+  function t(p) { return 'translate(' + p.x.toFixed(2) + ' ' + p.y.toFixed(2) + ') rotate(' + p.r.toFixed(2) + ') scale(' + s + ') translate(-12 -12.9)'; }
+  var rim = '', fill = '', extra = '';
+  pos.forEach(function (p) {
+    rim += '<path d="' + H + '" transform="' + t(p) + '"/>';
+    fill += '<path d="' + H + '" transform="' + t(p) + '" fill="' + W + '"/>';
+    if (folded) {
+      var id = 'c' + (uid++);
+      fill += '<g transform="' + t(p) + '"><clipPath id="' + id + '"><rect x="12" y="0" width="13" height="24"/></clipPath>' +
+        '<path d="' + H + '" fill="' + SHADE + '" clip-path="url(#' + id + ')"/>' +
+        '<path d="M12 8.4V20.2" stroke="' + P + '" stroke-width="' + (0.9 / s).toFixed(2) + '" stroke-dasharray="' + (1 / s).toFixed(2) + ' ' + (1.5 / s).toFixed(2) + '" stroke-linecap="round" opacity=".55"/></g>';
+    }
+  });
+  if (!folded) {
+    for (var j = 0; j < n - 1; j++) {
+      var a = pos[j], b = pos[j + 1], r = (a.r + b.r) / 2;
+      extra += '<g transform="translate(' + ((a.x + b.x) / 2).toFixed(2) + ' ' + ((a.y + b.y) / 2).toFixed(2) + ') rotate(' + r.toFixed(2) + ') scale(' + s + ')">' +
+        '<path d="M0 ' + (-2.3 - L / 2).toFixed(2) + 'V' + (-2.3 + L / 2).toFixed(2) + '" stroke="' + P + '" stroke-width="1" stroke-dasharray="1.4 1.6" stroke-linecap="round" opacity=".7"/></g>';
+    }
+  }
+  return '<g fill="' + P + '" stroke="' + P + '" stroke-width="3.2" stroke-linejoin="round">' + rim + '</g>' +
+         fill + extra;
+}
+function single(folded) { return chain(1, 1, 0, folded); }
+
+var OPTIONS = [
+  { tag: 'Today', name: 'Current chain', now: true, note: 'For comparison: three hearts, each tilted and offset a little.',
+    logo: function () {
+      var hearts = ['rotate(-5 12 13)', 'translate(17 0.6)', 'translate(34 0) rotate(5 12 13)'].map(function (t) { return '<path d="' + H + '" transform="' + t + '"/>'; }).join('');
+      return '<g fill="' + P + '" stroke="' + P + '" stroke-width="3.2" stroke-linejoin="round">' + hearts + '</g><g fill="' + W + '">' + hearts + '</g>' +
+        '<g stroke="' + P + '" stroke-width="1" stroke-dasharray="1.4 1.6" stroke-linecap="round" opacity=".7"><path d="M20.6 7.6v6.2"/><path d="M37.6 7.8v6.2"/></g>';
+    }, fav: function () { return single(false); } },
+  { tag: 'Option 1', name: 'A little overlap', note: 'The hearts still tuck a little into each other at the sides, much less than before.',
+    logo: function () { return chain(3, 1, 80, false, 20.4); }, fav: function () { return single(false); } },
+  { tag: 'Option 2', name: 'Barely overlapping', note: 'In between: each heart is nearly whole, joined by a short fold.',
+    logo: function () { return chain(3, 1, 80, false, 21.4); }, fav: function () { return single(false); } },
+  { tag: 'Option 3', name: 'Just touching', note: 'Full hearts that only meet where their edges touch, like a strip cut right to the fold.',
+    logo: function () { return chain(3, 1, 80, false, 22.4); }, fav: function () { return single(false); } }
+];
+
+/* Fit each viewBox to the drawing (plus room for the stroke). */
+var probe = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+probe.style.cssText = 'position:absolute;visibility:hidden'; document.body.appendChild(probe);
+function fit(inner) {
+  probe.innerHTML = '<g>' + inner + '</g>';
+  var b = probe.firstChild.getBBox(), pad = 1.8;
+  return [b.x - pad, b.y - pad, b.width + 2 * pad, b.height + 2 * pad].map(function (v) { return +v.toFixed(2); });
+}
+function svg(vb, w, h, inner) { return '<svg viewBox="' + vb.join(' ') + '" width="' + w + '" height="' + h + '" aria-hidden="true" fill="none">' + inner + '</svg>'; }
+
+var html = '';
+OPTIONS.forEach(function (o) {
+  var inner = o.logo(), vb = fit(inner), fav = o.fav(), fvb = fit(fav);
+  var hh = 26, hw = Math.round(vb[2] / vb[3] * hh);
+  html += '<section class="card' + (o.now ? ' now' : '') + '"><div class="tag">' + o.tag + '</div><h2>' + o.name + '</h2><p>' + o.note + '</p>' +
+    '<div class="big">' + svg(vb, vb[2] * 5, vb[3] * 5, inner) + '</div>' +
+    '<div class="label">Header, real size</div>' +
+    '<div class="hdr"><a class="brand" href="#">' + svg(vb, hw, hh, inner) + '<b>Kinship</b></a><nav><a href="#">About</a></nav></div>' +
+    '<div class="label">Favicon</div><div class="fav">' +
+    '<span>' + svg(fvb, 16, 16, fav) + 'Kinship</span><span>' + svg(fvb, 32, 32, fav) + '32 px</span></div></section>';
+});
+probe.remove();
+document.getElementById('grid').innerHTML = html;
+</script>
+</body>
+</html>

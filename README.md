@@ -75,7 +75,7 @@ Section labels are plain: “Fun fact”, never “A grateful fun fact” (grati
 Animals are someone, not something: they/them when sex is unknown, he/she when known, never "it". Never call animals by meat names ("beef", "pork", "poultry", "seafood") or "livestock", including in numbers, tables and labels. Don't soften animal agriculture either: name feedlots and slaughterhouses plainly, and say what a count leaves out. See FOUNDATION.md section 4.
 
 ## Logo
-A cut-paper chain of three hearts with dotted folds at the joins (the `LOGO` constant in `app.js`; a single paper heart is the favicon in `index.html`).
+A cut-paper chain of three whole hearts, draped in a gentle curve and joined at the sides (the `LOGO` constant in `app.js`; mock-ups in `mockups/logo-heart-chain-mockup-v3.html`, option 3; a single paper heart is the favicon in `index.html`).
 
 ## Plans
 The Plans menu (same on every page) lists Education plan, Improvements & budget, and Garden planner (`#plans/<id>`).
